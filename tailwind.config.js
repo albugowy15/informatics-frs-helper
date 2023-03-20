@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { fontFamily } = require('tailwindcss/defaultTheme')
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}",],
@@ -59,10 +60,17 @@ module.exports = {
           700: '#ACAAAF',
           800: '#C7C6CA',
           900: '#E4E2E6',
+        },
+        lightSurface: {
+          100: '#FEFBFF'
         }
       },
       fontFamily: {
         primary: ['Roboto', fontFamily.sans]
+      },
+      animation: {
+        bounce200: 'bounce 1s infinite 200ms',
+        bounce400: 'bounce 1s infinite 400ms',
       }
     },
   },
