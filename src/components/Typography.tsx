@@ -47,20 +47,24 @@ const Typography = <T extends React.ElementType>({
 
   return (
     <Component
-      className={clsx('text-black', [
-        variant === 'h1' && 'text-4xl font-bold',
-        variant === 'h2' && 'text-3xl font-bold',
-        variant === 'h3' && 'text-2xl font-bold',
-        variant === 'h4' && 'text-xl font-bold',
-        variant === 'h5' && 'text-lg font-bold',
-        variant === 'h6' && 'text-base font-bold',
-        variant === 'body1' && 'text-base',
-        variant === 'body2' && 'text-sm',
-        variant === 'body3' && 'text-xs',
-        variant === 'label1' && 'text-sm font-medium',
-        variant === 'label2' && 'text-xm font-medium',
-        variant === 'label3' && 'text-[11px] font-medium leading-4',
-      ])}
+      className={clsx(
+        'text-black',
+        [
+          variant === 'h1' && 'text-4xl font-bold',
+          variant === 'h2' && 'text-3xl font-bold',
+          variant === 'h3' && 'text-2xl font-bold',
+          variant === 'h4' && 'text-xl font-bold',
+          variant === 'h5' && 'text-lg font-bold',
+          variant === 'h6' && 'text-base font-bold',
+          variant === 'body1' && 'text-base',
+          variant === 'body2' && 'text-sm',
+          variant === 'body3' && 'text-xs',
+          variant === 'label1' && 'text-sm font-medium',
+          variant === 'label2' && 'text-xs font-medium',
+          variant === 'label3' && 'text-[11px] font-medium leading-4',
+        ],
+        className
+      )}
       {...props}
     >
       {children}
