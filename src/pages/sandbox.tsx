@@ -5,7 +5,7 @@ export default function SandboxPage() {
   return (
     <div className='flex h-screen flex-col items-center justify-center'>
       <Typography variant='h2'>Reusable Component</Typography>
-      <div className='flex justify-center gap-2 py-3'>
+      <div className='flex flex-wrap justify-center gap-2 py-3'>
         <LinkButton href='/sandbox/typography' variant='outlined'>
           Typography
         </LinkButton>
