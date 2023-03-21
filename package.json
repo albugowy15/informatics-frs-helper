@@ -11,8 +11,7 @@
     "lint:strict": "eslint --max-warnings=0 src",
     "typecheck": "tsc --noEmit --incremental false",
     "format": "prettier -w .",
-    "format:check": "prettier -c .",
-    "prepare": "husky install"
+    "format:check": "prettier -c ."
   },
   "dependencies": {
     "@headlessui/react": "^1.7.13",
@@ -48,7 +47,6 @@
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "husky": "^8.0.3",
     "lint-staged": "^13.2.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
