@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
-    dirs: ['src']
+    dirs: ['src'],
   },
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['images.unsplash.com']
-  }
-}
+    domains: ['images.unsplash.com'],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

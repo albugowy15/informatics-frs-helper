@@ -9,7 +9,7 @@ export default NextAuth({
         username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials, _req) {
         const res = await fetch('http://localhost:3000/api/login', {
           method: 'POST',
           body: JSON.stringify(credentials),

@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { fontFamily } = require('tailwindcss/defaultTheme')
+const { fontFamily } = require('tailwindcss/defaultTheme');
 module.exports = {
-  content: ["./src/**/*.{js,ts,jsx,tsx}",],
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -62,20 +62,17 @@ module.exports = {
           900: '#E4E2E6',
         },
         lightSurface: {
-          100: '#FEFBFF'
-        }
+          100: '#FEFBFF',
+        },
       },
       fontFamily: {
-        primary: ['Roboto', fontFamily.sans]
+        primary: ['Roboto', fontFamily.sans],
       },
       animation: {
         bounce200: 'bounce 1s infinite 200ms',
         bounce400: 'bounce 1s infinite 400ms',
-      }
+      },
     },
   },
-  plugins: [
-    require("@tailwindcss/forms"),
-    require('@tailwindcss/line-clamp'),
-  ],
-}
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/line-clamp')],
+};
