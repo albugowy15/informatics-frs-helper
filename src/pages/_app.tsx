@@ -1,13 +1,24 @@
-import type { AppProps } from 'next/app';
+import type { AppType } from 'next/app';
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 
 import '@/styles/globals.css';
 
+import { api } from '@/utils/api';
+
 import Layout from '@/components/Layout';
 
-export default function App({ Component, pageProps }: AppProps) {
+const App: AppType<{ session: Session | null }> = ({
+  Component,
+  pageProps: { session, ...pageProps },
+}) => {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <SessionProvider session={session}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </SessionProvider>
   );
-}
+};
+
+export default api.withTRPC(App);
