@@ -23,10 +23,12 @@ export const TextInput = ({
   helperText,
   placeholder,
 }: TextInputProps) => {
-  const { register, getFieldState } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
 
   const [showPassword, setShowPassword] = useState(false);
-  const { error } = getFieldState(name);
   return (
     <div className='flex flex-col py-2'>
       <Typography variant='label1'>{label}</Typography>
@@ -35,7 +37,7 @@ export const TextInput = ({
         <div className='relative w-full py-1'>
           <input
             className={clsx('form-input block w-full rounded-md', [
-              error && 'border-red-600',
+              errors[name] && 'border-red-600',
             ])}
             type={showPassword ? 'text' : 'password'}
             placeholder={placeholder}
@@ -59,13 +61,13 @@ export const TextInput = ({
         <div className='relative w-full py-1'>
           <input
             className={clsx('form-input block w-full rounded-md', [
-              error && 'border-red-600',
+              errors[name] && 'border-red-600',
             ])}
             type={type}
             placeholder={placeholder}
             {...register(name)}
           />
-          {error && (
+          {errors[name] && (
             <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3'>
               <HiExclamationCircle className='text-base text-error-600' />
             </div>
@@ -73,9 +75,11 @@ export const TextInput = ({
         </div>
       )}
 
-      <Typography variant='label2' className=' text-error-600'>
-        {error?.message}
-      </Typography>
+      {errors[name] && (
+        <Typography variant='label2' className=' text-error-600'>
+          {errors[name]?.message as string}
+        </Typography>
+      )}
     </div>
   );
 };
