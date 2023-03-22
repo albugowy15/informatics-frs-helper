@@ -1,7 +1,11 @@
-import { Listbox, Transition } from '@headlessui/react';
+import { Listbox, Switch, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import { Fragment, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import {
+  ControllerRenderProps,
+  FieldError,
+  useFormContext,
+} from 'react-hook-form';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { BsCheck2, BsChevronExpand } from 'react-icons/bs';
 import { HiExclamationCircle } from 'react-icons/hi';
@@ -84,55 +88,118 @@ export const TextInput = ({
   );
 };
 
-export const SelectInput = ({ data }: { data: string[] }) => {
-  const [selectedData, setSelectedData] = useState(data[0]);
+type SelectInputProps = {
+  label: string;
+  placeholder: string;
+  data?: string[];
+  helperText?: string;
+  error?: FieldError;
+  disabled?: boolean;
+} & ControllerRenderProps;
+
+export const SelectInput = ({
+  name,
+  onChange,
+  value,
+  label,
+  data,
+  helperText,
+  error,
+  disabled = false,
+  placeholder,
+}: SelectInputProps) => {
   return (
-    <Listbox value={selectedData} onChange={setSelectedData}>
-      <div className='relative mt-1'>
-        <Listbox.Button className='relative w-full cursor-default rounded-lg bg-teal-50 py-3 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm'>
-          <span className='block truncate'>{selectedData}</span>
-          <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
-            <BsChevronExpand className='text-base ' aria-hidden='true' />
-          </span>
-        </Listbox.Button>
-        <Transition
-          as={Fragment}
-          leave='transition ease-in duration-100'
-          leaveFrom='opacity-100'
-          leaveTo='opacity-0'
-        >
-          <Listbox.Options className='absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-teal-50 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
-            {data.map((item, idx) => (
-              <Listbox.Option
-                key={idx}
-                className={({ active }) =>
-                  `relative cursor-default select-none py-2.5 pl-10 pr-4 ${
-                    active ? 'bg-secondary-800' : 'text-gray-900'
-                  }`
-                }
-                value={item}
-              >
-                {({ selected }) => (
-                  <>
-                    <span
-                      className={`block truncate ${
-                        selected ? 'font-medium' : 'font-normal'
-                      }`}
-                    >
-                      {item}
-                    </span>
-                    {selected ? (
-                      <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
-                        <BsCheck2 className='text-base' aria-hidden='true' />
+    <div>
+      <Typography variant='label1'>{label}</Typography>
+      <Typography variant='body3'>{helperText}</Typography>
+      <Listbox
+        disabled={disabled}
+        value={value}
+        onChange={onChange}
+        name={name}
+      >
+        <div className='relative mt-1'>
+          <Listbox.Button
+            className={clsx(
+              'relative w-full cursor-default rounded-lg border py-3 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm',
+              [disabled && 'bg-neutral-800 text-neutral-400']
+            )}
+          >
+            <span className='block truncate'>
+              {value ? value : placeholder}
+            </span>
+            <span className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2'>
+              <BsChevronExpand className='text-base ' aria-hidden='true' />
+            </span>
+          </Listbox.Button>
+          <Transition
+            as={Fragment}
+            leave='transition ease-in duration-100'
+            leaveFrom='opacity-100'
+            leaveTo='opacity-0'
+          >
+            <Listbox.Options className='absolute z-30 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+              {data?.map((item, idx) => (
+                <Listbox.Option
+                  key={idx}
+                  className={({ active }) =>
+                    `relative cursor-default select-none py-2.5 pl-10 pr-4 ${
+                      active ? 'bg-primary-800' : 'text-gray-900'
+                    }`
+                  }
+                  value={item}
+                >
+                  {({ selected }) => (
+                    <>
+                      <span
+                        className={`block truncate ${
+                          selected ? 'font-medium' : 'font-normal'
+                        }`}
+                      >
+                        {item}
                       </span>
-                    ) : null}
-                  </>
-                )}
-              </Listbox.Option>
-            ))}
-          </Listbox.Options>
-        </Transition>
-      </div>
-    </Listbox>
+                      {selected ? (
+                        <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
+                          <BsCheck2 className='text-base' aria-hidden='true' />
+                        </span>
+                      ) : null}
+                    </>
+                  )}
+                </Listbox.Option>
+              ))}
+            </Listbox.Options>
+          </Transition>
+        </div>
+      </Listbox>
+      {error && (
+        <Typography variant='label2' className='pt-1 text-error-600'>
+          {error.message}
+        </Typography>
+      )}
+    </div>
+  );
+};
+
+type SwitchInputProps = {
+  label: string;
+} & ControllerRenderProps;
+export const SwitchInput = ({ value, onChange, label }: SwitchInputProps) => {
+  return (
+    <div className='flex items-center gap-2'>
+      <Typography variant='label1'>{label}</Typography>
+      <Switch
+        checked={value}
+        onChange={onChange}
+        className={`${value ? 'bg-primary-500' : 'bg-neutral-700'}
+          relative inline-flex h-[16px] w-[32px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+      >
+        <span className='sr-only'>Use setting</span>
+        <span
+          aria-hidden='true'
+          className={`${value ? 'translate-x-4' : 'translate-x-0'}
+            pointer-events-none inline-block h-[12px] w-[12px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+        />
+      </Switch>
+    </div>
   );
 };
