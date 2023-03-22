@@ -13,6 +13,7 @@ import { api } from '@/utils/api';
 
 import { Button } from '@/components/Button';
 import { SelectInput, SwitchInput } from '@/components/Form';
+import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 
 const Semester = ['1', '2', '3'];
@@ -30,6 +31,7 @@ const filterSchema = z.object({
 });
 
 type FilterForm = z.infer<typeof filterSchema>;
+
 export default function SchedulePage() {
   const methods = useForm<FilterForm>({
     resolver: zodResolver(filterSchema),
@@ -66,9 +68,11 @@ export default function SchedulePage() {
     setListMatkul(Subject[semesterField]);
   }, [semesterField]);
 
+  const [filterModal, setFilterModal] = useState(false);
+
   return (
-    <div className='flex gap-4'>
-      <aside className='sticky top-4 h-fit w-[26%] flex-shrink-0 rounded-xl border p-4'>
+    <div className='gap-4 lg:flex'>
+      <aside className='top-4 hidden h-fit w-[26%] flex-shrink-0 rounded-xl border p-4 lg:sticky'>
         <FormProvider {...methods}>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -115,7 +119,7 @@ export default function SchedulePage() {
           </form>
         </FormProvider>
       </aside>
-      <main className='flex flex-col gap-5 px-3'>
+      <main className='flex flex-col gap-5 lg:px-3'>
         <div>
           {response.data?.map((matkul) => (
             <>
@@ -146,6 +150,80 @@ export default function SchedulePage() {
           ))}
         </div>
       </main>
+      <Button
+        variant='filled'
+        className='fixed bottom-0 left-0 right-0 mx-auto mb-4 lg:hidden'
+        onClick={() => setFilterModal(true)}
+      >
+        Filter
+      </Button>
+      <Modal
+        isOpen={filterModal}
+        setIsOpen={setFilterModal}
+        title='Filter Jadwal'
+      >
+        <div className='overflow-scroll py-3'>
+          <FormProvider {...methods}>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className='flex flex-col gap-4'
+            >
+              <Controller
+                name='semester'
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                  <SelectInput
+                    placeholder='Pilih Semester'
+                    data={Semester}
+                    label='Pilih Semester'
+                    error={error}
+                    {...field}
+                  />
+                )}
+              />
+
+              <Controller
+                name='matkul'
+                control={control}
+                render={({ field }) => (
+                  <SelectInput
+                    placeholder='Pilih Matkul'
+                    disabled={semesterField === ''}
+                    data={listMatkul ? listMatkul : undefined}
+                    label='Pilih Matkul'
+                    helperText='Silahkan pilih semester dulu untuk menampilkan opsi'
+                    {...field}
+                  />
+                )}
+              />
+              <Controller
+                name='showAccelProgram'
+                control={control}
+                render={({ field }) => (
+                  <SwitchInput label='Tampilkan Matkul Akselerasi' {...field} />
+                )}
+              />
+              <div className='flex items-center justify-end gap-1'>
+                <Button
+                  variant='text'
+                  size='sm'
+                  type='submit'
+                  onClick={() => setFilterModal(false)}
+                >
+                  Tampilkan Jadwal
+                </Button>
+                <Button
+                  variant='text'
+                  size='sm'
+                  onClick={() => setFilterModal(false)}
+                >
+                  Batal
+                </Button>
+              </div>
+            </form>
+          </FormProvider>
+        </div>
+      </Modal>
     </div>
   );
 }

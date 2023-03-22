@@ -121,7 +121,7 @@ export const SelectInput = ({
         <div className='relative mt-1'>
           <Listbox.Button
             className={clsx(
-              'relative w-full cursor-default rounded-lg border py-3 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm',
+              'relative w-full cursor-default rounded-lg border py-2 pl-3 pr-10 text-left text-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 md:text-base lg:py-3',
               [disabled && 'bg-neutral-800 text-neutral-400']
             )}
           >
@@ -138,7 +138,7 @@ export const SelectInput = ({
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <Listbox.Options className='absolute z-30 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm'>
+            <Listbox.Options className='absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none lg:text-base'>
               {data?.map((item, idx) => (
                 <Listbox.Option
                   key={idx}
