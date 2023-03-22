@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Button } from '@/components/Button';
-import { SelectInput, TextInput } from '@/components/Form';
+import { TextInput } from '@/components/Form';
 
 const formSchema = z.object({
   name: z
@@ -53,7 +53,7 @@ export default function FormPage() {
           </Button>
         </form>
       </FormProvider>
-      <SelectInput data={selectData} />
+      {/* <SelectInput label='Pilih opsi'  data={selectData} /> */}
     </div>
   );
 }
