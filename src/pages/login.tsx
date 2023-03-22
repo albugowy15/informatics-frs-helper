@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -19,9 +20,13 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
   const { handleSubmit } = methods;
-  const onSubmit: SubmitHandler<LoginForm> = (data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+  const onSubmit: SubmitHandler<LoginForm> = async (data) => {
+    await signIn('credentials', {
+      username: data.username,
+      password: data.password,
+      redirect: true,
+      callbackUrl: '/',
+    });
   };
 
   return (

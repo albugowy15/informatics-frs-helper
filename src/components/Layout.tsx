@@ -1,8 +1,12 @@
+import { signIn, signOut, useSession } from 'next-auth/react';
+
 import BasicLink from '@/components/BasicLink';
-import { LinkButton } from '@/components/Button';
+import { Button, LinkButton } from '@/components/Button';
 import Typography from '@/components/Typography';
 
 const Navbar = () => {
+  const { data: session } = useSession();
+
   return (
     <header className='w-full bg-white'>
       <div className='container mx-auto flex items-center justify-between py-2 px-3'>
@@ -10,12 +14,23 @@ const Navbar = () => {
           TC FRS Helper
         </BasicLink>
         <nav className='flex justify-between gap-2'>
-          <LinkButton variant='filled' href='/login'>
-            Login
-          </LinkButton>
-          <LinkButton variant='outlined' href='/register'>
-            Register
-          </LinkButton>
+          {session?.user ? (
+            <>
+              <Typography variant='body1'>{session.user.username}</Typography>
+              <Button variant='filled' onClick={() => signOut()}>
+                Sign Out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant='filled' onClick={() => signIn()}>
+                Login
+              </Button>
+              <LinkButton variant='outlined' href='/register'>
+                Register
+              </LinkButton>
+            </>
+          )}
         </nav>
       </div>
     </header>

@@ -1,36 +1,78 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { GetServerSidePropsContext } from 'next';
-import { DefaultSession, getServerSession, NextAuthOptions } from 'next-auth';
-import DiscordProvider from 'next-auth/providers/discord';
+import { getServerSession, NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { prisma } from '@/server/db';
+import { LoginResponseData } from '@/pages/api/login';
 
-import { env } from '@/env.mjs';
+import { APIResponse } from '@/types/api';
 
-declare module 'next-auth' {
-  interface Session extends DefaultSession {
-    user: {
-      id: string;
-    } & DefaultSession['user'];
-  }
-}
+// declare module 'next-auth' {
+//   interface Session extends DefaultSession {
+//     user: {
+//       id: string;
+//       username: string;
+//       email: string;
+//     } & DefaultSession['user'];
+//   }
+// }
 
 export const authOptions: NextAuthOptions = {
+  // callbacks: {
+  //   session({ session, user }) {
+  //     if (session.user) {
+  //       session.user.id = user.id;
+  //     }
+  //     return session;
+  //   },
+  // },
+  providers: [
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        username: {
+          label: 'Username',
+          type: 'text',
+        },
+        password: {
+          label: 'Password',
+          type: 'password',
+        },
+      },
+      async authorize(credentials) {
+        const res = await fetch('http://localhost:3000/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(credentials),
+        });
+
+        const { data: user }: APIResponse<LoginResponseData> = await res.json();
+        if (res.ok && user) {
+          return user;
+        } else {
+          return null;
+        }
+      },
+    }),
+  ],
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-      }
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token }) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      session.user = token as any;
       return session;
     },
   },
-  adapter: PrismaAdapter(prisma),
-  providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID as string,
-      clientSecret: env.DISCORD_CLIENT_SECRET as string,
-    }),
-  ],
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt',
+  },
+  pages: {
+    signIn: '/login',
+  },
 };
 
 export const getServerAuthSession = (ctx: {

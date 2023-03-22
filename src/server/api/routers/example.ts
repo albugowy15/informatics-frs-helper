@@ -14,11 +14,11 @@ export const exampleRouter = createTRPCRouter({
         greeting: `Hello ${input.text}`,
       };
     }),
-
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
+  test: publicProcedure.query(({ ctx }) => {
+    if (ctx.session) {
+      return ctx.session.user.username;
+    }
   }),
-
   getSecretMessage: protectedProcedure.query(() => {
     return 'you can now see this secret message!';
   }),

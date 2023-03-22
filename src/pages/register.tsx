@@ -13,7 +13,11 @@ const registerSchema = z.object({
     .string()
     .email({ message: 'Email harus valid' })
     .nonempty({ message: 'Email tidak boleh kosong' }),
-  password: z.string().nonempty({ message: 'Password tidak boleh kosong' }),
+  password: z
+    .string()
+    .nonempty({ message: 'Password tidak boleh kosong' })
+    .min(8, { message: 'Password minimal 8 karakter' })
+    .max(16, { message: 'Password maksimal 16 karakter' }),
 });
 
 type RegisterForm = z.infer<typeof registerSchema>;
@@ -22,9 +26,16 @@ export default function RegisterPage() {
   const methods = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
-  const onSubmit = (data: RegisterForm) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+  const onSubmit = async (data: RegisterForm) => {
+    const res = await fetch('/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    const result = await res.json();
+    console.log(result);
   };
 
   return (
