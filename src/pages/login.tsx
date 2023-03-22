@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { toast, Toaster } from 'react-hot-toast';
 import { z } from 'zod';
 
 import BasicLink from '@/components/BasicLink';
@@ -21,11 +22,22 @@ export default function LoginPage() {
   });
   const { handleSubmit } = methods;
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
-    await signIn('credentials', {
+    toast.loading('Silahkan tunggu');
+    signIn('credentials', {
       username: data.username,
       password: data.password,
-      redirect: true,
-      callbackUrl: '/',
+      redirect: false,
+    }).then((res) => {
+      if (res) {
+        if (res.ok) {
+          toast.remove();
+          toast.success('Login berhasil');
+          window.location.replace('/');
+        } else {
+          toast.remove();
+          toast.error('Username atau password salah');
+        }
+      }
     });
   };
 
@@ -34,6 +46,7 @@ export default function LoginPage() {
       <Typography variant='h2' className='pb-5 text-center'>
         Silahkan Login
       </Typography>
+      <Toaster />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput label='Username' name='username' />

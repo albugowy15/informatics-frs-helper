@@ -1,5 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast, Toaster } from 'react-hot-toast';
 import { z } from 'zod';
 
 import BasicLink from '@/components/BasicLink';
@@ -27,15 +29,11 @@ export default function RegisterPage() {
     resolver: zodResolver(registerSchema),
   });
   const onSubmit = async (data: RegisterForm) => {
-    const res = await fetch('/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+    toast.promise(axios.post('/api/register', data), {
+      loading: 'Silahkan tunggu',
+      success: 'Akun berhasil dibuat, silahkan login',
+      error: (err) => err.response.data.message,
     });
-    const result = await res.json();
-    console.log(result);
   };
 
   return (
@@ -63,6 +61,7 @@ export default function RegisterPage() {
           </Typography>
         </form>
       </FormProvider>
+      <Toaster />
     </div>
   );
 }

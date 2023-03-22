@@ -34,13 +34,13 @@ export default async function handler(
         },
       });
     } catch (error) {
-      res.status(400).json({
+      return res.status(400).json({
         status: 'error',
-        message: 'User already exists',
+        message: 'Username already exists',
       });
     }
   } else {
-    res.status(400).json({
+    res.status(405).json({
       status: 'error',
       message: 'Request method not allowed',
     });

@@ -29,9 +29,17 @@ export default async function handler(
       });
     }
 
-    const user = await prisma.user.findFirst({
+    const user = await prisma.user.findUnique({
       where: { username: username },
     });
+
+    if (!user) {
+      res.status(401).json({
+        status: 'error',
+        message: 'User not found',
+      });
+      return;
+    }
 
     if (user) {
       const userId = user.id,
@@ -58,19 +66,15 @@ export default async function handler(
                 accessToken: token as string,
               },
             });
+            return;
           });
-          return;
         } else {
           res.status(400).json({
             status: 'error',
             message: 'Password incorrect',
           });
+          return;
         }
-      });
-    } else {
-      res.status(401).json({
-        status: 'error',
-        message: 'User not found',
       });
     }
   } else {
@@ -78,6 +82,7 @@ export default async function handler(
       status: 'error',
       message: 'Method not implemented',
     });
+    return;
   }
   return;
 }
