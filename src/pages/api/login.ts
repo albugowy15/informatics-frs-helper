@@ -55,7 +55,7 @@ export default async function handler(
             email: userEmail,
           };
 
-          jwt.sign(payload, KEY, { expiresIn: 31556926 }, (err, token) => {
+          jwt.sign(payload, KEY, { expiresIn: '1d' }, (_err, token) => {
             res.status(200).json({
               status: 'success',
               message: 'User successfully logged in',
