@@ -11,18 +11,14 @@ import { z } from 'zod';
 
 import { api } from '@/utils/api';
 
+import Accordion from '@/components/Accordion';
 import { Button } from '@/components/Button';
 import { SelectInput, SwitchInput } from '@/components/Form';
+import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 
-const Semester = ['1', '2', '3'];
-
-const Subject: Record<string, string[]> = {
-  '1': ['Semua', 'fefefe', 'fefhehfhe', 'fefefef'],
-  '2': ['Semua', 'fhfhehfe', 'yyetyeot', 'vbduuuer'],
-  '3': ['Semua', 'qtq55ete', '88y3yhd', 'ppppppp'],
-};
+const Semester = ['1', '2', '3', '4', '5', '6'];
 
 const filterSchema = z.object({
   semester: z.string().nonempty({ message: 'Silahkan pilih semester' }),
@@ -33,6 +29,7 @@ const filterSchema = z.object({
 type FilterForm = z.infer<typeof filterSchema>;
 
 export default function SchedulePage() {
+  // Form
   const methods = useForm<FilterForm>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
@@ -42,7 +39,20 @@ export default function SchedulePage() {
     },
   });
 
+  const { control, handleSubmit, resetField } = methods;
+
+  const semesterField = useWatch({
+    control,
+    name: 'semester',
+  });
+
+  const onSubmit: SubmitHandler<FilterForm> = (data) => {
+    setSubmitedData(data);
+  };
+
   const [submitedData, setSubmitedData] = useState<FilterForm>();
+
+  // Fetch data
   const response = api.public.getClass.useQuery(
     {
       matkul: submitedData?.matkul,
@@ -52,27 +62,23 @@ export default function SchedulePage() {
     { enabled: Boolean(submitedData) }
   );
 
-  const onSubmit: SubmitHandler<FilterForm> = (data) => {
-    setSubmitedData(data);
-  };
+  const listSubject = api.public.getSubject.useQuery(
+    {
+      semester: parseInt(semesterField),
+    },
+    { enabled: Boolean(semesterField) }
+  );
 
-  const [listMatkul, setListMatkul] = useState<string[]>();
-  const { control, handleSubmit } = methods;
-
-  const semesterField = useWatch({
-    control,
-    name: 'semester',
-  });
-
+  // reset matkul field when semester field changed
   useEffect(() => {
-    setListMatkul(Subject[semesterField]);
-  }, [semesterField]);
+    resetField('matkul');
+  }, [resetField, semesterField]);
 
   const [filterModal, setFilterModal] = useState(false);
 
   return (
     <div className='gap-4 lg:flex'>
-      <aside className='top-4 hidden h-fit w-[26%] flex-shrink-0 rounded-xl border p-4 lg:sticky'>
+      <aside className='sticky top-4 hidden h-fit w-[26%] flex-shrink-0 rounded-xl border border-neutral-700 p-4 lg:block'>
         <FormProvider {...methods}>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -99,7 +105,7 @@ export default function SchedulePage() {
                 <SelectInput
                   placeholder='Pilih Matkul'
                   disabled={semesterField === ''}
-                  data={listMatkul ? listMatkul : undefined}
+                  data={listSubject.data}
                   label='Pilih Matkul'
                   helperText='Silahkan pilih semester dulu untuk menampilkan opsi'
                   {...field}
@@ -119,37 +125,67 @@ export default function SchedulePage() {
           </form>
         </FormProvider>
       </aside>
-      <main className='flex flex-col gap-5 lg:px-3'>
-        <div>
-          {response.data?.map((matkul) => (
+      {submitedData != undefined ? (
+        <>
+          {response.isLoading && (
+            <div className='flex h-screen w-full items-center justify-center'>
+              <Loader />
+            </div>
+          )}
+        </>
+      ) : (
+        <Typography
+          variant='h3'
+          className='w-full py-5 text-center text-neutral-600'
+        >
+          Silahkan tentukan filter terlebih dahulu
+        </Typography>
+      )}
+      {response.isError && (
+        <Typography variant='h3' className='text-center'>
+          Terjadi kesalahan saat memuat data
+        </Typography>
+      )}
+      {response.isSuccess && (
+        <main className='flex w-full flex-col gap-3 lg:px-3'>
+          {response.data.map((matkul) => (
             <>
-              <Typography variant='h3'>{matkul.name}</Typography>
-              <Typography variant='body1'>
-                Semester {matkul.semester} | {matkul.sks} sks
-              </Typography>
-              <div className='flex flex-wrap gap-2 py-3'>
-                {matkul.Class.map((item) => (
-                  <div
-                    className='flex flex-col gap-1 rounded border p-2.5'
-                    key={item.id}
-                  >
-                    <Typography variant='h6'>
-                      {matkul.name} {item.code}
-                    </Typography>
+              <Accordion
+                title={
+                  <div>
+                    <Typography variant='h3'>{matkul.name}</Typography>
                     <Typography variant='body1'>
-                      {item.Lecturer.fullname}
+                      Semester {matkul.semester} | {matkul.sks} sks |{' '}
+                      {matkul.Class.length} kelas
                     </Typography>
-                    <Typography variant='body2'>
-                      {item.day}, {item.Session.session_time} WIB
-                    </Typography>
-                    <Typography variant='body2'>Ruang IF-1037</Typography>
                   </div>
-                ))}
-              </div>
+                }
+              >
+                <div className='flex flex-wrap gap-2'>
+                  {matkul.Class.map((item) => (
+                    <div
+                      className='flex flex-col gap-1 rounded-lg border border-neutral-600 bg-secondary-900 p-2.5'
+                      key={item.id}
+                    >
+                      <Typography variant='h6'>
+                        {matkul.name} {item.code}
+                      </Typography>
+                      <Typography variant='body2'>
+                        {item.Lecturer.fullname}
+                      </Typography>
+                      <Typography variant='body2'>
+                        {item.day}, {item.Session.session_time} WIB
+                      </Typography>
+                      <Typography variant='body2'>Ruang IF-1037</Typography>
+                    </div>
+                  ))}
+                </div>
+              </Accordion>
             </>
           ))}
-        </div>
-      </main>
+        </main>
+      )}
+
       <Button
         variant='filled'
         className='fixed bottom-0 left-0 right-0 mx-auto mb-4 lg:hidden'
@@ -189,7 +225,7 @@ export default function SchedulePage() {
                   <SelectInput
                     placeholder='Pilih Matkul'
                     disabled={semesterField === ''}
-                    data={listMatkul ? listMatkul : undefined}
+                    data={listSubject.data}
                     label='Pilih Matkul'
                     helperText='Silahkan pilih semester dulu untuk menampilkan opsi'
                     {...field}
