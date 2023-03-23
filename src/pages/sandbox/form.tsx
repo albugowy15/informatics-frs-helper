@@ -35,7 +35,6 @@ export default function FormPage() {
     console.log(data);
   };
 
-  const selectData = ['Budi susilo', 'Joko susilo', 'Ahmad susilo'];
   return (
     <div className='w-[400px] px-10'>
       <FormProvider {...methods}>

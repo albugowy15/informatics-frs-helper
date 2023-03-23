@@ -39,9 +39,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
           'transition-colors duration-75',
           [
-            size === 'sm' && 'px-4 py-2 text-xs',
-            size === 'md' && 'px-5 py-2.5 text-sm',
-            size === 'lg' && 'px-6 py-3 text-base',
+            size === 'sm' && 'px-2 py-1 text-xs',
+            size === 'md' && 'px-3 py-2 text-sm',
+            size === 'lg' && 'px-4 py-3 text-base',
           ],
           [
             variant === 'filled' &&
@@ -108,9 +108,9 @@ export const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
           'transition-colors duration-75',
           [
-            size === 'sm' && 'px-4 py-2 text-xs',
-            size === 'md' && 'px-5 py-2.5 text-sm',
-            size === 'lg' && 'px-6 py-3 text-base',
+            size === 'sm' && 'px-2 py-1 text-xs',
+            size === 'md' && 'px-3 py-2 text-sm',
+            size === 'lg' && 'px-4 py-3 text-base',
           ],
           [
             variant === 'filled' &&
@@ -151,6 +151,7 @@ type IconButtonProps = {
   variant: ButtonVariant;
   size?: ButtonSize;
   icon: IconType;
+  iconClassname?: string;
 } & React.ComponentPropsWithRef<'button'>;
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
@@ -161,6 +162,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       variant = 'filled',
       size = 'md',
       icon: Icon,
+      iconClassname,
       ...rest
     },
     ref
@@ -172,13 +174,13 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         type='button'
         disabled={disabled}
         className={clsx(
-          'inline-flex items-center rounded-3xl font-medium hover:shadow-md disabled:cursor-not-allowed disabled:text-neutral-500 disabled:shadow-none',
+          'inline-flex items-center rounded-full font-medium hover:shadow-md disabled:cursor-not-allowed disabled:text-neutral-500 disabled:shadow-none',
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
           'transition-colors duration-75',
           [
-            size === 'sm' && 'p-2 text-xs',
-            size === 'md' && 'p-3 text-sm',
-            size === 'lg' && 'p-4 text-base',
+            size === 'sm' && 'p-1 text-xs',
+            size === 'md' && 'p-2.5 text-base',
+            size === 'lg' && 'p-3 text-lg',
           ],
           [
             variant === 'filled' &&
@@ -196,7 +198,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
         )}
         {...rest}
       >
-        {Icon && <Icon className={className} />}
+        {Icon && <Icon className={iconClassname} />}
       </button>
     );
   }

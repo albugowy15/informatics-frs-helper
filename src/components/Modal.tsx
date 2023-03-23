@@ -50,7 +50,7 @@ const Modal = ({
               leaveFrom='opacity-100 scale-100'
               leaveTo='opacity-0 scale-95'
             >
-              <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-teal-50 p-6 text-left align-middle transition-all'>
+              <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-xl border border-neutral-600 bg-white p-6 text-left align-middle transition-all'>
                 {Icon && (
                   <Icon className='mx-auto mb-4 text-secondary-600' size={30} />
                 )}
