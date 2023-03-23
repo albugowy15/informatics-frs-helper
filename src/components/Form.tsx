@@ -34,14 +34,14 @@ export const TextInput = ({
 
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <div className='flex flex-col py-2'>
+    <div className='flex w-full flex-col'>
       <Typography variant='label1'>{label}</Typography>
       <Typography variant='body3'>{helperText}</Typography>
       {type === 'password' ? (
-        <div className='relative w-full py-1'>
+        <div className='relative w-full pt-1'>
           <input
             className={clsx('form-input block w-full rounded-md', [
-              errors[name] && 'border-red-600',
+              errors[name] ? 'border-red-600' : 'border-neutral-600',
             ])}
             type={showPassword ? 'text' : 'password'}
             placeholder={placeholder}
@@ -62,10 +62,10 @@ export const TextInput = ({
           </div>
         </div>
       ) : (
-        <div className='relative w-full py-1'>
+        <div className='relative w-full pt-1'>
           <input
             className={clsx('form-input block w-full rounded-md', [
-              errors[name] && 'border-red-600',
+              errors[name] ? 'border-red-600' : 'border-neutral-600',
             ])}
             type={type}
             placeholder={placeholder}
@@ -91,7 +91,7 @@ export const TextInput = ({
 type SelectInputProps = {
   label: string;
   placeholder: string;
-  data?: string[];
+  data?: string[] | number[];
   helperText?: string;
   error?: FieldError;
   disabled?: boolean;
@@ -109,7 +109,7 @@ export const SelectInput = ({
   placeholder,
 }: SelectInputProps) => {
   return (
-    <div>
+    <div className='w-full'>
       <Typography variant='label1'>{label}</Typography>
       <Typography variant='body3'>{helperText}</Typography>
       <Listbox
@@ -121,7 +121,7 @@ export const SelectInput = ({
         <div className='relative mt-1'>
           <Listbox.Button
             className={clsx(
-              'relative w-full cursor-default rounded-lg border py-2 pl-3 pr-10 text-left text-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 md:text-base lg:py-3',
+              'relative w-full cursor-default rounded-lg border border-neutral-600 py-2.5 pl-3 pr-10 text-left text-sm md:text-base',
               [disabled && 'bg-neutral-800 text-neutral-400']
             )}
           >

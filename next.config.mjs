@@ -1,4 +1,4 @@
-!process.env.SKIP_ENV_VALIDATION && (await import("./src/env.mjs"));
+!process.env.SKIP_ENV_VALIDATION && (await import('./src/env.mjs'));
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
@@ -10,8 +10,8 @@ const nextConfig = {
     domains: ['images.unsplash.com'],
   },
   i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
+    locales: ['en'],
+    defaultLocale: 'en',
   },
 };
 

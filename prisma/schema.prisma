@@ -19,6 +19,7 @@ model User {
   username String  @unique
   email    String  @unique
   password String
+  fullname String?
   idLine   String?
   whatsapp String?
   Plan     Plan[]

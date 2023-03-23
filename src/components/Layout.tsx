@@ -6,6 +6,7 @@ import { AiOutlineHome, AiOutlineSchedule } from 'react-icons/ai';
 import {
   BsBook,
   BsFillPersonFill,
+  BsLockFill,
   BsNewspaper,
   BsPersonCircle,
 } from 'react-icons/bs';
@@ -14,7 +15,7 @@ import { FiExternalLink, FiLogOut } from 'react-icons/fi';
 import { TbArrowsExchange2 } from 'react-icons/tb';
 
 import BasicLink from '@/components/BasicLink';
-import { Button, IconButton, LinkButton } from '@/components/Button';
+import { Button, LinkButton } from '@/components/Button';
 import Dropdown from '@/components/Dropdown';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
@@ -42,12 +43,9 @@ const Navbar = () => {
               <>
                 <Dropdown
                   menuButton={
-                    <IconButton
-                      icon={BsFillPersonFill}
-                      className='h-fit'
-                      size='md'
-                      variant='outlined'
-                    />
+                    <div className='flex h-fit items-center justify-center rounded-full border border-neutral-400 p-2.5 hover:bg-neutral-900'>
+                      <BsFillPersonFill className='text-base text-primary-400' />
+                    </div>
                   }
                   options={
                     <>
@@ -62,7 +60,7 @@ const Navbar = () => {
                                   : 'text-neutral-200',
                               ]
                             )}
-                            href='/profile'
+                            href={'/profile/' + session.user.id}
                           >
                             <BsPersonCircle
                               className={clsx([
@@ -84,7 +82,29 @@ const Navbar = () => {
                                   : 'text-neutral-200',
                               ]
                             )}
-                            href='/frs'
+                            href={'/ubah-password/' + session.user.id}
+                          >
+                            <BsLockFill
+                              className={clsx([
+                                active ? 'text-white' : 'text-primary-500',
+                              ])}
+                            />
+                            Ubah Password
+                          </BasicLink>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
+                          <BasicLink
+                            className={clsx(
+                              'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
+                              [
+                                active
+                                  ? 'bg-primary-500 text-neutral-50'
+                                  : 'text-neutral-200',
+                              ]
+                            )}
+                            href={'/frs/' + session.user.id}
                           >
                             <BsNewspaper
                               className={clsx([
