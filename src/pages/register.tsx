@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import { getSession, GetSessionParams } from 'next-auth/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast, Toaster } from 'react-hot-toast';
 import { z } from 'zod';
@@ -64,4 +65,22 @@ export default function RegisterPage() {
       <Toaster />
     </div>
   );
+}
+
+export async function getServerSideProps(
+  context: GetSessionParams | undefined
+) {
+  const session = await getSession(context);
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
 }
