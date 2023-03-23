@@ -44,4 +44,27 @@ export const publicRouter = createTRPCRouter({
 
       return matkul;
     }),
+  getSubject: publicProcedure
+    .input(
+      z.object({
+        semester: z.number().min(1).max(6),
+      })
+    )
+    .query(async ({ input }) => {
+      const listSubject = prisma.matkul
+        .findMany({
+          select: {
+            name: true,
+          },
+          where: {
+            semester: input.semester,
+          },
+        })
+        .then((res) => {
+          return res.map((item) => item.name);
+        });
+
+      (await listSubject).unshift('Semua');
+      return listSubject;
+    }),
 });
