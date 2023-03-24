@@ -28,7 +28,7 @@ model User {
 model Plan {
   id       String  @id @default(cuid())
   title    String
-  priority Int
+  totalSks Int
   semester Int
   Class    Class[]
   User     User?   @relation(fields: [userId], references: [id])
@@ -55,8 +55,7 @@ model Class {
   taken     Int
   Session   Session @relation(fields: [sessionId], references: [id])
   sessionId Int
-  Plan      Plan?   @relation(fields: [planId], references: [id])
-  planId    String?
+  Plan      Plan[]
 }
 
 model Session {
