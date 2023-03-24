@@ -2,6 +2,8 @@ import { GetServerSidePropsContext } from 'next';
 import { getServerSession, NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
+import { getBaseUrl } from '@/utils/api';
+
 import { LoginResponseData } from '@/pages/api/login';
 
 import { APIResponse } from '@/types/api';
@@ -39,7 +41,7 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        const res = await fetch('http://localhost:3000/api/login', {
+        const res = await fetch(`${getBaseUrl()}/api/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
