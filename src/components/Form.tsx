@@ -95,7 +95,7 @@ type SelectInputProps = {
   helperText?: string;
   error?: FieldError;
   disabled?: boolean;
-} & ControllerRenderProps;
+} & Partial<ControllerRenderProps>;
 
 export const SelectInput = ({
   name,
@@ -139,34 +139,49 @@ export const SelectInput = ({
             leaveTo='opacity-0'
           >
             <Listbox.Options className='absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-sm shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none lg:text-base'>
-              {data?.map((item, idx) => (
+              {data ? (
+                <>
+                  {data.map((item, idx) => (
+                    <Listbox.Option
+                      key={idx}
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2.5 pl-10 pr-4 ${
+                          active ? 'bg-primary-800' : 'text-gray-900'
+                        }`
+                      }
+                      value={item}
+                    >
+                      {({ selected }) => (
+                        <>
+                          <span
+                            className={`block truncate ${
+                              selected ? 'font-medium' : 'font-normal'
+                            }`}
+                          >
+                            {item}
+                          </span>
+                          {selected ? (
+                            <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
+                              <BsCheck2
+                                className='text-base'
+                                aria-hidden='true'
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </>
+              ) : (
                 <Listbox.Option
-                  key={idx}
-                  className={({ active }) =>
-                    `relative cursor-default select-none py-2.5 pl-10 pr-4 ${
-                      active ? 'bg-primary-800' : 'text-gray-900'
-                    }`
-                  }
-                  value={item}
+                  disabled
+                  value=''
+                  className='relative cursor-default select-none py-2.5 pl-10 pr-4 text-neutral-500'
                 >
-                  {({ selected }) => (
-                    <>
-                      <span
-                        className={`block truncate ${
-                          selected ? 'font-medium' : 'font-normal'
-                        }`}
-                      >
-                        {item}
-                      </span>
-                      {selected ? (
-                        <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
-                          <BsCheck2 className='text-base' aria-hidden='true' />
-                        </span>
-                      ) : null}
-                    </>
-                  )}
+                  <span>--Tidak ada opsi--</span>
                 </Listbox.Option>
-              ))}
+              )}
             </Listbox.Options>
           </Transition>
         </div>
