@@ -132,6 +132,14 @@ export default function SchedulePage() {
               <Loader />
             </div>
           )}
+          {response.isSuccess && response.data.length === 0 && (
+            <Typography
+              variant='h3'
+              className='w-full py-5 text-center text-neutral-600'
+            >
+              Tidak ada data yang sesuai dengan filter
+            </Typography>
+          )}
         </>
       ) : (
         <Typography
@@ -188,7 +196,7 @@ export default function SchedulePage() {
 
       <Button
         variant='filled'
-        className='fixed bottom-0 left-0 right-0 mx-auto mb-4 lg:hidden'
+        className='fixed bottom-0 left-0 right-0 mx-auto mb-7 lg:hidden'
         onClick={() => setFilterModal(true)}
       >
         Filter

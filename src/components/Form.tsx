@@ -80,7 +80,7 @@ export const TextInput = ({
       )}
 
       {errors[name] && (
-        <Typography variant='label2' className=' text-error-600'>
+        <Typography variant='label2' className='mt-1 text-error-600'>
           {errors[name]?.message as string}
         </Typography>
       )}

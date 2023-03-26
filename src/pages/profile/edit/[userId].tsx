@@ -56,22 +56,22 @@ export default function EditProfilePage() {
   const mutation = api.protected.updateProfile.useMutation();
 
   const onSubmit: SubmitHandler<EditProfileFormType> = (data) => {
-    mutation.mutate({
-      id: userId as string,
-      email: data.email,
-      fullname: data.fullname,
-      idLine: data.idLine,
-      username: data.username,
-      whatsapp: data.whatsapp,
-    });
-    if (mutation.isLoading) {
-      toast.loading('Memperbarui profil...');
-    }
-    if (mutation.isSuccess) {
-      toast.success('Profil berhasil diperbarui');
-      router.replace(`/profile/${userId}`);
-    }
-    if (mutation.isError) toast.error(mutation.error.message);
+    // toast.loading('Memperbarui profil...');
+    toast.promise(
+      mutation.mutateAsync({
+        id: userId as string,
+        email: data.email,
+        fullname: data.fullname,
+        idLine: data.idLine,
+        username: data.username,
+        whatsapp: data.whatsapp,
+      }),
+      {
+        loading: 'Memperbarui profil...',
+        success: 'Profil berhasil diperbarui',
+        error: 'Gagal memperbarui profil',
+      }
+    );
   };
 
   return (
@@ -81,7 +81,7 @@ export default function EditProfilePage() {
         <form
           className={clsx(
             [mutation.isLoading ? 'cursor-not-allowed' : 'cursor-default'],
-            'flex w-full min-w-fit flex-col rounded-lg border border-neutral-700 p-3 sm:w-[400px]'
+            'flex w-full min-w-fit flex-col gap-3 rounded-lg border border-neutral-700 p-3 sm:w-[400px]'
           )}
           onSubmit={handleSubmit(onSubmit)}
         >
@@ -110,7 +110,12 @@ export default function EditProfilePage() {
             name='whatsapp'
             placeholder='Contoh: 081234567890'
           />
-          <Button variant='filled' type='submit' className='mx-auto w-fit'>
+          <Button
+            variant='filled'
+            type='submit'
+            disabled={mutation.isLoading}
+            className='mx-auto w-fit'
+          >
             Perbarui Profil
           </Button>
         </form>

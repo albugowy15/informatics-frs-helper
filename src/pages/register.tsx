@@ -43,7 +43,7 @@ export default function RegisterPage() {
         Silahkan Register
       </Typography>
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <form onSubmit={methods.handleSubmit(onSubmit)} className='space-y-3'>
           <TextInput label='Username' name='username' />
           <TextInput label='Email' name='email' />
           <TextInput type='password' label='Password' name='password' />

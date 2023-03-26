@@ -75,6 +75,9 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/login',
   },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+  },
 };
 
 export const getServerAuthSession = (ctx: {

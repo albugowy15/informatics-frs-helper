@@ -11,7 +11,7 @@ import {
   BsPersonCircle,
 } from 'react-icons/bs';
 import { CgMenuGridR } from 'react-icons/cg';
-import { FiExternalLink, FiLogOut } from 'react-icons/fi';
+import { FiLogOut } from 'react-icons/fi';
 import { TbArrowsExchange2 } from 'react-icons/tb';
 
 import BasicLink from '@/components/BasicLink';
@@ -142,14 +142,9 @@ const Navbar = () => {
                 />
               </>
             ) : (
-              <>
-                <Button variant='filled' onClick={() => signIn()}>
-                  Login
-                </Button>
-                <LinkButton variant='outlined' href='/register'>
-                  Register
-                </LinkButton>
-              </>
+              <Button variant='filled' onClick={() => signIn()}>
+                Login
+              </Button>
             )}
           </nav>
         </div>
@@ -194,14 +189,10 @@ const Navbar = () => {
             </BasicLink>
           </div>
           <div className=' flex items-center justify-between'>
-            <BasicLink
-              href='https://github.com/albugowy15/informatics-frs-helper'
-              className='flex items-center gap-2 text-sm text-neutral-100 hover:text-primary-500'
-            >
-              Source Code{' '}
-              <FiExternalLink className='text-neutral-400 hover:text-primary-500' />
-            </BasicLink>
-            <Button variant='outlined' onClick={() => setOpenMenu(false)}>
+            <LinkButton href='/report' variant='outlined'>
+              Report
+            </LinkButton>
+            <Button variant='filled' onClick={() => setOpenMenu(false)}>
               Close
             </Button>
           </div>

@@ -8,7 +8,7 @@ type DropdownProps = {
 
 export default function Dropdown({ options, menuButton }: DropdownProps) {
   return (
-    <Menu as='div' className='relative inline-block text-left'>
+    <Menu as='div' className='relative z-50 inline-block text-left'>
       <div>
         <Menu.Button className='inline-flex w-full justify-center text-sm font-medium text-white'>
           {menuButton}
