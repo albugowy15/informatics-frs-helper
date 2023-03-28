@@ -161,30 +161,29 @@ export default function SchedulePage() {
               <Accordion
                 title={
                   <div>
-                    <Typography variant='h3'>{matkul.name}</Typography>
-                    <Typography variant='body1'>
+                    <Typography variant='h5'>{matkul.name}</Typography>
+                    <Typography variant='body2'>
                       Semester {matkul.semester} | {matkul.sks} sks |{' '}
                       {matkul.Class.length} kelas
                     </Typography>
                   </div>
                 }
               >
-                <div className='flex flex-wrap gap-2'>
+                <div className='grid grid-cols-2 gap-1 md:grid-cols-3 lg:grid-cols-4'>
                   {matkul.Class.map((item) => (
                     <div
-                      className='flex flex-col gap-1 rounded-lg border border-neutral-600 bg-secondary-900 p-2.5'
+                      className='flex flex-col gap-1 rounded-lg border border-neutral-600 p-2.5'
                       key={item.id}
                     >
-                      <Typography variant='h6'>
+                      <Typography variant='body2' className='font-medium'>
                         {matkul.name} {item.code}
                       </Typography>
-                      <Typography variant='body2'>
+                      <Typography variant='body3'>
                         {item.Lecturer.fullname}
                       </Typography>
-                      <Typography variant='body2'>
+                      <Typography variant='body3'>
                         {item.day}, {item.Session.session_time} WIB
                       </Typography>
-                      <Typography variant='body2'>Ruang IF-1037</Typography>
                     </div>
                   ))}
                 </div>
