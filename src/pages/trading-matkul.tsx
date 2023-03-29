@@ -11,70 +11,54 @@ import { z } from 'zod';
 
 import { api } from '@/utils/api';
 
-import Accordion from '@/components/Accordion';
 import { Button } from '@/components/Button';
-import { SelectInput, SwitchInput } from '@/components/Form';
+import { SelectInput } from '@/components/Form';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 
-const Semester = ['1', '2', '3', '4', '5', '6'];
-
 const filterSchema = z.object({
-  semester: z.string().nonempty({ message: 'Silahkan pilih semester' }),
+  semester: z.number().optional(),
   matkul: z.string().optional(),
-  showAccelProgram: z.boolean(),
 });
 
 type FilterForm = z.infer<typeof filterSchema>;
 
-export default function TradingMatkulPage() {
-  // Form
+const TradingMatkulPage = () => {
   const methods = useForm<FilterForm>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
-      matkul: '',
-      semester: '',
-      showAccelProgram: false,
+      matkul: undefined,
+      semester: undefined,
     },
   });
-
   const { control, handleSubmit, resetField } = methods;
-
   const semesterField = useWatch({
     control,
     name: 'semester',
   });
-
   const onSubmit: SubmitHandler<FilterForm> = (data) => {
     setSubmitedData(data);
   };
-
-  const [submitedData, setSubmitedData] = useState<FilterForm>();
-
-  // Fetch data
-  const response = api.public.getClass.useQuery(
-    {
-      matkul: submitedData?.matkul,
-      isAksel: submitedData?.showAccelProgram as boolean,
-      semester: parseInt(submitedData?.semester as string),
-    },
-    { enabled: Boolean(submitedData) }
-  );
-
   const listSubject = api.public.getSubject.useQuery(
     {
-      semester: parseInt(semesterField),
+      semester: semesterField as number,
     },
     { enabled: Boolean(semesterField) }
   );
-
   // reset matkul field when semester field changed
   useEffect(() => {
     resetField('matkul');
   }, [resetField, semesterField]);
-
   const [filterModal, setFilterModal] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(false);
+
+  const [submitedData, setSubmitedData] = useState<FilterForm>();
+
+  const tradeMatkulPosts = api.public.getTradeMatkul.useQuery({
+    matkul: submitedData?.matkul,
+    semester: submitedData?.semester,
+  });
 
   return (
     <div className='gap-4 lg:flex'>
@@ -90,7 +74,7 @@ export default function TradingMatkulPage() {
               render={({ field, fieldState: { error } }) => (
                 <SelectInput
                   placeholder='Pilih Semester'
-                  data={Semester}
+                  data={[1, 2, 3, 4, 5, 6, 7, 8]}
                   label='Pilih Semester'
                   error={error}
                   {...field}
@@ -104,7 +88,7 @@ export default function TradingMatkulPage() {
               render={({ field }) => (
                 <SelectInput
                   placeholder='Pilih Matkul'
-                  disabled={semesterField === ''}
+                  disabled={semesterField === undefined}
                   data={listSubject.data}
                   label='Pilih Matkul'
                   helperText='Silahkan pilih semester dulu untuk menampilkan opsi'
@@ -112,82 +96,103 @@ export default function TradingMatkulPage() {
                 />
               )}
             />
-            <Controller
-              name='showAccelProgram'
-              control={control}
-              render={({ field }) => (
-                <SwitchInput label='Tampilkan Matkul Akselerasi' {...field} />
-              )}
-            />
             <Button variant='tonal' className='mt-5 w-fit' type='submit'>
-              Tampilkan Jadwal
+              Tampilkan Trading Matkul
             </Button>
           </form>
         </FormProvider>
       </aside>
-      {submitedData != undefined ? (
-        <>
-          {response.isLoading && (
-            <div className='flex h-screen w-full items-center justify-center'>
-              <Loader />
-            </div>
-          )}
-          {response.isSuccess && response.data.length === 0 && (
-            <Typography
-              variant='h3'
-              className='w-full py-5 text-center text-neutral-600'
-            >
-              Tidak ada data yang sesuai dengan filter
-            </Typography>
-          )}
-        </>
-      ) : (
+
+      {tradeMatkulPosts.isLoading && (
+        <div className='flex h-screen w-full items-center justify-center'>
+          <Loader />
+        </div>
+      )}
+      {tradeMatkulPosts.isSuccess && tradeMatkulPosts.data.length === 0 && (
         <Typography
           variant='h3'
           className='w-full py-5 text-center text-neutral-600'
         >
-          Silahkan tentukan filter terlebih dahulu
+          Tidak ada trading matkul untuk saat ini
         </Typography>
       )}
-      {response.isError && (
+
+      {tradeMatkulPosts.isError && (
         <Typography variant='h3' className='text-center'>
           Terjadi kesalahan saat memuat data
         </Typography>
       )}
-      {response.isSuccess && (
-        <main className='flex w-full flex-col gap-3 lg:px-3'>
-          {response.data.map((matkul) => (
+      {tradeMatkulPosts.isSuccess && (
+        <main className='grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3'>
+          {tradeMatkulPosts.data.map((post) => (
             <>
-              <Accordion
-                title={
-                  <div>
-                    <Typography variant='h5'>{matkul.name}</Typography>
-                    <Typography variant='body2'>
-                      Semester {matkul.semester} | {matkul.sks} sks |{' '}
-                      {matkul.Class.length} kelas
-                    </Typography>
-                  </div>
-                }
+              <div
+                key={post.id}
+                className='rounded-lg border border-neutral-600 p-3'
               >
-                <div className='grid grid-cols-2 gap-1 md:grid-cols-3 lg:grid-cols-4'>
-                  {matkul.Class.map((item) => (
-                    <div
-                      className='flex flex-col gap-1 rounded-lg border border-neutral-600 p-2.5'
-                      key={item.id}
-                    >
-                      <Typography variant='body2' className='font-medium'>
-                        {matkul.name} {item.code}
-                      </Typography>
-                      <Typography variant='body3'>
-                        {item.Lecturer.fullname}
-                      </Typography>
-                      <Typography variant='body3'>
-                        {item.day}, {item.Session.session_time} WIB
-                      </Typography>
-                    </div>
-                  ))}
+                <Typography variant='body1' className='font-medium'>
+                  {post.User?.fullname}
+                </Typography>
+                <Typography variant='body2'>{post.User?.username}</Typography>
+                <div className='py-1' />
+                <Typography variant='body1'>
+                  <span className='font-medium text-error-500'>Want</span> :{' '}
+                  {post.searchMatkul.Matkul.name} {post.searchMatkul.code}
+                </Typography>
+                <Typography variant='body1'>
+                  <span className='font-medium text-secondary-500'>Have</span> :{' '}
+                  {post.hasMatkul.Matkul.name} {post.hasMatkul.code}
+                </Typography>
+                <Typography variant='body2' className='py-3'>
+                  {post.description}
+                </Typography>
+                <Typography variant='body1' className='font-medium'>
+                  Kontak
+                </Typography>
+                <div className='flex items-center gap-4'>
+                  <Typography variant='body2'>
+                    WA : {post.User?.whatsapp ? post.User.whatsapp : '-'}
+                  </Typography>
+                  <Typography variant='body2'>
+                    Line : {post.User?.idLine ? post.User.idLine : '-'}
+                  </Typography>
                 </div>
-              </Accordion>
+                <div className='py-3' />
+                <div className='flex justify-end'>
+                  <Button
+                    variant='filled'
+                    onClick={() => setConfirmModal(true)}
+                  >
+                    Terima
+                  </Button>
+                </div>
+              </div>
+              <Modal
+                title='Konfirmasi Trade Matkul'
+                isOpen={confirmModal}
+                setIsOpen={setConfirmModal}
+              >
+                <Typography variant='body1' className='py-2'>
+                  Silahkan menghubungi{' '}
+                  <span className='font-bold'>{post.User?.fullname}</span>{' '}
+                  melalui kontak dibawah berikut :
+                </Typography>
+                <Typography variant='body1'>
+                  WA : {post.User?.whatsapp ? post.User.whatsapp : '-'}
+                </Typography>
+                <Typography variant='body1'>
+                  Line : {post.User?.idLine ? post.User.idLine : '-'}
+                </Typography>
+
+                <div className='flex justify-end'>
+                  <Button
+                    variant='outlined'
+                    onClick={() => setConfirmModal(false)}
+                  >
+                    Close
+                  </Button>
+                </div>
+              </Modal>
             </>
           ))}
         </main>
@@ -195,7 +200,7 @@ export default function TradingMatkulPage() {
 
       <Button
         variant='filled'
-        className='fixed bottom-0 left-0 right-0 mx-auto mb-7 lg:hidden'
+        className='fixed bottom-0 left-0 right-0 mx-auto mb-7 w-fit lg:hidden'
         onClick={() => setFilterModal(true)}
       >
         Filter
@@ -217,7 +222,7 @@ export default function TradingMatkulPage() {
                 render={({ field, fieldState: { error } }) => (
                   <SelectInput
                     placeholder='Pilih Semester'
-                    data={Semester}
+                    data={[1, 2, 3, 4, 5, 6, 7, 8]}
                     label='Pilih Semester'
                     error={error}
                     {...field}
@@ -231,7 +236,7 @@ export default function TradingMatkulPage() {
                 render={({ field }) => (
                   <SelectInput
                     placeholder='Pilih Matkul'
-                    disabled={semesterField === ''}
+                    disabled={semesterField === undefined}
                     data={listSubject.data}
                     label='Pilih Matkul'
                     helperText='Silahkan pilih semester dulu untuk menampilkan opsi'
@@ -239,13 +244,7 @@ export default function TradingMatkulPage() {
                   />
                 )}
               />
-              <Controller
-                name='showAccelProgram'
-                control={control}
-                render={({ field }) => (
-                  <SwitchInput label='Tampilkan Matkul Akselerasi' {...field} />
-                )}
-              />
+
               <div className='flex items-center justify-end gap-1'>
                 <Button
                   variant='text'
@@ -269,4 +268,6 @@ export default function TradingMatkulPage() {
       </Modal>
     </div>
   );
-}
+};
+
+export default TradingMatkulPage;

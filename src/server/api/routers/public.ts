@@ -67,4 +67,60 @@ export const publicRouter = createTRPCRouter({
       (await listSubject).unshift('Semua');
       return listSubject;
     }),
+  getTradeMatkul: publicProcedure
+    .input(
+      z.object({
+        semester: z.number().min(1).max(8).optional(),
+        matkul: z.string().optional(),
+      })
+    )
+    .query(({ input }) => {
+      const tradeMatkulPosts = prisma.tradeMatkul.findMany({
+        include: {
+          hasMatkul: {
+            select: {
+              code: true,
+              Matkul: {
+                select: {
+                  name: true,
+                  semester: true,
+                },
+              },
+            },
+          },
+          searchMatkul: {
+            select: {
+              code: true,
+              Matkul: {
+                select: {
+                  name: true,
+                  semester: true,
+                },
+              },
+            },
+          },
+          User: {
+            select: {
+              username: true,
+              fullname: true,
+              idLine: true,
+              whatsapp: true,
+            },
+          },
+        },
+        where: {
+          hasMatkul: {
+            Matkul: {
+              semester: input.semester ?? undefined,
+              name:
+                input.matkul === '' || input.matkul === 'Semua'
+                  ? undefined
+                  : input.matkul,
+            },
+          },
+        },
+      });
+
+      return tradeMatkulPosts;
+    }),
 });

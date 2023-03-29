@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { getSession, GetSessionParams, signIn } from 'next-auth/react';
+import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast, Toaster } from 'react-hot-toast';
 import { z } from 'zod';
@@ -21,22 +22,24 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
   const { handleSubmit } = methods;
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
+    setButtonDisabled(true);
     toast.loading('Silahkan tunggu');
     signIn('credentials', {
       username: data.username,
       password: data.password,
       redirect: false,
     }).then((res) => {
-      if (res) {
-        if (res.ok) {
-          toast.remove();
-          toast.success('Login berhasil');
-          window.location.replace('/');
-        } else {
-          toast.remove();
-          toast.error('Username atau password salah');
-        }
+      if (res?.ok) {
+        toast.remove();
+        toast.success('Login berhasil');
+        setButtonDisabled(false);
+        window.location.replace('/');
+      } else {
+        toast.remove();
+        toast.error('Username atau password salah');
+        setButtonDisabled(false);
       }
     });
   };
@@ -60,6 +63,7 @@ export default function LoginPage() {
             className='flex w-full justify-center'
             type='submit'
             variant='filled'
+            disabled={buttonDisabled}
           >
             Login
           </Button>

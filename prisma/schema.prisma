@@ -48,18 +48,20 @@ model Matkul {
 }
 
 model Class {
-  id         String   @id @default(cuid())
-  Matkul     Matkul   @relation(fields: [matkulId], references: [id])
-  matkulId   String
-  Lecturer   Lecturer @relation(fields: [lecturerId], references: [id])
-  lecturerId String
-  day        String
-  code       String
-  isAksel    Boolean
-  taken      Int
-  Session    Session  @relation(fields: [sessionId], references: [id])
-  sessionId  Int
-  Plan       Plan[]
+  id           String        @id @default(cuid())
+  Matkul       Matkul        @relation(fields: [matkulId], references: [id])
+  matkulId     String
+  Lecturer     Lecturer      @relation(fields: [lecturerId], references: [id])
+  lecturerId   String
+  day          String
+  code         String
+  isAksel      Boolean
+  taken        Int
+  Session      Session       @relation(fields: [sessionId], references: [id])
+  sessionId    Int
+  Plan         Plan[]
+  searchMatkul TradeMatkul[] @relation("searchMatkul")
+  hasMatkul    TradeMatkul[] @relation("hasMatkul")
 
   @@index([sessionId])
   @@index([lecturerId])
@@ -80,12 +82,17 @@ model Lecturer {
 }
 
 model TradeMatkul {
-  id           String @id @default(cuid())
-  searchMatkul String
-  hasMatkul    String
-  description  String
-  User         User?  @relation(fields: [userId], references: [id])
-  userId       String
+  id             String  @id @default(cuid())
+  searchMatkul   Class   @relation("searchMatkul", fields: [searchMatkulId], references: [id])
+  searchMatkulId String
+  hasMatkul      Class   @relation("hasMatkul", fields: [hasMatkulId], references: [id])
+  hasMatkulId    String
+  description    String
+  User           User?   @relation(fields: [userId], references: [id])
+  userId         String
+  closed         Boolean
 
   @@index([userId])
+  @@index([searchMatkulId])
+  @@index([hasMatkulId])
 }

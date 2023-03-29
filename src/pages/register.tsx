@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import { getSession, GetSessionParams } from 'next-auth/react';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast, Toaster } from 'react-hot-toast';
 import { z } from 'zod';
@@ -29,12 +30,19 @@ export default function RegisterPage() {
   const methods = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const onSubmit = async (data: RegisterForm) => {
-    toast.promise(axios.post('/api/register', data), {
-      loading: 'Silahkan tunggu',
-      success: 'Akun berhasil dibuat, silahkan login',
-      error: (err) => err.response.data.message,
-    });
+    setButtonDisabled(true);
+    axios
+      .post('/api/register', data)
+      .then(() => {
+        toast.success('Akun berhasil dibuat, silahkan login');
+        setButtonDisabled(false);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+        setButtonDisabled(false);
+      });
   };
 
   return (
@@ -51,6 +59,7 @@ export default function RegisterPage() {
             className='flex w-full justify-center'
             type='submit'
             variant='filled'
+            disabled={buttonDisabled}
           >
             Register
           </Button>
