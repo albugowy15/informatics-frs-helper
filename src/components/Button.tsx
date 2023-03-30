@@ -38,6 +38,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           'inline-flex items-center rounded-3xl font-medium hover:shadow-md disabled:cursor-not-allowed disabled:text-neutral-500 disabled:shadow-none',
           'focus:outline-none focus-visible:ring focus-visible:ring-primary-500',
           'transition-colors duration-75',
+          className,
           [
             size === 'sm' && 'px-2 py-1 text-xs',
             size === 'md' && 'px-3 py-2 text-sm',
@@ -54,8 +55,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'bg-slate-100 text-primary-400 shadow-md shadow-slate-400 hover:bg-slate-200 disabled:bg-neutral-900 disabled:shadow-none',
             variant === 'tonal' &&
               'bg-secondary-900 hover:bg-secondary-800 disabled:bg-neutral-900',
-          ],
-          className
+          ]
         )}
         {...rest}
       >

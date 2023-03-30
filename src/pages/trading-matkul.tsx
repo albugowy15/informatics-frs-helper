@@ -7,6 +7,7 @@ import {
   useForm,
   useWatch,
 } from 'react-hook-form';
+import { BiFilterAlt } from 'react-icons/bi';
 import { z } from 'zod';
 
 import { api } from '@/utils/api';
@@ -18,7 +19,7 @@ import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 
 const filterSchema = z.object({
-  semester: z.number().optional(),
+  semester: z.string().optional(),
   matkul: z.string().optional(),
 });
 
@@ -32,7 +33,7 @@ const TradingMatkulPage = () => {
       semester: undefined,
     },
   });
-  const { control, handleSubmit, resetField } = methods;
+  const { control, handleSubmit, resetField, register } = methods;
   const semesterField = useWatch({
     control,
     name: 'semester',
@@ -42,7 +43,8 @@ const TradingMatkulPage = () => {
   };
   const listSubject = api.public.getSubject.useQuery(
     {
-      semester: semesterField as number,
+      semester: parseInt(semesterField as string),
+      withAll: true,
     },
     { enabled: Boolean(semesterField) }
   );
@@ -57,7 +59,9 @@ const TradingMatkulPage = () => {
 
   const tradeMatkulPosts = api.public.getTradeMatkul.useQuery({
     matkul: submitedData?.matkul,
-    semester: submitedData?.semester,
+    semester: submitedData?.semester
+      ? parseInt(submitedData.semester)
+      : undefined,
   });
 
   return (
@@ -74,7 +78,7 @@ const TradingMatkulPage = () => {
               render={({ field, fieldState: { error } }) => (
                 <SelectInput
                   placeholder='Pilih Semester'
-                  data={[1, 2, 3, 4, 5, 6, 7, 8]}
+                  data={['1', '2', '3', '4', '5', '6', '7', '8']}
                   label='Pilih Semester'
                   error={error}
                   {...field}
@@ -202,6 +206,7 @@ const TradingMatkulPage = () => {
         variant='filled'
         className='fixed bottom-0 left-0 right-0 mx-auto mb-7 w-fit lg:hidden'
         onClick={() => setFilterModal(true)}
+        icon={BiFilterAlt}
       >
         Filter
       </Button>
@@ -216,34 +221,41 @@ const TradingMatkulPage = () => {
               onSubmit={handleSubmit(onSubmit)}
               className='flex flex-col gap-4'
             >
-              <Controller
-                name='semester'
-                control={control}
-                render={({ field, fieldState: { error } }) => (
-                  <SelectInput
-                    placeholder='Pilih Semester'
-                    data={[1, 2, 3, 4, 5, 6, 7, 8]}
-                    label='Pilih Semester'
-                    error={error}
-                    {...field}
-                  />
-                )}
-              />
+              <div>
+                <label className=' text-sm font-medium'>Pilih Semester</label>
+                <select
+                  className='mt-1 block w-full rounded-lg border border-neutral-600 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-0'
+                  placeholder='Semester'
+                  {...register('semester')}
+                >
+                  <option value='' disabled>
+                    Semester
+                  </option>
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
+                    <option value={item} key={index}>
+                      Semester {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-              <Controller
-                name='matkul'
-                control={control}
-                render={({ field }) => (
-                  <SelectInput
-                    placeholder='Pilih Matkul'
-                    disabled={semesterField === undefined}
-                    data={listSubject.data}
-                    label='Pilih Matkul'
-                    helperText='Silahkan pilih semester dulu untuk menampilkan opsi'
-                    {...field}
-                  />
-                )}
-              />
+              <div>
+                <label className='text-sm font-medium'>Pilih Matkul</label>
+                <select
+                  className='mt-1 block w-full rounded-lg border border-neutral-600 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-0'
+                  placeholder='Matkul'
+                  {...register('matkul')}
+                >
+                  <option value='' disabled>
+                    Matkul
+                  </option>
+                  {listSubject.data?.map((item, index) => (
+                    <option value={item} key={index}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
               <div className='flex items-center justify-end gap-1'>
                 <Button

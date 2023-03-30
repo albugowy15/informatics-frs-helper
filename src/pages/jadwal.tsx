@@ -7,6 +7,7 @@ import {
   useForm,
   useWatch,
 } from 'react-hook-form';
+import { BiFilterAlt } from 'react-icons/bi';
 import { z } from 'zod';
 
 import { api } from '@/utils/api';
@@ -39,7 +40,7 @@ export default function SchedulePage() {
     },
   });
 
-  const { control, handleSubmit, resetField } = methods;
+  const { control, handleSubmit, resetField, register } = methods;
 
   const semesterField = useWatch({
     control,
@@ -65,6 +66,7 @@ export default function SchedulePage() {
   const listSubject = api.public.getSubject.useQuery(
     {
       semester: parseInt(semesterField),
+      withAll: true,
     },
     { enabled: Boolean(semesterField) }
   );
@@ -195,8 +197,9 @@ export default function SchedulePage() {
 
       <Button
         variant='filled'
-        className='fixed bottom-0 left-0 right-0 mx-auto mb-7 lg:hidden'
+        className='fixed bottom-0 left-0 right-0 mx-auto mb-7 w-fit lg:hidden'
         onClick={() => setFilterModal(true)}
+        icon={BiFilterAlt}
       >
         Filter
       </Button>
@@ -211,34 +214,42 @@ export default function SchedulePage() {
               onSubmit={handleSubmit(onSubmit)}
               className='flex flex-col gap-4'
             >
-              <Controller
-                name='semester'
-                control={control}
-                render={({ field, fieldState: { error } }) => (
-                  <SelectInput
-                    placeholder='Pilih Semester'
-                    data={Semester}
-                    label='Pilih Semester'
-                    error={error}
-                    {...field}
-                  />
-                )}
-              />
+              <div>
+                <label className=' text-sm font-medium'>Pilih Semester</label>
+                <select
+                  className='mt-1 block w-full rounded-lg border border-neutral-600 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-0'
+                  placeholder='Semester'
+                  {...register('semester')}
+                >
+                  <option value='' disabled>
+                    Semester
+                  </option>
+                  {Semester.map((item, index) => (
+                    <option value={item} key={index}>
+                      Semester {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-              <Controller
-                name='matkul'
-                control={control}
-                render={({ field }) => (
-                  <SelectInput
-                    placeholder='Pilih Matkul'
-                    disabled={semesterField === ''}
-                    data={listSubject.data}
-                    label='Pilih Matkul'
-                    helperText='Silahkan pilih semester dulu untuk menampilkan opsi'
-                    {...field}
-                  />
-                )}
-              />
+              <div>
+                <label className='text-sm font-medium'>Pilih Matkul</label>
+                <select
+                  className='mt-1 block w-full rounded-lg border border-neutral-600 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-0'
+                  placeholder='Matkul'
+                  {...register('matkul')}
+                >
+                  <option value='' disabled>
+                    Matkul
+                  </option>
+                  {listSubject.data?.map((item, index) => (
+                    <option value={item} key={index}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <Controller
                 name='showAccelProgram'
                 control={control}
