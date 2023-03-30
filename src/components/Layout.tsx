@@ -117,6 +117,28 @@ const Navbar = () => {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
+                          <BasicLink
+                            className={clsx(
+                              'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
+                              [
+                                active
+                                  ? 'bg-primary-500 text-neutral-50'
+                                  : 'text-neutral-200',
+                              ]
+                            )}
+                            href={'/my-trading-matkul/' + session.user.id}
+                          >
+                            <BsNewspaper
+                              className={clsx([
+                                active ? 'text-white' : 'text-primary-500',
+                              ])}
+                            />
+                            myTradeMatkul
+                          </BasicLink>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active }) => (
                           <button
                             onClick={() => signOut()}
                             className={clsx(

@@ -48,6 +48,7 @@ export const publicRouter = createTRPCRouter({
     .input(
       z.object({
         semester: z.number().min(1).max(6),
+        withAll: z.boolean().optional(),
       })
     )
     .query(async ({ input }) => {
@@ -64,7 +65,9 @@ export const publicRouter = createTRPCRouter({
           return res.map((item) => item.name);
         });
 
-      (await listSubject).unshift('Semua');
+      if (input.withAll == true) {
+        (await listSubject).unshift('Semua');
+      }
       return listSubject;
     }),
   getTradeMatkul: publicProcedure

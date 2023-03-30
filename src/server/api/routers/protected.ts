@@ -115,4 +115,137 @@ export const protectedRouter = createTRPCRouter({
       });
       return plans;
     }),
+  createTradeMatkul: protectedProcedure
+    .input(
+      z.object({
+        description: z.string().max(150),
+        userId: z.string(),
+        hasClass: z.object({
+          name: z.string(),
+          code: z.string(),
+        }),
+        searchClass: z.object({
+          name: z.string(),
+          code: z.string(),
+        }),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const hasClassId = await prisma.class.findFirst({
+        select: {
+          id: true,
+        },
+        where: {
+          code: input.hasClass.code,
+          AND: {
+            Matkul: {
+              name: input.hasClass.name,
+            },
+          },
+        },
+      });
+      const searchClassId = await prisma.class.findFirst({
+        select: {
+          id: true,
+        },
+        where: {
+          code: input.searchClass.code,
+          AND: {
+            Matkul: {
+              name: input.searchClass.name,
+            },
+          },
+        },
+      });
+      if (hasClassId && searchClassId) {
+        const result = prisma.tradeMatkul.create({
+          data: {
+            description: input.description,
+            userId: input.userId,
+            hasMatkulId: hasClassId?.id,
+            searchMatkulId: searchClassId?.id,
+            closed: false,
+          },
+        });
+        return result;
+      }
+      throw new Error('Class not found');
+    }),
+  getAllMyTradeMatkul: protectedProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      })
+    )
+    .query(({ input }) => {
+      const tradeMatkul = prisma.tradeMatkul.findMany({
+        select: {
+          id: true,
+          description: true,
+          closed: true,
+          hasMatkul: {
+            select: {
+              code: true,
+              Matkul: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          searchMatkul: {
+            select: {
+              code: true,
+              Matkul: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+        where: {
+          userId: input.userId,
+        },
+      });
+
+      return tradeMatkul;
+    }),
+  deleteMyTradeMatkul: protectedProcedure
+    .input(
+      z.object({
+        tradeMatkulId: z.string(),
+      })
+    )
+    .mutation(({ input }) => {
+      const result = prisma.tradeMatkul.delete({
+        where: {
+          id: input.tradeMatkulId,
+        },
+      });
+      return result;
+    }),
+  getClassByMatkul: protectedProcedure
+    .input(
+      z.object({
+        matkulName: z.string(),
+      })
+    )
+    .query(({ input }) => {
+      const classes = prisma.class
+        .findMany({
+          select: {
+            code: true,
+          },
+          where: {
+            Matkul: {
+              name: {
+                equals: input.matkulName,
+              },
+            },
+          },
+        })
+        .then((res) => res.map((item) => item.code));
+      return classes;
+    }),
 });
