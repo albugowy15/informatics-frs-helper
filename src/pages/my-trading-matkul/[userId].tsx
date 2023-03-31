@@ -57,34 +57,42 @@ export default function MyTradeMatkulPage() {
                 <>
                   <div
                     key={post.id}
-                    className='flex flex-col rounded-md border border-neutral-600 p-3 hover:cursor-pointer hover:bg-neutral-900'
-                    onClick={() =>
-                      router.push('/my-trading-matkul/edit/' + post.id)
-                    }
+                    className='flex flex-col justify-between rounded-md border border-neutral-600 p-3'
                   >
-                    <Typography variant='body1'>
-                      <span className='font-medium text-error-500'>Want</span> :{' '}
-                      {post.searchMatkul.Matkul.name} {post.searchMatkul.code}
-                    </Typography>
-                    <Typography variant='body1'>
-                      <span className='font-medium text-secondary-500'>
-                        Have
-                      </span>{' '}
-                      : {post.hasMatkul.Matkul.name} {post.hasMatkul.code}
-                    </Typography>
-                    <Typography variant='body2' className='py-3'>
-                      {post.description}
-                    </Typography>
-
-                    <Button
-                      variant='tonal'
-                      icon={AiFillDelete}
-                      disabled={deleteTradeMatkul.isLoading}
-                      className='self-end'
-                      onClick={() => setConfirmModal(true)}
-                    >
-                      Hapus
-                    </Button>
+                    <div>
+                      <Typography variant='body1'>
+                        <span className='font-medium text-error-500'>Want</span>{' '}
+                        : {post.searchMatkul.Matkul.name}{' '}
+                        {post.searchMatkul.code}
+                      </Typography>
+                      <Typography variant='body1'>
+                        <span className='font-medium text-secondary-500'>
+                          Have
+                        </span>{' '}
+                        : {post.hasMatkul.Matkul.name} {post.hasMatkul.code}
+                      </Typography>
+                      <Typography variant='body2' className='py-3'>
+                        {post.description}
+                      </Typography>
+                    </div>
+                    <div className='flex justify-end gap-3'>
+                      <LinkButton
+                        href={'/my-trading-matkul/edit/' + post.id}
+                        variant='filled'
+                        className={`${deleteTradeMatkul.isLoading} ? 'cursor-not-allowed' : ''`}
+                        icon={MdCreate}
+                      >
+                        Edit
+                      </LinkButton>
+                      <Button
+                        variant='tonal'
+                        icon={AiFillDelete}
+                        disabled={deleteTradeMatkul.isLoading}
+                        onClick={() => setConfirmModal(true)}
+                      >
+                        Hapus
+                      </Button>
+                    </div>
                   </div>
                   <Modal
                     title='Yakin ingin menghapus trade matkul ini?'

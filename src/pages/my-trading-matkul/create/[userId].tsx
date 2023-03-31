@@ -34,7 +34,8 @@ const createTradeMatkulFormSchema = z.object({
     .max(8),
   description: z
     .string({ required_error: 'Deskripsi tidak boleh kosong' })
-    .max(150, { message: 'Deskripsi tidak boleh lebih dari 150 karakter' }),
+    .max(150, { message: 'Deskripsi tidak boleh lebih dari 150 karakter' })
+    .nonempty({ message: 'Deskripsi tidak boleh kosong' }),
 });
 
 export type CreateTradeMatkulFormSchema = z.infer<
@@ -58,7 +59,12 @@ export default function CreateTradeMatkulPage() {
       searchMatkulSemester: undefined,
     },
   });
-  const { control, register, handleSubmit } = methods;
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
   const postTradeMatkul = api.protected.createTradeMatkul.useMutation();
 
   const onSubmit: SubmitHandler<CreateTradeMatkulFormSchema> = (data) => {
@@ -168,6 +174,11 @@ export default function CreateTradeMatkulPage() {
               rows={3}
               placeholder='Plisss... yang mau nuker dapat pahala'
             />
+            {errors.description && (
+              <Typography variant='label2' className='text-error-500'>
+                {errors.description.message}
+              </Typography>
+            )}
             <div className='py-4' />
             <div className='flex items-center gap-4'>
               <Button
