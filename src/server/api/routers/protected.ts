@@ -248,4 +248,103 @@ export const protectedRouter = createTRPCRouter({
         .then((res) => res.map((item) => item.code));
       return classes;
     }),
+  getTradeMatkul: protectedProcedure
+    .input(
+      z.object({
+        tradeMatkulId: z.string(),
+      })
+    )
+    .query(({ input }) => {
+      const tradeMatkulPost = prisma.tradeMatkul.findUnique({
+        where: {
+          id: input.tradeMatkulId,
+        },
+        select: {
+          id: true,
+          description: true,
+          hasMatkul: {
+            select: {
+              Matkul: {
+                select: {
+                  name: true,
+                  semester: true,
+                },
+              },
+              code: true,
+            },
+          },
+          searchMatkul: {
+            select: {
+              Matkul: {
+                select: {
+                  name: true,
+                  semester: true,
+                },
+              },
+              code: true,
+            },
+          },
+        },
+      });
+
+      return tradeMatkulPost;
+    }),
+  updateTradeMatkul: protectedProcedure
+    .input(
+      z.object({
+        tradeMatkulId: z.string(),
+        description: z.string().max(150),
+        hasClass: z.object({
+          name: z.string(),
+          code: z.string(),
+        }),
+        searchClass: z.object({
+          name: z.string(),
+          code: z.string(),
+        }),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const hasClassId = await prisma.class.findFirst({
+        select: {
+          id: true,
+        },
+        where: {
+          code: input.hasClass.code,
+          AND: {
+            Matkul: {
+              name: input.hasClass.name,
+            },
+          },
+        },
+      });
+      const searchClassId = await prisma.class.findFirst({
+        select: {
+          id: true,
+        },
+        where: {
+          code: input.searchClass.code,
+          AND: {
+            Matkul: {
+              name: input.searchClass.name,
+            },
+          },
+        },
+      });
+      if (hasClassId && searchClassId) {
+        const result = prisma.tradeMatkul.update({
+          data: {
+            description: input.description,
+            hasMatkulId: hasClassId.id,
+            searchMatkulId: searchClassId.id,
+            closed: false,
+          },
+          where: {
+            id: input.tradeMatkulId,
+          },
+        });
+        return result;
+      }
+      throw new Error('Class not found');
+    }),
 });

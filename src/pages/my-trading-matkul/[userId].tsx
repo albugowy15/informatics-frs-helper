@@ -57,7 +57,10 @@ export default function MyTradeMatkulPage() {
                 <>
                   <div
                     key={post.id}
-                    className='flex flex-col rounded-md border border-neutral-600 p-3'
+                    className='flex flex-col rounded-md border border-neutral-600 p-3 hover:cursor-pointer hover:bg-neutral-900'
+                    onClick={() =>
+                      router.push('/my-trading-matkul/edit/' + post.id)
+                    }
                   >
                     <Typography variant='body1'>
                       <span className='font-medium text-error-500'>Want</span> :{' '}

@@ -12,6 +12,11 @@ type HasMatkulProps = {
   hasMatkulSemesterField: number | undefined;
   hasClassList: string[] | undefined;
   hasMatkulField: string | undefined;
+  defaultValue?: {
+    semester: number;
+    matkul: string;
+    class: string;
+  };
 };
 
 const HasMatkulSection = ({
@@ -20,6 +25,7 @@ const HasMatkulSection = ({
   hasMatkulSemesterField,
   hasClassList,
   hasMatkulField,
+  defaultValue,
 }: HasMatkulProps) => {
   const { resetField } = useFormContext();
   useEffect(() => {
@@ -33,6 +39,7 @@ const HasMatkulSection = ({
       <Controller
         name='hasMatkulSemester'
         control={control}
+        defaultValue={defaultValue?.semester}
         render={({ field, fieldState: { error } }) => (
           <SelectInput
             data={[1, 2, 3, 4, 5, 6, 7, 8]}
@@ -46,6 +53,7 @@ const HasMatkulSection = ({
       <Controller
         name='hasMatkul'
         control={control}
+        defaultValue={defaultValue?.matkul}
         render={({ field, fieldState: { error } }) => (
           <SelectInput
             placeholder='Matkul yang dimiliki'
@@ -59,6 +67,7 @@ const HasMatkulSection = ({
       <Controller
         name='hasClass'
         control={control}
+        defaultValue={defaultValue?.class}
         render={({ field, fieldState: { error } }) => (
           <SelectInput
             placeholder='Kelas yang dimiliki'

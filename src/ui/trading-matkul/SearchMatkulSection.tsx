@@ -12,6 +12,11 @@ type SearchMatkulProps = {
   searchMatkulSemesterField: number | undefined;
   searchClassList: string[] | undefined;
   searchMatkulField: string | undefined;
+  defaultValue?: {
+    semester: number;
+    matkul: string;
+    class: string;
+  };
 };
 
 const SearchMatkulSection = ({
@@ -20,6 +25,7 @@ const SearchMatkulSection = ({
   searchMatkulSemesterField,
   searchClassList,
   searchMatkulField,
+  defaultValue,
 }: SearchMatkulProps) => {
   const { resetField } = useFormContext();
 
@@ -35,6 +41,7 @@ const SearchMatkulSection = ({
       <Controller
         name='searchMatkulSemester'
         control={control}
+        defaultValue={defaultValue?.semester}
         render={({ field, fieldState: { error } }) => (
           <SelectInput
             data={[1, 2, 3, 4, 5, 6, 7, 8]}
@@ -48,6 +55,7 @@ const SearchMatkulSection = ({
       <Controller
         name='searchMatkul'
         control={control}
+        defaultValue={defaultValue?.matkul}
         render={({ field, fieldState: { error } }) => (
           <SelectInput
             placeholder='Matkul yang dicari'
@@ -61,6 +69,7 @@ const SearchMatkulSection = ({
       <Controller
         name='searchClass'
         control={control}
+        defaultValue={defaultValue?.class}
         render={({ field, fieldState: { error } }) => (
           <SelectInput
             placeholder='Kelas yang dicari'
