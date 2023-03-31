@@ -55,7 +55,7 @@ export default function LoginPage() {
           <TextInput label='Username' name='username' />
           <TextInput type='password' label='Password' name='password' />
           <Typography variant='label1' className='mb-3 text-primary-500'>
-            <BasicLink href='/reset-password' className=''>
+            <BasicLink href='/forgot-password' className=''>
               Lupa Password?
             </BasicLink>
           </Typography>

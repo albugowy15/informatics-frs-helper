@@ -1,3 +1,5 @@
+import { TRPCError } from '@trpc/server';
+import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 
 import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc';
@@ -52,6 +54,87 @@ export const protectedRouter = createTRPCRouter({
         .then((res) => res.id);
 
       return updatedProfile;
+    }),
+  changePassword: protectedProcedure
+    .input(
+      z.object({
+        old_password: z.string({
+          required_error: 'Password lama tidak boleh kosong',
+        }),
+        new_password: z
+          .string({ required_error: 'Password baru tidak boleh kosong' })
+          .min(8)
+          .max(16),
+        userId: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const oldPassword = await prisma.user.findUnique({
+        select: {
+          password: true,
+        },
+        where: {
+          id: input.userId,
+        },
+      });
+      const hashNewPassword = await bcrypt.hash(input.new_password, 10);
+
+      if (oldPassword) {
+        const match = await bcrypt.compare(
+          input.old_password,
+          oldPassword.password
+        );
+
+        if (match) {
+          const changePassword = await prisma.user.update({
+            select: {
+              id: true,
+            },
+            where: {
+              id: input.userId,
+            },
+            data: {
+              password: hashNewPassword,
+            },
+          });
+
+          return changePassword;
+        }
+
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Password lama salah',
+        });
+      } else {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'User password not found',
+        });
+      }
+    }),
+  forgetPassword: protectedProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        email: z
+          .string({ required_error: 'Email tidak boleh kosong' })
+          .email({ message: 'Email tidak valid' }),
+      })
+    )
+    .mutation(() => {
+      // TODO: send email
+      // 1. Minta user masukin email nya
+      // 2. Cek apakah email nya ada di database
+      // 3. Jika ada, generate token pake jwt, proses nya hampir sama kayak di login
+      // kasih expires 15 menit
+      // 4. Kirim email ke user pake nodemailer
+      // 5. User klik link di email
+      // 6. Cek url nya, apakah tokennya valid atau enggak
+      // 7. Jika valid, redirect ke page reset password, user bisa masukin password baru
+      // 8. Jika tidak valid, redirect ke page error kasih tahu kalau link nya error atau expired
+      // 9. Jika user berhasil reset password, redirect ke page login
+
+      return;
     }),
   createPlan: protectedProcedure
     .input(
