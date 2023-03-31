@@ -5,9 +5,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { prisma } from '@/server/db';
 
+import { env } from '@/env.mjs';
+
 import { APIResponse } from '@/types/api';
 
-const KEY = process.env.NEXTAUTH_SECRET as string;
+const KEY = env.NEXTAUTH_SECRET as string;
 
 export type LoginResponseData = {
   username: string;

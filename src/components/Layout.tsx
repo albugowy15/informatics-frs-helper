@@ -128,7 +128,7 @@ const Navbar = () => {
                             )}
                             href={'/my-trading-matkul/' + session.user.id}
                           >
-                            <BsNewspaper
+                            <TbArrowsExchange2
                               className={clsx([
                                 active ? 'text-white' : 'text-primary-500',
                               ])}

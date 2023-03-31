@@ -1,14 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import {
-  Control,
-  Controller,
   FormProvider,
   SubmitHandler,
   useForm,
-  useFormContext,
   useWatch,
 } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
@@ -18,8 +14,10 @@ import { z } from 'zod';
 import { api } from '@/utils/api';
 
 import { Button } from '@/components/Button';
-import { SelectInput } from '@/components/Form';
 import Typography from '@/components/Typography';
+
+import HasMatkulSection from '@/ui/trading-matkul/HasMatkulSection';
+import SearchMatkulSection from '@/ui/trading-matkul/SearchMatkulSection';
 
 const createTradeMatkulFormSchema = z.object({
   hasMatkul: z.string({ required_error: 'Pilih matkul yang kamu miliki' }),
@@ -39,143 +37,9 @@ const createTradeMatkulFormSchema = z.object({
     .max(150, { message: 'Deskripsi tidak boleh lebih dari 150 karakter' }),
 });
 
-type CreateTradeMatkulFormSchema = z.infer<typeof createTradeMatkulFormSchema>;
-
-type HasMatkulProps = {
-  control: Control<CreateTradeMatkulFormSchema, unknown>;
-  hasMatkulList: string[] | undefined;
-  hasMatkulSemesterField: number | undefined;
-  hasClassList: string[] | undefined;
-  hasMatkulField: string | undefined;
-};
-
-const HasMatkul = ({
-  control,
-  hasMatkulList,
-  hasMatkulSemesterField,
-  hasClassList,
-  hasMatkulField,
-}: HasMatkulProps) => {
-  const { resetField } = useFormContext();
-  useEffect(() => {
-    resetField('hasMatkul');
-  }, [hasMatkulSemesterField]);
-  useEffect(() => {
-    resetField('hasClass');
-  }, [hasMatkulField]);
-  return (
-    <div className='flex flex-col items-center gap-4 lg:flex-row'>
-      <Controller
-        name='hasMatkulSemester'
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <SelectInput
-            data={[1, 2, 3, 4, 5, 6, 7, 8]}
-            placeholder='Semester'
-            label='Semester'
-            error={error}
-            {...field}
-          />
-        )}
-      />
-      <Controller
-        name='hasMatkul'
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <SelectInput
-            placeholder='Matkul yang dimiliki'
-            label='Pilih matkul yang dimiliki'
-            data={hasMatkulList}
-            error={error}
-            {...field}
-          />
-        )}
-      />
-      <Controller
-        name='hasClass'
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <SelectInput
-            placeholder='Kelas yang dimiliki'
-            label='Pilih kelas yang dimiliki'
-            data={hasClassList}
-            error={error}
-            {...field}
-          />
-        )}
-      />
-    </div>
-  );
-};
-
-type SearchMatkulProps = {
-  control: Control<CreateTradeMatkulFormSchema, unknown>;
-  searchMatkulList: string[] | undefined;
-  searchMatkulSemesterField: number | undefined;
-  searchClassList: string[] | undefined;
-  searchMatkulField: string | undefined;
-};
-
-const SearchMatkul = ({
-  control,
-  searchMatkulList,
-  searchMatkulSemesterField,
-  searchClassList,
-  searchMatkulField,
-}: SearchMatkulProps) => {
-  const { resetField } = useFormContext();
-
-  useEffect(() => {
-    resetField('searchMatkul');
-  }, [searchMatkulSemesterField]);
-
-  useEffect(() => {
-    resetField('searchClass');
-  }, [searchMatkulField]);
-  return (
-    <div className='flex flex-col items-center gap-4 lg:flex-row'>
-      <Controller
-        name='searchMatkulSemester'
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <SelectInput
-            data={[1, 2, 3, 4, 5, 6, 7, 8]}
-            placeholder='Semester'
-            label='Semester'
-            error={error}
-            {...field}
-          />
-        )}
-      />
-      <Controller
-        name='searchMatkul'
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <SelectInput
-            placeholder='Matkul yang dicari'
-            label='Pilih matkul yang dicari'
-            data={searchMatkulList}
-            error={error}
-            {...field}
-          />
-        )}
-      />
-      <Controller
-        name='searchClass'
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <SelectInput
-            placeholder='Kelas yang dicari'
-            label='Pilih kelas yang dicari'
-            data={searchClassList}
-            error={error}
-            {...field}
-          />
-        )}
-      />
-    </div>
-  );
-};
+export type CreateTradeMatkulFormSchema = z.infer<
+  typeof createTradeMatkulFormSchema
+>;
 
 export default function CreateTradeMatkulPage() {
   const router = useRouter();
@@ -275,7 +139,7 @@ export default function CreateTradeMatkulPage() {
               Detail Trade Matkul
             </Typography>
             <Typography variant='h5'>Matkul yang dimiliki</Typography>
-            <HasMatkul
+            <HasMatkulSection
               control={control}
               hasClassList={hasClassList.data}
               hasMatkulList={hasMatkulList.data}
@@ -284,7 +148,7 @@ export default function CreateTradeMatkulPage() {
             />
             <div className='py-2' />
             <Typography variant='h5'>Matkul yang dicari</Typography>
-            <SearchMatkul
+            <SearchMatkulSection
               control={control}
               searchClassList={searchClassList.data}
               searchMatkulList={searchMatkulList.data}

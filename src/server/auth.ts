@@ -4,29 +4,12 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 
 import { getBaseUrl } from '@/utils/api';
 
+import { env } from '@/env.mjs';
 import { LoginResponseData } from '@/pages/api/login';
 
 import { APIResponse } from '@/types/api';
 
-// declare module 'next-auth' {
-//   interface Session extends DefaultSession {
-//     user: {
-//       id: string;
-//       username: string;
-//       email: string;
-//     } & DefaultSession['user'];
-//   }
-// }
-
 export const authOptions: NextAuthOptions = {
-  // callbacks: {
-  //   session({ session, user }) {
-  //     if (session.user) {
-  //       session.user.id = user.id;
-  //     }
-  //     return session;
-  //   },
-  // },
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -68,7 +51,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
   },
@@ -76,7 +59,7 @@ export const authOptions: NextAuthOptions = {
     signIn: '/login',
   },
   jwt: {
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: env.NEXTAUTH_SECRET,
   },
 };
 
