@@ -112,30 +112,7 @@ export const protectedRouter = createTRPCRouter({
         });
       }
     }),
-  forgetPassword: protectedProcedure
-    .input(
-      z.object({
-        userId: z.string(),
-        email: z
-          .string({ required_error: 'Email tidak boleh kosong' })
-          .email({ message: 'Email tidak valid' }),
-      })
-    )
-    .mutation(() => {
-      // TODO: send email
-      // 1. Minta user masukin email nya
-      // 2. Cek apakah email nya ada di database
-      // 3. Jika ada, generate token pake jwt, proses nya hampir sama kayak di login
-      // kasih expires 15 menit
-      // 4. Kirim email ke user pake nodemailer
-      // 5. User klik link di email
-      // 6. Cek url nya, apakah tokennya valid atau enggak
-      // 7. Jika valid, redirect ke page reset password, user bisa masukin password baru
-      // 8. Jika tidak valid, redirect ke page error kasih tahu kalau link nya error atau expired
-      // 9. Jika user berhasil reset password, redirect ke page login
 
-      return;
-    }),
   createPlan: protectedProcedure
     .input(
       z.object({

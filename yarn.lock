@@ -279,11 +279,6 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@next-auth/prisma-adapter@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@next-auth/prisma-adapter/-/prisma-adapter-1.0.5.tgz#41a2fc7b44907054b81d456b426164e58becf4ed"
-  integrity sha512-VqMS11IxPXrPGXw6Oul6jcyS/n8GLOWzRMrPr3EMdtD6eOalM6zz05j08PcNiis8QzkfuYnCv49OvufTuaEwYQ==
-
 "@next/env@13.2.4":
   version "13.2.4"
   resolved "https://registry.npmjs.org/@next/env/-/env-13.2.4.tgz"
@@ -2831,11 +2826,6 @@ node-releases@^2.0.8:
   version "2.0.10"
   resolved "https://registry.npmjs.org/node-releases/-/node-releases-2.0.10.tgz"
   integrity sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w==
-
-nodemailer@^6.9.1:
-  version "6.9.1"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.1.tgz#8249d928a43ed85fec17b13d2870c8f758a126ed"
-  integrity sha512-qHw7dOiU5UKNnQpXktdgQ1d3OFgRAekuvbJLcdG5dnEo/GtcTHRYM7+UfJARdOFU9WUQO8OiIamgWPmiSFHYAA==
 
 normalize-package-data@^2.5.0:
   version "2.5.0"
