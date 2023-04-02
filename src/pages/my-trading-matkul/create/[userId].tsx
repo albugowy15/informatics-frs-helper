@@ -79,7 +79,7 @@ export default function CreateTradeMatkulPage() {
       <FormProvider {...methods}>
         <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
           {classOptions.data && (
-            <div className='flex justify-between gap-3'>
+            <div className='flex flex-col gap-3 md:flex-row md:justify-between'>
               <HasMatkulSection data={classOptions.data} />
 
               <SearchMatkulSection data={classOptions.data} />

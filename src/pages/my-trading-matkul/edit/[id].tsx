@@ -101,7 +101,7 @@ export default function CreateTradeMatkulPage() {
             tradeMatkulPost.data &&
             classOptions.data && (
               <>
-                <div className='flex justify-between gap-3'>
+                <div className='flex flex-col gap-3 md:flex-row md:justify-between'>
                   <HasMatkulSection
                     data={classOptions.data}
                     defaultValue={{
