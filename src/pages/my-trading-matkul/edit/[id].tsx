@@ -48,13 +48,13 @@ export default function CreateTradeMatkulPage() {
   const router = useRouter();
   const { data: session } = useSession();
   const { id } = router.query;
-  const userProfile = api.protected.getUserProfile.useQuery(
+  const userProfile = api.user.getUserProfile.useQuery(
     {
       id: session?.user.id as string,
     },
     { enabled: Boolean(session?.user.id) }
   );
-  const tradeMatkulPost = api.protected.getTradeMatkul.useQuery(
+  const tradeMatkulPost = api.tradeMatkul.getTradeMatkul.useQuery(
     {
       tradeMatkulId: id as string,
     },
@@ -71,7 +71,7 @@ export default function CreateTradeMatkulPage() {
     handleSubmit,
     formState: { errors },
   } = methods;
-  const updateTradeMatkul = api.protected.updateTradeMatkul.useMutation();
+  const updateTradeMatkul = api.tradeMatkul.updateTradeMatkul.useMutation();
 
   const onSubmit: SubmitHandler<EditTradeMatkulFormSchema> = (data) => {
     toast.promise(
@@ -110,16 +110,16 @@ export default function CreateTradeMatkulPage() {
     control,
     name: 'searchMatkul',
   });
-  const hasMatkulList = api.public.getSubject.useQuery({
+  const hasMatkulList = api.common.getSubject.useQuery({
     semester: hasMatkulSemesterField,
   });
-  const searchMatkulList = api.public.getSubject.useQuery({
+  const searchMatkulList = api.common.getSubject.useQuery({
     semester: searchMatkulSemesterField,
   });
-  const hasClassList = api.protected.getClassByMatkul.useQuery({
+  const hasClassList = api.common.getClassByMatkul.useQuery({
     matkulName: hasMatkulField,
   });
-  const searchClassList = api.protected.getClassByMatkul.useQuery({
+  const searchClassList = api.common.getClassByMatkul.useQuery({
     matkulName: searchMatkulField,
   });
 

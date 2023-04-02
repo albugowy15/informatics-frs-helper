@@ -11,7 +11,7 @@ export default function ProfilePage() {
   const router = useRouter();
   const { userId } = router.query;
   const { data } = useSession();
-  const userProfile = api.protected.getUserProfile.useQuery(
+  const userProfile = api.user.getUserProfile.useQuery(
     {
       id: userId as string,
     },

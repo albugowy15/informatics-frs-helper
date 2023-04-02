@@ -45,7 +45,7 @@ export type CreateTradeMatkulFormSchema = z.infer<
 export default function CreateTradeMatkulPage() {
   const router = useRouter();
   const { userId } = router.query;
-  const userProfile = api.protected.getUserProfile.useQuery(
+  const userProfile = api.user.getUserProfile.useQuery(
     {
       id: userId as string,
     },
@@ -65,7 +65,7 @@ export default function CreateTradeMatkulPage() {
     handleSubmit,
     formState: { errors },
   } = methods;
-  const postTradeMatkul = api.protected.createTradeMatkul.useMutation();
+  const postTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation();
 
   const onSubmit: SubmitHandler<CreateTradeMatkulFormSchema> = (data) => {
     toast.promise(
@@ -104,16 +104,16 @@ export default function CreateTradeMatkulPage() {
     control,
     name: 'searchMatkul',
   });
-  const hasMatkulList = api.public.getSubject.useQuery({
+  const hasMatkulList = api.common.getSubject.useQuery({
     semester: hasMatkulSemesterField,
   });
-  const searchMatkulList = api.public.getSubject.useQuery({
+  const searchMatkulList = api.common.getSubject.useQuery({
     semester: searchMatkulSemesterField,
   });
-  const hasClassList = api.protected.getClassByMatkul.useQuery({
+  const hasClassList = api.common.getClassByMatkul.useQuery({
     matkulName: hasMatkulField,
   });
-  const searchClassList = api.protected.getClassByMatkul.useQuery({
+  const searchClassList = api.common.getClassByMatkul.useQuery({
     matkulName: searchMatkulField,
   });
 

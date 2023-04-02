@@ -14,10 +14,10 @@ import Typography from '@/components/Typography';
 export default function MyTradeMatkulPage() {
   const router = useRouter();
   const { userId } = router.query;
-  const tradeMatkulPosts = api.protected.getAllMyTradeMatkul.useQuery({
+  const tradeMatkulPosts = api.tradeMatkul.getAllMyTradeMatkul.useQuery({
     userId: userId as string,
   });
-  const deleteTradeMatkul = api.protected.deleteMyTradeMatkul.useMutation();
+  const deleteTradeMatkul = api.tradeMatkul.deleteMyTradeMatkul.useMutation();
   const [confirmModal, setConfirmModal] = useState(false);
   function onDeleteTradeMatkul(postId: string) {
     toast.promise(deleteTradeMatkul.mutateAsync({ tradeMatkulId: postId }), {

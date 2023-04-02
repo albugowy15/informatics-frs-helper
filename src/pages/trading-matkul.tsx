@@ -28,10 +28,6 @@ type FilterForm = z.infer<typeof filterSchema>;
 const TradingMatkulPage = () => {
   const methods = useForm<FilterForm>({
     resolver: zodResolver(filterSchema),
-    defaultValues: {
-      matkul: undefined,
-      semester: undefined,
-    },
   });
   const { control, handleSubmit, resetField, register } = methods;
   const semesterField = useWatch({
@@ -41,7 +37,7 @@ const TradingMatkulPage = () => {
   const onSubmit: SubmitHandler<FilterForm> = (data) => {
     setSubmitedData(data);
   };
-  const listSubject = api.public.getSubject.useQuery(
+  const listSubject = api.common.getSubject.useQuery(
     {
       semester: parseInt(semesterField as string),
       withAll: true,
@@ -57,7 +53,7 @@ const TradingMatkulPage = () => {
 
   const [submitedData, setSubmitedData] = useState<FilterForm>();
 
-  const tradeMatkulPosts = api.public.getTradeMatkul.useQuery({
+  const tradeMatkulPosts = api.tradeMatkul.getAllTradeMatkul.useQuery({
     matkul: submitedData?.matkul,
     semester: submitedData?.semester
       ? parseInt(submitedData.semester)

@@ -32,7 +32,7 @@ type EditProfileFormType = z.infer<typeof EditProfileForm>;
 export default function EditProfilePage() {
   const router = useRouter();
   const { userId } = router.query;
-  const userProfile = api.protected.getUserProfile.useQuery(
+  const userProfile = api.user.getUserProfile.useQuery(
     {
       id: userId as string,
     },
@@ -53,7 +53,7 @@ export default function EditProfilePage() {
 
   const { handleSubmit } = methods;
 
-  const mutation = api.protected.updateProfile.useMutation();
+  const mutation = api.user.updateProfile.useMutation();
 
   const onSubmit: SubmitHandler<EditProfileFormType> = (data) => {
     // toast.loading('Memperbarui profil...');

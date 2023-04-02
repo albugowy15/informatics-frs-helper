@@ -56,13 +56,12 @@ const ClassPickSection = ({
 }) => {
   const [semester, setSemester] = useState<number>();
   const [subject, setSubject] = useState<string>();
-  const listSubject = api.public.getSubject.useQuery(
+  const listSubject = api.common.getSubject.useQuery(
     { semester: semester as number },
     { enabled: Boolean(semester) }
   );
-  const listClass = api.public.getClass.useQuery(
+  const listClass = api.common.getClass.useQuery(
     {
-      isAksel: false,
       semester: semester as number,
       matkul: subject,
     },

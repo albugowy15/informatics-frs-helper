@@ -4,7 +4,13 @@ import { IconType } from 'react-icons';
 
 import BasicLink, { BasicLinkProps } from './BasicLink';
 
-type ButtonVariant = 'filled' | 'outlined' | 'text' | 'elevated' | 'tonal';
+type ButtonVariant =
+  | 'filled'
+  | 'outlined'
+  | 'text'
+  | 'elevated'
+  | 'tonal'
+  | 'danger';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 type ButtonProps = {
@@ -47,6 +53,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           [
             variant === 'filled' &&
               'bg-primary-500 text-white hover:bg-primary-400 disabled:bg-neutral-900 ',
+            variant === 'danger' &&
+              'bg-error-500 text-white hover:bg-error-400 disabled:bg-neutral-900 ',
             variant === 'outlined' &&
               'border border-neutral-600 bg-transparent text-primary-400 hover:border-primary-500 hover:bg-neutral-900 disabled:border-neutral-600 disabled:bg-transparent',
             variant === 'text' &&
@@ -115,6 +123,8 @@ export const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
           [
             variant === 'filled' &&
               'bg-primary-500 text-white hover:bg-primary-400 disabled:bg-neutral-900 ',
+            variant === 'danger' &&
+              'bg-error-500 text-white hover:bg-error-400 disabled:bg-neutral-900 ',
             variant === 'outlined' &&
               'border border-neutral-600 bg-transparent text-primary-400 hover:border-primary-500 hover:bg-neutral-900 disabled:border-neutral-600 disabled:bg-transparent',
             variant === 'text' &&
@@ -185,6 +195,8 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
           [
             variant === 'filled' &&
               'bg-primary-500 text-white hover:bg-primary-400 disabled:bg-neutral-900 ',
+            variant === 'danger' &&
+              'bg-error-500 text-white hover:bg-error-400 disabled:bg-neutral-900 ',
             variant === 'outlined' &&
               'border border-neutral-600 bg-transparent text-primary-400 hover:border-primary-500 hover:bg-neutral-900 disabled:border-neutral-600 disabled:bg-transparent',
             variant === 'text' &&

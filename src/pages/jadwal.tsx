@@ -14,7 +14,7 @@ import { api } from '@/utils/api';
 
 import Accordion from '@/components/Accordion';
 import { Button } from '@/components/Button';
-import { SelectInput, SwitchInput } from '@/components/Form';
+import { SelectInput } from '@/components/Form';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
@@ -24,7 +24,6 @@ const Semester = ['1', '2', '3', '4', '5', '6'];
 const filterSchema = z.object({
   semester: z.string().nonempty({ message: 'Silahkan pilih semester' }),
   matkul: z.string().optional(),
-  showAccelProgram: z.boolean(),
 });
 
 type FilterForm = z.infer<typeof filterSchema>;
@@ -36,7 +35,6 @@ export default function SchedulePage() {
     defaultValues: {
       matkul: '',
       semester: '',
-      showAccelProgram: false,
     },
   });
 
@@ -54,16 +52,15 @@ export default function SchedulePage() {
   const [submitedData, setSubmitedData] = useState<FilterForm>();
 
   // Fetch data
-  const response = api.public.getClass.useQuery(
+  const response = api.common.getClass.useQuery(
     {
       matkul: submitedData?.matkul,
-      isAksel: submitedData?.showAccelProgram as boolean,
       semester: parseInt(submitedData?.semester as string),
     },
     { enabled: Boolean(submitedData) }
   );
 
-  const listSubject = api.public.getSubject.useQuery(
+  const listSubject = api.common.getSubject.useQuery(
     {
       semester: parseInt(semesterField),
       withAll: true,
@@ -114,13 +111,7 @@ export default function SchedulePage() {
                 />
               )}
             />
-            <Controller
-              name='showAccelProgram'
-              control={control}
-              render={({ field }) => (
-                <SwitchInput label='Tampilkan Matkul Akselerasi' {...field} />
-              )}
-            />
+
             <Button variant='tonal' className='mt-5 w-fit' type='submit'>
               Tampilkan Jadwal
             </Button>
@@ -249,14 +240,6 @@ export default function SchedulePage() {
                   ))}
                 </select>
               </div>
-
-              <Controller
-                name='showAccelProgram'
-                control={control}
-                render={({ field }) => (
-                  <SwitchInput label='Tampilkan Matkul Akselerasi' {...field} />
-                )}
-              />
               <div className='flex items-center justify-end gap-1'>
                 <Button
                   variant='text'

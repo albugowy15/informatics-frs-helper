@@ -10,7 +10,18 @@ export type BasicLinkProps = {
 } & React.ComponentPropsWithRef<'a'>;
 
 const BasicLink = React.forwardRef<HTMLAnchorElement, BasicLinkProps>(
-  ({ children, href, newTab, className, nextLinkProps, ...rest }, ref) => {
+  (
+    {
+      children,
+      href,
+      newTab,
+      className,
+      nextLinkProps,
+      'aria-disabled': disabled,
+      ...rest
+    },
+    ref
+  ) => {
     const isNewTab =
       newTab !== undefined
         ? newTab
@@ -22,6 +33,7 @@ const BasicLink = React.forwardRef<HTMLAnchorElement, BasicLinkProps>(
           href={href}
           ref={ref}
           className={className}
+          aria-disabled={disabled}
           {...rest}
           {...nextLinkProps}
         >
@@ -34,6 +46,7 @@ const BasicLink = React.forwardRef<HTMLAnchorElement, BasicLinkProps>(
       <a
         href={href}
         target='_blank'
+        aria-disabled={disabled}
         rel='noreferrer noopener'
         ref={ref}
         {...rest}

@@ -36,11 +36,11 @@ export default function CreateFRSPage() {
     mode: 'onTouched',
   });
   const { handleSubmit, control } = methods;
-  const mutatePlan = api.protected.createPlan.useMutation();
+  const mutatePlan = api.frs.createPlan.useMutation();
   const onSubmit: SubmitHandler<CreateFRSForm> = (data) => {
     if (classTaken.length > 0) {
       const matkul = classTaken.map((val) => {
-        return { id: val.id };
+        return val.id;
       });
 
       // post pake trpc

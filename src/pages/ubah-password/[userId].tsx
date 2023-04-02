@@ -27,7 +27,7 @@ export default function ChangePasswordPage() {
     resolver: zodResolver(changePasswordForm),
   });
   const { handleSubmit } = methods;
-  const mutatePassword = api.protected.changePassword.useMutation();
+  const mutatePassword = api.user.changePassword.useMutation();
   const onSubmit: SubmitHandler<CreatePasswordForm> = (data) => {
     toast.promise(
       mutatePassword.mutateAsync({

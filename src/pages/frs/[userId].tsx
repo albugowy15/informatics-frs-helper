@@ -8,7 +8,7 @@ import Typography from '@/components/Typography';
 
 export default function FRSPage() {
   const { data } = useSession();
-  const plans = api.protected.getAllPlans.useQuery(
+  const plans = api.frs.getAllPlans.useQuery(
     {
       userId: data?.user.id as string,
     },
