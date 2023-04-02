@@ -1,83 +1,172 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
-import { Control, Controller, useFormContext } from 'react-hook-form';
 
-import { SelectInput } from '@/components/Form';
+import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
-import { CreateTradeMatkulFormSchema } from '@/pages/my-trading-matkul/create/[userId]';
+import Typography from '@/components/Typography';
 
 type HasMatkulProps = {
-  control: Control<CreateTradeMatkulFormSchema, unknown>;
-  hasMatkulList: string[] | undefined;
-  hasMatkulSemesterField: number | undefined;
-  hasClassList: string[] | undefined;
-  hasMatkulField: string | undefined;
+  data: {
+    listSemester: {
+      id: number;
+      semester: number;
+    }[];
+    listSubject: {
+      id: string;
+      matkul: string;
+      semesterId: number;
+    }[];
+    listClass: {
+      id: string;
+      class: string;
+      matkulId: string;
+    }[];
+  };
   defaultValue?: {
-    semester: number;
+    semester: string;
     matkul: string;
     class: string;
   };
 };
 
-const HasMatkulSection = ({
-  control,
-  hasMatkulList,
-  hasMatkulSemesterField,
-  hasClassList,
-  hasMatkulField,
-  defaultValue,
-}: HasMatkulProps) => {
-  const { resetField } = useFormContext();
+const HasMatkulSection = ({ data, defaultValue }: HasMatkulProps) => {
+  const [listMatkul, setListMatkul] = useState<
+    {
+      id: string;
+      matkul: string;
+      semesterId: number;
+    }[]
+  >([]);
+  const [listClass, setListClass] = useState<
+    {
+      id: string;
+      class: string;
+      matkulId: string;
+    }[]
+  >([]);
+
   useEffect(() => {
-    resetField('hasMatkul');
-  }, [hasMatkulSemesterField]);
-  useEffect(() => {
-    resetField('hasClass');
-  }, [hasMatkulField]);
+    if (defaultValue) {
+      const newListMatkul = data.listSubject.filter(
+        (subject) => subject.semesterId === parseInt(defaultValue.semester)
+      );
+      setListMatkul(newListMatkul);
+
+      const newClassList = data.listClass.filter(
+        (classItem) => classItem.matkulId === defaultValue.matkul
+      );
+      setListClass(newClassList);
+    }
+  }, []);
+
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
   return (
-    <div className='flex flex-col items-center gap-4 lg:flex-row'>
-      <Controller
-        name='hasMatkulSemester'
-        control={control}
-        defaultValue={defaultValue?.semester}
-        render={({ field, fieldState: { error } }) => (
-          <SelectInput
-            data={[1, 2, 3, 4, 5, 6, 7, 8]}
-            placeholder='Semester'
-            label='Semester'
-            error={error}
-            {...field}
-          />
+    <div className='flex w-full flex-col gap-2'>
+      <Typography variant='h5'>Matkul yang dimiliki</Typography>
+      <div>
+        <label className='text-sm font-medium'>Pilih Semester</label>
+        <select
+          className='mt-1 block w-full rounded-lg border border-neutral-600 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-0'
+          {...register('hasMatkulSemester')}
+          onChange={(e) => {
+            const newListMatkul = data.listSubject.filter(
+              (subject) => subject.semesterId == parseInt(e.target.value)
+            );
+            setListMatkul(newListMatkul);
+          }}
+          defaultValue={defaultValue?.semester}
+        >
+          {defaultValue === undefined && (
+            <option disabled value='' selected hidden>
+              Semester
+            </option>
+          )}
+          {data.listSemester.map((semester) => (
+            <option
+              value={semester.semester}
+              selected={
+                defaultValue
+                  ? defaultValue.semester == semester.semester.toString()
+                  : false
+              }
+              key={semester.id}
+            >
+              {semester.semester}
+            </option>
+          ))}
+        </select>
+        {errors['hasMatkulSemester'] && (
+          <Typography variant='label2' className='mt-1 text-error-500'>
+            {errors['hasMatkulSemester'].message as string}
+          </Typography>
         )}
-      />
-      <Controller
-        name='hasMatkul'
-        control={control}
-        defaultValue={defaultValue?.matkul}
-        render={({ field, fieldState: { error } }) => (
-          <SelectInput
-            placeholder='Matkul yang dimiliki'
-            label='Pilih matkul yang dimiliki'
-            data={hasMatkulList}
-            error={error}
-            {...field}
-          />
+      </div>
+      <div>
+        <label className=' text-sm font-medium'>Pilih Matkul</label>
+        <select
+          className='mt-1 block w-full rounded-lg border border-neutral-600 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-0'
+          {...register('hasMatkul')}
+          onChange={(e) => {
+            const newClassList = data.listClass.filter(
+              (classItem) => classItem.matkulId == e.target.value.toString()
+            );
+
+            setListClass(newClassList);
+          }}
+          defaultValue={defaultValue?.matkul}
+        >
+          {defaultValue === undefined && (
+            <option disabled selected value='' hidden>
+              Mata Kuliah
+            </option>
+          )}
+          {listMatkul.map((matkul) => (
+            <option
+              value={matkul.id}
+              selected={defaultValue ? defaultValue.matkul == matkul.id : false}
+              key={matkul.id}
+            >
+              {matkul.matkul}
+            </option>
+          ))}
+        </select>
+        {errors['hasMatkul'] && (
+          <Typography variant='label2' className='mt-1 text-error-500'>
+            {errors['hasMatkul'].message as string}
+          </Typography>
         )}
-      />
-      <Controller
-        name='hasClass'
-        control={control}
-        defaultValue={defaultValue?.class}
-        render={({ field, fieldState: { error } }) => (
-          <SelectInput
-            placeholder='Kelas yang dimiliki'
-            label='Pilih kelas yang dimiliki'
-            data={hasClassList}
-            error={error}
-            {...field}
-          />
+      </div>
+      <div>
+        <label className=' text-sm font-medium'>Pilih Kelas</label>
+        <select
+          className='mt-1 block w-full rounded-lg border border-neutral-600 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-0'
+          {...register('hasClass')}
+          defaultValue={defaultValue?.class}
+        >
+          {defaultValue === undefined && (
+            <option disabled selected value='' hidden>
+              Kelas
+            </option>
+          )}
+          {listClass.map((kelas) => (
+            <option
+              value={kelas.id}
+              key={kelas.id}
+              selected={defaultValue ? defaultValue.class == kelas.id : false}
+            >
+              {kelas.class}
+            </option>
+          ))}
+        </select>
+        {errors['hasClass'] && (
+          <Typography variant='label2' className='mt-1 text-error-500'>
+            {errors['hasClass'].message as string}
+          </Typography>
         )}
-      />
+      </div>
     </div>
   );
 };
