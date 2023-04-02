@@ -23,7 +23,7 @@ export default function MyTradeMatkulPage() {
     toast.promise(deleteTradeMatkul.mutateAsync({ tradeMatkulId: postId }), {
       loading: 'Menghapus...',
       success: 'Berhasil menghapus',
-      error: 'Gagal menghapus',
+      error: (err) => err.message,
     });
   }
   return (

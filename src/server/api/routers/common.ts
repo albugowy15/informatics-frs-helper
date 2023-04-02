@@ -94,4 +94,58 @@ export const commonRouter = createTRPCRouter({
       }
       return listSubject;
     }),
+  getClassOptions: publicProcedure.query(async () => {
+    const listSemester = [
+      { id: 1, semester: 1 },
+      { id: 2, semester: 2 },
+      { id: 3, semester: 3 },
+      { id: 4, semester: 4 },
+      { id: 5, semester: 5 },
+      { id: 6, semester: 6 },
+      { id: 7, semester: 7 },
+      { id: 8, semester: 8 },
+    ];
+
+    const listSubject = await prisma.matkul
+      .findMany({
+        select: {
+          id: true,
+          name: true,
+          semester: true,
+        },
+      })
+      .then((res) => {
+        return res.map((item) => {
+          return {
+            id: item.id,
+            matkul: item.name,
+            semesterId: item.semester,
+          };
+        });
+      });
+
+    const listClass = await prisma.class
+      .findMany({
+        select: {
+          id: true,
+          code: true,
+          matkulId: true,
+        },
+      })
+      .then((res) => {
+        return res.map((item) => {
+          return {
+            id: item.id,
+            class: item.code,
+            matkulId: item.matkulId,
+          };
+        });
+      });
+
+    return {
+      listSemester,
+      listSubject,
+      listClass,
+    };
+  }),
 });

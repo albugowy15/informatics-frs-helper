@@ -14,59 +14,123 @@ export const tradeMatkulRouter = createTRPCRouter({
       z.object({
         description: z.string().max(150),
         userId: z.string(),
-        hasClass: z.object({
-          name: z.string(),
-          code: z.string(),
-        }),
-        searchClass: z.object({
-          name: z.string(),
-          code: z.string(),
-        }),
+        hasClassId: z.string(),
+        searchClassId: z.string(),
       })
     )
     .mutation(async ({ input }) => {
-      const hasClassId = await prisma.class.findFirst({
+      const hasClass = await prisma.class.findUnique({
         select: {
           id: true,
         },
         where: {
-          code: input.hasClass.code,
-          AND: {
-            Matkul: {
-              name: input.hasClass.name,
-            },
-          },
+          id: input.hasClassId,
         },
       });
-      const searchClassId = await prisma.class.findFirst({
-        select: {
-          id: true,
-        },
-        where: {
-          code: input.searchClass.code,
-          AND: {
-            Matkul: {
-              name: input.searchClass.name,
-            },
-          },
-        },
-      });
-      if (hasClassId && searchClassId) {
-        const result = prisma.tradeMatkul.create({
-          data: {
-            description: input.description,
-            userId: input.userId,
-            hasMatkulId: hasClassId?.id,
-            searchMatkulId: searchClassId?.id,
-            closed: false,
-          },
+
+      if (!hasClass) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Kelas yang dimiliki tidak ditemukan',
         });
-        return result;
       }
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Class not found',
+
+      const searchClass = await prisma.class.findUnique({
+        select: {
+          id: true,
+        },
+        where: {
+          id: input.searchClassId,
+        },
       });
+
+      if (!searchClass) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Kelas yang dicari tidak ditemukan',
+        });
+      }
+
+      if (hasClass.id === searchClass.id) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Tidak dapat bertukar dengan kelas yang sama',
+        });
+      }
+
+      const result = prisma.tradeMatkul.create({
+        data: {
+          description: input.description,
+          userId: input.userId,
+          hasMatkulId: hasClass.id,
+          searchMatkulId: searchClass.id,
+          closed: false,
+        },
+      });
+      return result;
+    }),
+  updateTradeMatkul: protectedProcedure
+    .input(
+      z.object({
+        tradeMatkulId: z.string(),
+        description: z.string().max(150),
+        hasClassId: z.string(),
+        searchClassId: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const hasClass = await prisma.class.findUnique({
+        select: {
+          id: true,
+        },
+        where: {
+          id: input.hasClassId,
+        },
+      });
+
+      if (!hasClass) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Kelas yang dimiliki tidak ditemukan',
+        });
+      }
+
+      const searchClass = await prisma.class.findUnique({
+        select: {
+          id: true,
+        },
+        where: {
+          id: input.searchClassId,
+        },
+      });
+
+      if (!searchClass) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Kelas yang dicari tidak ditemukan',
+        });
+      }
+
+      if (hasClass.id === searchClass.id) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Tidak dapat bertukar dengan kelas yang sama',
+        });
+      }
+
+      const result = prisma.tradeMatkul.update({
+        where: {
+          id: input.tradeMatkulId,
+        },
+        data: {
+          description: input.description,
+          hasMatkulId: hasClass.id,
+          searchMatkulId: searchClass.id,
+          closed: false,
+        },
+      });
+
+      return result;
     }),
   getAllMyTradeMatkul: protectedProcedure
     .input(
@@ -80,7 +144,7 @@ export const tradeMatkulRouter = createTRPCRouter({
           id: true,
           description: true,
           closed: true,
-          hasMatkul: {
+          searchMatkul: {
             select: {
               code: true,
               Matkul: {
@@ -90,7 +154,7 @@ export const tradeMatkulRouter = createTRPCRouter({
               },
             },
           },
-          searchMatkul: {
+          hasMatkul: {
             select: {
               code: true,
               Matkul: {
@@ -151,10 +215,12 @@ export const tradeMatkulRouter = createTRPCRouter({
             select: {
               Matkul: {
                 select: {
+                  id: true,
                   name: true,
                   semester: true,
                 },
               },
+              id: true,
               code: true,
             },
           },
@@ -163,9 +229,11 @@ export const tradeMatkulRouter = createTRPCRouter({
               Matkul: {
                 select: {
                   name: true,
+                  id: true,
                   semester: true,
                 },
               },
+              id: true,
               code: true,
             },
           },
@@ -174,67 +242,7 @@ export const tradeMatkulRouter = createTRPCRouter({
 
       return tradeMatkulPost;
     }),
-  updateTradeMatkul: protectedProcedure
-    .input(
-      z.object({
-        tradeMatkulId: z.string(),
-        description: z.string().max(150),
-        hasClass: z.object({
-          name: z.string(),
-          code: z.string(),
-        }),
-        searchClass: z.object({
-          name: z.string(),
-          code: z.string(),
-        }),
-      })
-    )
-    .mutation(async ({ input }) => {
-      const hasClassId = await prisma.class.findFirst({
-        select: {
-          id: true,
-        },
-        where: {
-          code: input.hasClass.code,
-          AND: {
-            Matkul: {
-              name: input.hasClass.name,
-            },
-          },
-        },
-      });
-      const searchClassId = await prisma.class.findFirst({
-        select: {
-          id: true,
-        },
-        where: {
-          code: input.searchClass.code,
-          AND: {
-            Matkul: {
-              name: input.searchClass.name,
-            },
-          },
-        },
-      });
-      if (hasClassId && searchClassId) {
-        const result = prisma.tradeMatkul.update({
-          data: {
-            description: input.description,
-            hasMatkulId: hasClassId.id,
-            searchMatkulId: searchClassId.id,
-            closed: false,
-          },
-          where: {
-            id: input.tradeMatkulId,
-          },
-        });
-        return result;
-      }
-      throw new TRPCError({
-        code: 'BAD_REQUEST',
-        message: 'Class not found',
-      });
-    }),
+
   getAllTradeMatkul: publicProcedure
     .input(
       z.object({
