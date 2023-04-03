@@ -55,7 +55,11 @@ export default function CreateTradeMatkulPage() {
 
   const classOptions = api.common.getClassOptions.useQuery();
 
-  const postTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation();
+  const postTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation({
+    onSuccess: () => {
+      router.push('/my-trading-matkul/' + userId);
+    },
+  });
 
   const onSubmit: SubmitHandler<CreateTradeMatkulFormSchema> = (data) => {
     toast.promise(

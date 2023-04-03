@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import toast, { Toaster } from 'react-hot-toast';
@@ -44,6 +45,7 @@ export type EditTradeMatkulFormSchema = z.infer<
 export default function CreateTradeMatkulPage() {
   const router = useRouter();
   const { id } = router.query;
+  const { data: session } = useSession();
   const tradeMatkulPost = api.tradeMatkul.getTradeMatkul.useQuery(
     {
       tradeMatkulId: id as string,
@@ -62,7 +64,11 @@ export default function CreateTradeMatkulPage() {
   } = methods;
 
   const classOptions = api.common.getClassOptions.useQuery();
-  const updateTradeMatkul = api.tradeMatkul.updateTradeMatkul.useMutation();
+  const updateTradeMatkul = api.tradeMatkul.updateTradeMatkul.useMutation({
+    onSuccess() {
+      router.push('/my-trading-matkul/' + session?.user.id);
+    },
+  });
 
   useEffect(() => {
     if (tradeMatkulPost.data) {

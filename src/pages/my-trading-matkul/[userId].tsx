@@ -12,13 +12,24 @@ import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 
 export default function MyTradeMatkulPage() {
+  const utils = api.useContext();
   const router = useRouter();
   const { userId } = router.query;
-  const tradeMatkulPosts = api.tradeMatkul.getAllMyTradeMatkul.useQuery({
-    userId: userId as string,
+  const tradeMatkulPosts = api.tradeMatkul.getAllMyTradeMatkul.useQuery(
+    {
+      userId: userId as string,
+    },
+    {
+      enabled: Boolean(userId),
+    }
+  );
+  const deleteTradeMatkul = api.tradeMatkul.deleteMyTradeMatkul.useMutation({
+    onSuccess() {
+      utils.tradeMatkul.getAllMyTradeMatkul.invalidate();
+    },
   });
-  const deleteTradeMatkul = api.tradeMatkul.deleteMyTradeMatkul.useMutation();
   const [confirmModal, setConfirmModal] = useState(false);
+  const [postId, setPostId] = useState('');
   function onDeleteTradeMatkul(postId: string) {
     toast.promise(deleteTradeMatkul.mutateAsync({ tradeMatkulId: postId }), {
       loading: 'Menghapus...',
@@ -88,7 +99,10 @@ export default function MyTradeMatkulPage() {
                         variant='tonal'
                         icon={AiFillDelete}
                         disabled={deleteTradeMatkul.isLoading}
-                        onClick={() => setConfirmModal(true)}
+                        onClick={() => {
+                          setPostId(post.id);
+                          setConfirmModal(true);
+                        }}
                       >
                         Hapus
                       </Button>
@@ -106,8 +120,7 @@ export default function MyTradeMatkulPage() {
                       <Button
                         variant='filled'
                         onClick={() => {
-                          onDeleteTradeMatkul(post.id);
-                          tradeMatkulPosts.refetch();
+                          onDeleteTradeMatkul(postId);
                           setConfirmModal(false);
                         }}
                       >

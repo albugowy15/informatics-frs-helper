@@ -180,9 +180,6 @@ export const tradeMatkulRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const result = await prisma.tradeMatkul.delete({
-        select: {
-          id: true,
-        },
         where: {
           id: input.tradeMatkulId,
         },
