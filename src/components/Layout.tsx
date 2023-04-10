@@ -28,7 +28,7 @@ const Navbar = () => {
   return (
     <>
       <header className='w-full bg-white'>
-        <div className='container mx-auto flex items-center justify-between py-2 px-3'>
+        <div className='container mx-auto flex items-center justify-between px-3 py-2'>
           <BasicLink href='/' className='text-base font-bold md:text-xl'>
             TC FRS Helper
           </BasicLink>

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "check": "yarn typecheck && yarn lint && yarn format",
     "build": "next build",
     "start": "next start",
     "start_db": "pscale connect informatics-frs prod --port 3309",

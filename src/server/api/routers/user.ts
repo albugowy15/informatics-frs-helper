@@ -5,6 +5,8 @@ import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc';
 import { prisma } from '@/server/db';
 
+import { EditProfileForm } from '@/pages/profile/edit/[userId]';
+
 export const userRouter = createTRPCRouter({
   getUserProfile: protectedProcedure
     .input(
@@ -27,16 +29,7 @@ export const userRouter = createTRPCRouter({
       return userProfile;
     }),
   updateProfile: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().nonempty(),
-        fullname: z.string().optional(),
-        username: z.string().min(6).max(12).nonempty(),
-        email: z.string().email().nonempty(),
-        idLine: z.string().optional(),
-        whatsapp: z.string(),
-      })
-    )
+    .input(z.object({ id: z.string(), content: EditProfileForm }))
     .mutation(({ input }) => {
       const updatedProfile = prisma.user
         .update({
@@ -44,11 +37,11 @@ export const userRouter = createTRPCRouter({
             id: input.id,
           },
           data: {
-            fullname: input.fullname,
-            username: input.username,
-            email: input.email,
-            idLine: input.idLine,
-            whatsapp: input.whatsapp,
+            fullname: input.content.fullname,
+            username: input.content.username,
+            email: input.content.email,
+            idLine: input.content.idLine,
+            whatsapp: input.content.whatsapp,
           },
         })
         .then((res) => res.id);

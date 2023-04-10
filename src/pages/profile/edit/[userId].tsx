@@ -6,11 +6,12 @@ import { toast, Toaster } from 'react-hot-toast';
 import { z } from 'zod';
 
 import { api } from '@/utils/api';
+import { asOptionalField } from '@/utils/zod';
 
 import { Button } from '@/components/Button';
 import { TextInput } from '@/components/Form';
 
-const EditProfileForm = z.object({
+export const EditProfileForm = z.object({
   fullname: z.string().optional(),
   username: z
     .string()
@@ -23,8 +24,17 @@ const EditProfileForm = z.object({
     .string()
     .email({ message: 'Email tidak valid' })
     .nonempty({ message: 'Email tidak boleh kosong' }),
-  idLine: z.string().optional(),
-  whatsapp: z.string(),
+  idLine: asOptionalField(
+    z.string().startsWith('@', { message: 'Id Line ditulis dengan awalan @' })
+  ),
+  whatsapp: asOptionalField(
+    z
+      .string()
+      .min(9, { message: 'No. Whatsapp minimal 9 angka' })
+      .max(14, { message: 'No. Whatsapp maksima 9 angka' })
+      .startsWith('08', { message: 'No. Whatsapp tidak valid' })
+      .regex(/^[0-9]*$/, { message: 'No. Whatsapp tidak valid' })
+  ),
 });
 
 type EditProfileFormType = z.infer<typeof EditProfileForm>;
@@ -60,11 +70,13 @@ export default function EditProfilePage() {
     toast.promise(
       mutation.mutateAsync({
         id: userId as string,
-        email: data.email,
-        fullname: data.fullname,
-        idLine: data.idLine,
-        username: data.username,
-        whatsapp: data.whatsapp,
+        content: {
+          email: data.email,
+          fullname: data.fullname,
+          idLine: data.idLine,
+          whatsapp: data.whatsapp,
+          username: data.username,
+        },
       }),
       {
         loading: 'Memperbarui profil...',
