@@ -25,6 +25,12 @@ const filterSchema = z.object({
 
 type FilterForm = z.infer<typeof filterSchema>;
 
+type SelectedTradeMatkul = {
+  name: string | null;
+  line: string;
+  whatsapp: string;
+};
+
 const TradingMatkulPage = () => {
   const methods = useForm<FilterForm>({
     resolver: zodResolver(filterSchema),
@@ -48,9 +54,11 @@ const TradingMatkulPage = () => {
   useEffect(() => {
     resetField('matkul');
   }, [resetField, semesterField]);
+
   const [filterModal, setFilterModal] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
-
+  const [selectedTradeMatkul, setSelectedTradeMatkul] =
+    useState<SelectedTradeMatkul>();
   const [submitedData, setSubmitedData] = useState<FilterForm>();
 
   const tradeMatkulPosts = api.tradeMatkul.getAllTradeMatkul.useQuery({
@@ -161,7 +169,19 @@ const TradingMatkulPage = () => {
                 <div className='flex justify-end'>
                   <Button
                     variant='filled'
-                    onClick={() => setConfirmModal(true)}
+                    onClick={() => {
+                      if (post.User) {
+                        setSelectedTradeMatkul({
+                          name: post.User.fullname
+                            ? post.User.fullname
+                            : post.User.fullname,
+                          line: post.User.idLine ?? '-',
+                          whatsapp: post.User.whatsapp ?? '-',
+                        });
+
+                        setConfirmModal(true);
+                      }
+                    }}
                   >
                     Terima
                   </Button>
@@ -174,14 +194,14 @@ const TradingMatkulPage = () => {
               >
                 <Typography variant='body1' className='py-2'>
                   Silahkan menghubungi{' '}
-                  <span className='font-bold'>{post.User?.fullname}</span>{' '}
+                  <span className='font-bold'>{selectedTradeMatkul?.name}</span>{' '}
                   melalui kontak dibawah berikut :
                 </Typography>
                 <Typography variant='body1'>
-                  WA : {post.User?.whatsapp ? post.User.whatsapp : '-'}
+                  WA : {selectedTradeMatkul?.whatsapp ?? '-'}
                 </Typography>
                 <Typography variant='body1'>
-                  Line : {post.User?.idLine ? post.User.idLine : '-'}
+                  Line : {selectedTradeMatkul?.line ?? '-'}
                 </Typography>
 
                 <div className='flex justify-end'>
