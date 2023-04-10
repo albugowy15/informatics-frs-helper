@@ -17,11 +17,12 @@ import { TbArrowsExchange2 } from 'react-icons/tb';
 import BasicLink from '@/components/BasicLink';
 import { Button, LinkButton } from '@/components/Button';
 import Dropdown from '@/components/Dropdown';
+import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [openMenu, setOpenMenu] = useState(false);
 
   return (
@@ -39,134 +40,140 @@ const Navbar = () => {
             >
               Menu
             </Button>
-            {session?.user ? (
-              <>
-                <Dropdown
-                  menuButton={
-                    <div className='flex h-fit items-center justify-center rounded-full border border-neutral-400 p-2.5 hover:bg-neutral-900'>
-                      <BsFillPersonFill className='text-base text-primary-400' />
-                    </div>
-                  }
-                  options={
-                    <>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <BasicLink
-                            className={clsx(
-                              'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
-                              [
-                                active
-                                  ? 'bg-primary-500 text-neutral-50'
-                                  : 'text-neutral-200',
-                              ]
-                            )}
-                            href={'/profile/' + session.user.id}
-                          >
-                            <BsPersonCircle
-                              className={clsx([
-                                active ? 'text-white' : 'text-primary-500',
-                              ])}
-                            />
-                            Profil
-                          </BasicLink>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <BasicLink
-                            className={clsx(
-                              'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
-                              [
-                                active
-                                  ? 'bg-primary-500 text-neutral-50'
-                                  : 'text-neutral-200',
-                              ]
-                            )}
-                            href={'/ubah-password/' + session.user.id}
-                          >
-                            <BsLockFill
-                              className={clsx([
-                                active ? 'text-white' : 'text-primary-500',
-                              ])}
-                            />
-                            Ubah Password
-                          </BasicLink>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <BasicLink
-                            className={clsx(
-                              'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
-                              [
-                                active
-                                  ? 'bg-primary-500 text-neutral-50'
-                                  : 'text-neutral-200',
-                              ]
-                            )}
-                            href={'/frs/' + session.user.id}
-                          >
-                            <BsNewspaper
-                              className={clsx([
-                                active ? 'text-white' : 'text-primary-500',
-                              ])}
-                            />
-                            myFRS
-                          </BasicLink>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <BasicLink
-                            className={clsx(
-                              'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
-                              [
-                                active
-                                  ? 'bg-primary-500 text-neutral-50'
-                                  : 'text-neutral-200',
-                              ]
-                            )}
-                            href={'/my-trading-matkul/' + session.user.id}
-                          >
-                            <TbArrowsExchange2
-                              className={clsx([
-                                active ? 'text-white' : 'text-primary-500',
-                              ])}
-                            />
-                            myTradeMatkul
-                          </BasicLink>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            onClick={() => signOut()}
-                            className={clsx(
-                              'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
-                              [
-                                active
-                                  ? 'bg-primary-500 text-neutral-50'
-                                  : 'text-neutral-200',
-                              ]
-                            )}
-                          >
-                            <FiLogOut
-                              className={clsx([
-                                active ? 'text-white' : 'text-primary-500',
-                              ])}
-                            />
-                            Logout
-                          </button>
-                        )}
-                      </Menu.Item>
-                    </>
-                  }
-                />
-              </>
+            {status == 'loading' ? (
+              <Loader />
             ) : (
-              <Button variant='filled' onClick={() => signIn()}>
-                Login
-              </Button>
+              <>
+                {session?.user ? (
+                  <>
+                    <Dropdown
+                      menuButton={
+                        <div className='flex h-fit items-center justify-center rounded-full border border-neutral-400 p-2.5 hover:bg-neutral-900'>
+                          <BsFillPersonFill className='text-base text-primary-400' />
+                        </div>
+                      }
+                      options={
+                        <>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <BasicLink
+                                className={clsx(
+                                  'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
+                                  [
+                                    active
+                                      ? 'bg-primary-500 text-neutral-50'
+                                      : 'text-neutral-200',
+                                  ]
+                                )}
+                                href={'/profile/' + session.user.id}
+                              >
+                                <BsPersonCircle
+                                  className={clsx([
+                                    active ? 'text-white' : 'text-primary-500',
+                                  ])}
+                                />
+                                Profil
+                              </BasicLink>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <BasicLink
+                                className={clsx(
+                                  'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
+                                  [
+                                    active
+                                      ? 'bg-primary-500 text-neutral-50'
+                                      : 'text-neutral-200',
+                                  ]
+                                )}
+                                href={'/ubah-password/' + session.user.id}
+                              >
+                                <BsLockFill
+                                  className={clsx([
+                                    active ? 'text-white' : 'text-primary-500',
+                                  ])}
+                                />
+                                Ubah Password
+                              </BasicLink>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <BasicLink
+                                className={clsx(
+                                  'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
+                                  [
+                                    active
+                                      ? 'bg-primary-500 text-neutral-50'
+                                      : 'text-neutral-200',
+                                  ]
+                                )}
+                                href={'/frs/' + session.user.id}
+                              >
+                                <BsNewspaper
+                                  className={clsx([
+                                    active ? 'text-white' : 'text-primary-500',
+                                  ])}
+                                />
+                                myFRS
+                              </BasicLink>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <BasicLink
+                                className={clsx(
+                                  'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
+                                  [
+                                    active
+                                      ? 'bg-primary-500 text-neutral-50'
+                                      : 'text-neutral-200',
+                                  ]
+                                )}
+                                href={'/my-trading-matkul/' + session.user.id}
+                              >
+                                <TbArrowsExchange2
+                                  className={clsx([
+                                    active ? 'text-white' : 'text-primary-500',
+                                  ])}
+                                />
+                                myTradeMatkul
+                              </BasicLink>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                onClick={() => signOut()}
+                                className={clsx(
+                                  'flex w-full items-center gap-3 rounded px-2 py-1.5 ',
+                                  [
+                                    active
+                                      ? 'bg-primary-500 text-neutral-50'
+                                      : 'text-neutral-200',
+                                  ]
+                                )}
+                              >
+                                <FiLogOut
+                                  className={clsx([
+                                    active ? 'text-white' : 'text-primary-500',
+                                  ])}
+                                />
+                                Logout
+                              </button>
+                            )}
+                          </Menu.Item>
+                        </>
+                      }
+                    />
+                  </>
+                ) : (
+                  <Button variant='filled' onClick={() => signIn()}>
+                    Login
+                  </Button>
+                )}
+              </>
             )}
           </nav>
         </div>
