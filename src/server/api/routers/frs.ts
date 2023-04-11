@@ -14,7 +14,7 @@ export const frsRouter = createTRPCRouter({
           .string()
           .array()
           .refine((e) => new Set(e).size === e.length, {
-            message: 'Class cant be duplicate',
+            message: 'Tidak boleh mengambil kelas yang sama',
           }),
         userId: z.string(),
       })
@@ -34,7 +34,9 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-      // check total sks
+
+      // perform some checks
+      //1. check total sks
       const totalSks = classes.reduce((acc, curr) => acc + curr.Matkul.sks, 0);
       if (totalSks < 18) {
         throw new TRPCError({
@@ -45,6 +47,20 @@ export const frsRouter = createTRPCRouter({
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'Total SKS tidak boleh lebih dari 24',
+        });
+      }
+
+      //2. check total plan
+      const totalPlan = await prisma.plan.count({
+        where: {
+          userId: input.userId,
+        },
+      });
+
+      if (totalPlan == 3) {
+        throw new TRPCError({
+          code: 'PRECONDITION_FAILED',
+          message: 'Telah mencapai batas plan yang dapat dibuat',
         });
       }
 
@@ -86,5 +102,84 @@ export const frsRouter = createTRPCRouter({
         },
       });
       return plans;
+    }),
+  getPlanDetail: protectedProcedure
+    .input(
+      z.object({
+        planId: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      const classTaken = await prisma.plan.findUnique({
+        select: {
+          id: true,
+          semester: true,
+          title: true,
+          totalSks: true,
+          Class: {
+            select: {
+              code: true,
+              day: true,
+              id: true,
+              Lecturer: {
+                select: {
+                  id: true,
+                  fullname: true,
+                },
+              },
+              Session: {
+                select: {
+                  session_time: true,
+                },
+              },
+              Matkul: {
+                select: {
+                  id: true,
+                  name: true,
+                  semester: true,
+                  sks: true,
+                },
+              },
+            },
+          },
+        },
+        where: {
+          id: input.planId,
+        },
+      });
+
+      if (classTaken == null) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Rencana FRS Tidak Ditemukan',
+        });
+      }
+
+      return classTaken;
+    }),
+  deletePlan: protectedProcedure
+    .input(
+      z.object({
+        planId: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const deletedPlan = await prisma.plan.delete({
+        select: {
+          id: true,
+        },
+        where: {
+          id: input.planId,
+        },
+      });
+
+      if (deletedPlan == undefined) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Rencana FRS Tidak Ditemukan',
+        });
+      }
+
+      return deletedPlan;
     }),
 });

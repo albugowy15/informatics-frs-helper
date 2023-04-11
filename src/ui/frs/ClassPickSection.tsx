@@ -20,6 +20,7 @@ export type ClassResponseData = {
     fullname: string;
   };
   day: string;
+  sks: number;
 };
 
 function checkValidPick(
@@ -33,6 +34,7 @@ function checkValidPick(
       errorMessage: 'Tidak dapat mengambil mata kuliah yang sama',
     };
   }
+
   const checkClassCollision = listKelas.find(
     (val) => val.day == kelas.day && val.Session == kelas.Session
   );
@@ -97,7 +99,7 @@ const ClassPickSection = ({
                 key={index}
                 title={
                   <div>
-                    <Typography variant='h5'>{subject.name}</Typography>
+                    <Typography variant='h6'>{subject.name}</Typography>
                     <Typography variant='body2'>
                       Semester {subject.semester} | {subject.sks} sks |{' '}
                       {subject.Class.length} kelas
@@ -106,19 +108,19 @@ const ClassPickSection = ({
                 }
               >
                 {subject.Class.length > 0 ? (
-                  <div className='grid grid-cols-4 gap-3'>
+                  <div className='grid grid-cols-2 gap-1 lg:grid-cols-4'>
                     {subject.Class.map((kelas) => (
                       <div
                         key={kelas.id}
-                        className='rounded-md border border-neutral-600 p-3'
+                        className='rounded-md border border-neutral-600 p-2 lg:p-3'
                       >
-                        <Typography variant='body1' className='font-medium'>
-                          {subject.name} {kelas.code}
+                        <Typography variant='body2' className='font-medium'>
+                          {subject.name} {kelas.code} ({subject.sks} sks)
                         </Typography>
-                        <Typography variant='body2'>
+                        <Typography variant='body3' className='py-0.5'>
                           {kelas.Lecturer.fullname}
                         </Typography>
-                        <Typography variant='body2'>
+                        <Typography variant='body3'>
                           {kelas.day}, {kelas.Session.session_time}
                         </Typography>
 
@@ -130,6 +132,7 @@ const ClassPickSection = ({
                             const data: ClassResponseData = {
                               ...kelas,
                               subject: subject.name,
+                              sks: subject.sks,
                             };
                             const { isValid, errorMessage } = checkValidPick(
                               classTaken,

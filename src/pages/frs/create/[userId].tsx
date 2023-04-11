@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Controller,
   FormProvider,
@@ -8,6 +9,7 @@ import {
   useForm,
 } from 'react-hook-form';
 import { toast, Toaster } from 'react-hot-toast';
+import { BsTrashFill } from 'react-icons/bs';
 import { z } from 'zod';
 
 import { api } from '@/utils/api';
@@ -29,7 +31,12 @@ const createFRSForm = z.object({
 
 type CreateFRSForm = z.infer<typeof createFRSForm>;
 export default function CreateFRSPage() {
+  const router = useRouter();
   const [classTaken, setClassTaken] = useState<ClassResponseData[]>([]);
+  const [sks, setSks] = useState(0);
+  useEffect(() => {
+    setSks(classTaken.reduce((acc, cur) => acc + cur.sks, 0));
+  }, [classTaken]);
   const { data: session } = useSession();
   const methods = useForm<CreateFRSForm>({
     resolver: zodResolver(createFRSForm),
@@ -45,20 +52,25 @@ export default function CreateFRSPage() {
 
       // post pake trpc
       toast.promise(
-        mutatePlan.mutateAsync({
-          title: data.title,
-          semester: data.semester,
-          matkul: matkul,
-          userId: session?.user.id as string,
-        }),
+        mutatePlan
+          .mutateAsync({
+            title: data.title,
+            semester: data.semester,
+            matkul: matkul,
+            userId: session?.user.id as string,
+          })
+          .then((res) => {
+            if (res.id) {
+              router.replace('/frs/' + session?.user.id);
+            }
+          }),
         {
           loading: 'Membuat rencana FRS...',
           success: 'Rencana FRS berhasil dibuat',
-          error: 'Gagal membuat rencana FRS' + mutatePlan.error?.message,
+          error: (error) => error?.message,
         }
       );
     }
-    toast.error('Tidak ada matkul yang diambil');
   };
 
   return (
@@ -97,31 +109,33 @@ export default function CreateFRSPage() {
           <section className='space-y-2'>
             <Typography variant='h4'>Matkul yang diambil</Typography>
             {classTaken.length > 0 ? (
-              <div className='grid grid-cols-4 gap-3'>
+              <div className='grid grid-cols-2  gap-2 lg:grid-cols-4'>
                 {classTaken.map((kelas, index) => (
                   <div
                     key={kelas.id}
-                    className='rounded-md border border-neutral-600 p-3'
+                    className='flex flex-col justify-between gap-2 rounded-md border border-neutral-600 p-2 lg:p-3'
                   >
-                    <Typography variant='body1' className='font-medium'>
-                      {kelas.subject} {kelas.code}
-                    </Typography>
-                    <Typography variant='body2'>
-                      {kelas.Lecturer.fullname}
-                    </Typography>
-                    <Typography variant='body2'>
-                      {kelas.day}, {kelas.Session.session_time}
-                    </Typography>
-
+                    <div>
+                      <Typography variant='body2' className='font-medium'>
+                        {kelas.subject} {kelas.code} ({kelas.sks} sks)
+                      </Typography>
+                      <Typography variant='body3' className='py-0.5'>
+                        {kelas.Lecturer.fullname}
+                      </Typography>
+                      <Typography variant='body3'>
+                        {kelas.day}, {kelas.Session.session_time}
+                      </Typography>
+                    </div>
                     <Button
-                      variant='filled'
+                      variant='danger'
                       size='sm'
-                      className='mt-3 bg-error-500 hover:bg-error-400'
+                      className='w-fit bg-error-500 hover:bg-error-400'
                       onClick={() => {
                         const classArray = [...classTaken];
                         classArray.splice(index, 1);
                         setClassTaken(classArray);
                       }}
+                      icon={BsTrashFill}
                     >
                       Drop
                     </Button>
@@ -134,8 +148,17 @@ export default function CreateFRSPage() {
               </Typography>
             )}
           </section>
+          <div className='py-3' />
+          <section>
+            <Typography variant='h4'>Total SKS : {sks}</Typography>
+          </section>
 
-          <Button variant='filled' type='submit' className='mt-3'>
+          <Button
+            variant='filled'
+            type='submit'
+            className='mt-3'
+            disabled={mutatePlan.isLoading}
+          >
             Simpan
           </Button>
 
