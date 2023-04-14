@@ -43,7 +43,7 @@ export default function PlanDetailPage() {
     <>
       {plan.isLoading ? (
         <div className='flex flex-col items-center justify-center'>
-          <Typography variant='label1'>Memuat Informais Rencana FRS</Typography>
+          <Typography variant='label1'>Memuat Informasi Rencana FRS</Typography>
           <Loader />
         </div>
       ) : (
