@@ -160,7 +160,7 @@ export const frsRouter = createTRPCRouter({
           userId: input.data.userId,
           totalSks: totalSks,
           Class: {
-            connect: input.data.matkul.map((item) => ({
+            set: input.data.matkul.map((item) => ({
               id: item,
             })),
           },

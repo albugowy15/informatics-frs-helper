@@ -85,7 +85,6 @@ export default function EditPlanPage() {
         return val.id;
       });
 
-      // post pake trpc
       toast.promise(
         mutatePlan
           .mutateAsync({
