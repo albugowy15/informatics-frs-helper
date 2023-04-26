@@ -6,6 +6,7 @@
     "dev": "next dev",
     "check": "yarn typecheck && yarn lint && yarn format",
     "build": "next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "start_db": "pscale connect informatics-frs prod --port 3309",
     "lint": "next lint",
