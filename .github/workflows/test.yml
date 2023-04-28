@@ -24,4 +24,4 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Eslint
-        uses: eslint --max-warnings=0 src
+        run: eslint --max-warnings=0 src
