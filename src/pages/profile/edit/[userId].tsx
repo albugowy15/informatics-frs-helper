@@ -63,10 +63,13 @@ export default function EditProfilePage() {
 
   const { handleSubmit } = methods;
 
-  const mutation = api.user.updateProfile.useMutation();
+  const mutation = api.user.updateProfile.useMutation({
+    onSuccess: () => {
+      router.replace('/profile/' + userId);
+    },
+  });
 
   const onSubmit: SubmitHandler<EditProfileFormType> = (data) => {
-    // toast.loading('Memperbarui profil...');
     toast.promise(
       mutation.mutateAsync({
         id: userId as string,

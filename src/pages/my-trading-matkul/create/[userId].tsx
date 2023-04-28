@@ -57,7 +57,7 @@ export default function CreateTradeMatkulPage() {
 
   const postTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation({
     onSuccess: () => {
-      router.push('/my-trading-matkul/' + userId);
+      router.replace('/my-trading-matkul/' + userId);
     },
   });
 
