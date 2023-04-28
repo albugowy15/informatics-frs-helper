@@ -107,6 +107,8 @@ export default function EditPlanPage() {
           error: (error) => error?.message,
         }
       );
+    } else {
+      toast.error('Kamu belum mengambil kelas apapun');
     }
   };
   return (

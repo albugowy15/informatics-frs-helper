@@ -70,6 +70,8 @@ export default function CreateFRSPage() {
           error: (error) => error?.message,
         }
       );
+    } else {
+      toast.error('Kamu belum mengambil matkul apapun');
     }
   };
 
