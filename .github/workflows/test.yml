@@ -23,8 +23,8 @@ jobs:
           node-version: 16
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Typecheck
-        uses: yarn typecheck
+      - name: TypeScript
+        run: yarn typecheck
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -34,5 +34,5 @@ jobs:
           node-version: 16
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Eslint
+      - name: ESlint
         run: yarn lint
