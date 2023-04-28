@@ -33,6 +33,7 @@ export default async function handler(
           id: user.id,
         },
       });
+      return;
     } catch (error) {
       return res.status(400).json({
         status: 'error',

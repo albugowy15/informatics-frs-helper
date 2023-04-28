@@ -29,6 +29,7 @@ export default async function handler(
         status: 'error',
         message: 'Request missing username or password',
       });
+      return;
     }
 
     const user = await prisma.user.findUnique({

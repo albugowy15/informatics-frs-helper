@@ -18,6 +18,13 @@ export const userRouter = createTRPCRouter({
       const userProfile = prisma.user
         .findUnique({
           where: { id: input.id },
+          select: {
+            email: true,
+            fullname: true,
+            idLine: true,
+            username: true,
+            whatsapp: true,
+          },
         })
         .then((user) => {
           if (!user) {
