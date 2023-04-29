@@ -10,6 +10,7 @@ import { asOptionalField } from '@/utils/zod';
 
 import { Button } from '@/components/Button';
 import { TextInput } from '@/components/Form';
+import HeadElement from '@/components/Head';
 
 export const EditProfileForm = z.object({
   fullname: z.string().optional(),
@@ -90,51 +91,54 @@ export default function EditProfilePage() {
   };
 
   return (
-    <main className='flex flex-col items-center justify-center gap-5'>
-      <Toaster />
-      <FormProvider {...methods}>
-        <form
-          className={clsx(
-            [mutation.isLoading ? 'cursor-not-allowed' : 'cursor-default'],
-            'flex w-full min-w-fit flex-col gap-3 rounded-lg border border-neutral-700 p-3 sm:w-[400px]'
-          )}
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <TextInput
-            label='Nama lengkap'
-            name='fullname'
-            placeholder='Contoh : John Doe'
-          />
-          <TextInput
-            label='Username'
-            name='username'
-            placeholder='Contoh : johndoe'
-          />
-          <TextInput
-            label='Email'
-            name='email'
-            placeholder='Contoh: johndoe@gmail.com'
-          />
-          <TextInput
-            label='ID Line'
-            name='idLine'
-            placeholder='Contoh: @johndoe'
-          />
-          <TextInput
-            label='WhatsApp'
-            name='whatsapp'
-            placeholder='Contoh: 081234567890'
-          />
-          <Button
-            variant='filled'
-            type='submit'
-            disabled={mutation.isLoading}
-            className='mx-auto w-fit'
+    <>
+      <HeadElement title='Edit Profile' />
+      <main className='flex flex-col items-center justify-center gap-5'>
+        <Toaster />
+        <FormProvider {...methods}>
+          <form
+            className={clsx(
+              [mutation.isLoading ? 'cursor-not-allowed' : 'cursor-default'],
+              'flex w-full min-w-fit flex-col gap-3 rounded-lg border border-neutral-700 p-3 sm:w-[400px]'
+            )}
+            onSubmit={handleSubmit(onSubmit)}
           >
-            Perbarui Profil
-          </Button>
-        </form>
-      </FormProvider>
-    </main>
+            <TextInput
+              label='Nama lengkap'
+              name='fullname'
+              placeholder='Contoh : John Doe'
+            />
+            <TextInput
+              label='Username'
+              name='username'
+              placeholder='Contoh : johndoe'
+            />
+            <TextInput
+              label='Email'
+              name='email'
+              placeholder='Contoh: johndoe@gmail.com'
+            />
+            <TextInput
+              label='ID Line'
+              name='idLine'
+              placeholder='Contoh: @johndoe'
+            />
+            <TextInput
+              label='WhatsApp'
+              name='whatsapp'
+              placeholder='Contoh: 081234567890'
+            />
+            <Button
+              variant='filled'
+              type='submit'
+              disabled={mutation.isLoading}
+              className='mx-auto w-fit'
+            >
+              Perbarui Profil
+            </Button>
+          </form>
+        </FormProvider>
+      </main>
+    </>
   );
 }

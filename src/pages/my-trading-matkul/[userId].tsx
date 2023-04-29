@@ -7,6 +7,7 @@ import { MdCreate } from 'react-icons/md';
 import { api } from '@/utils/api';
 
 import { Button, LinkButton } from '@/components/Button';
+import HeadElement from '@/components/Head';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
@@ -39,6 +40,7 @@ export default function MyTradeMatkulPage() {
   }
   return (
     <>
+      <HeadElement title='myTradeMatkul' />
       <Toaster />
       <div className='flex items-center gap-7'>
         <Typography variant='h4'>List My Trade Matkul</Typography>

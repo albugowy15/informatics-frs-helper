@@ -8,6 +8,7 @@ import { z } from 'zod';
 import BasicLink from '@/components/BasicLink';
 import { Button } from '@/components/Button';
 import { TextInput } from '@/components/Form';
+import HeadElement from '@/components/Head';
 import Typography from '@/components/Typography';
 
 const loginSchema = z.object({
@@ -45,36 +46,39 @@ export default function LoginPage() {
   };
 
   return (
-    <div className='mx-auto mt-6 w-full rounded-xl border border-neutral-500 p-4 md:w-96 md:p-10'>
-      <Typography variant='h2' className='pb-5 text-center'>
-        Silahkan Login
-      </Typography>
-      <Toaster />
-      <FormProvider {...methods}>
-        <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
-          <TextInput label='Username' name='username' />
-          <TextInput type='password' label='Password' name='password' />
+    <>
+      <HeadElement title='Login' />
+      <div className='mx-auto mt-6 w-full rounded-xl border border-neutral-500 p-4 md:w-96 md:p-10'>
+        <Typography variant='h2' className='pb-5 text-center'>
+          Silahkan Login
+        </Typography>
+        <Toaster />
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
+            <TextInput label='Username' name='username' />
+            <TextInput type='password' label='Password' name='password' />
 
-          <Button
-            className='flex w-full justify-center'
-            type='submit'
-            variant='filled'
-            disabled={buttonDisabled}
-          >
-            Login
-          </Button>
-          <Typography variant='body2' className='pt-3 text-center'>
-            Belum punya akun?{' '}
-            <BasicLink
-              className='font-medium text-primary-500'
-              href='/register'
+            <Button
+              className='flex w-full justify-center'
+              type='submit'
+              variant='filled'
+              disabled={buttonDisabled}
             >
-              Daftar
-            </BasicLink>
-          </Typography>
-        </form>
-      </FormProvider>
-    </div>
+              Login
+            </Button>
+            <Typography variant='body2' className='pt-3 text-center'>
+              Belum punya akun?{' '}
+              <BasicLink
+                className='font-medium text-primary-500'
+                href='/register'
+              >
+                Daftar
+              </BasicLink>
+            </Typography>
+          </form>
+        </FormProvider>
+      </div>
+    </>
   );
 }
 

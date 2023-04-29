@@ -16,6 +16,7 @@ import { api } from '@/utils/api';
 
 import { Button } from '@/components/Button';
 import { SelectInput, TextInput } from '@/components/Form';
+import HeadElement from '@/components/Head';
 import Typography from '@/components/Typography';
 
 import ClassPickSection, { ClassResponseData } from '@/ui/frs/ClassPickSection';
@@ -113,6 +114,7 @@ export default function EditPlanPage() {
   };
   return (
     <>
+      <HeadElement title='Edit myFRS' />
       <Toaster />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>

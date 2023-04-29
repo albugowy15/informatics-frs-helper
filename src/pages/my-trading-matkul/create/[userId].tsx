@@ -9,6 +9,7 @@ import { z } from 'zod';
 import { api } from '@/utils/api';
 
 import { Button } from '@/components/Button';
+import HeadElement from '@/components/Head';
 import Typography from '@/components/Typography';
 
 import HasMatkulSection from '@/ui/trading-matkul/HasMatkulSection';
@@ -79,6 +80,7 @@ export default function CreateTradeMatkulPage() {
 
   return (
     <>
+      <HeadElement title='Create myTradeMatkul' />
       <Toaster />
       <FormProvider {...methods}>
         <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>

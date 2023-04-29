@@ -7,6 +7,7 @@ import { MdDelete, MdEdit } from 'react-icons/md';
 import { api } from '@/utils/api';
 
 import { Button, LinkButton } from '@/components/Button';
+import HeadElement from '@/components/Head';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
@@ -41,6 +42,7 @@ export default function PlanDetailPage() {
   };
   return (
     <>
+      <HeadElement title='Detail myFRS' />
       {plan.isLoading ? (
         <div className='flex flex-col items-center justify-center'>
           <Typography variant='label1'>Memuat Informasi Rencana FRS</Typography>
