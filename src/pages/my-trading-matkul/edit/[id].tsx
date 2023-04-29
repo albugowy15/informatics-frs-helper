@@ -11,6 +11,7 @@ import { z } from 'zod';
 import { api } from '@/utils/api';
 
 import { Button } from '@/components/Button';
+import HeadElement from '@/components/Head';
 import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
@@ -95,6 +96,7 @@ export default function CreateTradeMatkulPage() {
 
   return (
     <>
+      <HeadElement title='Edit myTradeMatkul' />
       <Toaster />
       <FormProvider {...methods}>
         <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
