@@ -1,6 +1,6 @@
 name: Test
 
-on: 
+on:
   push:
     branches:
       - main
@@ -9,7 +9,7 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-  
+
 env:
   SKIP_ENV_VALIDATION: true
 
@@ -36,3 +36,14 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: ESlint
         run: yarn lint
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Prettier
+        run: yarn format:check
