@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import { NextSeo } from 'next-seo';
 import { useEffect, useState } from 'react';
 import {
   Controller,
@@ -13,10 +14,10 @@ import { BsTrashFill } from 'react-icons/bs';
 import { z } from 'zod';
 
 import { api } from '@/utils/api';
+import { renderPageTitle } from '@/utils/page';
 
 import { Button } from '@/components/Button';
 import { SelectInput, TextInput } from '@/components/Form';
-import HeadElement from '@/components/Head';
 import Typography from '@/components/Typography';
 
 import ClassPickSection, { ClassResponseData } from '@/ui/frs/ClassPickSection';
@@ -78,7 +79,7 @@ export default function CreateFRSPage() {
 
   return (
     <>
-      <HeadElement title='Create myFRS' />
+      <NextSeo title={renderPageTitle('Create myFRS')} />
       <Toaster />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>

@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
+import { NextSeo } from 'next-seo';
 
 import { api } from '@/utils/api';
+import { renderPageTitle } from '@/utils/page';
 
 import { LinkButton } from '@/components/Button';
-import HeadElement from '@/components/Head';
 import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
@@ -20,7 +21,7 @@ export default function ProfilePage() {
   );
   return (
     <>
-      <HeadElement title='Profile' />
+      <NextSeo title={renderPageTitle('Profile')} />
       <main className='flex flex-col items-center justify-center gap-5'>
         {userProfile.isLoading ? (
           <Loader />

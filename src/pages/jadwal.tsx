@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { NextSeo } from 'next-seo';
 import { useEffect, useState } from 'react';
 import {
   Controller,
@@ -11,11 +12,11 @@ import { BiFilterAlt } from 'react-icons/bi';
 import { z } from 'zod';
 
 import { api } from '@/utils/api';
+import { renderPageTitle } from '@/utils/page';
 
 import Accordion from '@/components/Accordion';
 import { Button } from '@/components/Button';
 import { SelectInput } from '@/components/Form';
-import HeadElement from '@/components/Head';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
@@ -78,8 +79,8 @@ export default function SchedulePage() {
 
   return (
     <>
-      <HeadElement
-        title='Informasi Jadwal'
+      <NextSeo
+        title={renderPageTitle('Informasi Jadwal')}
         description='Informasi Jadwal Mata Kuliah Informatika ITS'
       />
       <div className='gap-4 lg:flex'>
