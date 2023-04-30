@@ -1,11 +1,12 @@
 import { useSession } from 'next-auth/react';
+import { NextSeo } from 'next-seo';
 import { BsPencilSquare } from 'react-icons/bs';
 
 import { api } from '@/utils/api';
+import { renderPageTitle } from '@/utils/page';
 
 import BasicLink from '@/components/BasicLink';
 import { LinkButton } from '@/components/Button';
-import HeadElement from '@/components/Head';
 import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
@@ -19,7 +20,7 @@ export default function FRSPage() {
   );
   return (
     <>
-      <HeadElement title='myFRS' />
+      <NextSeo title={renderPageTitle('myFRS')} />
       <main>
         <Typography variant='h3'>My FRS Plan</Typography>
         <Typography variant='body1' className='py-3'>

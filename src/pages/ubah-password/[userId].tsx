@@ -1,14 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
+import { NextSeo } from 'next-seo';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast, Toaster } from 'react-hot-toast';
 import { z } from 'zod';
 
 import { api } from '@/utils/api';
+import { renderPageTitle } from '@/utils/page';
 
 import { Button } from '@/components/Button';
 import { TextInput } from '@/components/Form';
-import HeadElement from '@/components/Head';
 import Typography from '@/components/Typography';
 
 const changePasswordForm = z.object({
@@ -45,7 +46,7 @@ export default function ChangePasswordPage() {
   };
   return (
     <>
-      <HeadElement title='Ubah Password' />
+      <NextSeo title={renderPageTitle('Ubah Password')} />
       <Toaster />
       <div className='mx-auto mt-6 w-full rounded-xl border border-neutral-500 p-4 md:w-96 md:p-10'>
         <Typography variant='h5' className='pb-5 text-center'>

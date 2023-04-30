@@ -1,13 +1,14 @@
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { AiFillDelete } from 'react-icons/ai';
 import { MdCreate } from 'react-icons/md';
 
 import { api } from '@/utils/api';
+import { renderPageTitle } from '@/utils/page';
 
 import { Button, LinkButton } from '@/components/Button';
-import HeadElement from '@/components/Head';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
@@ -40,7 +41,7 @@ export default function MyTradeMatkulPage() {
   }
   return (
     <>
-      <HeadElement title='myTradeMatkul' />
+      <NextSeo title={renderPageTitle('myTradeMatkul')} />
       <Toaster />
       <div className='flex items-center gap-7'>
         <Typography variant='h4'>List My Trade Matkul</Typography>

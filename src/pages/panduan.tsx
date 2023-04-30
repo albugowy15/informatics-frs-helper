@@ -1,11 +1,14 @@
-import HeadElement from '@/components/Head';
+import { NextSeo } from 'next-seo';
+
+import { renderPageTitle } from '@/utils/page';
+
 import Typography from '@/components/Typography';
 
 export default function PanduanPage() {
   return (
     <>
-      <HeadElement
-        title='Panduan Penggunaan'
+      <NextSeo
+        title={renderPageTitle('Panduan Penggunaan')}
         description='Panduan penggunaan aplikasi Informatics FRS Helper'
       />
       <main className='space-y-2'>

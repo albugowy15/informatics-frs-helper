@@ -1,16 +1,17 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast, Toaster } from 'react-hot-toast';
 import { z } from 'zod';
 
 import { api } from '@/utils/api';
+import { renderPageTitle } from '@/utils/page';
 import { asOptionalField } from '@/utils/zod';
 
 import { Button } from '@/components/Button';
 import { TextInput } from '@/components/Form';
-import HeadElement from '@/components/Head';
 
 export const EditProfileForm = z.object({
   fullname: z.string().optional(),
@@ -92,7 +93,7 @@ export default function EditProfilePage() {
 
   return (
     <>
-      <HeadElement title='Edit Profile' />
+      <NextSeo title={renderPageTitle('Edit Profile')} />
       <main className='flex flex-col items-center justify-center gap-5'>
         <Toaster />
         <FormProvider {...methods}>

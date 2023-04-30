@@ -1,14 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { getSession, GetSessionParams, signIn } from 'next-auth/react';
+import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast, Toaster } from 'react-hot-toast';
 import { z } from 'zod';
 
+import { renderPageTitle } from '@/utils/page';
+
 import BasicLink from '@/components/BasicLink';
 import { Button } from '@/components/Button';
 import { TextInput } from '@/components/Form';
-import HeadElement from '@/components/Head';
 import Typography from '@/components/Typography';
 
 const loginSchema = z.object({
@@ -47,7 +49,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <HeadElement title='Login' />
+      <NextSeo title={renderPageTitle('Login')} />
       <div className='mx-auto mt-6 w-full rounded-xl border border-neutral-500 p-4 md:w-96 md:p-10'>
         <Typography variant='h2' className='pb-5 text-center'>
           Silahkan Login
