@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { AiOutlineHome, AiOutlineSchedule } from 'react-icons/ai';
+import { BiLogIn } from 'react-icons/bi';
 import {
   BsBook,
   BsFillPersonFill,
@@ -169,7 +170,11 @@ const Navbar = () => {
                     />
                   </>
                 ) : (
-                  <Button variant='filled' onClick={() => signIn()}>
+                  <Button
+                    variant='filled'
+                    icon={BiLogIn}
+                    onClick={() => signIn()}
+                  >
                     Login
                   </Button>
                 )}
@@ -218,7 +223,11 @@ const Navbar = () => {
             </BasicLink>
           </div>
           <div className=' flex items-center justify-between'>
-            <LinkButton href='/report' variant='outlined'>
+            <LinkButton
+              onClick={() => setOpenMenu(false)}
+              href='/report'
+              variant='outlined'
+            >
               Report
             </LinkButton>
             <Button variant='filled' onClick={() => setOpenMenu(false)}>
@@ -248,7 +257,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className='flex min-h-screen flex-col'>
       <Navbar />
-      <div className='container mx-auto px-3'>{children}</div>
+      <div className='container mx-auto px-3 py-6'>{children}</div>
       <Footer />
     </div>
   );
