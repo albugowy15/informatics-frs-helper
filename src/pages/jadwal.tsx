@@ -21,7 +21,7 @@ import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
 
-const Semester = ['1', '2', '3', '4', '5', '6'];
+const Semester = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
 const filterSchema = z.object({
   semester: z.string().nonempty({ message: 'Silahkan pilih semester' }),

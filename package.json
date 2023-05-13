@@ -1,14 +1,31 @@
 {
   "name": "informatics-frs-helper",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "author": {
+    "name": "Mohamad Kholid Bughowi",
+    "email": "kholidbughowi@gmail.com",
+    "url": "https://bughowi.com"
+  },
+  "categories": [
+    "Other",
+    "Education"
+  ],
+  "description": "Fullstack Typesafe Next.js application for ITS Informatics students to organize their FRS ",
+  "homepage": "https://informatics-frs-helper.vercel.app",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/albugowy15/informatics-frs-helper",
+    "directory": "src"
+  },
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "check": "yarn typecheck && yarn lint && yarn format",
     "build": "next build",
     "postinstall": "prisma generate",
     "start": "next start",
-    "start_db": "pscale connect informatics-frs prod --port 3309",
+    "start_db": "pscale connect informatics-frs main --port 3309",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && yarn format",
     "lint:strict": "eslint --max-warnings=0 src",
@@ -58,20 +75,10 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "lint-staged": "^13.2.2",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.2.8",
     "prisma": "^4.13.0",
     "tailwindcss": "^3.3.2"
-  },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "eslint --max-warnings=0",
-      "prettier -w"
-    ],
-    "**/*.{json,css,scss,md,webmanifest}": [
-      "prettier -w"
-    ]
   }
 }
