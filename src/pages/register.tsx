@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { getSession, GetSessionParams } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { z } from 'zod';
 
 import { renderPageTitle } from '@/utils/page';
@@ -25,11 +26,17 @@ const registerSchema = z.object({
     .nonempty({ message: 'Password tidak boleh kosong' })
     .min(8, { message: 'Password minimal 8 karakter' })
     .max(16, { message: 'Password maksimal 16 karakter' }),
+  confirmPassword: z
+    .string()
+    .nonempty({ message: 'Password tidak boleh kosong' })
+    .min(8, { message: 'Password minimal 8 karakter' })
+    .max(16, { message: 'Password maksimal 16 karakter' }),
 });
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
+  const router = useRouter();
   const methods = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
@@ -40,6 +47,7 @@ export default function RegisterPage() {
       .post('/api/register', data)
       .then(() => {
         toast.success('Akun berhasil dibuat, silahkan login');
+        router.push('/login');
         setButtonDisabled(false);
       })
       .catch((err) => {
@@ -60,6 +68,11 @@ export default function RegisterPage() {
             <TextInput label='Username' name='username' />
             <TextInput label='Email' name='email' />
             <TextInput type='password' label='Password' name='password' />
+            <TextInput
+              type='password'
+              label='Konfirmasi Password'
+              name='confirmPassword'
+            />
             <Button
               className='flex w-full justify-center'
               type='submit'
@@ -76,7 +89,6 @@ export default function RegisterPage() {
             </Typography>
           </form>
         </FormProvider>
-        <Toaster />
       </div>
     </>
   );
