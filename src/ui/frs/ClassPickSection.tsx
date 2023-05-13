@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import { api } from '@/utils/api';
 
@@ -72,7 +72,6 @@ const ClassPickSection = ({
 
   return (
     <section className='space-y-3'>
-      <Toaster />
       <Typography variant='h4'>Form Ambil Matkul</Typography>
       <div className='flex items-center gap-3 md:w-[60%]'>
         <SelectInput

@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { useEffect } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { FaSave } from 'react-icons/fa';
 import { z } from 'zod';
 
@@ -98,7 +98,6 @@ export default function CreateTradeMatkulPage() {
   return (
     <>
       <NextSeo title={renderPageTitle('Edit myTradeMatkul')} />
-      <Toaster />
       <FormProvider {...methods}>
         <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
           {tradeMatkulPost.isLoading && (
