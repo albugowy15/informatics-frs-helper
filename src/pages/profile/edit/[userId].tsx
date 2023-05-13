@@ -1,10 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
+import { getSession, GetSessionParams } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { z } from 'zod';
+
+import { prisma } from '@/server/db';
 
 import { api } from '@/utils/api';
 import { renderPageTitle } from '@/utils/page';
@@ -41,25 +44,31 @@ export const EditProfileForm = z.object({
 
 type EditProfileFormType = z.infer<typeof EditProfileForm>;
 
-export default function EditProfilePage() {
+type UserProfileProps = {
+  fullname: string | null;
+  username: string;
+  email: string;
+  idLine: string | null;
+  whatsapp: string | null;
+};
+
+export default function EditProfilePage({
+  userProfile,
+}: {
+  userProfile: UserProfileProps;
+}) {
   const router = useRouter();
   const { userId } = router.query;
-  const userProfile = api.user.getUserProfile.useQuery(
-    {
-      id: userId as string,
-    },
-    { enabled: userId !== undefined }
-  );
 
   const methods = useForm<EditProfileFormType>({
     resolver: zodResolver(EditProfileForm),
 
-    values: {
-      fullname: userProfile.data?.fullname ?? '',
-      username: userProfile.data?.username ?? '',
-      email: userProfile.data?.email ?? '',
-      idLine: userProfile.data?.idLine ?? '',
-      whatsapp: userProfile.data?.whatsapp ?? '',
+    defaultValues: {
+      fullname: userProfile.fullname ?? '',
+      username: userProfile.username ?? '',
+      email: userProfile.email ?? '',
+      idLine: userProfile.idLine ?? '',
+      whatsapp: userProfile.whatsapp ?? '',
     },
   });
 
@@ -141,4 +150,44 @@ export default function EditProfilePage() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps(
+  context: GetSessionParams | undefined
+) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  const userProfile = await prisma.user
+    .findUnique({
+      where: { id: session.user.id },
+      select: {
+        email: true,
+        fullname: true,
+        idLine: true,
+        username: true,
+        whatsapp: true,
+      },
+    })
+    .then((user) => {
+      if (!user) {
+        throw new Error('User not found');
+      }
+      return user;
+    });
+
+  return {
+    props: {
+      userProfile,
+      session,
+    },
+  };
 }
