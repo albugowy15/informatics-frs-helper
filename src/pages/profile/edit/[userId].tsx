@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { z } from 'zod';
 
 import { api } from '@/utils/api';
@@ -95,7 +95,6 @@ export default function EditProfilePage() {
     <>
       <NextSeo title={renderPageTitle('Edit Profile')} />
       <main className='flex flex-col items-center justify-center gap-5'>
-        <Toaster />
         <FormProvider {...methods}>
           <form
             className={clsx(

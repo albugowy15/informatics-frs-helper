@@ -9,7 +9,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { BsTrashFill } from 'react-icons/bs';
 import { z } from 'zod';
 
@@ -116,7 +116,6 @@ export default function EditPlanPage() {
   return (
     <>
       <NextSeo title={renderPageTitle('Edit myFRS')} />
-      <Toaster />
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <section className='space-y-2'>

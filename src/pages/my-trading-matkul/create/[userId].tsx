@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { FaSave } from 'react-icons/fa';
 import { z } from 'zod';
 
@@ -82,7 +82,6 @@ export default function CreateTradeMatkulPage() {
   return (
     <>
       <NextSeo title={renderPageTitle('Create myTradeMatkul')} />
-      <Toaster />
       <FormProvider {...methods}>
         <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
           {classOptions.data && (

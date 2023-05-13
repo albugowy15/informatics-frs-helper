@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { z } from 'zod';
 
 import { api } from '@/utils/api';
@@ -47,12 +47,10 @@ export default function ChangePasswordPage() {
   return (
     <>
       <NextSeo title={renderPageTitle('Ubah Password')} />
-      <Toaster />
       <div className='mx-auto mt-6 w-full rounded-xl border border-neutral-500 p-4 md:w-96 md:p-10'>
         <Typography variant='h5' className='pb-5 text-center'>
           Silahkan Ubah Password Anda
         </Typography>
-        <Toaster />
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
             <TextInput

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { MdDelete, MdEdit } from 'react-icons/md';
 
 import { api } from '@/utils/api';
@@ -53,7 +53,6 @@ export default function PlanDetailPage() {
         <>
           {plan.data ? (
             <>
-              <Toaster />
               <section>
                 <Typography variant='h4' className='mb-1'>
                   Informasi Plan FRS

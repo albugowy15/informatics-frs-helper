@@ -3,7 +3,7 @@ import { getSession, GetSessionParams, signIn } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { z } from 'zod';
 
 import { renderPageTitle } from '@/utils/page';
@@ -54,7 +54,6 @@ export default function LoginPage() {
         <Typography variant='h2' className='pb-5 text-center'>
           Silahkan Login
         </Typography>
-        <Toaster />
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
             <TextInput label='Username' name='username' />
