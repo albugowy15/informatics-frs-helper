@@ -20,7 +20,8 @@ import { Button } from '@/components/Button';
 import { SelectInput, TextInput } from '@/components/Form';
 import Typography from '@/components/Typography';
 
-import ClassPickSection, { ClassResponseData } from '@/ui/frs/ClassPickSection';
+import { PlanDetailClass } from '@/pages/frs/edit/[planId]';
+import ClassPickSection from '@/ui/frs/ClassPickSection';
 
 const createFRSForm = z.object({
   title: z
@@ -34,10 +35,10 @@ const createFRSForm = z.object({
 type CreateFRSForm = z.infer<typeof createFRSForm>;
 export default function CreateFRSPage() {
   const router = useRouter();
-  const [classTaken, setClassTaken] = useState<ClassResponseData[]>([]);
+  const [classTaken, setClassTaken] = useState<PlanDetailClass[]>([]);
   const [sks, setSks] = useState(0);
   useEffect(() => {
-    setSks(classTaken.reduce((acc, cur) => acc + cur.sks, 0));
+    setSks(classTaken.reduce((acc, cur) => acc + cur.Matkul.sks, 0));
   }, [classTaken]);
   const { data: session } = useSession();
   const methods = useForm<CreateFRSForm>({
@@ -49,7 +50,7 @@ export default function CreateFRSPage() {
   const onSubmit: SubmitHandler<CreateFRSForm> = (data) => {
     if (classTaken.length > 0) {
       const matkul = classTaken.map((val) => {
-        return val.id;
+        return val.Matkul.id;
       });
 
       // post pake trpc
@@ -116,12 +117,13 @@ export default function CreateFRSPage() {
               <div className='grid grid-cols-2  gap-2 lg:grid-cols-4'>
                 {classTaken.map((kelas, index) => (
                   <div
-                    key={kelas.id}
+                    key={index}
                     className='flex flex-col justify-between gap-2 rounded-md border border-neutral-600 p-2 lg:p-3'
                   >
                     <div>
                       <Typography variant='body2' className='font-medium'>
-                        {kelas.subject} {kelas.code} ({kelas.sks} sks)
+                        {kelas.Matkul.name} {kelas.code} ({kelas.Matkul.sks}{' '}
+                        sks)
                       </Typography>
                       <Typography variant='body3' className='py-0.5'>
                         {kelas.Lecturer.fullname}

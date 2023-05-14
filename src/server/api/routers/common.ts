@@ -49,6 +49,7 @@ export const commonRouter = createTRPCRouter({
               : input.matkul,
         },
         select: {
+          id: true,
           name: true,
           semester: true,
           sks: true,
@@ -57,7 +58,7 @@ export const commonRouter = createTRPCRouter({
               code: true,
               day: true,
               id: true,
-              Lecturer: { select: { code: true, fullname: true } },
+              Lecturer: { select: { code: true, fullname: true, id: true } },
               Session: {
                 select: { session_time: true },
               },
