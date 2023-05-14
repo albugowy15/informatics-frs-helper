@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
@@ -13,6 +14,8 @@ import { toast } from 'react-hot-toast';
 import { BsTrashFill } from 'react-icons/bs';
 import { z } from 'zod';
 
+import { prisma } from '@/server/db';
+
 import { api } from '@/utils/api';
 import { renderPageTitle } from '@/utils/page';
 
@@ -20,7 +23,7 @@ import { Button } from '@/components/Button';
 import { SelectInput, TextInput } from '@/components/Form';
 import Typography from '@/components/Typography';
 
-import ClassPickSection, { ClassResponseData } from '@/ui/frs/ClassPickSection';
+import ClassPickSection from '@/ui/frs/ClassPickSection';
 
 const editFRSForm = z.object({
   title: z
@@ -33,58 +36,88 @@ const editFRSForm = z.object({
 
 type EditFRSForm = z.infer<typeof editFRSForm>;
 
-export default function EditPlanPage() {
+export type PlanDetailClass = {
+  code: string;
+  Matkul: {
+    semester: number;
+    name: string;
+    sks: number;
+    id: string;
+  };
+  Session: {
+    session_time: string;
+  };
+  Lecturer: {
+    id: string;
+    fullname: string;
+  };
+  day: string;
+};
+
+type PlanDetailProps = {
+  title: string;
+  semester: number;
+  Class: PlanDetailClass[];
+  id: string;
+  totalSks: number;
+};
+
+export default function EditPlanPage({
+  planDetail,
+}: {
+  planDetail: PlanDetailProps;
+}) {
   const router = useRouter();
   const { data: session } = useSession();
   const { planId } = router.query;
-  const planDetail = api.frs.getPlanDetail.useQuery(
-    {
-      planId: planId as string,
-    },
-    { enabled: Boolean(planId) }
-  );
-  useEffect(() => {
-    if (planDetail.data) {
-      setValue('title', planDetail.data.title);
-      setValue('semester', planDetail.data.semester);
-      const classFromPlan: ClassResponseData[] = planDetail.data.Class.map(
-        (item) => {
-          return {
-            code: item.code,
-            id: item.id,
-            subject: item.Matkul.name,
-            Session: {
-              session_time: item.Session.session_time,
-            },
-            Lecturer: {
-              code: item.Lecturer.id,
-              fullname: item.Lecturer.fullname,
-            },
-            day: item.day,
-            sks: item.Matkul.sks,
-          };
-        }
-      );
-      setClassTaken(classFromPlan);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [planId, planDetail.data]);
+  // useEffect(() => {
+  //   if (planDetail.data) {
+  //     setValue('title', planDetail.data.title);
+  //     setValue('semester', planDetail.data.semester);
+  //     const classFromPlan: ClassResponseData[] = planDetail.data.Class.map(
+  //       (item) => {
+  //         return {
+  //           code: item.code,
+  //           id: item.id,
+  //           subject: item.Matkul.name,
+  //           Session: {
+  //             session_time: item.Session.session_time,
+  //           },
+  //           Lecturer: {
+  //             code: item.Lecturer.id,
+  //             fullname: item.Lecturer.fullname,
+  //           },
+  //           day: item.day,
+  //           sks: item.Matkul.sks,
+  //         };
+  //       }
+  //     );
+  //     setClassTaken(classFromPlan);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [ planDetail.data]);
   const methods = useForm<EditFRSForm>({
     resolver: zodResolver(editFRSForm),
     mode: 'onTouched',
+    defaultValues: {
+      title: planDetail.title,
+      semester: planDetail.semester,
+    },
   });
-  const { control, setValue, handleSubmit } = methods;
-  const [classTaken, setClassTaken] = useState<ClassResponseData[]>([]);
+  const { control, handleSubmit } = methods;
+  const [classTaken, setClassTaken] = useState<PlanDetailClass[]>(
+    planDetail.Class
+  );
   const [sks, setSks] = useState(0);
 
   useEffect(() => {
-    setSks(classTaken.reduce((acc, cur) => acc + cur.sks, 0));
+    setSks(classTaken.reduce((acc, cur) => acc + cur.Matkul.sks, 0));
   }, [classTaken]);
   const mutatePlan = api.frs.updatePlan.useMutation();
   const onSubmit: SubmitHandler<EditFRSForm> = (data) => {
     if (classTaken.length > 0) {
       const matkul = classTaken.map((val) => {
-        return val.id;
+        return val.Matkul.id;
       });
 
       toast.promise(
@@ -152,12 +185,13 @@ export default function EditPlanPage() {
               <div className='grid grid-cols-2  gap-2 lg:grid-cols-4'>
                 {classTaken.map((kelas, index) => (
                   <div
-                    key={kelas.id}
+                    key={index}
                     className='flex flex-col justify-between gap-2 rounded-md border border-neutral-600 p-2 lg:p-3'
                   >
                     <div>
                       <Typography variant='body2' className='font-medium'>
-                        {kelas.subject} {kelas.code} ({kelas.sks} sks)
+                        {kelas.Matkul.name} {kelas.code} ({kelas.Matkul.sks}{' '}
+                        sks)
                       </Typography>
                       <Typography variant='body3' className='py-0.5'>
                         {kelas.Lecturer.fullname}
@@ -213,4 +247,59 @@ export default function EditPlanPage() {
       </FormProvider>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  if (context.params === undefined) {
+    return {
+      notFound: true,
+    };
+  }
+  const classTaken = await prisma.plan.findUnique({
+    select: {
+      id: true,
+      semester: true,
+      title: true,
+      totalSks: true,
+      Class: {
+        select: {
+          code: true,
+          day: true,
+          id: true,
+          Lecturer: {
+            select: {
+              id: true,
+              fullname: true,
+            },
+          },
+          Session: {
+            select: {
+              session_time: true,
+            },
+          },
+          Matkul: {
+            select: {
+              id: true,
+              name: true,
+              semester: true,
+              sks: true,
+            },
+          },
+        },
+      },
+    },
+    where: {
+      id: context.params.id as string,
+    },
+  });
+
+  if (classTaken == null) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { classTaken },
+  };
 }

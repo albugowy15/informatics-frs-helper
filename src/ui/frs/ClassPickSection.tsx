@@ -8,26 +8,15 @@ import { Button } from '@/components/Button';
 import { SelectInput } from '@/components/Form';
 import Typography from '@/components/Typography';
 
-export type ClassResponseData = {
-  code: string;
-  id: string;
-  subject: string;
-  Session: {
-    session_time: string;
-  };
-  Lecturer: {
-    code: string;
-    fullname: string;
-  };
-  day: string;
-  sks: number;
-};
+import { PlanDetailClass } from '@/pages/frs/edit/[planId]';
 
 function checkValidPick(
-  listKelas: ClassResponseData[],
-  kelas: ClassResponseData
+  listKelas: PlanDetailClass[],
+  kelas: PlanDetailClass
 ): { isValid: boolean; errorMessage: string } {
-  const checkSameClass = listKelas.find((val) => val.subject == kelas.subject);
+  const checkSameClass = listKelas.find(
+    (val) => val.Matkul.name == kelas.Matkul.name
+  );
   if (checkSameClass) {
     return {
       isValid: false,
@@ -53,8 +42,8 @@ const ClassPickSection = ({
   classTaken,
   setClassTaken,
 }: {
-  classTaken: ClassResponseData[];
-  setClassTaken: Dispatch<SetStateAction<ClassResponseData[]>>;
+  classTaken: PlanDetailClass[];
+  setClassTaken: Dispatch<SetStateAction<PlanDetailClass[]>>;
 }) => {
   const [semester, setSemester] = useState<number>();
   const [subject, setSubject] = useState<string>();
@@ -128,17 +117,25 @@ const ClassPickSection = ({
                           size='sm'
                           className='mt-3'
                           onClick={() => {
-                            const data: ClassResponseData = {
+                            const data: PlanDetailClass = {
                               ...kelas,
-                              subject: subject.name,
-                              sks: subject.sks,
+                              Matkul: {
+                                name: subject.name,
+                                sks: subject.sks,
+                                id: subject.id,
+                                semester: subject.semester,
+                              },
+                              Lecturer: {
+                                fullname: kelas.Lecturer.fullname,
+                                id: kelas.Lecturer.id,
+                              },
                             };
                             const { isValid, errorMessage } = checkValidPick(
                               classTaken,
                               data
                             );
                             if (isValid) {
-                              setClassTaken((prev: ClassResponseData[]) => [
+                              setClassTaken((prev: PlanDetailClass[]) => [
                                 ...prev,
                                 data,
                               ]);
