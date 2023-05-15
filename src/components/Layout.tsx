@@ -208,10 +208,18 @@ const Navbar = () => {
             <BasicLink
               onClick={() => setOpenMenu(false)}
               className='flex items-center gap-3 py-3 hover:text-primary-400'
+              href='/trending'
+            >
+              <AiOutlineSchedule className='text-lg' />
+              Kelas Trending
+            </BasicLink>
+            <BasicLink
+              onClick={() => setOpenMenu(false)}
+              className='flex items-center gap-3 py-3 hover:text-primary-400'
               href='/jadwal'
             >
               <AiOutlineSchedule className='text-lg' />
-              Jadwal Matkul
+              Jadwal Kelas
             </BasicLink>
             <BasicLink
               onClick={() => setOpenMenu(false)}
@@ -219,7 +227,7 @@ const Navbar = () => {
               href='/trading-matkul'
             >
               <TbArrowsExchange2 className='text-lg' />
-              Trading Matkul
+              Trading Kelas
             </BasicLink>
           </div>
           <div className=' flex items-center justify-between'>

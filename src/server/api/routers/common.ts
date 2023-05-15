@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import {
@@ -37,6 +38,7 @@ export const commonRouter = createTRPCRouter({
       z.object({
         semester: z.number().min(1).max(6),
         matkul: z.string().optional(),
+        with_taken: z.boolean().optional(),
       })
     )
     .query(async ({ input }) => {
@@ -62,6 +64,7 @@ export const commonRouter = createTRPCRouter({
               Session: {
                 select: { session_time: true },
               },
+              taken: input.with_taken ? input.with_taken : false,
             },
           },
         },
@@ -148,5 +151,33 @@ export const commonRouter = createTRPCRouter({
       listSubject,
       listClass,
     };
+  }),
+  getTrendingClasses: publicProcedure.query(async () => {
+    const classes = await prisma.class.findMany({
+      select: {
+        code: true,
+        day: true,
+        id: true,
+        Lecturer: { select: { fullname: true, id: true } },
+        Matkul: { select: { name: true, id: true } },
+        Session: {
+          select: { session_time: true },
+        },
+        taken: true,
+      },
+      orderBy: {
+        taken: 'desc',
+      },
+      take: 10,
+    });
+
+    if (classes == null || classes.length == 0) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'Tidak ada kelas yang tersedia',
+      });
+    }
+
+    return classes;
   }),
 });
