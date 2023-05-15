@@ -405,6 +405,19 @@ export const frsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
+      const previousClasses = await prisma.class.findMany({
+        select: {
+          id: true,
+        },
+        where: {
+          Plan: {
+            some: {
+              id: input.planId,
+            },
+          },
+        },
+      });
+
       const deletedPlan = await prisma.plan.delete({
         select: {
           id: true,
@@ -414,32 +427,46 @@ export const frsRouter = createTRPCRouter({
         },
       });
 
-      const updatedClass = await prisma.class.updateMany({
-        where: {
-          Plan: {
-            some: {
-              id: input.planId,
-            },
-          },
-        },
-        data: {
-          taken: {
-            decrement: 1,
-          },
-        },
-      });
-
-      if (!updatedClass) {
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Gagal mengupdate kelas',
-        });
-      }
-
-      if (deletedPlan == undefined) {
+      if (deletedPlan == undefined || deletedPlan == null) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Rencana FRS Tidak Ditemukan',
+        });
+      }
+
+      try {
+        await prisma.$queryRaw`DELETE FROM _ClassToPlan WHERE "A" = ${input.planId}`;
+      } catch (e) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Gagal menghapus kelas',
+        });
+      }
+
+      if (previousClasses.length == 0) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Tidak ada kelas yang diambil sebelumnya',
+        });
+      }
+
+      try {
+        await prisma.class.updateMany({
+          where: {
+            id: {
+              in: previousClasses.map((item) => item.id),
+            },
+          },
+          data: {
+            taken: {
+              decrement: 1,
+            },
+          },
+        });
+      } catch (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Gagal mengupdate kelas yang diambil sebelumnya',
         });
       }
 

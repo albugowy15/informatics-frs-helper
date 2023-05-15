@@ -2,7 +2,11 @@ import { Menu } from '@headlessui/react';
 import clsx from 'clsx';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
-import { AiOutlineHome, AiOutlineSchedule } from 'react-icons/ai';
+import {
+  AiOutlineFire,
+  AiOutlineHome,
+  AiOutlineSchedule,
+} from 'react-icons/ai';
 import { BiLogIn } from 'react-icons/bi';
 import {
   BsBook,
@@ -210,7 +214,7 @@ const Navbar = () => {
               className='flex items-center gap-3 py-3 hover:text-primary-400'
               href='/trending'
             >
-              <AiOutlineSchedule className='text-lg' />
+              <AiOutlineFire className='text-lg' />
               Kelas Trending
             </BasicLink>
             <BasicLink
