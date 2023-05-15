@@ -50,7 +50,7 @@ export default function CreateFRSPage() {
   const onSubmit: SubmitHandler<CreateFRSForm> = (data) => {
     if (classTaken.length > 0) {
       const matkul = classTaken.map((val) => {
-        return val.Matkul.id;
+        return val.id;
       });
 
       // post pake trpc

@@ -37,6 +37,7 @@ const editFRSForm = z.object({
 type EditFRSForm = z.infer<typeof editFRSForm>;
 
 export type PlanDetailClass = {
+  id: string;
   code: string;
   Matkul: {
     semester: number;
@@ -100,7 +101,7 @@ export default function EditPlanPage({
     resolver: zodResolver(editFRSForm),
     mode: 'onTouched',
     defaultValues: {
-      title: planDetail.title,
+      title: planDetail.title ?? '',
       semester: planDetail.semester,
     },
   });
@@ -117,7 +118,7 @@ export default function EditPlanPage({
   const onSubmit: SubmitHandler<EditFRSForm> = (data) => {
     if (classTaken.length > 0) {
       const matkul = classTaken.map((val) => {
-        return val.Matkul.id;
+        return val.id;
       });
 
       toast.promise(
@@ -255,7 +256,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       notFound: true,
     };
   }
-  const classTaken = await prisma.plan.findUnique({
+  const classTaken: PlanDetailProps | null = await prisma.plan.findUnique({
     select: {
       id: true,
       semester: true,
@@ -289,7 +290,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       },
     },
     where: {
-      id: context.params.id as string,
+      id: context.params.planId as string,
     },
   });
 
@@ -300,6 +301,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   }
 
   return {
-    props: { classTaken },
+    props: { planDetail: classTaken },
   };
 }
