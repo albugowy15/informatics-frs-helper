@@ -5,6 +5,7 @@ import { api } from '@/utils/api';
 
 import Accordion from '@/components/Accordion';
 import { Button } from '@/components/Button';
+import CounterBadge from '@/components/CounterBadge';
 import { SelectInput } from '@/components/Form';
 import Typography from '@/components/Typography';
 
@@ -55,6 +56,7 @@ const ClassPickSection = ({
     {
       semester: semester as number,
       matkul: subject,
+      with_taken: true,
     },
     { enabled: Boolean(subject || semester) }
   );
@@ -111,6 +113,8 @@ const ClassPickSection = ({
                         <Typography variant='body3'>
                           {kelas.day}, {kelas.Session.session_time}
                         </Typography>
+
+                        <CounterBadge count={kelas.taken} />
 
                         <Button
                           variant='filled'
