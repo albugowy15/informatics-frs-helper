@@ -16,6 +16,7 @@ import { renderPageTitle } from '@/utils/page';
 
 import Accordion from '@/components/Accordion';
 import { Button } from '@/components/Button';
+import CounterBadge from '@/components/CounterBadge';
 import { SelectInput } from '@/components/Form';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
@@ -58,6 +59,7 @@ export default function SchedulePage() {
     {
       matkul: submitedData?.matkul,
       semester: parseInt(submitedData?.semester as string),
+      with_taken: true,
     },
     { enabled: Boolean(submitedData) }
   );
@@ -184,6 +186,8 @@ export default function SchedulePage() {
                         <Typography variant='body3'>
                           {item.day}, {item.Session.session_time} WIB
                         </Typography>
+
+                        <CounterBadge count={item.taken} />
                       </div>
                     ))}
                   </div>
