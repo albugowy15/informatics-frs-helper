@@ -165,6 +165,11 @@ export const commonRouter = createTRPCRouter({
         },
         taken: true,
       },
+      where: {
+        taken: {
+          gt: 0,
+        },
+      },
       orderBy: {
         taken: 'desc',
       },
