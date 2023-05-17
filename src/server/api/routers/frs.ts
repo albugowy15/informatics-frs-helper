@@ -19,7 +19,14 @@ export const frsRouter = createTRPCRouter({
         userId: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
+      if (input.userId !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Tidak dapat membuat plan FRS',
+        });
+      }
+
       const classes = await prisma.class.findMany({
         select: {
           Matkul: {
@@ -148,7 +155,14 @@ export const frsRouter = createTRPCRouter({
         }),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
+      // check user Id
+      if (input.data.userId !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Tidak dapat memperbarui rencana FRS',
+        });
+      }
       // check plan Id
       const returnedPlanId = await prisma.plan.findUnique({
         select: {
@@ -350,13 +364,14 @@ export const frsRouter = createTRPCRouter({
         planId: z.string(),
       })
     )
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const classTaken = await prisma.plan.findUnique({
         select: {
           id: true,
           semester: true,
           title: true,
           totalSks: true,
+          userId: true,
           Class: {
             select: {
               code: true,
@@ -396,6 +411,13 @@ export const frsRouter = createTRPCRouter({
         });
       }
 
+      if (classTaken.userId !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Tidak dapat mengakses rencana FRS',
+        });
+      }
+
       return classTaken;
     }),
   deletePlan: protectedProcedure
@@ -404,7 +426,31 @@ export const frsRouter = createTRPCRouter({
         planId: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
+      const plannedFRS = await prisma.plan.findUnique({
+        where: {
+          id: input.planId,
+        },
+        select: {
+          id: true,
+          userId: true,
+        },
+      });
+
+      if (!plannedFRS) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Rencana FRS Tidak Ditemukan',
+        });
+      }
+
+      if (plannedFRS.userId !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Tidak dapat menghapus rencana FRS',
+        });
+      }
+
       const previousClasses = await prisma.class.findMany({
         select: {
           id: true,
