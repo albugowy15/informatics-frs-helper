@@ -1,5 +1,6 @@
+import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 
 import { api } from '@/utils/api';
@@ -89,4 +90,43 @@ export default function ProfilePage() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  if (!context.params) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const { userId } = context.params;
+
+  if (userId == undefined) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const session = await getSession(context);
+  if (session == null) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  if (userId !== session.user.id) {
+    return {
+      redirect: {
+        destination: '/403',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }

@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { useEffect, useState } from 'react';
 import {
@@ -58,6 +58,7 @@ export type PlanDetailClass = {
 type PlanDetailProps = {
   title: string;
   semester: number;
+  userId: string | null;
   Class: PlanDetailClass[];
   id: string;
   totalSks: number;
@@ -71,32 +72,7 @@ export default function EditPlanPage({
   const router = useRouter();
   const { data: session } = useSession();
   const { planId } = router.query;
-  // useEffect(() => {
-  //   if (planDetail.data) {
-  //     setValue('title', planDetail.data.title);
-  //     setValue('semester', planDetail.data.semester);
-  //     const classFromPlan: ClassResponseData[] = planDetail.data.Class.map(
-  //       (item) => {
-  //         return {
-  //           code: item.code,
-  //           id: item.id,
-  //           subject: item.Matkul.name,
-  //           Session: {
-  //             session_time: item.Session.session_time,
-  //           },
-  //           Lecturer: {
-  //             code: item.Lecturer.id,
-  //             fullname: item.Lecturer.fullname,
-  //           },
-  //           day: item.day,
-  //           sks: item.Matkul.sks,
-  //         };
-  //       }
-  //     );
-  //     setClassTaken(classFromPlan);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [ planDetail.data]);
+
   const methods = useForm<EditFRSForm>({
     resolver: zodResolver(editFRSForm),
     mode: 'onTouched',
@@ -261,6 +237,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       id: true,
       semester: true,
       title: true,
+      userId: true,
       totalSks: true,
       Class: {
         select: {
@@ -297,6 +274,25 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (classTaken == null) {
     return {
       notFound: true,
+    };
+  }
+
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  if (session.user.id !== classTaken.userId) {
+    return {
+      redirect: {
+        destination: '/403',
+        permanent: false,
+      },
     };
   }
 

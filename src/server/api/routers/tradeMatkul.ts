@@ -18,7 +18,15 @@ export const tradeMatkulRouter = createTRPCRouter({
         searchClassId: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
+      // check tradematkul for user
+      if (input.userId !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Anda Tidak memiliki akses untuk membuat trade matkul ini',
+        });
+      }
+
       const hasClass = await prisma.class.findUnique({
         select: {
           id: true,
@@ -78,7 +86,32 @@ export const tradeMatkulRouter = createTRPCRouter({
         searchClassId: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
+      // check tradematkul for user
+      const tradeMatkul = await prisma.tradeMatkul.findUnique({
+        select: {
+          id: true,
+          userId: true,
+        },
+        where: {
+          id: input.tradeMatkulId,
+        },
+      });
+
+      if (!tradeMatkul) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Tidak dapat menemukan trade matkul',
+        });
+      }
+
+      if (tradeMatkul.userId !== ctx.session.user.id) {
+        throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: 'Anda Tidak memiliki akses untuk mengubah trade matkul ini',
+        });
+      }
+
       const hasClass = await prisma.class.findUnique({
         select: {
           id: true,
@@ -119,9 +152,7 @@ export const tradeMatkulRouter = createTRPCRouter({
       }
 
       const result = prisma.tradeMatkul.update({
-        where: {
-          id: input.tradeMatkulId,
-        },
+        where: {},
         data: {
           description: input.description,
           hasMatkulId: hasClass.id,

@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -104,6 +104,9 @@ export default function CreateTradeMatkulPage({
   const updateTradeMatkul = api.tradeMatkul.updateTradeMatkul.useMutation({
     onSuccess() {
       router.push('/my-trading-matkul/' + session?.user.id);
+    },
+    onError(error) {
+      toast.error(error.message);
     },
   });
 
@@ -230,12 +233,32 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           code: true,
         },
       },
+      userId: true,
     },
   });
 
   if (!tradeMatkulPost) {
     return {
       notFound: true,
+    };
+  }
+
+  const session = await getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  if (tradeMatkulPost.userId !== session.user.id) {
+    return {
+      redirect: {
+        destination: '/403',
+        permanent: false,
+      },
     };
   }
 
