@@ -1,6 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { GetServerSidePropsContext } from 'next';
-import { getSession, useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
@@ -25,7 +23,6 @@ const changePasswordForm = z.object({
 
 type CreatePasswordForm = z.infer<typeof changePasswordForm>;
 export default function ChangePasswordPage() {
-  const { data: session } = useSession();
   const methods = useForm<CreatePasswordForm>({
     resolver: zodResolver(changePasswordForm),
   });
@@ -36,7 +33,6 @@ export default function ChangePasswordPage() {
       mutatePassword.mutateAsync({
         new_password: data.new_password,
         old_password: data.old_password,
-        userId: session?.user.id as string,
       }),
       {
         success: 'Password berhasil diubah',
@@ -78,39 +74,4 @@ export default function ChangePasswordPage() {
       </div>
     </>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.params) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const { userId } = context.params;
-
-  if (userId == undefined) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const session = await getSession(context);
-  if (session == null) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  if (userId !== session.user.id) {
-    return {
-      redirect: {
-        destination: '/403',
-        permanent: false,
-      },
-    };
-  }
 }

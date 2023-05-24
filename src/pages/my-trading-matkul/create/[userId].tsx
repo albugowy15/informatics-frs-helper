@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { zodResolver } from '@hookform/resolvers/zod';
-import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { getSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -71,7 +69,6 @@ export default function CreateTradeMatkulPage() {
         description: data.description,
         hasClassId: data.hasClass,
         searchClassId: data.searchClass,
-        userId: userId as string,
       }),
       {
         loading: 'Membuat post trade matkul',
@@ -133,43 +130,4 @@ export default function CreateTradeMatkulPage() {
       </FormProvider>
     </>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.params) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const { userId } = context.params;
-
-  if (userId == undefined) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const session = await getSession(context);
-  if (session == null) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  if (userId !== session.user.id) {
-    return {
-      redirect: {
-        destination: '/403',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
 }
