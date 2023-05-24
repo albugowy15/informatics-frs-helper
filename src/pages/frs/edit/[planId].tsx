@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { useEffect, useState } from 'react';
 import {
@@ -70,7 +70,6 @@ export default function EditPlanPage({
   planDetail: PlanDetailProps;
 }) {
   const router = useRouter();
-  const { data: session } = useSession();
   const { planId } = router.query;
 
   const methods = useForm<EditFRSForm>({
@@ -109,7 +108,7 @@ export default function EditPlanPage({
           })
           .then((res) => {
             if (res.id) {
-              router.replace('/frs/' + session?.user.id);
+              router.replace('/frs');
             }
           }),
         {

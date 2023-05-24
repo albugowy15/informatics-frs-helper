@@ -143,7 +143,9 @@ export const tradeMatkulRouter = createTRPCRouter({
       }
 
       const result = prisma.tradeMatkul.update({
-        where: {},
+        where: {
+          id: tradeMatkul.id,
+        },
         data: {
           description: input.description,
           hasMatkulId: hasClass.id,

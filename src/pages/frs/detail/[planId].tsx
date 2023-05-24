@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -15,7 +14,6 @@ import Typography from '@/components/Typography';
 
 export default function PlanDetailPage() {
   const router = useRouter();
-  const { data: session } = useSession();
   const plan = api.frs.getPlanDetail.useQuery(
     {
       planId: router.query.planId as string,
@@ -31,7 +29,7 @@ export default function PlanDetailPage() {
     toast.promise(
       deletePlan.mutateAsync({ planId: planId }).then((res) => {
         if (res.id) {
-          router.replace('/frs/' + session?.user.id);
+          router.replace('/frs');
         }
       }),
       {

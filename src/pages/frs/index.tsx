@@ -1,4 +1,3 @@
-import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { BsPencilSquare } from 'react-icons/bs';
 
@@ -11,7 +10,6 @@ import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
 export default function FRSPage() {
-  const { data } = useSession();
   const plans = api.frs.getAllPlans.useQuery();
   return (
     <>
@@ -57,7 +55,7 @@ export default function FRSPage() {
                 {plans.data?.length !== 3 ? (
                   <LinkButton
                     variant='tonal'
-                    href={'/frs/create/' + data?.user.id}
+                    href='/frs/create'
                     className='my-2'
                     icon={BsPencilSquare}
                   >

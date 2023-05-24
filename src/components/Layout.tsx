@@ -70,7 +70,7 @@ const Navbar = () => {
                                       : 'text-neutral-200',
                                   ]
                                 )}
-                                href={'/profile/' + session.user.id}
+                                href='/profile'
                               >
                                 <BsPersonCircle
                                   className={clsx([
@@ -92,7 +92,7 @@ const Navbar = () => {
                                       : 'text-neutral-200',
                                   ]
                                 )}
-                                href={'/ubah-password/' + session.user.id}
+                                href='/ubah-password'
                               >
                                 <BsLockFill
                                   className={clsx([
@@ -114,7 +114,7 @@ const Navbar = () => {
                                       : 'text-neutral-200',
                                   ]
                                 )}
-                                href={'/frs/' + session.user.id}
+                                href='/frs'
                               >
                                 <BsNewspaper
                                   className={clsx([
@@ -136,7 +136,7 @@ const Navbar = () => {
                                       : 'text-neutral-200',
                                   ]
                                 )}
-                                href={'/my-trading-matkul/' + session.user.id}
+                                href='/my-trading-matkul'
                               >
                                 <TbArrowsExchange2
                                   className={clsx([

@@ -1,4 +1,3 @@
-import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 
 import { api } from '@/utils/api';
@@ -9,7 +8,6 @@ import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
 export default function ProfilePage() {
-  const { data } = useSession();
   const userProfile = api.user.getUserProfile.useQuery();
   return (
     <>
@@ -70,10 +68,7 @@ export default function ProfilePage() {
                 </span>
               </Typography>
             </div>
-            <LinkButton
-              href={'/profile/edit/' + data?.user.id}
-              variant='filled'
-            >
+            <LinkButton href='/profile/edit' variant='filled'>
               Edit Profile
             </LinkButton>
           </>

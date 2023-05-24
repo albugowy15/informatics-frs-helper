@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc';
 import { prisma } from '@/server/db';
 
-import { EditProfileForm } from '@/pages/profile/edit/[userId]';
+import { EditProfileForm } from '@/pages/profile/edit';
 
 export const userRouter = createTRPCRouter({
   getUserProfile: protectedProcedure.query(async ({ ctx }) => {

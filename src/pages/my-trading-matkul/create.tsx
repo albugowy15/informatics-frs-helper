@@ -43,7 +43,6 @@ export type CreateTradeMatkulFormSchema = z.infer<
 
 export default function CreateTradeMatkulPage() {
   const router = useRouter();
-  const { userId } = router.query;
 
   const methods = useForm<CreateTradeMatkulFormSchema>({
     resolver: zodResolver(createTradeMatkulFormSchema),
@@ -59,7 +58,7 @@ export default function CreateTradeMatkulPage() {
 
   const postTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation({
     onSuccess: () => {
-      router.replace('/my-trading-matkul/' + userId);
+      router.replace('/my-trading-matkul/');
     },
   });
 
