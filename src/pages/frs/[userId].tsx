@@ -1,5 +1,4 @@
-import { GetServerSidePropsContext } from 'next';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { BsPencilSquare } from 'react-icons/bs';
 
@@ -13,12 +12,7 @@ import Typography from '@/components/Typography';
 
 export default function FRSPage() {
   const { data } = useSession();
-  const plans = api.frs.getAllPlans.useQuery(
-    {
-      userId: data?.user.id as string,
-    },
-    { enabled: Boolean(data?.user.id) }
-  );
+  const plans = api.frs.getAllPlans.useQuery();
   return (
     <>
       <NextSeo title={renderPageTitle('myFRS')} />
@@ -88,43 +82,4 @@ export default function FRSPage() {
       </main>
     </>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.params) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const { userId } = context.params;
-
-  if (userId == undefined) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const session = await getSession(context);
-  if (session == null) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  if (userId !== session.user.id) {
-    return {
-      redirect: {
-        destination: '/403',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
 }

@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { useEffect, useState } from 'react';
 import {
@@ -61,7 +60,6 @@ export default function CreateFRSPage() {
             title: data.title,
             semester: data.semester,
             matkul: matkul,
-            userId: session?.user.id as string,
           })
           .then((res) => {
             if (res.id) {
@@ -180,43 +178,4 @@ export default function CreateFRSPage() {
       </FormProvider>
     </>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.params) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const { userId } = context.params;
-
-  if (userId == undefined) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const session = await getSession(context);
-  if (session == null) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  if (userId !== session.user.id) {
-    return {
-      redirect: {
-        destination: '/403',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
 }

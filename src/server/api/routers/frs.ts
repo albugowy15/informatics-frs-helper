@@ -16,17 +16,9 @@ export const frsRouter = createTRPCRouter({
           .refine((e) => new Set(e).size === e.length, {
             message: 'Tidak boleh mengambil kelas yang sama',
           }),
-        userId: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (input.userId !== ctx.session.user.id) {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Tidak dapat membuat plan FRS',
-        });
-      }
-
       const classes = await prisma.class.findMany({
         select: {
           Matkul: {
@@ -63,7 +55,7 @@ export const frsRouter = createTRPCRouter({
       //2. check total plan
       const totalPlan = await prisma.plan.count({
         where: {
-          userId: input.userId,
+          userId: ctx.session.user.id,
         },
       });
 
@@ -97,7 +89,7 @@ export const frsRouter = createTRPCRouter({
         data: {
           title: input.title,
           semester: input.semester,
-          userId: input.userId,
+          userId: ctx.session.user.id,
           totalSks: totalSks,
           Class: {
             connect: input.matkul.map((item) => ({
@@ -151,18 +143,10 @@ export const frsRouter = createTRPCRouter({
             .refine((e) => new Set(e).size === e.length, {
               message: 'Tidak boleh mengambil kelas yang sama',
             }),
-          userId: z.string(),
         }),
       })
     )
     .mutation(async ({ input, ctx }) => {
-      // check user Id
-      if (input.data.userId !== ctx.session.user.id) {
-        throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Tidak dapat memperbarui rencana FRS',
-        });
-      }
       // check plan Id
       const returnedPlanId = await prisma.plan.findUnique({
         select: {
@@ -279,7 +263,7 @@ export const frsRouter = createTRPCRouter({
         data: {
           title: input.data.title,
           semester: input.data.semester,
-          userId: input.data.userId,
+          userId: ctx.session.user.id,
           totalSks: totalSks,
           Class: {
             set: input.data.matkul.map((item) => ({
@@ -338,26 +322,20 @@ export const frsRouter = createTRPCRouter({
 
       return updatedPlan;
     }),
-  getAllPlans: protectedProcedure
-    .input(
-      z.object({
-        userId: z.string(),
-      })
-    )
-    .query(async ({ input }) => {
-      const plans = await prisma.plan.findMany({
-        select: {
-          id: true,
-          title: true,
-          semester: true,
-          totalSks: true,
-        },
-        where: {
-          userId: input.userId,
-        },
-      });
-      return plans;
-    }),
+  getAllPlans: protectedProcedure.query(async ({ ctx }) => {
+    const plans = await prisma.plan.findMany({
+      select: {
+        id: true,
+        title: true,
+        semester: true,
+        totalSks: true,
+      },
+      where: {
+        userId: ctx.session.user.id,
+      },
+    });
+    return plans;
+  }),
   getPlanDetail: protectedProcedure
     .input(
       z.object({

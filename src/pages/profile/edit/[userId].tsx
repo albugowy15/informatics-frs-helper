@@ -84,7 +84,6 @@ export default function EditProfilePage({
   const onSubmit: SubmitHandler<EditProfileFormType> = (data) => {
     toast.promise(
       mutation.mutateAsync({
-        id: userId as string,
         content: {
           email: data.email,
           fullname: data.fullname,

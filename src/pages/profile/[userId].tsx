@@ -1,6 +1,4 @@
-import { GetServerSidePropsContext } from 'next';
-import { useRouter } from 'next/router';
-import { getSession, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 
 import { api } from '@/utils/api';
@@ -11,15 +9,8 @@ import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
 export default function ProfilePage() {
-  const router = useRouter();
-  const { userId } = router.query;
   const { data } = useSession();
-  const userProfile = api.user.getUserProfile.useQuery(
-    {
-      id: userId as string,
-    },
-    { enabled: userId !== undefined }
-  );
+  const userProfile = api.user.getUserProfile.useQuery();
   return (
     <>
       <NextSeo title={renderPageTitle('Profile')} />
@@ -90,43 +81,4 @@ export default function ProfilePage() {
       </main>
     </>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.params) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const { userId } = context.params;
-
-  if (userId == undefined) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const session = await getSession(context);
-  if (session == null) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  if (userId !== session.user.id) {
-    return {
-      redirect: {
-        destination: '/403',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
 }

@@ -1,6 +1,4 @@
-import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { getSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -19,14 +17,7 @@ export default function MyTradeMatkulPage() {
   const utils = api.useContext();
   const router = useRouter();
   const { userId } = router.query;
-  const tradeMatkulPosts = api.tradeMatkul.getAllMyTradeMatkul.useQuery(
-    {
-      userId: userId as string,
-    },
-    {
-      enabled: Boolean(userId),
-    }
-  );
+  const tradeMatkulPosts = api.tradeMatkul.getAllMyTradeMatkul.useQuery();
   const deleteTradeMatkul = api.tradeMatkul.deleteMyTradeMatkul.useMutation({
     onSuccess() {
       utils.tradeMatkul.getAllMyTradeMatkul.invalidate();
@@ -153,43 +144,4 @@ export default function MyTradeMatkulPage() {
       )}
     </>
   );
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  if (!context.params) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const { userId } = context.params;
-
-  if (userId == undefined) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const session = await getSession(context);
-  if (session == null) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  if (userId !== session.user.id) {
-    return {
-      redirect: {
-        destination: '/403',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
 }

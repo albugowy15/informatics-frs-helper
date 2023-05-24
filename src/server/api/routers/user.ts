@@ -8,40 +8,34 @@ import { prisma } from '@/server/db';
 import { EditProfileForm } from '@/pages/profile/edit/[userId]';
 
 export const userRouter = createTRPCRouter({
-  getUserProfile: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().nonempty(),
-      })
-    )
-    .query(({ input }) => {
-      const userProfile = prisma.user
-        .findUnique({
-          where: { id: input.id },
-          select: {
-            email: true,
-            fullname: true,
-            idLine: true,
-            username: true,
-            whatsapp: true,
-          },
-        })
-        .then((user) => {
-          if (!user) {
-            throw new Error('User not found');
-          }
-          return user;
-        });
+  getUserProfile: protectedProcedure.query(async ({ ctx }) => {
+    const userProfile = await prisma.user.findUnique({
+      where: { id: ctx.session.user.id },
+      select: {
+        email: true,
+        fullname: true,
+        idLine: true,
+        username: true,
+        whatsapp: true,
+      },
+    });
 
-      return userProfile;
-    }),
+    if (!userProfile) {
+      throw new TRPCError({
+        code: 'NOT_FOUND',
+        message: 'User tidak ditemukan',
+      });
+    }
+
+    return userProfile;
+  }),
   updateProfile: protectedProcedure
-    .input(z.object({ id: z.string(), content: EditProfileForm }))
-    .mutation(({ input }) => {
+    .input(z.object({ content: EditProfileForm }))
+    .mutation(({ input, ctx }) => {
       const updatedProfile = prisma.user
         .update({
           where: {
-            id: input.id,
+            id: ctx.session.user.id,
           },
           data: {
             fullname: input.content.fullname,
@@ -65,16 +59,15 @@ export const userRouter = createTRPCRouter({
           .string({ required_error: 'Password baru tidak boleh kosong' })
           .min(8)
           .max(16),
-        userId: z.string(),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       const oldPassword = await prisma.user.findUnique({
         select: {
           password: true,
         },
         where: {
-          id: input.userId,
+          id: ctx.session.user.id,
         },
       });
 
@@ -103,7 +96,7 @@ export const userRouter = createTRPCRouter({
           id: true,
         },
         where: {
-          id: input.userId,
+          id: ctx.session.user.id,
         },
         data: {
           password: hashNewPassword,

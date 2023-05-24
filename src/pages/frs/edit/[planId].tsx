@@ -105,7 +105,6 @@ export default function EditPlanPage({
               title: data.title,
               semester: data.semester,
               matkul: matkul,
-              userId: session?.user.id as string,
             },
           })
           .then((res) => {
