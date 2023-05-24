@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -15,8 +14,6 @@ import Typography from '@/components/Typography';
 
 export default function MyTradeMatkulPage() {
   const utils = api.useContext();
-  const router = useRouter();
-  const { userId } = router.query;
   const tradeMatkulPosts = api.tradeMatkul.getAllMyTradeMatkul.useQuery();
   const deleteTradeMatkul = api.tradeMatkul.deleteMyTradeMatkul.useMutation({
     onSuccess() {
@@ -38,7 +35,7 @@ export default function MyTradeMatkulPage() {
       <div className='flex items-center gap-7'>
         <Typography variant='h4'>List My Trade Matkul</Typography>
         <LinkButton
-          href={'/my-trading-matkul/create/' + userId}
+          href='/my-trading-matkul/create/'
           variant='outlined'
           icon={MdCreate}
         >

@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { useEffect, useState } from 'react';
 import {
@@ -40,7 +39,6 @@ export default function CreateFRSPage() {
   useEffect(() => {
     setSks(classTaken.reduce((acc, cur) => acc + cur.Matkul.sks, 0));
   }, [classTaken]);
-  const { data: session } = useSession();
   const methods = useForm<CreateFRSForm>({
     resolver: zodResolver(createFRSForm),
     mode: 'onTouched',
@@ -63,7 +61,7 @@ export default function CreateFRSPage() {
           })
           .then((res) => {
             if (res.id) {
-              router.replace('/frs/' + session?.user.id);
+              router.replace('/frs');
             }
           }),
         {

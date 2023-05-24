@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import { NextSeo } from 'next-seo';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -88,7 +88,6 @@ export default function CreateTradeMatkulPage({
 }: CreateTradeMatkulPageProps) {
   const router = useRouter();
   const { id } = router.query;
-  const { data: session } = useSession();
   const methods = useForm<EditTradeMatkulFormSchema>({
     resolver: zodResolver(editTradeMatkulFormSchema),
     defaultValues: {
@@ -103,7 +102,7 @@ export default function CreateTradeMatkulPage({
   } = methods;
   const updateTradeMatkul = api.tradeMatkul.updateTradeMatkul.useMutation({
     onSuccess() {
-      router.push('/my-trading-matkul/' + session?.user.id);
+      router.push('/my-trading-matkul/');
     },
     onError(error) {
       toast.error(error.message);

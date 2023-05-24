@@ -59,7 +59,6 @@ export default function EditProfilePage({
   userProfile: UserProfileProps;
 }) {
   const router = useRouter();
-  const { userId } = router.query;
 
   const methods = useForm<EditProfileFormType>({
     resolver: zodResolver(EditProfileForm),
@@ -77,7 +76,7 @@ export default function EditProfilePage({
 
   const mutation = api.user.updateProfile.useMutation({
     onSuccess: () => {
-      router.replace('/profile/' + userId);
+      router.replace('/profile');
     },
   });
 
