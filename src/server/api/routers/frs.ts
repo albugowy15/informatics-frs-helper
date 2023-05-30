@@ -361,6 +361,7 @@ export const frsRouter = createTRPCRouter({
                   fullname: true,
                 },
               },
+              taken: true,
               Session: {
                 select: {
                   session_time: true,

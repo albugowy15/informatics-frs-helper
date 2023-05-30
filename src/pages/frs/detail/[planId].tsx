@@ -8,6 +8,7 @@ import { api } from '@/utils/api';
 import { renderPageTitle } from '@/utils/page';
 
 import { Button, LinkButton } from '@/components/Button';
+import CounterBadge from '@/components/CounterBadge';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
@@ -87,6 +88,7 @@ export default function PlanDetailPage() {
                         <Typography variant='body2'>
                           {kelas.day}, {kelas.Session.session_time}
                         </Typography>
+                        <CounterBadge count={kelas.taken} size='body2' />
                       </div>
                     </div>
                   ))}

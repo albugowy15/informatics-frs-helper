@@ -16,6 +16,7 @@ import { api } from '@/utils/api';
 import { renderPageTitle } from '@/utils/page';
 
 import { Button } from '@/components/Button';
+import CounterBadge from '@/components/CounterBadge';
 import { SelectInput, TextInput } from '@/components/Form';
 import Typography from '@/components/Typography';
 
@@ -128,6 +129,7 @@ export default function CreateFRSPage() {
                       <Typography variant='body3'>
                         {kelas.day}, {kelas.Session.session_time}
                       </Typography>
+                      <CounterBadge count={kelas.taken} size='body3' />
                     </div>
                     <Button
                       variant='danger'

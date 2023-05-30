@@ -1,4 +1,3 @@
-import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 
 import {
@@ -175,13 +174,6 @@ export const commonRouter = createTRPCRouter({
       },
       take: 10,
     });
-
-    if (classes == null || classes.length == 0) {
-      throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'Tidak ada kelas yang tersedia',
-      });
-    }
 
     return classes;
   }),

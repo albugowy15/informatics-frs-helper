@@ -1,5 +1,6 @@
 import { api } from '@/utils/api';
 
+import CounterBadge from '@/components/CounterBadge';
 import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
@@ -19,7 +20,7 @@ export default function TrendingPage() {
         <>
           {popularClasses.isSuccess ? (
             <>
-              {popularClasses.data ? (
+              {popularClasses.data.length > 0 ? (
                 <>
                   <Typography variant='h2' className='text-center'>
                     Top 10 Kelas Paling Banyak Diambil
@@ -40,18 +41,16 @@ export default function TrendingPage() {
                         <Typography variant='body2'>
                           {kelas.Lecturer.fullname}
                         </Typography>
-                        <Typography variant='body2' className='pt-2'>
-                          Diambil{' '}
-                          <span className='font-bold text-error-500'>
-                            {kelas.taken}
-                          </span>{' '}
-                          kali
-                        </Typography>
+                        <CounterBadge count={kelas.taken} size='body2' />
                       </div>
                     ))}
                   </main>
                 </>
-              ) : null}
+              ) : (
+                <div className='flex items-center justify-center'>
+                  <Typography variant='body1'>Tidak ada data kelas</Typography>
+                </div>
+              )}
             </>
           ) : (
             <div className='flex items-center justify-center'>

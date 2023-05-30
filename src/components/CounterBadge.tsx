@@ -1,10 +1,16 @@
 import clsx from 'clsx';
 
-import Typography from '@/components/Typography';
+import Typography, { TypographyVariants } from '@/components/Typography';
 
-const CounterBadge = ({ count }: { count: number }) => {
+const CounterBadge = ({
+  count,
+  size,
+}: {
+  count: number;
+  size?: TypographyVariants;
+}) => {
   return (
-    <Typography variant='body3'>
+    <Typography variant={size ?? 'body3'}>
       Diambil{' '}
       <span
         className={clsx(
@@ -18,7 +24,7 @@ const CounterBadge = ({ count }: { count: number }) => {
       >
         {count}
       </span>{' '}
-      mahasiswa
+      kali
     </Typography>
   );
 };
