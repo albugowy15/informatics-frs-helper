@@ -35,7 +35,7 @@ export const commonRouter = createTRPCRouter({
   getClass: publicProcedure
     .input(
       z.object({
-        semester: z.number().min(1).max(6),
+        semester: z.number().min(1).max(8),
         matkul: z.string().optional(),
         with_taken: z.boolean().optional(),
       })
@@ -74,7 +74,7 @@ export const commonRouter = createTRPCRouter({
   getSubject: publicProcedure
     .input(
       z.object({
-        semester: z.number().min(1).max(6),
+        semester: z.number().min(1).max(8),
         withAll: z.boolean().optional(),
       })
     )
