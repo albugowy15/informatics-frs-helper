@@ -11,34 +11,6 @@ import Typography from '@/components/Typography';
 
 import { PlanDetailClass } from '@/pages/frs/edit/[planId]';
 
-function checkValidPick(
-  listKelas: PlanDetailClass[],
-  kelas: PlanDetailClass
-): { isValid: boolean; errorMessage: string } {
-  const checkSameClass = listKelas.find(
-    (val) => val.Matkul.name == kelas.Matkul.name
-  );
-  if (checkSameClass) {
-    return {
-      isValid: false,
-      errorMessage: 'Tidak dapat mengambil mata kuliah yang sama',
-    };
-  }
-
-  const checkClassCollision = listKelas.find(
-    (val) => val.day == kelas.day && val.Session == kelas.Session
-  );
-  if (checkClassCollision) {
-    return {
-      isValid: false,
-      errorMessage:
-        'Tidak dapat mengambil lebih dari satu kelas di jam yang sama',
-    };
-  }
-
-  return { isValid: true, errorMessage: '' };
-}
-
 const ClassPickSection = ({
   classTaken,
   setClassTaken,
@@ -48,6 +20,7 @@ const ClassPickSection = ({
 }) => {
   const [semester, setSemester] = useState<number>();
   const [subject, setSubject] = useState<string>();
+  const [pickClass, setPickClass] = useState<PlanDetailClass>();
   const listSubject = api.common.getSubject.useQuery(
     { semester: semester as number },
     { enabled: Boolean(semester) }
@@ -60,6 +33,13 @@ const ClassPickSection = ({
     },
     { enabled: Boolean(subject || semester) }
   );
+  const mutateValidClass = api.frs.validatePlan.useMutation({
+    onSuccess: () => {
+      if (pickClass) {
+        setClassTaken((prev: PlanDetailClass[]) => [...prev, pickClass]);
+      }
+    },
+  });
 
   return (
     <section className='space-y-3'>
@@ -121,6 +101,19 @@ const ClassPickSection = ({
                           size='sm'
                           className='mt-3'
                           onClick={() => {
+                            const incomingClass = kelas.id;
+                            const takenClass = classTaken.map((val) => val.id);
+                            toast.promise(
+                              mutateValidClass.mutateAsync({
+                                classTaken: takenClass,
+                                incomingClass: incomingClass,
+                              }),
+                              {
+                                loading: 'Memvalidasi kelas',
+                                error: (err) => err.message,
+                                success: (data) => data.message,
+                              }
+                            );
                             const data: PlanDetailClass = {
                               ...kelas,
                               Matkul: {
@@ -134,19 +127,7 @@ const ClassPickSection = ({
                                 id: kelas.Lecturer.id,
                               },
                             };
-                            const { isValid, errorMessage } = checkValidPick(
-                              classTaken,
-                              data
-                            );
-                            if (isValid) {
-                              setClassTaken((prev: PlanDetailClass[]) => [
-                                ...prev,
-                                data,
-                              ]);
-                              toast.success('Berhasil mengambil kelas');
-                            } else {
-                              toast.error(errorMessage);
-                            }
+                            setPickClass(data);
                           }}
                         >
                           Ambil
