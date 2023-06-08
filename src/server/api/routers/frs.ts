@@ -10,12 +10,7 @@ export const frsRouter = createTRPCRouter({
       z.object({
         title: z.string(),
         semester: z.number().min(1).max(8),
-        matkul: z
-          .string()
-          .array()
-          .refine((e) => new Set(e).size === e.length, {
-            message: 'Tidak boleh mengambil kelas yang sama',
-          }),
+        matkul: z.string().array(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -66,25 +61,6 @@ export const frsRouter = createTRPCRouter({
         });
       }
 
-      //2. check class schedule conflict from inputed classes
-      const scheduleConflict = classes.some((item1, index1) => {
-        return classes.some((item2, index2) => {
-          if (index1 !== index2) {
-            return (
-              item1.day === item2.day && item1.sessionId === item2.sessionId
-            );
-          }
-          return false;
-        });
-      });
-
-      if (scheduleConflict) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Terdapat kelas dengan jadwal yang sama',
-        });
-      }
-
       const result = await prisma.plan.create({
         data: {
           title: input.title,
@@ -130,6 +106,112 @@ export const frsRouter = createTRPCRouter({
         id: result.id,
       };
     }),
+  validatePlan: protectedProcedure
+    .input(
+      z.object({ classTaken: z.string().array(), incomingClass: z.string() })
+    )
+    .mutation(async ({ input }) => {
+      if (input.classTaken.length == 0) {
+        return {
+          message: 'Kelas berhasil diambil',
+        };
+      }
+      // check unique plan
+      const isUnique = input.classTaken.every(
+        (item) => item !== input.incomingClass
+      );
+      if (!isUnique) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Tidak boleh mengambil kelas yang sama',
+        });
+      }
+
+      const takenClasses = await prisma.class.findMany({
+        select: {
+          id: true,
+          Matkul: {
+            select: {
+              id: true,
+              sks: true,
+            },
+          },
+          taken: true,
+          day: true,
+          sessionId: true,
+        },
+        where: {
+          id: {
+            in: input.classTaken.map((item) => item),
+          },
+        },
+      });
+
+      const checkClass = await prisma.class.findUnique({
+        select: {
+          id: true,
+          Matkul: {
+            select: {
+              id: true,
+              sks: true,
+            },
+          },
+          taken: true,
+          day: true,
+          sessionId: true,
+        },
+        where: {
+          id: input.incomingClass,
+        },
+      });
+
+      if (!checkClass) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Kelas tidak ditemukan',
+        });
+      }
+
+      // check total sks
+      const totalSks = takenClasses.reduce(
+        (acc, curr) => acc + curr.Matkul.sks,
+        0
+      );
+      if (totalSks + checkClass.Matkul.sks > 24) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Total SKS tidak boleh libih dari 24',
+        });
+      }
+
+      // check same subject
+      const isSameSubject = takenClasses.find((item) => {
+        return item.Matkul.id === checkClass.Matkul.id;
+      });
+      if (isSameSubject) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Kamu sudah mengambil mata kuliah ini',
+        });
+      }
+
+      // check schedule conflict
+      const isScheduleConflict = takenClasses.find((item) => {
+        return (
+          item.day === checkClass.day && item.sessionId === checkClass.sessionId
+        );
+      });
+      if (isScheduleConflict) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Terdapat kelas dengan jadwal yang sama',
+        });
+      }
+
+      return {
+        message: 'Kelas dapat diambil',
+      };
+    }),
   updatePlan: protectedProcedure
     .input(
       z.object({
@@ -137,12 +219,7 @@ export const frsRouter = createTRPCRouter({
         data: z.object({
           title: z.string(),
           semester: z.number().min(1).max(8),
-          matkul: z
-            .string()
-            .array()
-            .refine((e) => new Set(e).size === e.length, {
-              message: 'Tidak boleh mengambil kelas yang sama',
-            }),
+          matkul: z.string().array(),
         }),
       })
     )
@@ -231,25 +308,6 @@ export const frsRouter = createTRPCRouter({
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'Total SKS tidak boleh lebih dari 24',
-        });
-      }
-
-      //2. check class schedule conflict from inputed classes
-      const scheduleConflict = classes.some((item1, index1) => {
-        return classes.some((item2, index2) => {
-          if (index1 !== index2) {
-            return (
-              item1.day === item2.day && item1.sessionId === item2.sessionId
-            );
-          }
-          return false;
-        });
-      });
-
-      if (scheduleConflict) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Terdapat kelas dengan jadwal yang sama',
         });
       }
 
