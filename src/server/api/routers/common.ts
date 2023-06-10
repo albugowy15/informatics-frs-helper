@@ -27,6 +27,9 @@ export const commonRouter = createTRPCRouter({
               },
             },
           },
+          orderBy: {
+            code: 'asc',
+          },
         })
         .then((res) => res.map((item) => item.code));
 
@@ -64,6 +67,9 @@ export const commonRouter = createTRPCRouter({
                 select: { session_time: true },
               },
               taken: input.with_taken ? input.with_taken : false,
+            },
+            orderBy: {
+              code: 'asc',
             },
           },
         },
@@ -133,6 +139,9 @@ export const commonRouter = createTRPCRouter({
           id: true,
           code: true,
           matkulId: true,
+        },
+        orderBy: {
+          code: 'asc',
         },
       })
       .then((res) => {

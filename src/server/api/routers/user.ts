@@ -19,14 +19,12 @@ export const userRouter = createTRPCRouter({
         whatsapp: true,
       },
     });
-
     if (!userProfile) {
       throw new TRPCError({
         code: 'NOT_FOUND',
         message: 'User tidak ditemukan',
       });
     }
-
     return userProfile;
   }),
   updateProfile: protectedProcedure
@@ -46,7 +44,6 @@ export const userRouter = createTRPCRouter({
           },
         })
         .then((res) => res.id);
-
       return updatedProfile;
     }),
   changePassword: protectedProcedure
@@ -70,26 +67,22 @@ export const userRouter = createTRPCRouter({
           id: ctx.session.user.id,
         },
       });
-
       if (!oldPassword) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'Password lama salah',
         });
       }
-
       const match = await bcrypt.compare(
         input.old_password,
         oldPassword.password
       );
-
       if (!match) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'Password lama salah',
         });
       }
-
       const hashNewPassword = await bcrypt.hash(input.new_password, 10);
       const changePassword = await prisma.user.update({
         select: {
@@ -102,7 +95,6 @@ export const userRouter = createTRPCRouter({
           password: hashNewPassword,
         },
       });
-
       return changePassword;
     }),
 });

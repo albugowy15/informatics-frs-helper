@@ -31,36 +31,24 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-
-      // perform some checks
-      //1. check total sks
-      const totalSks = classes.reduce((acc, curr) => acc + curr.Matkul.sks, 0);
-      if (totalSks < 18) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Total SKS tidak boleh kurang dari 18',
-        });
-      } else if (totalSks > 24) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Total SKS tidak boleh lebih dari 24',
-        });
-      }
-
-      //2. check total plan
       const totalPlan = await prisma.plan.count({
         where: {
           userId: ctx.session.user.id,
         },
       });
-
       if (totalPlan == 3) {
         throw new TRPCError({
           code: 'PRECONDITION_FAILED',
           message: 'Telah mencapai batas plan yang dapat dibuat',
         });
       }
-
+      const totalSks = classes.reduce((acc, curr) => acc + curr.Matkul.sks, 0);
+      if (totalSks > 24) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Total SKS tidak boleh lebih dari 24',
+        });
+      }
       const result = await prisma.plan.create({
         data: {
           title: input.title,
@@ -74,14 +62,12 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-
       if (!result) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Gagal membuat plan',
         });
       }
-
       const updatedClass = await prisma.class.updateMany({
         where: {
           id: {
@@ -94,14 +80,12 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-
       if (!updatedClass) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Gagal mengupdate kelas',
         });
       }
-
       return {
         id: result.id,
       };
@@ -116,7 +100,6 @@ export const frsRouter = createTRPCRouter({
           message: 'Kelas berhasil diambil',
         };
       }
-      // check unique plan
       const isUnique = input.classTaken.every(
         (item) => item !== input.incomingClass
       );
@@ -126,7 +109,6 @@ export const frsRouter = createTRPCRouter({
           message: 'Tidak boleh mengambil kelas yang sama',
         });
       }
-
       const takenClasses = await prisma.class.findMany({
         select: {
           id: true,
@@ -146,7 +128,6 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-
       const checkClass = await prisma.class.findUnique({
         select: {
           id: true,
@@ -164,15 +145,12 @@ export const frsRouter = createTRPCRouter({
           id: input.incomingClass,
         },
       });
-
       if (!checkClass) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'Kelas tidak ditemukan',
         });
       }
-
-      // check total sks
       const totalSks = takenClasses.reduce(
         (acc, curr) => acc + curr.Matkul.sks,
         0
@@ -183,8 +161,6 @@ export const frsRouter = createTRPCRouter({
           message: 'Total SKS tidak boleh libih dari 24',
         });
       }
-
-      // check same subject
       const isSameSubject = takenClasses.find((item) => {
         return item.Matkul.id === checkClass.Matkul.id;
       });
@@ -194,8 +170,6 @@ export const frsRouter = createTRPCRouter({
           message: 'Kamu sudah mengambil mata kuliah ini',
         });
       }
-
-      // check schedule conflict
       const isScheduleConflict = takenClasses.find((item) => {
         return (
           item.day === checkClass.day && item.sessionId === checkClass.sessionId
@@ -207,7 +181,6 @@ export const frsRouter = createTRPCRouter({
           message: 'Terdapat kelas dengan jadwal yang sama',
         });
       }
-
       return {
         message: 'Kelas dapat diambil',
       };
@@ -224,7 +197,6 @@ export const frsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      // check plan Id
       const returnedPlanId = await prisma.plan.findUnique({
         select: {
           id: true,
@@ -233,14 +205,12 @@ export const frsRouter = createTRPCRouter({
           id: input.planId,
         },
       });
-
       if (returnedPlanId == null) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Rencana FRS tidak ditemukan',
         });
       }
-
       const classes = await prisma.class.findMany({
         select: {
           id: true,
@@ -258,7 +228,6 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-
       const previousClasses = await prisma.class.findMany({
         select: {
           id: true,
@@ -278,39 +247,25 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-
       if (previousClasses == null || previousClasses.length == 0) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Tidak ada kelas yang diambil sebelumnya',
         });
       }
-
-      // get all dropped classes
       const droppedClasses = previousClasses.filter(
         (item) => !input.data.matkul.includes(item.id)
       );
-
-      // get all added classes
       const addedClasses = classes.filter(
         (item) => !previousClasses.map((item) => item.id).includes(item.id)
       );
-
-      // perform some checks
-      //1. check total sks
       const totalSks = classes.reduce((acc, curr) => acc + curr.Matkul.sks, 0);
-      if (totalSks < 18) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Total SKS tidak boleh kurang dari 18',
-        });
-      } else if (totalSks > 24) {
+      if (totalSks > 24) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'Total SKS tidak boleh lebih dari 24',
         });
       }
-
       const updatedPlan = await prisma.plan.update({
         select: {
           id: true,
@@ -330,14 +285,12 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-
       if (!updatedPlan) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Gagal mengupdate plan',
         });
       }
-
       const decreasedTakenDroppedClass = await prisma.class.updateMany({
         where: {
           id: {
@@ -350,14 +303,12 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-
       if (!decreasedTakenDroppedClass) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Gagal mengupdate kelas',
         });
       }
-
       const increasedTakenAddedClass = await prisma.class.updateMany({
         where: {
           id: {
@@ -370,14 +321,12 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-
       if (!increasedTakenAddedClass) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Gagal mengupdate kelas',
         });
       }
-
       return updatedPlan;
     }),
   getAllPlans: protectedProcedure.query(async ({ ctx }) => {
@@ -440,21 +389,18 @@ export const frsRouter = createTRPCRouter({
           id: input.planId,
         },
       });
-
       if (classTaken == null) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Rencana FRS Tidak Ditemukan',
         });
       }
-
       if (classTaken.userId !== ctx.session.user.id) {
         throw new TRPCError({
           code: 'FORBIDDEN',
           message: 'Tidak dapat mengakses rencana FRS',
         });
       }
-
       return classTaken;
     }),
   deletePlan: protectedProcedure
@@ -473,21 +419,18 @@ export const frsRouter = createTRPCRouter({
           userId: true,
         },
       });
-
       if (!plannedFRS) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Rencana FRS Tidak Ditemukan',
         });
       }
-
       if (plannedFRS.userId !== ctx.session.user.id) {
         throw new TRPCError({
           code: 'FORBIDDEN',
           message: 'Tidak dapat menghapus rencana FRS',
         });
       }
-
       const previousClasses = await prisma.class.findMany({
         select: {
           id: true,
@@ -500,7 +443,6 @@ export const frsRouter = createTRPCRouter({
           },
         },
       });
-
       const deletedPlan = await prisma.plan.delete({
         select: {
           id: true,
@@ -509,14 +451,12 @@ export const frsRouter = createTRPCRouter({
           id: input.planId,
         },
       });
-
       if (deletedPlan == undefined || deletedPlan == null) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'Rencana FRS Tidak Ditemukan',
         });
       }
-
       try {
         await prisma.$queryRaw`DELETE FROM _ClassToPlan WHERE "A" = ${input.planId}`;
       } catch (e) {
@@ -525,14 +465,12 @@ export const frsRouter = createTRPCRouter({
           message: 'Gagal menghapus kelas',
         });
       }
-
       if (previousClasses.length == 0) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Tidak ada kelas yang diambil sebelumnya',
         });
       }
-
       try {
         await prisma.class.updateMany({
           where: {
@@ -552,7 +490,6 @@ export const frsRouter = createTRPCRouter({
           message: 'Gagal mengupdate kelas yang diambil sebelumnya',
         });
       }
-
       return deletedPlan;
     }),
 });
