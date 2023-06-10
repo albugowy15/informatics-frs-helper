@@ -134,7 +134,7 @@ export default function EditPlanPage({
               <TextInput
                 label='Judul Plan'
                 name='title'
-                placeholder='Contoh: War PAA'
+                placeholder='Contoh: Plan FRS Genap'
               />
             </div>
             <div className='w-full md:w-44'>
