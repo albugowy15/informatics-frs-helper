@@ -5,6 +5,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "headwind.runOnSave": false,
   "typescript.preferences.importModuleSpecifier": "non-relative"
 }

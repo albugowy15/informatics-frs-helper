@@ -63,103 +63,105 @@ const ClassPickSection = ({
         />
       </div>
       <div className='flex flex-col gap-2'>
-        {listClass.isLoading ? (
-          <div className='flex flex-col items-center justify-center text-center'>
-            <Typography variant='label1'>Memuat kelas</Typography>
-            <div className='py-1' />
-            <Loader />
-          </div>
-        ) : (
-          <>
-            {listClass.data ? (
-              <>
-                {listClass.data.map((subject, index) => (
-                  <Accordion
-                    key={index}
-                    title={
-                      <div>
-                        <Typography variant='h6'>{subject.name}</Typography>
-                        <Typography variant='body2'>
-                          Semester {subject.semester} | {subject.sks} sks |{' '}
-                          {subject.Class.length} kelas
-                        </Typography>
-                      </div>
-                    }
-                  >
-                    {subject.Class.length > 0 ? (
-                      <div className='grid grid-cols-2 gap-1 lg:grid-cols-4'>
-                        {subject.Class.map((kelas) => (
-                          <div
-                            key={kelas.id}
-                            className='rounded-md border border-neutral-600 p-2 lg:p-3'
-                          >
-                            <Typography variant='body2' className='font-medium'>
-                              {subject.name} {kelas.code} ({subject.sks} sks)
-                            </Typography>
-                            <Typography variant='body3' className='py-0.5'>
-                              {kelas.Lecturer.fullname}
-                            </Typography>
-                            <Typography variant='body3'>
-                              {kelas.day}, {kelas.Session.session_time}
-                            </Typography>
-
-                            <CounterBadge count={kelas.taken} />
-
-                            <Button
-                              variant='filled'
-                              size='sm'
-                              className='mt-3'
-                              onClick={() => {
-                                const incomingClass = kelas.id;
-                                const takenClass = classTaken.map(
-                                  (val) => val.id
-                                );
-                                toast.promise(
-                                  mutateValidClass.mutateAsync({
-                                    classTaken: takenClass,
-                                    incomingClass: incomingClass,
-                                  }),
-                                  {
-                                    loading: 'Memvalidasi kelas',
-                                    error: (err) => err.message,
-                                    success: (data) => data.message,
-                                  }
-                                );
-                                const data: PlanDetailClass = {
-                                  ...kelas,
-                                  Matkul: {
-                                    name: subject.name,
-                                    sks: subject.sks,
-                                    id: subject.id,
-                                    semester: subject.semester,
-                                  },
-                                  Lecturer: {
-                                    fullname: kelas.Lecturer.fullname,
-                                    id: kelas.Lecturer.id,
-                                  },
-                                };
-                                setPickClass(data);
-                              }}
-                            >
-                              Ambil
-                            </Button>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <Typography
-                        variant='body2'
-                        className='text-center text-neutral-400'
-                      >
-                        Tidak ada kelas
+        <>
+          {listClass.isSuccess && listClass.data ? (
+            <>
+              {listClass.data.map((subject, index) => (
+                <Accordion
+                  key={index}
+                  title={
+                    <div>
+                      <Typography variant='h6'>{subject.name}</Typography>
+                      <Typography variant='body2'>
+                        Semester {subject.semester} | {subject.sks} sks |{' '}
+                        {subject.Class.length} kelas
                       </Typography>
-                    )}
-                  </Accordion>
-                ))}
-              </>
-            ) : null}
-          </>
-        )}
+                    </div>
+                  }
+                >
+                  {subject.Class.length > 0 ? (
+                    <div className='grid grid-cols-2 gap-1 lg:grid-cols-4'>
+                      {subject.Class.map((kelas) => (
+                        <div
+                          key={kelas.id}
+                          className='rounded-md border border-neutral-600 p-2 lg:p-3'
+                        >
+                          <Typography variant='body2' className='font-medium'>
+                            {subject.name} {kelas.code} ({subject.sks} sks)
+                          </Typography>
+                          <Typography variant='body3' className='py-0.5'>
+                            {kelas.Lecturer.fullname}
+                          </Typography>
+                          <Typography variant='body3'>
+                            {kelas.day}, {kelas.Session.session_time}
+                          </Typography>
+
+                          <CounterBadge count={kelas.taken} />
+
+                          <Button
+                            variant='filled'
+                            size='sm'
+                            className='mt-3'
+                            onClick={() => {
+                              const incomingClass = kelas.id;
+                              const takenClass = classTaken.map(
+                                (val) => val.id
+                              );
+                              toast.promise(
+                                mutateValidClass.mutateAsync({
+                                  classTaken: takenClass,
+                                  incomingClass: incomingClass,
+                                }),
+                                {
+                                  loading: 'Memvalidasi kelas',
+                                  error: (err) => err.message,
+                                  success: (data) => data.message,
+                                }
+                              );
+                              const data: PlanDetailClass = {
+                                ...kelas,
+                                Matkul: {
+                                  name: subject.name,
+                                  sks: subject.sks,
+                                  id: subject.id,
+                                  semester: subject.semester,
+                                },
+                                Lecturer: {
+                                  fullname: kelas.Lecturer.fullname,
+                                  id: kelas.Lecturer.id,
+                                },
+                              };
+                              setPickClass(data);
+                            }}
+                          >
+                            Ambil
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <Typography
+                      variant='body2'
+                      className='text-center text-neutral-400'
+                    >
+                      Tidak ada kelas
+                    </Typography>
+                  )}
+                </Accordion>
+              ))}
+            </>
+          ) : (
+            <>
+              {listClass.isLoading && semester != undefined ? (
+                <div className='flex flex-col items-center justify-center text-center'>
+                  <Typography variant='label1'>Memuat kelas</Typography>
+                  <div className='py-1' />
+                  <Loader />
+                </div>
+              ) : null}
+            </>
+          )}
+        </>
       </div>
     </section>
   );
