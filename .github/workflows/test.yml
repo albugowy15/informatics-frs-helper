@@ -21,10 +21,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Download deps
+        uses: bahmutov/npm-install@v1
       - name: TypeScript
-        run: yarn typecheck
+        run: npm typecheck
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -32,10 +32,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Download deps
+        uses: bahmutov/npm-install@v1
       - name: ESlint
-        run: yarn lint
+        run: npm lint
   prettier:
     runs-on: ubuntu-latest
     steps:
@@ -43,7 +43,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Download deps
+        uses: bahmutov/npm-install@v1
       - name: Prettier
-        run: yarn format:check
+        run: npm format:check
