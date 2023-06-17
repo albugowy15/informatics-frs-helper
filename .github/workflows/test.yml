@@ -22,7 +22,7 @@ jobs:
       - name: Download deps
         run: npm install
       - name: TypeScript
-        run: npm typecheck
+        run: npm run typecheck
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -31,7 +31,7 @@ jobs:
       - name: Download deps
         run: npm install
       - name: ESlint
-        run: npm lint
+        run: npm run lint
   prettier:
     runs-on: ubuntu-latest
     steps:
@@ -40,4 +40,4 @@ jobs:
       - name: Download deps
         run: npm install
       - name: Prettier
-        run: npm format:check
+        run: npm run format:check
