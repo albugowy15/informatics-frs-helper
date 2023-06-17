@@ -19,10 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-        with:
-          node-version: 16
       - name: Download deps
-        uses: bahmutov/npm-install@v1
+        uses: npm install
       - name: TypeScript
         run: npm typecheck
   lint:
@@ -30,10 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-        with:
-          node-version: 16
       - name: Download deps
-        uses: bahmutov/npm-install@v1
+        uses: npm install
       - name: ESlint
         run: npm lint
   prettier:
@@ -41,9 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-        with:
-          node-version: 16
       - name: Download deps
-        uses: bahmutov/npm-install@v1
+        uses: npm install
       - name: Prettier
         run: npm format:check
