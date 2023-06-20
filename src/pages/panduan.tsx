@@ -43,14 +43,12 @@ export default function PanduanPage() {
             perkuliahan yang sama
           </li>
           <li>Tidak dapat mengambil kelas dengan mata kuliah yang sama</li>
-          <li>
-            Tidak dapat mengambil lebih dari 24 sks atau kurang dari 18 sks
-          </li>
+          <li>Tidak dapat mengambil lebih dari 24 sks</li>
         </ul>
         <Typography variant='body1'>
           Dengan ini, rencana FRS yang kamu buat akan tervalidasi dan tidak akan
           mengambil kelas yang tidak sesuai dengan aturan di atas. Ini juga akan
-          membantu kamu dalam merencanakan FRS kamu dengan lebih matang. Berikut
+          membantu kamu dalam merencanakan FRS dengan lebih matang. Berikut
           untuk detail cara membuat rencana FRS:
         </Typography>
         <ol className='list-inside list-decimal'>
@@ -61,13 +59,13 @@ export default function PanduanPage() {
             Pilih <b>Buat Rencana Baru</b>
           </li>
           <li>Isi judul rencana</li>
-          <li>Pilih semester dimana kamu akan melakukan FRS</li>
+          <li>Pilih semester dimana akan melakukan FRS</li>
           <li>
             Ambil kelas dan mata kuliah di bagian Form Ambil Matkul. Cari kelas
             dan matkul dengan memilih dropdown semester atau matkul
           </li>
           <li>
-            Apabila sudah yakin dengan rencana yang sudah dibuat, klik tombol{' '}
+            Apabila sudah yakin dengan rencana yang dibuat, klik tombol{' '}
             <b>Simpan</b>.
           </li>
         </ol>
@@ -77,10 +75,10 @@ export default function PanduanPage() {
         <div className='py-1' />
         <Typography variant='h3'>2. myTradeMatkul - Trading Matkul</Typography>
         <Typography variant='body1'>
-          Kalau ini kamu bisa pake buat nyari orang yang mau tukeran matkul.
+          Kalau ini kamu bisa gunakan buat nyari orang yang mau tukeran matkul.
           Kamu bisa lihat daftar postingan trade matkul di menu{' '}
-          <b>Trading Matkul</b>. Untuk membuat postingan trade matkul, kamu bisa
-          ikuti langkah-langkah berikut:
+          <b>Trading Matkul</b>. Untuk membuat postingan trade matkul, ikuti
+          langkah-langkah berikut:
         </Typography>
         <ol className='list-inside list-decimal'>
           <li>
@@ -88,7 +86,7 @@ export default function PanduanPage() {
           </li>
           <li>
             Pilih semester, nama mata kuliah, dan kode kelas dari kelas yang
-            udah kamu ambil pas FRS
+            udah diambil saat FRS
           </li>
           <li>
             Kemudian pilih semester, nama mata kuliah, dan kode kelas untuk
@@ -98,10 +96,10 @@ export default function PanduanPage() {
           <li>Klik simpan</li>
         </ol>
         <Typography variant='body1'>
-          Sangat dianjurkan agar kamu melengkapi profil dengan mengisi nama
-          lengkap, id line, atau WA untuk memudahkan orang yang mau trade sama
-          kamu. Kamu juga bisa mengubah atau menghapus postingan trade matkul
-          yang sudah dibuat.
+          Sangat dianjurkan agar melengkapi profil dengan mengisi nama lengkap,
+          id line, atau WA untuk memudahkan orang yang mau trade sama kamu. Kamu
+          juga bisa mengubah atau menghapus postingan trade matkul yang sudah
+          dibuat.
         </Typography>
         <div className='py-1' />
         <Typography variant='h3'>3. Informasi Jadwal</Typography>
