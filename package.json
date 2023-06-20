@@ -42,6 +42,7 @@
     "@trpc/next": "^10.29.1",
     "@trpc/react-query": "^10.29.1",
     "@trpc/server": "^10.29.1",
+    "@vercel/analytics": "^1.0.1",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.0",

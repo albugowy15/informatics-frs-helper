@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import type { AppType } from 'next/app';
 import { useRouter } from 'next/router';
 import { Session } from 'next-auth';
@@ -33,12 +34,15 @@ const App: AppType<{ session: Session | null }> = ({
   }, [router]);
 
   return (
-    <SessionProvider session={session}>
-      <Toaster />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </SessionProvider>
+    <>
+      <SessionProvider session={session}>
+        <Toaster />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </SessionProvider>
+      <Analytics />
+    </>
   );
 };
 
