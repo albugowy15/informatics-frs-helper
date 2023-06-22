@@ -141,7 +141,7 @@ export const userRouter = createTRPCRouter({
         username: user.username,
       };
       const token = jwt.sign(payload, env.RESET_SECRET, {
-        expiresIn: '1h',
+        expiresIn: '30m',
       });
       const tokenUrl = `${getBaseUrl()}/reset-password/${token}`;
 
