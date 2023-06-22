@@ -58,6 +58,12 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
             <TextInput label='Username' name='username' />
             <TextInput type='password' label='Password' name='password' />
+            <BasicLink
+              className='text-sm font-medium text-primary-500'
+              href='/forgot-password'
+            >
+              Lupa Password?
+            </BasicLink>
 
             <Button
               className='flex w-full justify-center'
