@@ -7,6 +7,8 @@ import { z } from 'zod';
 const server = z.object({
   DATABASE_URL: z.string().url(),
   NODE_ENV: z.enum(['development', 'test', 'production']),
+  RESET_SECRET: z.string(),
+  SENDGRID_API_KEY: z.string(),
   NEXTAUTH_SECRET:
     process.env.NODE_ENV === 'production'
       ? z.string().min(1)
@@ -39,6 +41,8 @@ const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
   NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+  RESET_SECRET: process.env.RESET_SECRET,
+  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 
