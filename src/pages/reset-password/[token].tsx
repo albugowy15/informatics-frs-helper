@@ -14,7 +14,11 @@ import { TextInput } from '@/components/Form';
 import Typography from '@/components/Typography';
 
 const resetPasswordSchema = z.object({
-  newPassword: z.string().nonempty({ message: 'Password tidak boleh kosong' }),
+  newPassword: z
+    .string()
+    .nonempty({ message: 'Password tidak boleh kosong' })
+    .min(8, { message: 'Password minimal 8 karakter' })
+    .max(16, { message: 'Password maksimal 16 karakter' }),
 });
 
 type ResetPasswordForm = z.infer<typeof resetPasswordSchema>;
