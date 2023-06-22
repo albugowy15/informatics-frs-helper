@@ -114,7 +114,6 @@ export const userRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
-      // check in db
       const user = await prisma.user.findUnique({
         select: {
           id: true,
@@ -125,14 +124,18 @@ export const userRouter = createTRPCRouter({
           username: input.username,
         },
       });
-
       if (!user) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'User tidak ditemukan',
         });
       }
-      // create jwt token
+      if (user.email !== input.email) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'User tidak ditemukan',
+        });
+      }
       const payload = {
         userId: user.id,
         username: user.username,
@@ -140,19 +143,15 @@ export const userRouter = createTRPCRouter({
       const token = jwt.sign(payload, env.RESET_SECRET, {
         expiresIn: '1h',
       });
-
-      // make jwt token as part of url.
       const tokenUrl = `${getBaseUrl()}/reset-password/${token}`;
 
       sgMail.setApiKey(env.SENDGRID_API_KEY);
       const msg = {
-        to: user.email, // Change to your recipient
-        from: 'kholidbughowi@gmail.com', // Change to your verified sender
+        to: user.email,
+        from: 'kholidbughowi@gmail.com',
         subject: 'Reset Password - Informatics FRS Helper',
         html: `<h1>Konfirmasi Reset Password</h1><p>Hallo ${user.username}</p><p>Kamu telah meminta untuk reset password. Silahkan klik link berikut untukmereset password kamu</p><br /><a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>${tokenUrl}</a><br /><p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
       };
-
-      // send email to user
       sgMail
         .send(msg)
         .then(() => {
@@ -195,7 +194,6 @@ export const userRouter = createTRPCRouter({
             message: 'Token tidak valid',
           });
         }
-
         try {
           const hashNewPassword = await bcrypt.hash(input.newPassword, 10);
           await prisma.user.update({
