@@ -1,10 +1,19 @@
+import sgMail from '@sendgrid/mail';
 import { TRPCError } from '@trpc/server';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 
-import { createTRPCRouter, protectedProcedure } from '@/server/api/trpc';
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from '@/server/api/trpc';
 import { prisma } from '@/server/db';
 
+import { getBaseUrl } from '@/utils/api';
+
+import { env } from '@/env.mjs';
 import { EditProfileForm } from '@/pages/profile/edit';
 
 export const userRouter = createTRPCRouter({
@@ -96,5 +105,124 @@ export const userRouter = createTRPCRouter({
         },
       });
       return changePassword;
+    }),
+  resetPassword: publicProcedure
+    .input(
+      z.object({
+        username: z.string(),
+        email: z.string().email(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      // check in db
+      const user = await prisma.user.findUnique({
+        select: {
+          id: true,
+          username: true,
+          email: true,
+        },
+        where: {
+          username: input.username,
+        },
+      });
+
+      if (!user) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'User tidak ditemukan',
+        });
+      }
+      // create jwt token
+      const payload = {
+        userId: user.id,
+        username: user.username,
+      };
+      const token = jwt.sign(payload, env.RESET_SECRET, {
+        expiresIn: '1h',
+      });
+
+      // make jwt token as part of url.
+      const tokenUrl = `${getBaseUrl()}/reset-password/${token}`;
+
+      sgMail.setApiKey(env.SENDGRID_API_KEY);
+      const msg = {
+        to: user.email, // Change to your recipient
+        from: 'kholidbughowi@gmail.com', // Change to your verified sender
+        subject: 'Reset Password - Informatics FRS Helper',
+        html: `<h1>Konfirmasi Reset Password</h1><p>Hallo ${user.username}</p><p>Kamu telah meminta untuk reset password. Silahkan klik link berikut untukmereset password kamu</p><br /><a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>${tokenUrl}</a><br /><p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
+      };
+
+      // send email to user
+      sgMail
+        .send(msg)
+        .then(() => {
+          return { message: 'Email berhasil dikirim' };
+        })
+        .catch(() => {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Gagal mengirim email',
+          });
+        });
+    }),
+  verifyResetPassword: publicProcedure
+    .input(z.object({ token: z.string(), newPassword: z.string() }))
+    .mutation(async ({ input }) => {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const decoded: any = jwt.verify(input.token, env.RESET_SECRET);
+        const userId = decoded.userId;
+        const username = decoded.username;
+        const user = await prisma.user.findUnique({
+          select: {
+            id: true,
+            username: true,
+            email: true,
+          },
+          where: {
+            id: userId,
+          },
+        });
+        if (!user) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'User tidak ditemukan',
+          });
+        }
+        if (user.username !== username) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Token tidak valid',
+          });
+        }
+
+        try {
+          const hashNewPassword = await bcrypt.hash(input.newPassword, 10);
+          await prisma.user.update({
+            select: {
+              id: true,
+            },
+            where: {
+              id: userId,
+            },
+            data: {
+              password: hashNewPassword,
+            },
+          });
+          return {
+            message: 'Password berhasil diubah',
+          };
+        } catch (e) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Gagal mengubah password',
+          });
+        }
+      } catch (error) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Token tidak valid',
+        });
+      }
     }),
 });
