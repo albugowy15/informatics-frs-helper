@@ -108,6 +108,30 @@ export default function PanduanPage() {
           aja menu <b>Jadwal Matkul</b>. Kamu bisa lihat jadwal matkul
           menggunakan filter berdasarkan semester dan nama mata kuliah.
         </Typography>
+        <div className='py-1' />
+        <Typography variant='h2'>Batasan Fitur yang dimiliki</Typography>
+        <Typography variant='body1'>
+          Terdapat beberapa batasan terkait informasi atau fitur yang ada
+          sebagai berikut:{' '}
+        </Typography>
+        <Typography variant='h4'>Kelas Team Teaching</Typography>
+        <Typography variant='body1'>
+          Apabila satu kelas diajar oleh lebih dari satu dosen, maka hanya
+          ditampilkan dosen urutan pertama saja sesuai dengan yang tertera pada
+          jadwal.
+        </Typography>
+        <Typography variant='h4'>Maksimal 3 Plan FRS</Typography>
+        <Typography variant='body1'>
+          Dalam satu semester, satu akun hanya diperbolehkan untuk membuat
+          hingga 3 rencana FRS.
+        </Typography>
+        <Typography variant='h4'>
+          FRS dihapus setiap pergantian semester
+        </Typography>
+        <Typography variant='body1'>
+          Saat akan pergantian semester, frs yang telah tersimpan selama
+          semester sebelumnya akan dihapus.
+        </Typography>
       </main>
     </>
   );
