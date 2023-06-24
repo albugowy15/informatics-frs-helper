@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        const res = await fetch(`${env.NEXTAUTH_URL}/api/login`, {
+        const res = await fetch(`${env.BASE_URL}/api/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

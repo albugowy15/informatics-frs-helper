@@ -9,6 +9,7 @@ const server = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']),
   RESET_SECRET: z.string(),
   SENDGRID_API_KEY: z.string(),
+  BASE_URL: z.string().url(),
   NEXTAUTH_SECRET:
     process.env.NODE_ENV === 'production'
       ? z.string().min(1)
@@ -43,6 +44,7 @@ const processEnv = {
   NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   RESET_SECRET: process.env.RESET_SECRET,
   SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+  BASE_URL: process.env.BASE_URL,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 

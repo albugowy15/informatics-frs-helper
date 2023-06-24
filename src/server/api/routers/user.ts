@@ -141,7 +141,7 @@ export const userRouter = createTRPCRouter({
       const token = jwt.sign(payload, env.RESET_SECRET, {
         expiresIn: '30m',
       });
-      const tokenUrl = `${env.NEXTAUTH_URL}/reset-password/${token}`;
+      const tokenUrl = `${env.BASE_URL}/reset-password/${token}`;
 
       sgMail.setApiKey(env.SENDGRID_API_KEY);
       const msg = {
