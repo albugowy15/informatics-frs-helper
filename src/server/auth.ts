@@ -2,8 +2,6 @@ import { GetServerSidePropsContext } from 'next';
 import { getServerSession, NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { getBaseUrl } from '@/utils/api';
-
 import { env } from '@/env.mjs';
 import { LoginResponseData } from '@/pages/api/login';
 
@@ -24,7 +22,7 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        const res = await fetch(`${getBaseUrl()}/api/login`, {
+        const res = await fetch(`${env.NEXTAUTH_URL}/api/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

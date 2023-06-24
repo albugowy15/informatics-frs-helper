@@ -11,8 +11,6 @@ import {
 } from '@/server/api/trpc';
 import { prisma } from '@/server/db';
 
-import { getBaseUrl } from '@/utils/api';
-
 import { env } from '@/env.mjs';
 import { EditProfileForm } from '@/pages/profile/edit';
 
@@ -143,14 +141,14 @@ export const userRouter = createTRPCRouter({
       const token = jwt.sign(payload, env.RESET_SECRET, {
         expiresIn: '30m',
       });
-      const tokenUrl = `${getBaseUrl()}/reset-password/${token}`;
+      const tokenUrl = `${env.NEXTAUTH_URL}/reset-password/${token}`;
 
       sgMail.setApiKey(env.SENDGRID_API_KEY);
       const msg = {
         to: user.email,
         from: 'kholidbughowi@gmail.com',
         subject: 'Reset Password - Informatics FRS Helper',
-        html: `<h1>Konfirmasi Reset Password</h1><p>Hallo ${user.username}</p><p>Kamu telah meminta untuk reset password. Silahkan klik link berikut untukmereset password kamu</p><br /><a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>${tokenUrl}</a><br /><p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
+        html: `<h1>Konfirmasi Reset Password</h1><p>Hallo <strong>${user.username}</strong></p><br/><p>Kamu telah meminta untuk reset password. Silahkan klik link berikut untuk mereset password kamu</p><br /><a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>${tokenUrl}</a><br /><br /><p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
       };
       sgMail
         .send(msg)
