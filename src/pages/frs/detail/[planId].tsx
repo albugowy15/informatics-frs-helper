@@ -73,22 +73,18 @@ export default function PlanDetailPage() {
                 <Typography variant='h4'>Matkul yang diambil</Typography>
                 <div className='grid gap-2 lg:grid-cols-4'>
                   {plan.data.Class.map((kelas) => (
-                    <div
+                    <ClassCard
                       key={kelas.id}
-                      className='flex flex-col justify-between gap-2 rounded-md border border-neutral-600 p-2 lg:p-3'
-                    >
-                      <ClassCard
-                        data={{
-                          subjectCode: kelas.code,
-                          subjectName: kelas.Matkul.name,
-                          sks: kelas.Matkul.sks,
-                          lecturers: kelas.Lecturer,
-                          day: kelas.day,
-                          sessionTime: kelas.Session.session_time,
-                          taken: kelas.taken,
-                        }}
-                      />
-                    </div>
+                      data={{
+                        subjectCode: kelas.code,
+                        subjectName: kelas.Matkul.name,
+                        sks: kelas.Matkul.sks,
+                        lecturers: kelas.Lecturer,
+                        day: kelas.day,
+                        sessionTime: kelas.Session.session_time,
+                        taken: kelas.taken,
+                      }}
+                    />
                   ))}
                 </div>
               </section>

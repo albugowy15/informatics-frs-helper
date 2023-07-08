@@ -161,37 +161,33 @@ export default function EditPlanPage({
             {classTaken.length > 0 ? (
               <div className='grid grid-cols-2  gap-2 lg:grid-cols-4'>
                 {classTaken.map((kelas, index) => (
-                  <div
-                    key={index}
-                    className='flex flex-col justify-between gap-2 rounded-md border border-neutral-600 p-2 lg:p-3'
-                  >
-                    <ClassCard
-                      data={{
-                        subjectName: kelas.Matkul.name,
-                        subjectCode: kelas.code,
-                        lecturers: kelas.Lecturer,
-                        day: kelas.day,
-                        sessionTime: kelas.Session.session_time,
-                        taken: kelas.taken,
-                        sks: kelas.Matkul.sks,
-                      }}
-                      action={
-                        <Button
-                          variant='danger'
-                          size='sm'
-                          className='w-fit bg-error-500 hover:bg-error-400'
-                          onClick={() => {
-                            const classArray = [...classTaken];
-                            classArray.splice(index, 1);
-                            setClassTaken(classArray);
-                          }}
-                          icon={BsTrashFill}
-                        >
-                          Drop
-                        </Button>
-                      }
-                    />
-                  </div>
+                  <ClassCard
+                    key={kelas.id}
+                    data={{
+                      subjectName: kelas.Matkul.name,
+                      subjectCode: kelas.code,
+                      lecturers: kelas.Lecturer,
+                      day: kelas.day,
+                      sessionTime: kelas.Session.session_time,
+                      taken: kelas.taken,
+                      sks: kelas.Matkul.sks,
+                    }}
+                    action={
+                      <Button
+                        variant='danger'
+                        size='sm'
+                        className='w-fit bg-error-500 hover:bg-error-400'
+                        onClick={() => {
+                          const classArray = [...classTaken];
+                          classArray.splice(index, 1);
+                          setClassTaken(classArray);
+                        }}
+                        icon={BsTrashFill}
+                      >
+                        Drop
+                      </Button>
+                    }
+                  />
                 ))}
               </div>
             ) : (

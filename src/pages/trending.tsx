@@ -37,6 +37,7 @@ export default function TrendingPage() {
                           subjectName: kelas.Matkul.name,
                           lecturers: kelas.Lecturer,
                           taken: kelas.taken,
+                          sks: kelas.Matkul.sks,
                         }}
                       />
                     ))}

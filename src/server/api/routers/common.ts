@@ -167,7 +167,7 @@ export const commonRouter = createTRPCRouter({
         day: true,
         id: true,
         Lecturer: { select: { fullname: true, id: true } },
-        Matkul: { select: { name: true, id: true } },
+        Matkul: { select: { name: true, id: true, sks: true } },
         Session: {
           select: { session_time: true },
         },
@@ -175,7 +175,7 @@ export const commonRouter = createTRPCRouter({
       },
       where: {
         taken: {
-          gt: 0,
+          gt: 10,
         },
       },
       orderBy: {

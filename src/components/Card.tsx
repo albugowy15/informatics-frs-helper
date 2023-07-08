@@ -11,7 +11,7 @@ type ClassCardProps = {
     day: string;
     sessionTime: string;
     taken: number;
-    sks?: number;
+    sks: number;
   };
   action?: React.ReactNode;
 };

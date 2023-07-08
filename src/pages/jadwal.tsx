@@ -171,7 +171,7 @@ export default function SchedulePage() {
                     </div>
                   }
                 >
-                  <div className='grid grid-cols-2 gap-1 md:grid-cols-3 lg:grid-cols-4'>
+                  <div className='grid grid-cols-2 gap-1 md:grid-cols-3'>
                     {matkul.Class.map((item) => (
                       <ClassCard
                         data={{
@@ -181,6 +181,7 @@ export default function SchedulePage() {
                           subjectCode: item.code,
                           subjectName: matkul.name,
                           taken: item.taken,
+                          sks: matkul.sks,
                         }}
                         key={item.id}
                       />
