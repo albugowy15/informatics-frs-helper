@@ -52,8 +52,7 @@ model Class {
   id           String        @id @default(cuid())
   Matkul       Matkul        @relation(fields: [matkulId], references: [id])
   matkulId     String
-  Lecturer     Lecturer      @relation(fields: [lecturerId], references: [id])
-  lecturerId   String
+  Lecturer     Lecturer[]     
   day          String
   code         String
   isAksel      Boolean
@@ -65,7 +64,6 @@ model Class {
   hasMatkul    TradeMatkul[] @relation("hasMatkul")
 
   @@index([sessionId])
-  @@index([lecturerId])
   @@index([matkulId])
 }
 
