@@ -8,7 +8,7 @@ import { api } from '@/utils/api';
 import { renderPageTitle } from '@/utils/page';
 
 import { Button, LinkButton } from '@/components/Button';
-import CounterBadge from '@/components/CounterBadge';
+import { ClassCard } from '@/components/Card';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
@@ -77,19 +77,17 @@ export default function PlanDetailPage() {
                       key={kelas.id}
                       className='flex flex-col justify-between gap-2 rounded-md border border-neutral-600 p-2 lg:p-3'
                     >
-                      <div>
-                        <Typography variant='body1' className='font-medium'>
-                          {kelas.Matkul.name} {kelas.code} ({kelas.Matkul.sks}{' '}
-                          sks)
-                        </Typography>
-                        <Typography variant='body2' className='py-0.5'>
-                          {kelas.Lecturer.fullname}
-                        </Typography>
-                        <Typography variant='body2'>
-                          {kelas.day}, {kelas.Session.session_time}
-                        </Typography>
-                        <CounterBadge count={kelas.taken} size='body2' />
-                      </div>
+                      <ClassCard
+                        data={{
+                          subjectCode: kelas.code,
+                          subjectName: kelas.Matkul.name,
+                          sks: kelas.Matkul.sks,
+                          lecturers: kelas.Lecturer,
+                          day: kelas.day,
+                          sessionTime: kelas.Session.session_time,
+                          taken: kelas.taken,
+                        }}
+                      />
                     </div>
                   ))}
                 </div>

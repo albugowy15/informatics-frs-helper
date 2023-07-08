@@ -1,6 +1,6 @@
 import { api } from '@/utils/api';
 
-import CounterBadge from '@/components/CounterBadge';
+import { ClassCard } from '@/components/Card';
 import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
@@ -28,21 +28,17 @@ export default function TrendingPage() {
                   <div className='py-2' />
                   <main className='mx-auto flex max-w-lg flex-col gap-2'>
                     {popularClasses.data.map((kelas) => (
-                      <div
+                      <ClassCard
                         key={kelas.id}
-                        className='rounded-md border border-slate-500 p-3'
-                      >
-                        <Typography variant='body1' className='font-bold'>
-                          {kelas.Matkul.name} {kelas.code}
-                        </Typography>
-                        <Typography variant='body2'>
-                          {kelas.day}, {kelas.Session.session_time}
-                        </Typography>
-                        <Typography variant='body2'>
-                          {kelas.Lecturer.fullname}
-                        </Typography>
-                        <CounterBadge count={kelas.taken} size='body2' />
-                      </div>
+                        data={{
+                          day: kelas.day,
+                          sessionTime: kelas.Session.session_time,
+                          subjectCode: kelas.code,
+                          subjectName: kelas.Matkul.name,
+                          lecturers: kelas.Lecturer,
+                          taken: kelas.taken,
+                        }}
+                      />
                     ))}
                   </main>
                 </>

@@ -5,7 +5,7 @@ import { api } from '@/utils/api';
 
 import Accordion from '@/components/Accordion';
 import { Button } from '@/components/Button';
-import CounterBadge from '@/components/CounterBadge';
+import { ClassCard } from '@/components/Card';
 import { SelectInput } from '@/components/Form';
 import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
@@ -86,56 +86,54 @@ const ClassPickSection = ({
                           key={kelas.id}
                           className='rounded-md border border-neutral-600 p-2 lg:p-3'
                         >
-                          <Typography variant='body2' className='font-medium'>
-                            {subject.name} {kelas.code} ({subject.sks} sks)
-                          </Typography>
-                          <Typography variant='body3' className='py-0.5'>
-                            {kelas.Lecturer.fullname}
-                          </Typography>
-                          <Typography variant='body3'>
-                            {kelas.day}, {kelas.Session.session_time}
-                          </Typography>
-
-                          <CounterBadge count={kelas.taken} />
-
-                          <Button
-                            variant='filled'
-                            size='sm'
-                            className='mt-3'
-                            onClick={() => {
-                              const incomingClass = kelas.id;
-                              const takenClass = classTaken.map(
-                                (val) => val.id
-                              );
-                              toast.promise(
-                                mutateValidClass.mutateAsync({
-                                  classTaken: takenClass,
-                                  incomingClass: incomingClass,
-                                }),
-                                {
-                                  loading: 'Memvalidasi kelas',
-                                  error: (err) => err.message,
-                                  success: (data) => data.message,
-                                }
-                              );
-                              const data: PlanDetailClass = {
-                                ...kelas,
-                                Matkul: {
-                                  name: subject.name,
-                                  sks: subject.sks,
-                                  id: subject.id,
-                                  semester: subject.semester,
-                                },
-                                Lecturer: {
-                                  fullname: kelas.Lecturer.fullname,
-                                  id: kelas.Lecturer.id,
-                                },
-                              };
-                              setPickClass(data);
+                          <ClassCard
+                            data={{
+                              subjectName: subject.name,
+                              subjectCode: kelas.code,
+                              lecturers: kelas.Lecturer,
+                              day: kelas.day,
+                              sessionTime: kelas.Session.session_time,
+                              taken: kelas.taken,
+                              sks: subject.sks,
                             }}
-                          >
-                            Ambil
-                          </Button>
+                            action={
+                              <Button
+                                variant='filled'
+                                size='sm'
+                                className='mt-3'
+                                onClick={() => {
+                                  const incomingClass = kelas.id;
+                                  const takenClass = classTaken.map(
+                                    (val) => val.id
+                                  );
+                                  toast.promise(
+                                    mutateValidClass.mutateAsync({
+                                      classTaken: takenClass,
+                                      incomingClass: incomingClass,
+                                    }),
+                                    {
+                                      loading: 'Memvalidasi kelas',
+                                      error: (err) => err.message,
+                                      success: (data) => data.message,
+                                    }
+                                  );
+                                  const data: PlanDetailClass = {
+                                    ...kelas,
+                                    Matkul: {
+                                      name: subject.name,
+                                      sks: subject.sks,
+                                      id: subject.id,
+                                      semester: subject.semester,
+                                    },
+                                    Lecturer: kelas.Lecturer,
+                                  };
+                                  setPickClass(data);
+                                }}
+                              >
+                                Ambil
+                              </Button>
+                            }
+                          />
                         </div>
                       ))}
                     </div>
