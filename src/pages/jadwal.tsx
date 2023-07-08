@@ -16,7 +16,7 @@ import { renderPageTitle } from '@/utils/page';
 
 import Accordion from '@/components/Accordion';
 import { Button } from '@/components/Button';
-import CounterBadge from '@/components/CounterBadge';
+import { ClassCard } from '@/components/Card';
 import { SelectInput } from '@/components/Form';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
@@ -173,22 +173,17 @@ export default function SchedulePage() {
                 >
                   <div className='grid grid-cols-2 gap-1 md:grid-cols-3 lg:grid-cols-4'>
                     {matkul.Class.map((item) => (
-                      <div
-                        className='flex flex-col gap-1 rounded-lg border border-neutral-600 p-2.5'
+                      <ClassCard
+                        data={{
+                          day: item.day,
+                          lecturers: item.Lecturer,
+                          sessionTime: item.Session.session_time,
+                          subjectCode: item.code,
+                          subjectName: matkul.name,
+                          taken: item.taken,
+                        }}
                         key={item.id}
-                      >
-                        <Typography variant='body2' className='font-medium'>
-                          {matkul.name} {item.code}
-                        </Typography>
-                        <Typography variant='body3'>
-                          {item.Lecturer.fullname}
-                        </Typography>
-                        <Typography variant='body3'>
-                          {item.day}, {item.Session.session_time} WIB
-                        </Typography>
-
-                        <CounterBadge count={item.taken} />
-                      </div>
+                      />
                     ))}
                   </div>
                 </Accordion>

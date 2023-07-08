@@ -20,7 +20,7 @@ import { api } from '@/utils/api';
 import { renderPageTitle } from '@/utils/page';
 
 import { Button } from '@/components/Button';
-import CounterBadge from '@/components/CounterBadge';
+import { ClassCard } from '@/components/Card';
 import { SelectInput, TextInput } from '@/components/Form';
 import Typography from '@/components/Typography';
 
@@ -53,7 +53,7 @@ export type PlanDetailClass = {
   Lecturer: {
     id: string;
     fullname: string;
-  };
+  }[];
   day: string;
 };
 
@@ -165,32 +165,32 @@ export default function EditPlanPage({
                     key={index}
                     className='flex flex-col justify-between gap-2 rounded-md border border-neutral-600 p-2 lg:p-3'
                   >
-                    <div>
-                      <Typography variant='body2' className='font-medium'>
-                        {kelas.Matkul.name} {kelas.code} ({kelas.Matkul.sks}{' '}
-                        sks)
-                      </Typography>
-                      <Typography variant='body3' className='py-0.5'>
-                        {kelas.Lecturer.fullname}
-                      </Typography>
-                      <Typography variant='body3'>
-                        {kelas.day}, {kelas.Session.session_time}
-                      </Typography>
-                      <CounterBadge count={kelas.taken} size='body3' />
-                    </div>
-                    <Button
-                      variant='danger'
-                      size='sm'
-                      className='w-fit bg-error-500 hover:bg-error-400'
-                      onClick={() => {
-                        const classArray = [...classTaken];
-                        classArray.splice(index, 1);
-                        setClassTaken(classArray);
+                    <ClassCard
+                      data={{
+                        subjectName: kelas.Matkul.name,
+                        subjectCode: kelas.code,
+                        lecturers: kelas.Lecturer,
+                        day: kelas.day,
+                        sessionTime: kelas.Session.session_time,
+                        taken: kelas.taken,
+                        sks: kelas.Matkul.sks,
                       }}
-                      icon={BsTrashFill}
-                    >
-                      Drop
-                    </Button>
+                      action={
+                        <Button
+                          variant='danger'
+                          size='sm'
+                          className='w-fit bg-error-500 hover:bg-error-400'
+                          onClick={() => {
+                            const classArray = [...classTaken];
+                            classArray.splice(index, 1);
+                            setClassTaken(classArray);
+                          }}
+                          icon={BsTrashFill}
+                        >
+                          Drop
+                        </Button>
+                      }
+                    />
                   </div>
                 ))}
               </div>
