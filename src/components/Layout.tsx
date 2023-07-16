@@ -1,5 +1,6 @@
 import { Menu } from '@headlessui/react';
 import clsx from 'clsx';
+import dynamic from 'next/dynamic';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import {
@@ -23,8 +24,9 @@ import BasicLink from '@/components/BasicLink';
 import { Button, LinkButton } from '@/components/Button';
 import Dropdown from '@/components/Dropdown';
 import Loader from '@/components/Loader';
-import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
+
+const DynamicModal = dynamic(() => import('@/components/Modal'));
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -187,7 +189,11 @@ const Navbar = () => {
           </nav>
         </div>
       </header>
-      <Modal isOpen={openMenu} setIsOpen={setOpenMenu} title='Menu Navigation'>
+      <DynamicModal
+        isOpen={openMenu}
+        setIsOpen={setOpenMenu}
+        title='Menu Navigation'
+      >
         <div className='py-2'>
           <Typography variant='body1' className='text-neutral-400'>
             Berikut daftar menu yang dapat kamu akses
@@ -247,7 +253,7 @@ const Navbar = () => {
             </Button>
           </div>
         </div>
-      </Modal>
+      </DynamicModal>
     </>
   );
 };

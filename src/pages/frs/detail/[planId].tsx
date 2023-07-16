@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
@@ -10,8 +11,9 @@ import { renderPageTitle } from '@/utils/page';
 import { Button, LinkButton } from '@/components/Button';
 import { ClassCard } from '@/components/Card';
 import Loader from '@/components/Loader';
-import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
+
+const DynamicModal = dynamic(() => import('@/components/Modal'));
 
 export default function PlanDetailPage() {
   const router = useRouter();
@@ -108,7 +110,7 @@ export default function PlanDetailPage() {
                 </Button>
               </div>
               {/* Delete Modal */}
-              <Modal
+              <DynamicModal
                 title='Hapus Rencana Ini?'
                 isOpen={deleteModal}
                 setIsOpen={setDeleteModal}
@@ -133,7 +135,7 @@ export default function PlanDetailPage() {
                     </Button>
                   </div>
                 </div>
-              </Modal>
+              </DynamicModal>
               {/* End delete Modal */}
             </>
           ) : (

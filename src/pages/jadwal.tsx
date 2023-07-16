@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import dynamic from 'next/dynamic';
 import { NextSeo } from 'next-seo';
 import { useEffect, useState } from 'react';
 import {
@@ -19,8 +20,9 @@ import { Button } from '@/components/Button';
 import { ClassCard } from '@/components/Card';
 import { SelectInput } from '@/components/Form';
 import Loader from '@/components/Loader';
-import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
+
+const DynamicModal = dynamic(() => import('@/components/Modal'));
 
 const Semester = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
@@ -201,7 +203,7 @@ export default function SchedulePage() {
         >
           Filter
         </Button>
-        <Modal
+        <DynamicModal
           isOpen={filterModal}
           setIsOpen={setFilterModal}
           title='Filter Jadwal'
@@ -267,7 +269,7 @@ export default function SchedulePage() {
               </form>
             </FormProvider>
           </div>
-        </Modal>
+        </DynamicModal>
       </div>
     </>
   );

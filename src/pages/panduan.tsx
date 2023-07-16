@@ -114,12 +114,6 @@ export default function PanduanPage() {
           Terdapat beberapa batasan terkait informasi atau fitur yang ada
           sebagai berikut:{' '}
         </Typography>
-        <Typography variant='h4'>Kelas Team Teaching</Typography>
-        <Typography variant='body1'>
-          Apabila satu kelas diajar oleh lebih dari satu dosen, maka hanya
-          ditampilkan dosen urutan pertama saja sesuai dengan yang tertera pada
-          jadwal.
-        </Typography>
         <Typography variant='h4'>Maksimal 3 Plan FRS</Typography>
         <Typography variant='body1'>
           Dalam satu semester, satu akun hanya diperbolehkan untuk membuat
@@ -129,8 +123,8 @@ export default function PanduanPage() {
           FRS dihapus setiap pergantian semester
         </Typography>
         <Typography variant='body1'>
-          Saat akan pergantian semester, frs yang telah tersimpan selama
-          semester sebelumnya akan dihapus.
+          Saat akan pergantian semester, frs yang telah tersimpan pada semester
+          sebelumnya akan dihapus.
         </Typography>
       </main>
     </>

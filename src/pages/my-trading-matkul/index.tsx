@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import { NextSeo } from 'next-seo';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -9,8 +10,9 @@ import { renderPageTitle } from '@/utils/page';
 
 import { Button, LinkButton } from '@/components/Button';
 import Loader from '@/components/Loader';
-import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
+
+const DynamicModal = dynamic(() => import('@/components/Modal'));
 
 export default function MyTradeMatkulPage() {
   const utils = api.useContext();
@@ -100,7 +102,7 @@ export default function MyTradeMatkulPage() {
                       </Button>
                     </div>
                   </div>
-                  <Modal
+                  <DynamicModal
                     title='Yakin ingin menghapus trade matkul ini?'
                     isOpen={confirmModal}
                     setIsOpen={setConfirmModal}
@@ -125,7 +127,7 @@ export default function MyTradeMatkulPage() {
                         Batal
                       </Button>
                     </div>
-                  </Modal>
+                  </DynamicModal>
                 </>
               ))}
             </main>

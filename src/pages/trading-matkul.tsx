@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import dynamic from 'next/dynamic';
 import { NextSeo } from 'next-seo';
 import { useEffect, useState } from 'react';
 import {
@@ -17,8 +18,9 @@ import { renderPageTitle } from '@/utils/page';
 import { Button } from '@/components/Button';
 import { SelectInput } from '@/components/Form';
 import Loader from '@/components/Loader';
-import Modal from '@/components/Modal';
 import Typography from '@/components/Typography';
+
+const DynamicModal = dynamic(() => import('@/components/Modal'));
 
 const filterSchema = z.object({
   semester: z.string().optional(),
@@ -194,7 +196,7 @@ const TradingMatkulPage = () => {
                     </Button>
                   </div>
                 </div>
-                <Modal
+                <DynamicModal
                   title='Konfirmasi Trade Matkul'
                   isOpen={confirmModal}
                   setIsOpen={setConfirmModal}
@@ -221,7 +223,7 @@ const TradingMatkulPage = () => {
                       Close
                     </Button>
                   </div>
-                </Modal>
+                </DynamicModal>
               </>
             ))}
           </main>
@@ -235,7 +237,7 @@ const TradingMatkulPage = () => {
         >
           Filter
         </Button>
-        <Modal
+        <DynamicModal
           isOpen={filterModal}
           setIsOpen={setFilterModal}
           title='Filter Jadwal'
@@ -302,7 +304,7 @@ const TradingMatkulPage = () => {
               </form>
             </FormProvider>
           </div>
-        </Modal>
+        </DynamicModal>
       </div>
     </>
   );

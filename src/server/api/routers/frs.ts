@@ -158,7 +158,7 @@ export const frsRouter = createTRPCRouter({
       if (totalSks + checkClass.Matkul.sks > 24) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
-          message: 'Total SKS tidak boleh libih dari 24',
+          message: 'Total SKS tidak boleh lebih dari 24',
         });
       }
       const isSameSubject = takenClasses.find((item) => {
