@@ -12,7 +12,7 @@ export const commonRouter = createTRPCRouter({
     .input(
       z.object({
         matkulName: z.string(),
-      })
+      }),
     )
     .query(({ input }) => {
       const classes = prisma.class
@@ -41,7 +41,7 @@ export const commonRouter = createTRPCRouter({
         semester: z.number().min(1).max(8),
         matkul: z.string().optional(),
         with_taken: z.boolean().optional(),
-      })
+      }),
     )
     .query(async ({ input }) => {
       const matkul = await prisma.matkul.findMany({
@@ -82,7 +82,7 @@ export const commonRouter = createTRPCRouter({
       z.object({
         semester: z.number().min(1).max(8),
         withAll: z.boolean().optional(),
-      })
+      }),
     )
     .query(async ({ input }) => {
       const listSubject = prisma.matkul

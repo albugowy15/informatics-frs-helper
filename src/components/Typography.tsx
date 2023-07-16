@@ -63,7 +63,7 @@ const Typography = <T extends React.ElementType>({
           variant === 'label2' && 'text-xs font-medium',
           variant === 'label3' && 'text-[11px] font-medium leading-4',
         ],
-        className
+        className,
       )}
       {...props}
     >

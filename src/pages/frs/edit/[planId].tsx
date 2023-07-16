@@ -84,7 +84,7 @@ export default function EditPlanPage({
   });
   const { control, handleSubmit } = methods;
   const [classTaken, setClassTaken] = useState<PlanDetailClass[]>(
-    planDetail.Class
+    planDetail.Class,
   );
   const [sks, setSks] = useState(0);
 
@@ -117,7 +117,7 @@ export default function EditPlanPage({
           loading: 'Memperbaru rencana FRS...',
           success: 'Rencana FRS berhasil diperbarui',
           error: (error) => error?.message,
-        }
+        },
       );
     } else {
       toast.error('Kamu belum mengambil kelas apapun');

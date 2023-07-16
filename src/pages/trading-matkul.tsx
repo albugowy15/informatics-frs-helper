@@ -52,7 +52,7 @@ const TradingMatkulPage = () => {
       semester: parseInt(semesterField as string),
       withAll: true,
     },
-    { enabled: Boolean(semesterField) }
+    { enabled: Boolean(semesterField) },
   );
   // reset matkul field when semester field changed
   useEffect(() => {

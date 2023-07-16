@@ -19,7 +19,7 @@ const CounterBadge = ({
             count >= 11 && count <= 20 && 'text-yellow-500',
             count >= 21 && 'text-error-400',
           ],
-          'font-medium'
+          'font-medium',
         )}
       >
         {count}

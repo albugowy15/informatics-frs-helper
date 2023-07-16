@@ -23,7 +23,7 @@ export default function PlanDetailPage() {
     },
     {
       enabled: Boolean(router.query.planId),
-    }
+    },
   );
   const deletePlan = api.frs.deletePlan.useMutation();
   const [deleteModal, setDeleteModal] = useState(false);
@@ -39,7 +39,7 @@ export default function PlanDetailPage() {
         loading: 'Menghapus Rencana FRS',
         success: 'Rencana FRS Berhasil Dihapus',
         error: (error) => error.message,
-      }
+      },
     );
   };
   return (

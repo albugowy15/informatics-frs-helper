@@ -121,7 +121,7 @@ export default function CreateTradeMatkulPage({
         loading: 'Update post trade matkul',
         success: 'Berhasil update post trade matkul',
         error: (err) => err.message,
-      }
+      },
     );
   };
 

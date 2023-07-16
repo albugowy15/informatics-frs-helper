@@ -10,7 +10,7 @@ type RegisterResponseData = {
 };
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<APIResponse<RegisterResponseData>>
+  res: NextApiResponse<APIResponse<RegisterResponseData>>,
 ) {
   const { method } = req;
   if (method !== 'POST') {

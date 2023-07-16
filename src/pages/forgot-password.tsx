@@ -37,7 +37,7 @@ export default function ForgotPassword() {
         loading: 'Silahkan tunggu',
         success: 'Reset password berhasil, silahkan cek email',
         error: (error) => error.message,
-      }
+      },
     );
   };
   return (
@@ -72,7 +72,7 @@ export default function ForgotPassword() {
 }
 
 export async function getServerSideProps(
-  context: GetSessionParams | undefined
+  context: GetSessionParams | undefined,
 ) {
   const session = await getSession(context);
   if (session) {

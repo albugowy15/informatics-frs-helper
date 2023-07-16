@@ -20,7 +20,7 @@ const BasicLink = React.forwardRef<HTMLAnchorElement, BasicLinkProps>(
       'aria-disabled': disabled,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const isNewTab =
       newTab !== undefined
@@ -55,7 +55,7 @@ const BasicLink = React.forwardRef<HTMLAnchorElement, BasicLinkProps>(
         {children}
       </a>
     );
-  }
+  },
 );
 
 export default BasicLink;

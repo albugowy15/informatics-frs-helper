@@ -69,7 +69,7 @@ export default function CreateFRSPage() {
           loading: 'Membuat rencana FRS...',
           success: 'Rencana FRS berhasil dibuat',
           error: (error) => error?.message,
-        }
+        },
       );
     } else {
       toast.error('Kamu belum mengambil matkul apapun');

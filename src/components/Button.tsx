@@ -32,7 +32,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       iconClassName,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const disabled = buttonDisabled || false;
     return (
@@ -63,7 +63,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               'bg-slate-100 text-primary-400 shadow-md shadow-slate-400 hover:bg-slate-200 disabled:bg-neutral-900 disabled:shadow-none',
             variant === 'tonal' &&
               'bg-secondary-900 hover:bg-secondary-800 disabled:bg-neutral-900',
-          ]
+          ],
         )}
         {...rest}
       >
@@ -76,7 +76,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                   size === 'md' && 'text-sm',
                   size === 'lg' && 'text-base',
                 ],
-                iconClassName
+                iconClassName,
               )}
             />
           </span>
@@ -84,7 +84,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 
 type LinkButtonProps = {
@@ -105,7 +105,7 @@ export const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
       iconClassName,
       ...rest
     },
-    ref
+    ref,
   ) => {
     return (
       <BasicLink
@@ -134,7 +134,7 @@ export const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
             variant === 'tonal' &&
               'bg-secondary-900 hover:bg-secondary-800 disabled:bg-neutral-900',
           ],
-          className
+          className,
         )}
       >
         {Icon && (
@@ -146,7 +146,7 @@ export const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
                   size === 'md' && 'text-sm',
                   size === 'lg' && 'text-base',
                 ],
-                iconClassName
+                iconClassName,
               )}
             />
           </span>
@@ -154,7 +154,7 @@ export const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
         {children}
       </BasicLink>
     );
-  }
+  },
 );
 
 type IconButtonProps = {
@@ -175,7 +175,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       iconClassname,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const disabled = buttonDisabled || false;
     return (
@@ -206,12 +206,12 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
             variant === 'tonal' &&
               'bg-secondary-900 hover:bg-secondary-800 disabled:bg-neutral-900',
           ],
-          className
+          className,
         )}
         {...rest}
       >
         {Icon && <Icon className={iconClassname} />}
       </button>
     );
-  }
+  },
 );

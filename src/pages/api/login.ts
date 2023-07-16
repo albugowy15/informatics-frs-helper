@@ -19,7 +19,7 @@ export type LoginResponseData = {
 };
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<APIResponse<LoginResponseData>>
+  res: NextApiResponse<APIResponse<LoginResponseData>>,
 ) {
   const { method } = req;
 

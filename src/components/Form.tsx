@@ -122,7 +122,7 @@ export const SelectInput = ({
           <Listbox.Button
             className={clsx(
               'relative w-full cursor-default rounded-lg border border-neutral-600 py-2.5 pl-3 pr-10 text-left text-sm md:text-base',
-              [disabled && 'bg-neutral-800 text-neutral-400']
+              [disabled && 'bg-neutral-800 text-neutral-400'],
             )}
           >
             <span className='block truncate'>

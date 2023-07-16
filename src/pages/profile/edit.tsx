@@ -31,7 +31,7 @@ export const EditProfileForm = z.object({
     .email({ message: 'Email tidak valid' })
     .nonempty({ message: 'Email tidak boleh kosong' }),
   idLine: asOptionalField(
-    z.string().startsWith('@', { message: 'Id Line ditulis dengan awalan @' })
+    z.string().startsWith('@', { message: 'Id Line ditulis dengan awalan @' }),
   ),
   whatsapp: asOptionalField(
     z
@@ -39,7 +39,7 @@ export const EditProfileForm = z.object({
       .min(9, { message: 'No. Whatsapp minimal 9 angka' })
       .max(14, { message: 'No. Whatsapp maksima 9 angka' })
       .startsWith('08', { message: 'No. Whatsapp tidak valid' })
-      .regex(/^[0-9]*$/, { message: 'No. Whatsapp tidak valid' })
+      .regex(/^[0-9]*$/, { message: 'No. Whatsapp tidak valid' }),
   ),
 });
 
@@ -95,7 +95,7 @@ export default function EditProfilePage({
         loading: 'Memperbarui profil...',
         success: 'Profil berhasil diperbarui',
         error: 'Gagal memperbarui profil',
-      }
+      },
     );
   };
 
@@ -107,7 +107,7 @@ export default function EditProfilePage({
           <form
             className={clsx(
               [mutation.isLoading ? 'cursor-not-allowed' : 'cursor-default'],
-              'flex w-full min-w-fit flex-col gap-3 rounded-lg border border-neutral-700 p-3 sm:w-[400px]'
+              'flex w-full min-w-fit flex-col gap-3 rounded-lg border border-neutral-700 p-3 sm:w-[400px]',
             )}
             onSubmit={handleSubmit(onSubmit)}
           >

@@ -24,7 +24,7 @@ const ClassPickSection = ({
   const [pickClass, setPickClass] = useState<PlanDetailClass>();
   const listSubject = api.common.getSubject.useQuery(
     { semester: semester as number },
-    { enabled: Boolean(semester) }
+    { enabled: Boolean(semester) },
   );
   const listClass = api.common.getClass.useQuery(
     {
@@ -32,7 +32,7 @@ const ClassPickSection = ({
       matkul: subject,
       with_taken: true,
     },
-    { enabled: Boolean(subject || semester) }
+    { enabled: Boolean(subject || semester) },
   );
   const mutateValidClass = api.frs.validatePlan.useMutation({
     onSuccess: () => {
@@ -101,7 +101,7 @@ const ClassPickSection = ({
                               onClick={() => {
                                 const incomingClass = kelas.id;
                                 const takenClass = classTaken.map(
-                                  (val) => val.id
+                                  (val) => val.id,
                                 );
                                 toast.promise(
                                   mutateValidClass.mutateAsync({
@@ -112,7 +112,7 @@ const ClassPickSection = ({
                                     loading: 'Memvalidasi kelas',
                                     error: (err) => err.message,
                                     success: (data) => data.message,
-                                  }
+                                  },
                                 );
                                 const data: PlanDetailClass = {
                                   ...kelas,

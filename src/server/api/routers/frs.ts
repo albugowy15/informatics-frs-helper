@@ -11,7 +11,7 @@ export const frsRouter = createTRPCRouter({
         title: z.string(),
         semester: z.number().min(1).max(8),
         matkul: z.string().array(),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const classes = await prisma.class.findMany({
@@ -92,7 +92,7 @@ export const frsRouter = createTRPCRouter({
     }),
   validatePlan: protectedProcedure
     .input(
-      z.object({ classTaken: z.string().array(), incomingClass: z.string() })
+      z.object({ classTaken: z.string().array(), incomingClass: z.string() }),
     )
     .mutation(async ({ input }) => {
       if (input.classTaken.length == 0) {
@@ -101,7 +101,7 @@ export const frsRouter = createTRPCRouter({
         };
       }
       const isUnique = input.classTaken.every(
-        (item) => item !== input.incomingClass
+        (item) => item !== input.incomingClass,
       );
       if (!isUnique) {
         throw new TRPCError({
@@ -153,7 +153,7 @@ export const frsRouter = createTRPCRouter({
       }
       const totalSks = takenClasses.reduce(
         (acc, curr) => acc + curr.Matkul.sks,
-        0
+        0,
       );
       if (totalSks + checkClass.Matkul.sks > 24) {
         throw new TRPCError({
@@ -194,7 +194,7 @@ export const frsRouter = createTRPCRouter({
           semester: z.number().min(1).max(8),
           matkul: z.string().array(),
         }),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const returnedPlanId = await prisma.plan.findUnique({
@@ -254,10 +254,10 @@ export const frsRouter = createTRPCRouter({
         });
       }
       const droppedClasses = previousClasses.filter(
-        (item) => !input.data.matkul.includes(item.id)
+        (item) => !input.data.matkul.includes(item.id),
       );
       const addedClasses = classes.filter(
-        (item) => !previousClasses.map((item) => item.id).includes(item.id)
+        (item) => !previousClasses.map((item) => item.id).includes(item.id),
       );
       const totalSks = classes.reduce((acc, curr) => acc + curr.Matkul.sks, 0);
       if (totalSks > 24) {
@@ -347,7 +347,7 @@ export const frsRouter = createTRPCRouter({
     .input(
       z.object({
         planId: z.string(),
-      })
+      }),
     )
     .query(async ({ input, ctx }) => {
       const classTaken = await prisma.plan.findUnique({
@@ -407,7 +407,7 @@ export const frsRouter = createTRPCRouter({
     .input(
       z.object({
         planId: z.string(),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const plannedFRS = await prisma.plan.findUnique({

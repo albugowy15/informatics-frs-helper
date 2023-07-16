@@ -41,7 +41,7 @@ export default function ResetPasswordPage() {
         loading: 'Memperbarui password',
         success: 'Password berhasil diperbarui',
         error: (error) => error.message,
-      }
+      },
     );
   };
   return (
@@ -71,7 +71,7 @@ export default function ResetPasswordPage() {
 }
 
 export async function getServerSideProps(
-  context: GetSessionParams | undefined
+  context: GetSessionParams | undefined,
 ) {
   const session = await getSession(context);
   if (session) {

@@ -15,7 +15,7 @@ export const tradeMatkulRouter = createTRPCRouter({
         description: z.string().max(150),
         hasClassId: z.string(),
         searchClassId: z.string(),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const hasClass = await prisma.class.findUnique({
@@ -70,7 +70,7 @@ export const tradeMatkulRouter = createTRPCRouter({
         description: z.string().max(150),
         hasClassId: z.string(),
         searchClassId: z.string(),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const tradeMatkul = await prisma.tradeMatkul.findUnique({
@@ -178,7 +178,7 @@ export const tradeMatkulRouter = createTRPCRouter({
     .input(
       z.object({
         tradeMatkulId: z.string(),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const returnedTradeMatkul = await prisma.tradeMatkul.findUnique({
@@ -220,7 +220,7 @@ export const tradeMatkulRouter = createTRPCRouter({
     .input(
       z.object({
         tradeMatkulId: z.string(),
-      })
+      }),
     )
     .query(async ({ input, ctx }) => {
       const tradeMatkulPost = await prisma.tradeMatkul.findUnique({
@@ -279,7 +279,7 @@ export const tradeMatkulRouter = createTRPCRouter({
       z.object({
         semester: z.number().min(1).max(8).optional(),
         matkul: z.string().optional(),
-      })
+      }),
     )
     .query(async ({ input }) => {
       const tradeMatkulPosts = await prisma.tradeMatkul.findMany({

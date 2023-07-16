@@ -48,12 +48,12 @@ const SearchMatkulSection = ({ data, defaultValue }: SearchMatkulProps) => {
   useEffect(() => {
     if (defaultValue) {
       const newListMatkul = data.listSubject.filter(
-        (subject) => subject.semesterId == parseInt(defaultValue.semester)
+        (subject) => subject.semesterId == parseInt(defaultValue.semester),
       );
       setListMatkul(newListMatkul);
 
       const newClassList = data.listClass.filter(
-        (classItem) => classItem.matkulId == defaultValue.matkul
+        (classItem) => classItem.matkulId == defaultValue.matkul,
       );
       setListClass(newClassList);
     }
@@ -73,7 +73,7 @@ const SearchMatkulSection = ({ data, defaultValue }: SearchMatkulProps) => {
           {...register('searchMatkulSemester')}
           onChange={(e) => {
             const newListMatkul = data.listSubject.filter(
-              (subject) => subject.semesterId == parseInt(e.target.value)
+              (subject) => subject.semesterId == parseInt(e.target.value),
             );
             setListMatkul(newListMatkul);
           }}
@@ -111,7 +111,7 @@ const SearchMatkulSection = ({ data, defaultValue }: SearchMatkulProps) => {
           {...register('searchMatkul')}
           onChange={(e) => {
             const newClassList = data.listClass.filter(
-              (classItem) => classItem.matkulId == e.target.value.toString()
+              (classItem) => classItem.matkulId == e.target.value.toString(),
             );
 
             setListClass(newClassList);

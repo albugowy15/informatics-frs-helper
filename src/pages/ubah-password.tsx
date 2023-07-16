@@ -38,7 +38,7 @@ export default function ChangePasswordPage() {
         success: 'Password berhasil diubah',
         loading: 'Mengubah password..',
         error: (error) => error.message,
-      }
+      },
     );
   };
   return (

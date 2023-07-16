@@ -73,7 +73,7 @@ export default function CreateTradeMatkulPage() {
         loading: 'Membuat post trade matkul',
         success: 'Berhasil membuat post trade matkul',
         error: (err) => err.message,
-      }
+      },
     );
   };
 

@@ -63,7 +63,7 @@ export const userRouter = createTRPCRouter({
           .string({ required_error: 'Password baru tidak boleh kosong' })
           .min(8)
           .max(16),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const oldPassword = await prisma.user.findUnique({
@@ -82,7 +82,7 @@ export const userRouter = createTRPCRouter({
       }
       const match = await bcrypt.compare(
         input.old_password,
-        oldPassword.password
+        oldPassword.password,
       );
       if (!match) {
         throw new TRPCError({
@@ -109,7 +109,7 @@ export const userRouter = createTRPCRouter({
       z.object({
         username: z.string(),
         email: z.string().email(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       const user = await prisma.user.findUnique({

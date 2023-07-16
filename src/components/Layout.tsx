@@ -70,7 +70,7 @@ const Navbar = () => {
                                     active
                                       ? 'bg-primary-500 text-neutral-50'
                                       : 'text-neutral-200',
-                                  ]
+                                  ],
                                 )}
                                 href='/profile'
                               >
@@ -92,7 +92,7 @@ const Navbar = () => {
                                     active
                                       ? 'bg-primary-500 text-neutral-50'
                                       : 'text-neutral-200',
-                                  ]
+                                  ],
                                 )}
                                 href='/ubah-password'
                               >
@@ -114,7 +114,7 @@ const Navbar = () => {
                                     active
                                       ? 'bg-primary-500 text-neutral-50'
                                       : 'text-neutral-200',
-                                  ]
+                                  ],
                                 )}
                                 href='/frs'
                               >
@@ -136,7 +136,7 @@ const Navbar = () => {
                                     active
                                       ? 'bg-primary-500 text-neutral-50'
                                       : 'text-neutral-200',
-                                  ]
+                                  ],
                                 )}
                                 href='/my-trading-matkul'
                               >
@@ -159,7 +159,7 @@ const Navbar = () => {
                                     active
                                       ? 'bg-primary-500 text-neutral-50'
                                       : 'text-neutral-200',
-                                  ]
+                                  ],
                                 )}
                               >
                                 <FiLogOut

@@ -63,7 +63,7 @@ export default function SchedulePage() {
       semester: parseInt(submitedData?.semester as string),
       with_taken: true,
     },
-    { enabled: Boolean(submitedData) }
+    { enabled: Boolean(submitedData) },
   );
 
   const listSubject = api.common.getSubject.useQuery(
@@ -71,7 +71,7 @@ export default function SchedulePage() {
       semester: parseInt(semesterField),
       withAll: true,
     },
-    { enabled: Boolean(semesterField) }
+    { enabled: Boolean(semesterField) },
   );
 
   // reset matkul field when semester field changed

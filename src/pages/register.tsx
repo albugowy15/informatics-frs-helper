@@ -95,7 +95,7 @@ export default function RegisterPage() {
 }
 
 export async function getServerSideProps(
-  context: GetSessionParams | undefined
+  context: GetSessionParams | undefined,
 ) {
   const session = await getSession(context);
   if (session) {

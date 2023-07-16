@@ -14,7 +14,7 @@ export default createNextApiHandler({
       ? ({ path, error }) => {
           // eslint-disable-next-line no-console
           console.error(
-            `❌ tRPC failed on ${path ?? '<no-path>'}: ${error.message}`
+            `❌ tRPC failed on ${path ?? '<no-path>'}: ${error.message}`,
           );
         }
       : undefined,
