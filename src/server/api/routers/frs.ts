@@ -170,9 +170,11 @@ export const frsRouter = createTRPCRouter({
           message: 'Kamu sudah mengambil mata kuliah ini',
         });
       }
-      const isScheduleConflict = takenClasses.find((item) => {
+      const isScheduleConflict = takenClasses.some((item) => {
         return (
-          item.day === checkClass.day && item.sessionId === checkClass.sessionId
+          item.day != null &&
+          item.day === checkClass.day &&
+          item.sessionId === checkClass.sessionId
         );
       });
       if (isScheduleConflict) {
