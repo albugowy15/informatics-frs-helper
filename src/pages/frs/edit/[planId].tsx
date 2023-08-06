@@ -47,14 +47,14 @@ export type PlanDetailClass = {
     sks: number;
     id: string;
   };
-  Session: {
+  Session?: {
     session_time: string;
-  };
+  } | null;
   Lecturer: {
     id: string;
     fullname: string;
   }[];
-  day: string;
+  day?: string | null;
 };
 
 type PlanDetailProps = {
@@ -168,7 +168,7 @@ export default function EditPlanPage({
                       subjectCode: kelas.code,
                       lecturers: kelas.Lecturer,
                       day: kelas.day,
-                      sessionTime: kelas.Session.session_time,
+                      sessionTime: kelas.Session?.session_time,
                       taken: kelas.taken,
                       sks: kelas.Matkul.sks,
                     }}

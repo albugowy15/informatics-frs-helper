@@ -21,7 +21,7 @@
     "build": "next build",
     "postinstall": "prisma generate",
     "start": "next start",
-    "start_db": "pscale connect informatics-frs main --port 3309",
+    "db:start": "pscale connect informatics-frs dev --port 3309",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && yarn format",
     "lint:strict": "eslint --max-warnings=0 src",

@@ -32,7 +32,7 @@ export default function TrendingPage() {
                         key={kelas.id}
                         data={{
                           day: kelas.day,
-                          sessionTime: kelas.Session.session_time,
+                          sessionTime: kelas.Session?.session_time,
                           subjectCode: kelas.code,
                           subjectName: kelas.Matkul.name,
                           lecturers: kelas.Lecturer,

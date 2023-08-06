@@ -8,8 +8,8 @@ type ClassCardProps = {
     subjectName: string;
     subjectCode: string;
     lecturers: { id: string; fullname: string }[];
-    day: string;
-    sessionTime: string;
+    day?: string | null;
+    sessionTime?: string | null;
     taken: number;
     sks: number;
   };
@@ -26,12 +26,14 @@ export const ClassCard = ({ data, action }: ClassCardProps) => {
           {lecturer.fullname}
         </Typography>
       ))}
-      <Typography variant='body3'>
-        {data.day}, {data.sessionTime} WIB
-      </Typography>
+      {data.day != null && data.sessionTime != null ? (
+        <Typography variant='body3'>
+          {data.day}, {data.sessionTime} WIB
+        </Typography>
+      ) : null}
 
       <CounterBadge count={data.taken} />
-
+      <div className='py-1' />
       {action}
     </div>
   );

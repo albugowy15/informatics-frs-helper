@@ -122,7 +122,7 @@ export default function CreateFRSPage() {
                       sks: kelas.Matkul.sks,
                       lecturers: kelas.Lecturer,
                       day: kelas.day,
-                      sessionTime: kelas.Session.session_time,
+                      sessionTime: kelas.Session?.session_time,
                       taken: kelas.taken,
                     }}
                     action={

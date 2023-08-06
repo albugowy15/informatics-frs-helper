@@ -179,7 +179,7 @@ export default function SchedulePage() {
                         data={{
                           day: item.day,
                           lecturers: item.Lecturer,
-                          sessionTime: item.Session.session_time,
+                          sessionTime: item.Session?.session_time,
                           subjectCode: item.code,
                           subjectName: matkul.name,
                           taken: item.taken,

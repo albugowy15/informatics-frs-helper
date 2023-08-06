@@ -53,12 +53,11 @@ model Class {
   Matkul       Matkul        @relation(fields: [matkulId], references: [id])
   matkulId     String
   Lecturer     Lecturer[]     
-  day          String
+  day          String?
   code         String
-  isAksel      Boolean
   taken        Int
-  Session      Session       @relation(fields: [sessionId], references: [id])
-  sessionId    Int
+  Session      Session?       @relation(fields: [sessionId], references: [id])
+  sessionId    Int?
   Plan         Plan[]
   searchMatkul TradeMatkul[] @relation("searchMatkul")
   hasMatkul    TradeMatkul[] @relation("hasMatkul")

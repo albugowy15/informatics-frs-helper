@@ -89,7 +89,7 @@ const ClassPickSection = ({
                             subjectCode: kelas.code,
                             lecturers: kelas.Lecturer,
                             day: kelas.day,
-                            sessionTime: kelas.Session.session_time,
+                            sessionTime: kelas.Session?.session_time,
                             taken: kelas.taken,
                             sks: subject.sks,
                           }}
@@ -97,7 +97,6 @@ const ClassPickSection = ({
                             <Button
                               variant='filled'
                               size='sm'
-                              className='mt-3'
                               onClick={() => {
                                 const incomingClass = kelas.id;
                                 const takenClass = classTaken.map(
