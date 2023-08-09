@@ -1,7 +1,7 @@
-import sgMail from '@sendgrid/mail';
 import { TRPCError } from '@trpc/server';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { Resend } from 'resend';
 import { z } from 'zod';
 
 import {
@@ -131,7 +131,7 @@ export const userRouter = createTRPCRouter({
       if (user.email !== input.email) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: 'User tidak ditemukan',
+          message: 'Email tidak ditemukan',
         });
       }
       const payload = {
@@ -142,25 +142,23 @@ export const userRouter = createTRPCRouter({
         expiresIn: '30m',
       });
       const tokenUrl = `${env.BASE_URL}/reset-password/${token}`;
-
-      sgMail.setApiKey(env.SENDGRID_API_KEY);
-      const msg = {
-        to: user.email,
-        from: 'kholidbughowi@gmail.com',
-        subject: 'Reset Password - Informatics FRS Helper',
-        html: `<h1>Konfirmasi Reset Password</h1><p>Hallo <strong>${user.username}</strong></p><br/><p>Kamu telah meminta untuk reset password. Silahkan klik link berikut untuk mereset password kamu</p><br /><a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>${tokenUrl}</a><br /><br /><p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
-      };
-      sgMail
-        .send(msg)
-        .then(() => {
-          return { message: 'Email berhasil dikirim' };
-        })
-        .catch(() => {
-          throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'Gagal mengirim email',
-          });
+      const resend = new Resend(env.RESEND_API_KEY);
+      try {
+        await resend.emails.send({
+          from: 'TC FRS Helper <no-reply@tc-frs-helper.live>',
+          to: [user.email],
+          subject: 'Permintaan Reset Password - TC FRS Helper',
+          html: `<h1>Konfirmasi Reset Password</h1><p>Hallo <strong>${user.username}</strong></p><br/><p>Kamu telah meminta untuk reset password. Silahkan klik link berikut untuk mereset password kamu</p><br /><a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>${tokenUrl}</a><br /><br /><p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
         });
+        return {
+          message: 'Email reset password berhasil dikirim',
+        };
+      } catch (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Gagal mengirimkan email reset password',
+        });
+      }
     }),
   verifyResetPassword: publicProcedure
     .input(z.object({ token: z.string(), newPassword: z.string() }))
