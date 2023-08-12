@@ -73,6 +73,9 @@ export const commonRouter = createTRPCRouter({
             },
           },
         },
+        orderBy: {
+          name: 'asc',
+        },
       });
 
       return matkul;
@@ -92,6 +95,9 @@ export const commonRouter = createTRPCRouter({
           },
           where: {
             semester: input.semester,
+          },
+          orderBy: {
+            name: 'asc',
           },
         })
         .then((res) => {
@@ -121,6 +127,9 @@ export const commonRouter = createTRPCRouter({
           id: true,
           name: true,
           semester: true,
+        },
+        orderBy: {
+          name: 'asc',
         },
       })
       .then((res) => {
