@@ -26,7 +26,7 @@ export default async function handler(
   if (password !== confirmPassword) {
     res.status(400).json({
       status: 'error',
-      message: 'Password and confirm password do not match',
+      message: 'Password dan konfirmasi password tidak sama',
     });
     return;
   }
@@ -42,7 +42,7 @@ export default async function handler(
 
     res.status(201).json({
       status: 'success',
-      message: 'User successfully registered',
+      message: 'Berhasil membuat akun',
       data: {
         id: user.id,
       },
@@ -50,7 +50,7 @@ export default async function handler(
   } catch (error) {
     return res.status(400).json({
       status: 'error',
-      message: 'Username already exists',
+      message: 'Username atau email telah digunakan',
     });
   }
   return;
