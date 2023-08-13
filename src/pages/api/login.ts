@@ -40,13 +40,31 @@ export default async function handler(
     return;
   }
 
-  const user = await prisma.user.findUnique({
-    where: { username: username },
+  const users = await prisma.user.findMany({
+    where: {
+      OR: [
+        {
+          username: username,
+        },
+        {
+          email: username,
+        },
+      ],
+    },
   });
+
+  if (users.length === 0 || users.length > 1) {
+    res.status(401).json({
+      status: 'error',
+      message: 'User tidak ditemukan',
+    });
+    return;
+  }
+  const user = users[0];
   if (!user) {
     res.status(401).json({
       status: 'error',
-      message: 'User not found',
+      message: 'User tidak ditemukan',
     });
     return;
   }

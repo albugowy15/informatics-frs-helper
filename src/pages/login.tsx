@@ -56,7 +56,7 @@ export default function LoginPage() {
         </Typography>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
-            <TextInput label='Username' name='username' />
+            <TextInput label='Username atau Email' name='username' />
             <TextInput type='password' label='Password' name='password' />
             <BasicLink
               className='text-sm font-medium text-primary-500'
