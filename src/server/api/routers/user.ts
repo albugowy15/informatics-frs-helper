@@ -107,7 +107,6 @@ export const userRouter = createTRPCRouter({
   resetPassword: publicProcedure
     .input(
       z.object({
-        username: z.string(),
         email: z.string().email(),
       }),
     )
@@ -119,19 +118,13 @@ export const userRouter = createTRPCRouter({
           email: true,
         },
         where: {
-          username: input.username,
+          email: input.email,
         },
       });
       if (!user) {
         throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'User tidak ditemukan',
-        });
-      }
-      if (user.email !== input.email) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Email tidak ditemukan',
         });
       }
       const payload = {
@@ -148,7 +141,15 @@ export const userRouter = createTRPCRouter({
           from: 'TC FRS Helper <no-reply@tc-frs-helper.live>',
           to: [user.email],
           subject: 'Permintaan Reset Password - TC FRS Helper',
-          html: `<h1>Konfirmasi Reset Password</h1><p>Hallo <strong>${user.username}</strong></p><br/><p>Kamu telah meminta untuk reset password. Silahkan klik link berikut untuk mereset password kamu</p><br /><a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>${tokenUrl}</a><br /><br /><p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
+          html: `
+          <h1>Konfirmasi Reset Password</h1>
+          <p>Hallo <strong>${user.username}</strong></p>
+          <br/>
+          <p>Kamu telah meminta untuk reset password. Silahkan klik link berikut untuk mereset password kamu</p>
+          <br />
+          <a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>${tokenUrl}</a>
+          <br /><br />
+          <p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
         });
         return {
           message: 'Email reset password berhasil dikirim',

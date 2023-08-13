@@ -13,7 +13,6 @@ import { TextInput } from '@/components/Form';
 import Typography from '@/components/Typography';
 
 const forgotPasswordSchema = z.object({
-  username: z.string().nonempty({ message: 'Username tidak boleh kosong' }),
   email: z
     .string()
     .email({ message: 'Email tidak valid' })
@@ -30,7 +29,6 @@ export default function ForgotPassword() {
   const onSubmit: SubmitHandler<ForgotPasswordForm> = async (data) => {
     toast.promise(
       mutateForgotPassword.mutateAsync({
-        username: data.username,
         email: data.email,
       }),
       {
@@ -53,7 +51,6 @@ export default function ForgotPassword() {
         </Typography>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
-            <TextInput label='Username' name='username' />
             <TextInput label='Email' name='email' />
 
             <Button
