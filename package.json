@@ -8,7 +8,7 @@
     "url": "https://bughowi.com"
   },
   "description": "Fullstack Typesafe Next.js application for ITS Informatics students to organize their FRS ",
-  "homepage": "https://informatics-frs-helper.vercel.app",
+  "homepage": "https://tc-frs-helper.live",
   "repository": {
     "type": "github",
     "url": "https://github.com/albugowy15/informatics-frs-helper",
@@ -51,7 +51,9 @@
     "react-hook-form": "^7.45.4",
     "react-hot-toast": "^2.4.1",
     "resend": "^0.17.2",
-    "superjson": "^1.13.1"
+    "superjson": "^1.13.1",
+    "react-icons": "^4.10.1",
+    "nprogress": "^0.2.0"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.7.0",
@@ -71,12 +73,10 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",
-    "nprogress": "^0.2.0",
     "postcss": "^8.4.27",
     "prettier": "^3.0.1",
     "prettier-plugin-tailwindcss": "^0.5.2",
     "prisma": "^5.1.1",
-    "react-icons": "^4.10.1",
     "tailwindcss": "^3.3.3",
     "typescript": "5.1.6",
     "zod": "^3.21.4"

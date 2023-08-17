@@ -316,7 +316,7 @@ export const tradeMatkulRouter = createTRPCRouter({
           },
         },
         where: {
-          hasMatkul: {
+          searchMatkul: {
             Matkul: {
               semester: input.semester ?? undefined,
               name:
