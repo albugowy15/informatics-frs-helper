@@ -108,7 +108,7 @@ const TradingMatkulPage = () => {
                     disabled={semesterField === undefined}
                     data={listSubject.data}
                     label='Pilih Matkul'
-                    helperText='Silahkan pilih semester dulu untuk menampilkan opsi'
+                    helperText='Pilih mata kuliah yang Anda inginkan (Want)'
                     {...field}
                   />
                 )}
