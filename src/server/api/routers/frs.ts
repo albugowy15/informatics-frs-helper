@@ -173,6 +173,7 @@ export const frsRouter = createTRPCRouter({
       const isScheduleConflict = takenClasses.some((item) => {
         return (
           item.day != null &&
+          item.sessionId != null &&
           item.day === checkClass.day &&
           item.sessionId === checkClass.sessionId
         );
