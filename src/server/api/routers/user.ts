@@ -1,4 +1,5 @@
 import { TRPCError } from '@trpc/server';
+import { kv } from '@vercel/kv';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Resend } from 'resend';
@@ -127,6 +128,25 @@ export const userRouter = createTRPCRouter({
           message: 'User tidak ditemukan',
         });
       }
+      const savedTimeRedis = await kv.get<string>(user.id);
+      if (savedTimeRedis) {
+        const currentTime = new Date();
+        const savedTime = new Date(savedTimeRedis);
+
+        const difference = currentTime.getTime() - savedTime.getTime();
+        const fiveMinsMS = 5 * 60 * 1000;
+
+        if (difference < fiveMinsMS) {
+          const nextAttemptMn = Math.ceil(
+            (fiveMinsMS - difference) / (1000 * 60),
+          );
+          throw new TRPCError({
+            code: 'TOO_MANY_REQUESTS',
+            message: `Tunggu ${nextAttemptMn} menit lagi untuk mengirim link reset password berikutnya`,
+          });
+        }
+      }
+
       const payload = {
         userId: user.id,
         username: user.username,
@@ -151,6 +171,14 @@ export const userRouter = createTRPCRouter({
           <br /><br />
           <p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
         });
+        const currentTime = new Date();
+        try {
+          await kv.set(user.id, currentTime.toISOString());
+        } catch (error) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+          });
+        }
         return {
           message: 'Email reset password berhasil dikirim',
         };
