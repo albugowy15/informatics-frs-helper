@@ -22,11 +22,11 @@ import { TbArrowsExchange2 } from 'react-icons/tb';
 
 import BasicLink from '@/components/BasicLink';
 import { Button, LinkButton } from '@/components/Button';
-import Dropdown from '@/components/Dropdown';
-import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
 const DynamicModal = dynamic(() => import('@/components/Modal'));
+const DynamicDropdown = dynamic(() => import('@/components/Dropdown'));
+const DynamicLoader = dynamic(() => import('@/components/Loader'));
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -48,12 +48,12 @@ const Navbar = () => {
               Menu
             </Button>
             {status == 'loading' ? (
-              <Loader />
+              <DynamicLoader />
             ) : (
               <>
                 {session?.user ? (
                   <>
-                    <Dropdown
+                    <DynamicDropdown
                       menuButton={
                         <div className='flex h-fit items-center justify-center rounded-full border border-neutral-400 p-2.5 hover:bg-neutral-900'>
                           <BsFillPersonFill className='text-base text-primary-400' />

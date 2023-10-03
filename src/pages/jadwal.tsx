@@ -15,14 +15,16 @@ import { z } from 'zod';
 import { api } from '@/utils/api';
 import { renderPageTitle } from '@/utils/page';
 
-import Accordion from '@/components/Accordion';
 import { Button } from '@/components/Button';
-import { ClassCard } from '@/components/Card';
 import { SelectInput } from '@/components/Form';
-import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
 const DynamicModal = dynamic(() => import('@/components/Modal'));
+const DynamicClassCard = dynamic(() =>
+  import('@/components/Card').then((mod) => mod.ClassCard),
+);
+const DynamicLoader = dynamic(() => import('@/components/Loader'));
+const DynamicAccordion = dynamic(() => import('@/components/Accordion'));
 
 const Semester = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
@@ -133,7 +135,7 @@ export default function SchedulePage() {
           <>
             {response.isLoading && (
               <div className='flex h-screen w-full items-center justify-center'>
-                <Loader />
+                <DynamicLoader />
               </div>
             )}
             {response.isSuccess && response.data.length === 0 && (
@@ -162,7 +164,7 @@ export default function SchedulePage() {
           <main className='flex w-full flex-col gap-3 lg:px-3'>
             {response.data.map((matkul) => (
               <>
-                <Accordion
+                <DynamicAccordion
                   title={
                     <div>
                       <Typography variant='h5'>{matkul.name}</Typography>
@@ -175,7 +177,7 @@ export default function SchedulePage() {
                 >
                   <div className='grid grid-cols-2 gap-1 md:grid-cols-3'>
                     {matkul.Class.map((item) => (
-                      <ClassCard
+                      <DynamicClassCard
                         data={{
                           day: item.day,
                           lecturers: item.Lecturer,
@@ -189,7 +191,7 @@ export default function SchedulePage() {
                       />
                     ))}
                   </div>
-                </Accordion>
+                </DynamicAccordion>
               </>
             ))}
           </main>

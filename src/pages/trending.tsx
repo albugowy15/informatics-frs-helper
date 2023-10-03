@@ -1,8 +1,13 @@
+import dynamic from 'next/dynamic';
+
 import { api } from '@/utils/api';
 
-import { ClassCard } from '@/components/Card';
-import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
+
+const DynamicClassCard = dynamic(() =>
+  import('@/components/Card').then((mod) => mod.ClassCard),
+);
+const DynamicLoader = dynamic(() => import('@/components/Loader'));
 
 export default function TrendingPage() {
   const popularClasses = api.common.getTrendingClasses.useQuery();
@@ -14,7 +19,7 @@ export default function TrendingPage() {
             Memuat kelas paling trending
           </Typography>
           <div className='py-1' />
-          <Loader />
+          <DynamicLoader />
         </div>
       ) : (
         <>
@@ -28,7 +33,7 @@ export default function TrendingPage() {
                   <div className='py-2' />
                   <main className='mx-auto flex max-w-lg flex-col gap-2'>
                     {popularClasses.data.map((kelas) => (
-                      <ClassCard
+                      <DynamicClassCard
                         key={kelas.id}
                         data={{
                           day: kelas.day,

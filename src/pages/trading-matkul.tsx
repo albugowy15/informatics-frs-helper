@@ -17,10 +17,10 @@ import { renderPageTitle } from '@/utils/page';
 
 import { Button } from '@/components/Button';
 import { SelectInput } from '@/components/Form';
-import Loader from '@/components/Loader';
 import Typography from '@/components/Typography';
 
 const DynamicModal = dynamic(() => import('@/components/Modal'));
+const DynamicLoader = dynamic(() => import('@/components/Loader'));
 
 const filterSchema = z.object({
   semester: z.string().optional(),
@@ -122,7 +122,7 @@ const TradingMatkulPage = () => {
 
         {tradeMatkulPosts.isLoading && (
           <div className='flex h-screen w-full items-center justify-center'>
-            <Loader />
+            <DynamicLoader />
           </div>
         )}
         {tradeMatkulPosts.isSuccess && tradeMatkulPosts.data.length === 0 && (

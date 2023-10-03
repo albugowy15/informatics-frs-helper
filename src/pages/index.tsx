@@ -41,10 +41,7 @@ function ScheduleStatusAlert({ status }: { status: string }) {
             <p>
               Jadwal Kelas: <strong>OUTDATED</strong>
             </p>
-            <p className='text-sm'>
-              Perhatian! Jadwal kelas belum diperbarui, menunggu rilis jadwal
-              dari departemen.
-            </p>
+            <p className='text-sm'>Perhatian! Jadwal kelas belum diperbarui.</p>
           </div>
         </>
       )}
