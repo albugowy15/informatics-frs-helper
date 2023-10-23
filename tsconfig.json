@@ -29,7 +29,12 @@
       "@/assets/*": ["./src/assets/*"],
       "@/types/*": ["./src/types/*"],
       "@/ui/*": ["./src/ui/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     ".eslintrc.js",
@@ -37,7 +42,8 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
-    "**/*.mjs"
+    "**/*.mjs",
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
