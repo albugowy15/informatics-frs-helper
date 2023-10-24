@@ -2,6 +2,8 @@ import { Inter } from 'next/font/google';
 import { headers } from 'next/headers';
 import React from 'react';
 
+import { getServerAuthSession } from '@/server/auth';
+
 import '@/styles/globals.css';
 
 import Footer from '@/components/layout/footer';
@@ -17,11 +19,12 @@ const inter = Inter({
   display: 'swap',
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerAuthSession();
   return (
     <html lang='en' className={inter.className} suppressHydrationWarning>
       <head />
@@ -34,8 +37,8 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Toaster />
-            <Navbar items={homeNavigation} />
-            <div className='container py-5'>{children}</div>
+            <Navbar items={homeNavigation} session={session} />
+            <div className='px-3 md:container py-5'>{children}</div>
             <Footer />
           </ThemeProvider>
         </TRPCReactProvider>

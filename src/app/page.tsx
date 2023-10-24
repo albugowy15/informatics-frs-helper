@@ -13,11 +13,11 @@ export const metadata: Metadata = {
   title: renderPageTitle('Home'),
   description: 'Informatics FRS Helper',
 };
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <ScheduleStatusAlert />
-      <main className='relative mt-28 flex flex-col items-center justify-center space-y-2 '>
+      <main className='mt-24 flex flex-col items-center justify-center space-y-2 '>
         <Typography variant='h2' className='text-center'>
           Informatics FRS Helper
         </Typography>
