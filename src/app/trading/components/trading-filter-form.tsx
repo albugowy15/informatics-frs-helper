@@ -1,8 +1,9 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -21,6 +22,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+import { api } from '@/trpc/react';
+
+const Semester = ['1', '2', '3', '4', '5', '6', '7', '8'];
+
 const filterSchema = z.object({
   semester: z.string().optional(),
   matkul: z.string().optional(),
@@ -29,18 +34,38 @@ const filterSchema = z.object({
 type FilterForm = z.infer<typeof filterSchema>;
 
 const TradingFilterForm = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const form = useForm<FilterForm>({
     resolver: zodResolver(filterSchema),
+    defaultValues: {
+      matkul: searchParams?.get('subject') ?? '',
+      semester: searchParams?.get('semester') ?? '',
+    },
   });
-  const { handleSubmit } = form;
+  const semesterWatch = useWatch({ control: form.control, name: 'semester' });
+
+  const listSubjects = api.common.getSubject.useQuery(
+    {
+      semester: parseInt(semesterWatch!),
+      withAll: true,
+    },
+    { enabled: semesterWatch !== undefined },
+  );
   const onSubmit: SubmitHandler<FilterForm> = (data) => {
-    setSubmitedData(data);
+    const newParams = new URLSearchParams(searchParams?.toString());
+    newParams.set('semester', data.semester ?? '');
+    newParams.set('subject', data.matkul ?? 'all');
+    router.push(`${pathname}?${newParams.toString()}`);
   };
-  const [submitedData, setSubmitedData] = useState<FilterForm>();
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className='flex flex-col gap-4'
+      >
         <FormField
           control={form.control}
           name='semester'
@@ -54,13 +79,11 @@ const TradingFilterForm = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {['1', '2', '3', '4', '5', '6', '7', '8'].map(
-                    (item, index) => (
-                      <SelectItem key={index} value={item}>
-                        {item}
-                      </SelectItem>
-                    ),
-                  )}
+                  {Semester.map((item, index) => (
+                    <SelectItem key={index} value={item}>
+                      {item}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </FormItem>
@@ -71,28 +94,23 @@ const TradingFilterForm = () => {
           name='matkul'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Pilih Matkul</FormLabel>
+              <FormLabel>Mata Kuliah</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder='Pilih matkul'></SelectValue>
+                    <SelectValue placeholder='Pilih Mata kuliah' />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
-                  {[
-                    'Matkul 1',
-                    'Matkul 2',
-                    'Matkul 3',
-                    'Matkul 4',
-                    'Matkul 5',
-                    'Matkul 6',
-                    'Matkul 7',
-                    'Matkul 8',
-                  ].map((item, index) => (
-                    <SelectItem key={index} value={item}>
-                      {item}
-                    </SelectItem>
-                  ))}
+                <SelectContent className='overflow-scroll max-h-52'>
+                  {listSubjects.data ? (
+                    <>
+                      {listSubjects.data.map((item, index) => (
+                        <SelectItem key={index} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </>
+                  ) : null}
                 </SelectContent>
               </Select>
             </FormItem>
