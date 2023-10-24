@@ -5,8 +5,6 @@ import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 
-import { api } from '@/utils/api';
-
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -22,6 +20,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+
+import { api } from '@/trpc/react';
 
 const Semester = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
@@ -45,7 +45,6 @@ const ScheduleFilterForm = () => {
   });
   const semesterWatch = useWatch({ control: form.control, name: 'semester' });
 
-  const { handleSubmit } = form;
   const listSubjects = api.common.getSubject.useQuery({
     semester: parseInt(semesterWatch),
     withAll: true,
@@ -53,13 +52,16 @@ const ScheduleFilterForm = () => {
   const onSubmit: SubmitHandler<FilterForm> = (data) => {
     const newParams = new URLSearchParams(searchParams?.toString());
     newParams.set('semester', data.semester);
-    newParams.set('subject', data.matkul ?? 'all');
+    newParams.set('subject', data.matkul ?? 'Semua');
     router.push(`${pathname}?${newParams.toString()}`);
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className='flex flex-col gap-4'
+      >
         <FormField
           control={form.control}
           name='semester'
@@ -96,7 +98,7 @@ const ScheduleFilterForm = () => {
                     <SelectValue placeholder='Pilih Mata kuliah' />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className='overflow-scroll max-h-52'>
                   {listSubjects.data ? (
                     <>
                       {listSubjects.data.map((item, index) => (
@@ -111,7 +113,6 @@ const ScheduleFilterForm = () => {
             </FormItem>
           )}
         />
-
         <Button type='submit'>Tampilkan Jadwal</Button>
       </form>
     </Form>

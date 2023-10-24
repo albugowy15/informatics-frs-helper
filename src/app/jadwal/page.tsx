@@ -1,3 +1,4 @@
+import { SlidersHorizontal } from 'lucide-react';
 import { Metadata } from 'next';
 
 import { prisma } from '@/server/db';
@@ -40,16 +41,17 @@ type SearchParam = {
   semester: string;
   subject: string;
 };
+
 export default async function SchedulePage({
   searchParams,
 }: {
   searchParams: SearchParam;
 }) {
-  const { semester = '0', subject = 'all' } = searchParams;
+  const { semester = undefined, subject = undefined } = searchParams;
   const classes = await prisma.matkul.findMany({
     where: {
-      semester: parseInt(semester),
-      name: subject === 'all' ? undefined : subject,
+      semester: semester === undefined ? parseInt('0') : parseInt(semester),
+      name: subject === undefined || subject === 'Semua' ? undefined : subject,
     },
     select: {
       id: true,
@@ -92,9 +94,32 @@ export default async function SchedulePage({
             </CardContent>
           </Card>
         </aside>
+        <section className='flex flex-col mb-7 lg:hidden'>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant='outline'>
+                <SlidersHorizontal className='mr-2 h-4 w-4' />
+                Filter
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Filter Jadwal</DialogTitle>
+                <DialogDescription>
+                  Silahkan filter jadwal berdasarkan semester dan mata kuliah
+                </DialogDescription>
+              </DialogHeader>
+              <div className='overflow-scroll py-3 px-2'>
+                <ScheduleFilterForm />
+              </div>
+            </DialogContent>
+          </Dialog>
+        </section>
         <main className='flex w-full flex-col gap-3 lg:px-3'>
           {classes.length == 0 ? (
-            <Typography variant='h4'>Tidak ada kelas</Typography>
+            <Typography variant='h4' className='text-center lg:text-left'>
+              Tidak ada kelas
+            </Typography>
           ) : null}
           {classes.map((matkul) => (
             <>
@@ -110,21 +135,31 @@ export default async function SchedulePage({
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className='grid grid-cols-2 gap-1 md:grid-cols-3'>
-                      {matkul.Class.map((item) => (
-                        <ClassCard
-                          data={{
-                            day: item.day,
-                            lecturers: item.Lecturer,
-                            sessionTime: item.Session?.session_time,
-                            subjectCode: item.code,
-                            subjectName: matkul.name,
-                            taken: item.taken,
-                            sks: matkul.sks,
-                          }}
-                          key={item.id}
-                        />
-                      ))}
+                    <div className='grid gap-2 md:grid-cols-3'>
+                      {matkul.Class.length == 0 ? (
+                        <>
+                          <Typography variant='body1'>
+                            Tidak ada kelas
+                          </Typography>
+                        </>
+                      ) : (
+                        <>
+                          {matkul.Class.map((item) => (
+                            <ClassCard
+                              data={{
+                                day: item.day,
+                                lecturers: item.Lecturer,
+                                sessionTime: item.Session?.session_time,
+                                subjectCode: item.code,
+                                subjectName: matkul.name,
+                                taken: item.taken,
+                                sks: matkul.sks,
+                              }}
+                              key={item.id}
+                            />
+                          ))}
+                        </>
+                      )}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -132,24 +167,6 @@ export default async function SchedulePage({
             </>
           ))}
         </main>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className='fixed bottom-0 left-0 right-0 mx-auto mb-7 w-fit lg:hidden'>
-              Filter
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Filter Jadwal</DialogTitle>
-              <DialogDescription>
-                Silahkan filter jadwal berdasarkan semester dan mata kuliah
-              </DialogDescription>
-            </DialogHeader>
-            <div className='overflow-scroll py-3 px-2'>
-              <ScheduleFilterForm />
-            </div>
-          </DialogContent>
-        </Dialog>
       </div>
     </>
   );
