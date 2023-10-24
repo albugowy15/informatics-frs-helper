@@ -6,6 +6,12 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
+import { initTRPC, TRPCError } from '@trpc/server';
+import { NextRequest } from 'next/server';
+import superjson from 'superjson';
+import { ZodError } from 'zod';
+
+import { getServerAuthSession } from '@/server/auth';
 
 /**
  * 1. CONTEXT
@@ -14,11 +20,9 @@
  *
  * These allow you to access things when processing a request, like the database, the session, etc.
  */
-import { type CreateNextContextOptions } from '@trpc/server/adapters/next';
-import { type Session } from 'next-auth';
 
 type CreateContextOptions = {
-  session: Session | null;
+  headers: Headers;
 };
 
 /**
@@ -31,9 +35,11 @@ type CreateContextOptions = {
  *
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
-const createInnerTRPCContext = (opts: CreateContextOptions) => {
+const createInnerTRPCContext = async (opts: CreateContextOptions) => {
+  const session = await getServerAuthSession();
   return {
-    session: opts.session,
+    session,
+    headers: opts.headers,
   };
 };
 
@@ -43,14 +49,11 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = async (opts: CreateNextContextOptions) => {
-  const { req, res } = opts;
-
-  // Get the session from the server using the getServerSession wrapper function
-  const session = await getServerAuthSession({ req, res });
+export const createTRPCContext = async (opts: { req: NextRequest }) => {
+  // Fetch stuff that depends on the request
 
   return createInnerTRPCContext({
-    session,
+    headers: opts.req.headers,
   });
 };
 
@@ -61,11 +64,6 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
-import { initTRPC, TRPCError } from '@trpc/server';
-import superjson from 'superjson';
-import { ZodError } from 'zod';
-
-import { getServerAuthSession } from '@/server/auth';
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,

@@ -109,6 +109,29 @@ export const commonRouter = createTRPCRouter({
       }
       return listSubject;
     }),
+  getSubjectMappedWithSemester: publicProcedure.query(async () => {
+    const subjects = await prisma.matkul.findMany({
+      select: {
+        name: true,
+        semester: true,
+      },
+      orderBy: {
+        semester: 'asc',
+      },
+    });
+    const semesterToSubjectMap: { [key: number]: string[] } = subjects.reduce(
+      (result, subject) => {
+        const { name, semester } = subject;
+        if (!result[semester]) {
+          result[semester] = [];
+        }
+        result[semester]?.push(name);
+        return result;
+      },
+      {} as { [key: number]: string[] },
+    );
+    return semesterToSubjectMap;
+  }),
   getClassOptions: publicProcedure.query(async () => {
     const listSemester = [
       { id: 1, semester: 1 },
