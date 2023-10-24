@@ -1,8 +1,16 @@
+import { Metadata } from 'next';
+
 import { prisma } from '@/server/db';
+
+import { renderPageTitle } from '@/utils/page';
 
 import ClassCard from '@/components/class-card';
 import Typography from '@/components/typography';
 
+export const metadata: Metadata = {
+  title: renderPageTitle('Trending'),
+  description: 'Top 10 kelas paling banya diambil',
+};
 export default async function TrendingPage() {
   const trendingClass = await prisma.class.findMany({
     select: {
@@ -24,15 +32,15 @@ export default async function TrendingPage() {
     orderBy: {
       taken: 'desc',
     },
-    take: 10,
+    take: 12,
   });
   return (
     <>
       <Typography variant='h2' className='text-center'>
-        Top 10 Kelas Paling Banyak Diambil
+        Top 12 Kelas Paling Banyak Diambil
       </Typography>
       <div className='py-2' />
-      <main className='mx-auto flex max-w-lg flex-col gap-2'>
+      <main className='mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-2'>
         {trendingClass.map((kelas, index) => (
           <ClassCard
             key={index}
