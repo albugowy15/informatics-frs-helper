@@ -2,9 +2,9 @@ export { default } from 'next-auth/middleware';
 
 export const config = {
   matcher: [
-    '/frs/:path*',
-    '/profile/:path*',
+    '/my-frs/:path*',
+    '/profil/:path*',
     '/ubah-password/:path*',
-    '/my-trading-matkul/:path*',
+    '/my-trade-matkul/:path*',
   ],
 };
