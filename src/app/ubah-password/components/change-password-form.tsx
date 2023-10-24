@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -15,6 +16,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
+
+import { api } from '@/trpc/react';
 
 const changePasswordForm = z.object({
   old_password: z.string({
@@ -33,28 +36,28 @@ const ChangePasswordForm = () => {
     resolver: zodResolver(changePasswordForm),
   });
   const { handleSubmit } = form;
-  // const mutatePassword = api.user.changePassword.useMutation();
+  const mutatePassword = api.user.changePassword.useMutation();
   const onSubmit: SubmitHandler<CreatePasswordForm> = (data) => {
-    toast({
-      title: 'Loading',
-      description: 'Sedang mengubah password..',
-    });
-    // mutatePassword.mutate({
-    //   new_password: data.new_password,
-    //   old_password: data.old_password,
-    // });
-    // if (mutatePassword.isError) {
-    //   toast({
-    //     title: 'Error',
-    //     description: mutatePassword.error?.message,
-    //   });
-    // }
-    // if (mutatePassword.isSuccess) {
-    //   toast({
-    //     title: 'Success',
-    //     description: 'Password berhasil diubah',
-    //   });
-    // }
+    mutatePassword
+      .mutateAsync({
+        new_password: data.new_password,
+        old_password: data.old_password,
+      })
+      .then((res) => {
+        if (res) {
+          toast({
+            title: 'Success',
+            description: 'Password berhasil diubah',
+          });
+        }
+      })
+      .catch((err) => {
+        toast({
+          title: 'Error',
+          variant: 'destructive',
+          description: err.message,
+        });
+      });
   };
   return (
     <Form {...form}>
@@ -89,9 +92,16 @@ const ChangePasswordForm = () => {
         <Button
           className='flex w-full justify-center'
           type='submit'
-          // disabled={mutatePassword.isLoading}
+          disabled={mutatePassword.isLoading}
         >
-          Ubah Password
+          {mutatePassword.isLoading ? (
+            <>
+              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+              Mohon Tunggu
+            </>
+          ) : (
+            <>Ubah Password</>
+          )}
         </Button>
       </form>
     </Form>
