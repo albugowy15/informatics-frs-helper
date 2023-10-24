@@ -20,4 +20,12 @@ export const homeNavigation: Navigation[] = [
     name: 'Kelas Trending',
     url: '/trending',
   },
+  {
+    name: 'Panduan',
+    url: '/panduan',
+  },
+  {
+    name: 'Report',
+    url: '/report',
+  },
 ];
