@@ -1,14 +1,16 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
+
+import { api } from '@/utils/api';
 
 import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,7 +24,6 @@ import {
 } from '@/components/ui/select';
 
 const Semester = ['1', '2', '3', '4', '5', '6', '7', '8'];
-const matkul = ['AJK', 'Jarkom', 'PBKK'];
 
 const filterSchema = z.object({
   semester: z.string().nonempty({ message: 'Silahkan pilih semester' }),
@@ -32,19 +33,28 @@ const filterSchema = z.object({
 type FilterForm = z.infer<typeof filterSchema>;
 
 const ScheduleFilterForm = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const form = useForm<FilterForm>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
-      matkul: '',
-      semester: '',
+      matkul: searchParams?.get('subject') ?? '',
+      semester: searchParams?.get('semester') ?? '',
     },
   });
+  const semesterWatch = useWatch({ control: form.control, name: 'semester' });
 
   const { handleSubmit } = form;
-
-  const [submitedData, setSubmitedData] = useState<FilterForm>();
+  const listSubjects = api.common.getSubject.useQuery({
+    semester: parseInt(semesterWatch),
+    withAll: true,
+  });
   const onSubmit: SubmitHandler<FilterForm> = (data) => {
-    setSubmitedData(data);
+    const newParams = new URLSearchParams(searchParams?.toString());
+    newParams.set('semester', data.semester);
+    newParams.set('subject', data.matkul ?? 'all');
+    router.push(`${pathname}?${newParams.toString()}`);
   };
 
   return (
@@ -56,7 +66,6 @@ const ScheduleFilterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Semester</FormLabel>
-              <FormDescription>Silahkan pilih semester</FormDescription>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -81,7 +90,6 @@ const ScheduleFilterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Mata Kuliah</FormLabel>
-              <FormDescription>Silahkan pilih matkul</FormDescription>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -89,11 +97,15 @@ const ScheduleFilterForm = () => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {matkul.map((item, index) => (
-                    <SelectItem key={index} value={item}>
-                      {item}
-                    </SelectItem>
-                  ))}
+                  {listSubjects.data ? (
+                    <>
+                      {listSubjects.data.map((item, index) => (
+                        <SelectItem key={index} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </>
+                  ) : null}
                 </SelectContent>
               </Select>
             </FormItem>

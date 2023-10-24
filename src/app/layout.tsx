@@ -1,4 +1,5 @@
-import { Inter as FontSans } from 'next/font/google';
+import { Inter } from 'next/font/google';
+import { headers } from 'next/headers';
 import React from 'react';
 
 import '@/styles/globals.css';
@@ -9,11 +10,11 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 
 import { homeNavigation } from '@/config/navigation';
-import { cn } from '@/lib/utils';
+import { TRPCReactProvider } from '@/trpc/react';
 
-export const fontSans = FontSans({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-sans',
+  display: 'swap',
 });
 
 export default function RootLayout({
@@ -22,25 +23,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang='en' className={inter.className} suppressHydrationWarning>
       <head />
-      <body
-        className={cn(
-          'min-h-screen bg-background flex flex-col font-sans antialiased',
-          fontSans.variable,
-        )}
-      >
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Toaster />
-          <Navbar items={homeNavigation} />
-          <div className='container py-5'>{children}</div>
-          <Footer />
-        </ThemeProvider>
+      <body className='min-h-screen bg-background flex flex-col font-sans antialiased'>
+        <TRPCReactProvider headers={headers()}>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='system'
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Toaster />
+            <Navbar items={homeNavigation} />
+            <div className='container py-5'>{children}</div>
+            <Footer />
+          </ThemeProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );

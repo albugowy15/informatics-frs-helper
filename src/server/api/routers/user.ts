@@ -13,7 +13,7 @@ import {
 import { prisma } from '@/server/db';
 
 import { env } from '@/env.mjs';
-import { EditProfileForm } from '@/pages/profile/edit';
+// import { EditProfileForm } from '@/pages/profile/edit';
 
 export const userRouter = createTRPCRouter({
   getUserProfile: protectedProcedure.query(async ({ ctx }) => {
@@ -35,25 +35,25 @@ export const userRouter = createTRPCRouter({
     }
     return userProfile;
   }),
-  updateProfile: protectedProcedure
-    .input(z.object({ content: EditProfileForm }))
-    .mutation(({ input, ctx }) => {
-      const updatedProfile = prisma.user
-        .update({
-          where: {
-            id: ctx.session.user.id,
-          },
-          data: {
-            fullname: input.content.fullname,
-            username: input.content.username,
-            email: input.content.email,
-            idLine: input.content.idLine,
-            whatsapp: input.content.whatsapp,
-          },
-        })
-        .then((res) => res.id);
-      return updatedProfile;
-    }),
+  // updateProfile: protectedProcedure
+  //   .input(z.object({ content: EditProfileForm }))
+  //   .mutation(({ input, ctx }) => {
+  //     const updatedProfile = prisma.user
+  //       .update({
+  //         where: {
+  //           id: ctx.session.user.id,
+  //         },
+  //         data: {
+  //           fullname: input.content.fullname,
+  //           username: input.content.username,
+  //           email: input.content.email,
+  //           idLine: input.content.idLine,
+  //           whatsapp: input.content.whatsapp,
+  //         },
+  //       })
+  //       .then((res) => res.id);
+  //     return updatedProfile;
+  //   }),
   changePassword: protectedProcedure
     .input(
       z.object({
