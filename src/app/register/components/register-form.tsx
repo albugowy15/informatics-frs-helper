@@ -20,19 +20,19 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 
 const registerSchema = z.object({
-  username: z.string().nonempty({ message: 'Username tidak boleh kosong' }),
+  username: z.string().min(1, { message: 'Username tidak boleh kosong' }),
   email: z
     .string()
     .email({ message: 'Email harus valid' })
-    .nonempty({ message: 'Email tidak boleh kosong' }),
+    .min(1, { message: 'Email tidak boleh kosong' }),
   password: z
     .string()
-    .nonempty({ message: 'Password tidak boleh kosong' })
+    .min(1, { message: 'Password tidak boleh kosong' })
     .min(8, { message: 'Password minimal 8 karakter' })
     .max(16, { message: 'Password maksimal 16 karakter' }),
   confirmPassword: z
     .string()
-    .nonempty({ message: 'Password tidak boleh kosong' })
+    .min(1, { message: 'Password tidak boleh kosong' })
     .min(8, { message: 'Password minimal 8 karakter' })
     .max(16, { message: 'Password maksimal 16 karakter' }),
 });
