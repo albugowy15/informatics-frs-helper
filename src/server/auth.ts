@@ -1,8 +1,8 @@
 import { getServerSession, NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
+import { LoginResponseData } from '@/app/api/login/route';
 import { env } from '@/env.mjs';
-import { LoginResponseData } from '@/pages/api/login';
 
 import { APIResponse } from '@/types/api';
 
