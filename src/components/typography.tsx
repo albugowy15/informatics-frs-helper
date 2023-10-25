@@ -37,7 +37,7 @@ const Typography = <T extends React.ElementType>({
             'text-3xl font-semibold tracking-tight first:mt-0',
           variant === 'h3' && 'text-2xl font-semibold tracking-tight',
           variant === 'h4' && 'text-xl font-semibold tracking-tight',
-          variant === 'body1' && 'leading-7 [&:not(:first-child)]:mt-6',
+          variant === 'body1' && 'leading-7 [&:not(:first-child)]:mt-3',
           variant === 'label1' && 'text-sm font-medium leading-none',
         ],
         className,
