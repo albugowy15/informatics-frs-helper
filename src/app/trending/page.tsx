@@ -1,39 +1,18 @@
 import { Metadata } from 'next';
 
-import { prisma } from '@/server/db';
-
 import { renderPageTitle } from '@/utils/page';
 
 import ClassCard from '@/components/class-card';
 import Typography from '@/components/typography';
+
+import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {
   title: renderPageTitle('Trending'),
   description: 'Top 10 kelas paling banya diambil',
 };
 export default async function TrendingPage() {
-  const trendingClass = await prisma.class.findMany({
-    select: {
-      code: true,
-      day: true,
-      id: true,
-      Lecturer: { select: { fullname: true, id: true } },
-      Matkul: { select: { name: true, id: true, sks: true } },
-      Session: {
-        select: { session_time: true },
-      },
-      taken: true,
-    },
-    where: {
-      taken: {
-        gt: 10,
-      },
-    },
-    orderBy: {
-      taken: 'desc',
-    },
-    take: 12,
-  });
+  const trendingClass = await api.common.getTrendingClasses.query();
   return (
     <>
       <Typography variant='h2' className='text-center'>
