@@ -1,5 +1,6 @@
 import { Pencil } from 'lucide-react';
 import { Metadata } from 'next';
+import Link from 'next/link';
 
 import { renderPageTitle } from '@/utils/page';
 
@@ -75,9 +76,11 @@ export default async function ProfilePage() {
           <Separator />
         </CardContent>
         <CardFooter className='flex flex-col'>
-          <Button>
-            <Pencil className='mr-2 h-4 w-4' />
-            Edit Profile
+          <Button asChild>
+            <Link href='/profil/edit'>
+              <Pencil className='mr-2 h-4 w-4' />
+              Edit Profile
+            </Link>
           </Button>
         </CardFooter>
       </Card>
