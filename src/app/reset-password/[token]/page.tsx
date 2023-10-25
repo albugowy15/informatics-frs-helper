@@ -15,14 +15,19 @@ import ResetPasswordForm from '@/app/reset-password/[token]/components/reset-pas
 export const metadata: Metadata = {
   title: renderPageTitle('Reset Password'),
 };
-export default function ResetPasswordPage() {
+
+export default function ResetPasswordPage({
+  params,
+}: {
+  params: { token: string };
+}) {
   return (
     <Card className='mx-auto mt-6 w-full md:w-96'>
       <CardHeader>
         <CardTitle>Reset Password</CardTitle>
         <CardDescription>Silahkan buat password baru Anda</CardDescription>
         <CardContent>
-          <ResetPasswordForm />
+          <ResetPasswordForm token={params.token} />
         </CardContent>
       </CardHeader>
     </Card>
