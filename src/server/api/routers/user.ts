@@ -12,6 +12,8 @@ import {
 } from '@/server/api/trpc';
 import { prisma } from '@/server/db';
 
+import { asOptionalField } from '@/utils/zod';
+
 import { env } from '@/env.mjs';
 // import { EditProfileForm } from '@/pages/profile/edit';
 
@@ -35,25 +37,47 @@ export const userRouter = createTRPCRouter({
     }
     return userProfile;
   }),
-  // updateProfile: protectedProcedure
-  //   .input(z.object({ content: EditProfileForm }))
-  //   .mutation(({ input, ctx }) => {
-  //     const updatedProfile = prisma.user
-  //       .update({
-  //         where: {
-  //           id: ctx.session.user.id,
-  //         },
-  //         data: {
-  //           fullname: input.content.fullname,
-  //           username: input.content.username,
-  //           email: input.content.email,
-  //           idLine: input.content.idLine,
-  //           whatsapp: input.content.whatsapp,
-  //         },
-  //       })
-  //       .then((res) => res.id);
-  //     return updatedProfile;
-  //   }),
+  updateProfile: protectedProcedure
+    .input(
+      z.object({
+        fullname: z.string().optional(),
+        username: z
+          .string()
+          .min(6, { message: 'Username minimal 6 karakter' })
+          .max(12, { message: 'Username maksimal 12 karakter' }),
+        email: z.string().email({ message: 'Email tidak valid' }),
+        idLine: asOptionalField(
+          z
+            .string()
+            .startsWith('@', { message: 'Id Line ditulis dengan awalan @' }),
+        ),
+        whatsapp: asOptionalField(
+          z
+            .string()
+            .min(9, { message: 'No. Whatsapp minimal 9 angka' })
+            .max(14, { message: 'No. Whatsapp maksima 9 angka' })
+            .startsWith('08', { message: 'No. Whatsapp tidak valid' })
+            .regex(/^[0-9]*$/, { message: 'No. Whatsapp tidak valid' }),
+        ),
+      }),
+    )
+    .mutation(({ input, ctx }) => {
+      const updatedProfile = prisma.user
+        .update({
+          where: {
+            id: ctx.session.user.id,
+          },
+          data: {
+            fullname: input.fullname,
+            username: input.username,
+            email: input.email,
+            idLine: input.idLine,
+            whatsapp: input.whatsapp,
+          },
+        })
+        .then((res) => res.id);
+      return updatedProfile;
+    }),
   changePassword: protectedProcedure
     .input(
       z.object({
