@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Typography, { TypographyVariants } from '@/components/typography';
 
 import { cn } from '@/lib/utils';
@@ -12,7 +14,7 @@ export type ClassCardProps = {
     taken: number;
     sks: number;
   };
-  action?: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 const CounterBadge = ({
@@ -42,7 +44,7 @@ const CounterBadge = ({
   );
 };
 
-export const ClassCard = ({ data, action }: ClassCardProps) => {
+export const ClassCard = ({ data, children }: ClassCardProps) => {
   return (
     <div className='rounded-md border p-2 lg:p-3 space-y-1'>
       <Typography variant='body1' className='font-medium'>
@@ -61,7 +63,7 @@ export const ClassCard = ({ data, action }: ClassCardProps) => {
 
       <CounterBadge count={data.taken} />
       <div className='py-1' />
-      {action}
+      {children}
     </div>
   );
 };
