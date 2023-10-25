@@ -1,9 +1,6 @@
 import { Pencil } from 'lucide-react';
 import { Metadata } from 'next';
 
-import { getServerAuthSession } from '@/server/auth';
-import { prisma } from '@/server/db';
-
 import { renderPageTitle } from '@/utils/page';
 
 import Typography from '@/components/typography';
@@ -18,21 +15,13 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
+import { api } from '@/trpc/server';
+
 export const metadata: Metadata = {
   title: renderPageTitle('Profile'),
 };
 export default async function ProfilePage() {
-  const session = await getServerAuthSession();
-  const userProfile = await prisma.user.findUnique({
-    where: { id: session?.user.id },
-    select: {
-      email: true,
-      fullname: true,
-      idLine: true,
-      username: true,
-      whatsapp: true,
-    },
-  });
+  const userProfile = await api.user.getUserProfile.query();
 
   return (
     <>
@@ -46,52 +35,42 @@ export default async function ProfilePage() {
         <CardContent>
           <Typography
             variant='body1'
-            className='flex items-center justify-between py-2'
+            className='flex items-center justify-between py-2 font-semibold'
           >
             Nama lengkap
-            <span className='font-normal text-neutral-300'>
-              {userProfile?.fullname}
-            </span>
+            <span className='font-normal'>{userProfile?.fullname}</span>
           </Typography>
           <Separator />
           <Typography
             variant='body1'
-            className='flex items-center justify-between py-2'
+            className='flex items-center justify-between py-2 font-semibold'
           >
             Username
-            <span className='font-normal text-neutral-300'>
-              {userProfile?.username}
-            </span>
+            <span className='font-normal'>{userProfile?.username}</span>
           </Typography>
           <Separator />
           <Typography
             variant='body1'
-            className='flex items-center justify-between py-2'
+            className='flex items-center justify-between py-2 font-semibold'
           >
             Email
-            <span className='font-normal text-neutral-300'>
-              {userProfile?.email}
-            </span>
+            <span className='font-normal'>{userProfile?.email}</span>
           </Typography>
           <Separator />
           <Typography
             variant='body1'
-            className='flex items-center justify-between py-2'
+            className='flex items-center justify-between py-2 font-semibold'
           >
             ID Line
-            <span className='font-normal text-neutral-300'>
-              {userProfile?.idLine}
-            </span>
+            <span className='font-normal'>{userProfile?.idLine}</span>
           </Typography>
           <Separator />
           <Typography
             variant='body1'
-            className='flex items-center justify-between py-2'
+            className='flex items-center justify-between py-2 font-semibold'
           >
             No. WA
-            <span className='font-normal text-neutral-300'>
-              {userProfile?.whatsapp}
-            </span>
+            <span className='font-normal'>{userProfile?.whatsapp}</span>
           </Typography>
           <Separator />
         </CardContent>

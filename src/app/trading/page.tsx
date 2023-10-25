@@ -1,8 +1,6 @@
 import { SlidersHorizontal } from 'lucide-react';
 import { Metadata } from 'next';
 
-import { prisma } from '@/server/db';
-
 import { renderPageTitle } from '@/utils/page';
 
 import Typography from '@/components/typography';
@@ -24,6 +22,7 @@ import {
 } from '@/components/ui/dialog';
 
 import TradingFilterForm from '@/app/trading/components/trading-filter-form';
+import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {
   title: renderPageTitle('Trading Kelas'),
@@ -41,49 +40,11 @@ export default async function TradingMatkulPage({
   searchParams: SearchParam;
 }) {
   const { semester = undefined, subject = undefined } = searchParams;
-  const listTrades = await prisma.tradeMatkul.findMany({
-    include: {
-      hasMatkul: {
-        select: {
-          code: true,
-          Matkul: {
-            select: {
-              name: true,
-              semester: true,
-            },
-          },
-        },
-      },
-      searchMatkul: {
-        select: {
-          code: true,
-          Matkul: {
-            select: {
-              name: true,
-              semester: true,
-            },
-          },
-        },
-      },
-      User: {
-        select: {
-          username: true,
-          fullname: true,
-          idLine: true,
-          whatsapp: true,
-        },
-      },
-    },
-    where: {
-      searchMatkul: {
-        Matkul: {
-          semester: semester === undefined ? undefined : parseInt(semester),
-          name:
-            subject === undefined || subject === 'Semua' ? undefined : subject,
-        },
-      },
-    },
+  const listTrades = await api.tradeMatkul.getAllTradeMatkul.query({
+    semester: semester === undefined ? undefined : parseInt(semester),
+    matkul: subject === undefined || subject === 'Semua' ? undefined : subject,
   });
+
   return (
     <>
       <div className='gap-4 mt-4 lg:flex'>
