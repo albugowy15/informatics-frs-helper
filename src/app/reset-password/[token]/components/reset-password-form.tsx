@@ -1,6 +1,7 @@
+'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
-import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -29,15 +30,12 @@ const resetPasswordSchema = z.object({
 
 type ResetPasswordForm = z.infer<typeof resetPasswordSchema>;
 
-const ResetPasswordForm = () => {
+const ResetPasswordForm = ({ token }: { token: string }) => {
   const form = useForm<ResetPasswordForm>({
     resolver: zodResolver(resetPasswordSchema),
   });
-  const router = useRouter();
-  const { handleSubmit } = form;
   const mutateResetPassword = api.user.verifyResetPassword.useMutation();
   const onSubmit: SubmitHandler<ResetPasswordForm> = async (data) => {
-    const token = router.query.token as string;
     mutateResetPassword
       .mutateAsync({
         token: token,
@@ -62,7 +60,7 @@ const ResetPasswordForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-3'>
         <FormField
           control={form.control}
           name='newPassword'
