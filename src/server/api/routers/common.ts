@@ -38,7 +38,7 @@ export const commonRouter = createTRPCRouter({
   getClass: publicProcedure
     .input(
       z.object({
-        semester: z.number().min(1).max(8),
+        semester: z.number().optional(),
         matkul: z.string().optional(),
         with_taken: z.boolean().optional(),
       }),
@@ -47,10 +47,7 @@ export const commonRouter = createTRPCRouter({
       const matkul = await prisma.matkul.findMany({
         where: {
           semester: input.semester,
-          name:
-            input.matkul === '' || input.matkul === 'Semua'
-              ? undefined
-              : input.matkul,
+          name: input.matkul,
         },
         select: {
           id: true,
@@ -213,7 +210,7 @@ export const commonRouter = createTRPCRouter({
       orderBy: {
         taken: 'desc',
       },
-      take: 10,
+      take: 12,
     });
 
     return classes;
