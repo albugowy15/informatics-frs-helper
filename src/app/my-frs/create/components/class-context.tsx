@@ -3,8 +3,8 @@
 import React, { createContext, useState } from 'react';
 
 export const ClassContext = createContext<{
-  classTaken: TakenClassType[] | null;
-  setClassTaken: React.Dispatch<React.SetStateAction<TakenClassType[] | null>>;
+  classTaken: TakenClassType[];
+  setClassTaken: React.Dispatch<React.SetStateAction<TakenClassType[]>>;
 } | null>(null);
 
 export type TakenClassType = {
@@ -28,7 +28,7 @@ export type TakenClassType = {
 };
 
 const ClassContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [classTaken, setClassTaken] = useState<TakenClassType[] | null>(null);
+  const [classTaken, setClassTaken] = useState<TakenClassType[]>([]);
   return (
     <ClassContext.Provider value={{ classTaken, setClassTaken }}>
       {children}
