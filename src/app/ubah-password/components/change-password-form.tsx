@@ -13,6 +13,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
@@ -68,10 +69,11 @@ const ChangePasswordForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password lama</FormLabel>
+              <FormDescription>Masukkan password lama Anda</FormDescription>
               <FormControl>
                 <Input type='password' placeholder='Password lama' {...field} />
               </FormControl>
-              <FormDescription>Masukkan password lama Anda</FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -81,10 +83,11 @@ const ChangePasswordForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password baru</FormLabel>
+              <FormDescription>Masukkan password baru Anda</FormDescription>
               <FormControl>
                 <Input type='password' placeholder='Password baru' {...field} />
               </FormControl>
-              <FormDescription>Masukkan password baru Anda</FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />

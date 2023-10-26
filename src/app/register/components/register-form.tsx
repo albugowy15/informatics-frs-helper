@@ -15,6 +15,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
@@ -77,6 +78,7 @@ const RegisterForm = () => {
               <FormControl>
                 <Input type='text' {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -89,6 +91,7 @@ const RegisterForm = () => {
               <FormControl>
                 <Input type='email' {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -101,6 +104,7 @@ const RegisterForm = () => {
               <FormControl>
                 <Input type='password' {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -113,6 +117,7 @@ const RegisterForm = () => {
               <FormControl>
                 <Input type='password' {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />

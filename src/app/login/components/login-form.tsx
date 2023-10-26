@@ -16,6 +16,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
@@ -78,10 +79,11 @@ const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email atau Username</FormLabel>
+              <FormDescription>Silahkan masukkan username</FormDescription>
               <FormControl>
                 <Input type='text' placeholder='Username' {...field} />
               </FormControl>
-              <FormDescription>Silahkan masukkan username</FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -91,10 +93,11 @@ const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
+              <FormDescription>Silahkan masukkan password</FormDescription>
               <FormControl>
                 <Input type='password' placeholder='Password' {...field} />
               </FormControl>
-              <FormDescription>Silahkan masukkan password</FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />
