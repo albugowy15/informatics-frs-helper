@@ -47,9 +47,9 @@ export default async function CreateFRSPage({
 
   return (
     <>
-      <main className='gap-4 mt-4 lg:flex'>
+      <main className='gap-4 mt-4 flex flex-col lg:flex-row'>
         <ClassContextProvider>
-          <aside className='sticky top-4 hidden h-fit w-[26%] flex-shrink-0 lg:block'>
+          <aside className='lg:sticky lg:top-4 h-fit lg:w-[30%] lg:flex-shrink-0 lg:overflow-y-auto'>
             <Card>
               <CardHeader>
                 <CardTitle>Informasi Plan FRS</CardTitle>
@@ -70,7 +70,7 @@ export default async function CreateFRSPage({
               <CardContent>
                 <TakeClassForm />
 
-                <div>
+                <div className='mt-3'>
                   {classes.length == 0 ? (
                     <Typography
                       variant='h4'
@@ -115,6 +115,7 @@ export default async function CreateFRSPage({
                                         taken: item.taken,
                                         sks: matkul.sks,
                                       }}
+                                      size='sm'
                                       key={item.id}
                                     >
                                       <ClassCardActionButton

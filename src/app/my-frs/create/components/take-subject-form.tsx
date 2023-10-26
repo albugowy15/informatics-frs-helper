@@ -61,13 +61,13 @@ const TakeClassForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex gap-3 items-end'
+        className='flex flex-col lg:flex-row gap-3 lg:items-end'
       >
         <FormField
           control={form.control}
           name='semester'
           render={({ field }) => (
-            <FormItem className='w-1/3'>
+            <FormItem className='lg:w-1/3'>
               <FormLabel>Semester</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -91,7 +91,7 @@ const TakeClassForm = () => {
           control={form.control}
           name='matkul'
           render={({ field }) => (
-            <FormItem className='w-1/3'>
+            <FormItem className='lg:w-1/3'>
               <FormLabel>Mata Kuliah</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>

@@ -1,11 +1,15 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Semester } from '@/utils/contatnts';
 
+import ClassCard from '@/components/class-card';
 import Typography from '@/components/typography';
 import { Button } from '@/components/ui/button';
 import {
@@ -24,6 +28,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { toast } from '@/components/ui/use-toast';
+
+import { ClassContext } from '@/app/my-frs/create/components/class-context';
+import { api } from '@/trpc/react';
 
 const createFRSFormSchema = z.object({
   title: z
@@ -43,8 +51,51 @@ const CreateFRSForm = () => {
   const form = useForm<CreateFRSFormType>({
     resolver: zodResolver(createFRSFormSchema),
   });
+  const router = useRouter();
+  const context = useContext(ClassContext);
+  const [sks, setSks] = useState(0);
+  useEffect(() => {
+    if (context) {
+      setSks(context.classTaken.reduce((acc, cur) => acc + cur.Matkul.sks, 0));
+    }
+  }, [context, context?.classTaken]);
 
-  const onSubmit: SubmitHandler<CreateFRSFormType> = (data) => {};
+  const mutateFrsPlan = api.frs.createPlan.useMutation();
+
+  const onSubmit: SubmitHandler<CreateFRSFormType> = (data) => {
+    if (context && context.classTaken.length > 0) {
+      const subjects = context.classTaken.map((val) => val.id);
+      mutateFrsPlan
+        .mutateAsync({
+          title: data.title,
+          semester: parseInt(data.semester),
+          matkul: subjects,
+        })
+        .then((res) => {
+          if (res) {
+            toast({
+              title: 'Success',
+              description: 'Berhasil membuat rencana FRS',
+            });
+            router.replace('/my-frs');
+          }
+        })
+        .catch((err) => {
+          toast({
+            variant: 'destructive',
+            title: 'Error',
+            description: err.message,
+          });
+        });
+    }
+  };
+
+  const handleDropTakenClass = (index: number) => {
+    const classArr = context ? [...context.classTaken] : [];
+    classArr.splice(index, 1);
+    context?.setClassTaken(classArr);
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
@@ -86,13 +137,51 @@ const CreateFRSForm = () => {
 
         <div>
           <Typography variant='h4'>Matkul yang diambil</Typography>
-          <Typography variant='label1' className='font-normal pt-2'>
-            Kamu belum mengambil matkul apapun
-          </Typography>
+          {context && context.classTaken.length > 0 ? (
+            <>
+              <div className='space-y-2'>
+                {context.classTaken.map((item, index) => (
+                  <ClassCard
+                    data={{
+                      lecturers: item.Lecturer,
+                      sks: item.Matkul.sks,
+                      subjectCode: item.code,
+                      subjectName: item.Matkul.name,
+                      taken: item.taken,
+                      day: item.day,
+                      sessionTime: item.Session?.session_time,
+                    }}
+                    size='sm'
+                    key={item.id}
+                  >
+                    <Button
+                      variant='destructive'
+                      onClick={() => handleDropTakenClass(index)}
+                    >
+                      Drop
+                    </Button>
+                  </ClassCard>
+                ))}
+              </div>
+            </>
+          ) : (
+            <Typography variant='label1' className='font-normal pt-2'>
+              Kamu belum mengambil matkul apapun
+            </Typography>
+          )}
         </div>
 
-        <Typography variant='h4'>Total SKS : 0</Typography>
-        <Button type='submit'>Simpan</Button>
+        <Typography variant='h4'>Total SKS : {sks}</Typography>
+        <Button type='submit' disabled={mutateFrsPlan.isLoading}>
+          {mutateFrsPlan.isLoading ? (
+            <>
+              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+              Please wait..
+            </>
+          ) : (
+            <>Simpan</>
+          )}
+        </Button>
       </form>
     </Form>
   );
