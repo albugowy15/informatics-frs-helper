@@ -30,7 +30,8 @@ import {
 } from '@/components/ui/select';
 import { toast } from '@/components/ui/use-toast';
 
-import { ClassContext } from '@/app/my-frs/create/components/class-context';
+import { ClassContext } from '@/app/my-frs/components/class-context';
+import { PlanDetailProps } from '@/app/my-frs/type';
 import { api } from '@/trpc/react';
 
 const createFRSFormSchema = z.object({
@@ -47,9 +48,19 @@ const createFRSFormSchema = z.object({
 
 type CreateFRSFormType = z.infer<typeof createFRSFormSchema>;
 
-const CreateFRSForm = () => {
+const CreateFRSForm = ({
+  planDetail,
+  planId,
+}: {
+  planDetail?: PlanDetailProps;
+  planId?: string;
+}) => {
   const form = useForm<CreateFRSFormType>({
     resolver: zodResolver(createFRSFormSchema),
+    defaultValues: {
+      title: planDetail?.title ?? '',
+      semester: planDetail ? planDetail.semester.toString() : '',
+    },
   });
   const router = useRouter();
   const context = useContext(ClassContext);
@@ -60,33 +71,68 @@ const CreateFRSForm = () => {
     }
   }, [context, context?.classTaken]);
 
-  const mutateFrsPlan = api.frs.createPlan.useMutation();
+  const mutateUpdatePlan = api.frs.updatePlan.useMutation();
+  const mutateCreatePlan = api.frs.createPlan.useMutation();
 
   const onSubmit: SubmitHandler<CreateFRSFormType> = (data) => {
     if (context && context.classTaken.length > 0) {
       const subjects = context.classTaken.map((val) => val.id);
-      mutateFrsPlan
-        .mutateAsync({
-          title: data.title,
-          semester: parseInt(data.semester),
-          matkul: subjects,
-        })
-        .then((res) => {
-          if (res) {
+      if (planDetail) {
+        mutateUpdatePlan
+          .mutateAsync({
+            data: {
+              title: data.title,
+              semester: parseInt(data.semester),
+              matkul: subjects,
+            },
+            planId: planId ?? '',
+          })
+          .then((res) => {
+            if (res) {
+              toast({
+                title: 'Success',
+                description: 'Berhasil memperbarui rencana FRS',
+              });
+              router.replace('/my-frs');
+            }
+          })
+          .catch((err) => {
             toast({
-              title: 'Success',
-              description: 'Berhasil membuat rencana FRS',
+              variant: 'destructive',
+              title: 'Error',
+              description: err.message,
             });
-            router.replace('/my-frs');
-          }
-        })
-        .catch((err) => {
-          toast({
-            variant: 'destructive',
-            title: 'Error',
-            description: err.message,
           });
-        });
+      } else {
+        mutateCreatePlan
+          .mutateAsync({
+            title: data.title,
+            semester: parseInt(data.semester),
+            matkul: subjects,
+          })
+          .then((res) => {
+            if (res) {
+              toast({
+                title: 'Success',
+                description: 'Berhasil membuat rencana FRS',
+              });
+              router.replace('/my-frs');
+            }
+          })
+          .catch((err) => {
+            toast({
+              variant: 'destructive',
+              title: 'Error',
+              description: err.message,
+            });
+          });
+      }
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Kamu belum mengambil kelas sama sekali',
+      });
     }
   };
 
@@ -172,8 +218,11 @@ const CreateFRSForm = () => {
         </div>
 
         <Typography variant='h4'>Total SKS : {sks}</Typography>
-        <Button type='submit' disabled={mutateFrsPlan.isLoading}>
-          {mutateFrsPlan.isLoading ? (
+        <Button
+          type='submit'
+          disabled={mutateCreatePlan.isLoading || mutateUpdatePlan.isLoading}
+        >
+          {mutateCreatePlan.isLoading || mutateUpdatePlan.isLoading ? (
             <>
               <Loader2 className='mr-2 h-4 w-4 animate-spin' />
               Please wait..
