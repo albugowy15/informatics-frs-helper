@@ -25,7 +25,7 @@ export default async function FRSPage() {
           dihapus di semester berikutnya.
         </Typography>
 
-        {plans.length <= 3 ? (
+        {plans.length < 3 ? (
           <Button className='my-6' asChild>
             <Link href='/my-frs/create'>
               <Plus className='mr-2 h-4 w-4' />
@@ -34,7 +34,7 @@ export default async function FRSPage() {
           </Button>
         ) : (
           <>
-            <Typography variant='body1'>
+            <Typography variant='body1' className='my-4'>
               Kamu tidak dapat membuat plan baru karena telah mencapai maksimal
               jumlah plan yang dapat dibuat sebanyak 3
             </Typography>
