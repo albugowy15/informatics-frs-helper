@@ -69,7 +69,7 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormDescription>Masukkan password baru Anda</FormDescription>
-              <Input {...field} placeholder='password' />
+              <Input {...field} type='password' />
               <FormMessage />
             </FormItem>
           )}

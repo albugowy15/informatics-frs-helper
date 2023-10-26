@@ -26,10 +26,10 @@ export default function ResetPasswordPage({
       <CardHeader>
         <CardTitle>Reset Password</CardTitle>
         <CardDescription>Silahkan buat password baru Anda</CardDescription>
-        <CardContent>
-          <ResetPasswordForm token={params.token} />
-        </CardContent>
       </CardHeader>
+      <CardContent>
+        <ResetPasswordForm token={params.token} />
+      </CardContent>
     </Card>
   );
 }
