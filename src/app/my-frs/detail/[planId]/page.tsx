@@ -1,12 +1,11 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 
 import { renderPageTitle } from '@/utils/page';
 
 import ClassCard from '@/components/class-card';
 import Typography from '@/components/typography';
-import { Button } from '@/components/ui/button';
 
+import DetailFrsAction from '@/app/my-frs/detail/[planId]/components/detail-frs-action';
 import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {
@@ -57,15 +56,11 @@ export default async function PlanDetailPage({
             </div>
           </section>
           <div className='py-2' />
-          <div className='flex items-center gap-3'>
-            <Button>
-              <Link href={'/my-frs/edit/' + plan.id}></Link>
-              Ubah
-            </Button>
-          </div>
-          {/* Delete Modal */}
-
-          {/* End delete Modal */}
+          <DetailFrsAction
+            frsTitle={plan.title}
+            planId={plan.id}
+            key={plan.id}
+          />
         </>
       ) : (
         <Typography variant='body1'>Rencara FRS Tidak ditemukan</Typography>
