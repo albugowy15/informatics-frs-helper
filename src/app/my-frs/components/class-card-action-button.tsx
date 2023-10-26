@@ -5,19 +5,17 @@ import { useContext, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 
-import {
-  ClassContext,
-  TakenClassType,
-} from '@/app/my-frs/create/components/class-context';
+import { ClassContext } from '@/app/my-frs/components/class-context';
+import { PlanDetailClass } from '@/app/my-frs/type';
 import { api } from '@/trpc/react';
 
-const ClassCardActionButton = ({ data }: { data: TakenClassType }) => {
+const ClassCardActionButton = ({ data }: { data: PlanDetailClass }) => {
   const context = useContext(ClassContext);
-  const [pickClass, setPickClass] = useState<TakenClassType>();
+  const [pickClass, setPickClass] = useState<PlanDetailClass>();
   const validateClassTaken = api.frs.validatePlan.useMutation({
     onSuccess: () => {
       if (pickClass) {
-        context?.setClassTaken((prev: TakenClassType[]) => [
+        context?.setClassTaken((prev: PlanDetailClass[]) => [
           ...prev,
           pickClass,
         ]);
@@ -25,7 +23,7 @@ const ClassCardActionButton = ({ data }: { data: TakenClassType }) => {
     },
   });
 
-  const handleTakeClass = (kelas: TakenClassType) => {
+  const handleTakeClass = (kelas: PlanDetailClass) => {
     const takenClass = context?.classTaken.map((val) => val.id);
     validateClassTaken
       .mutateAsync({
@@ -48,7 +46,7 @@ const ClassCardActionButton = ({ data }: { data: TakenClassType }) => {
         });
       });
 
-    const data: TakenClassType = {
+    const data: PlanDetailClass = {
       ...kelas,
       Matkul: kelas.Matkul,
     };
