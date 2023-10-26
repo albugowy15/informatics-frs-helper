@@ -14,6 +14,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
 import {
   Select,
@@ -83,6 +84,7 @@ const TakeClassForm = () => {
                   ))}
                 </SelectContent>
               </Select>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -111,6 +113,7 @@ const TakeClassForm = () => {
                   ) : null}
                 </SelectContent>
               </Select>
+              <FormMessage />
             </FormItem>
           )}
         />

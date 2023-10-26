@@ -15,6 +15,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
 import {
   Select,
@@ -86,6 +87,7 @@ const TradingFilterForm = () => {
                   ))}
                 </SelectContent>
               </Select>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -113,6 +115,7 @@ const TradingFilterForm = () => {
                   ) : null}
                 </SelectContent>
               </Select>
+              <FormMessage />
             </FormItem>
           )}
         />

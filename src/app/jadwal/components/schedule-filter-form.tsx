@@ -14,6 +14,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
 import {
   Select,
@@ -82,6 +83,7 @@ const ScheduleFilterForm = () => {
                   ))}
                 </SelectContent>
               </Select>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -110,6 +112,7 @@ const ScheduleFilterForm = () => {
                   ) : null}
                 </SelectContent>
               </Select>
+              <FormMessage />
             </FormItem>
           )}
         />

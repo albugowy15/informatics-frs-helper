@@ -12,6 +12,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
@@ -69,6 +70,7 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
               <FormLabel>Password</FormLabel>
               <FormDescription>Masukkan password baru Anda</FormDescription>
               <Input {...field} placeholder='password' />
+              <FormMessage />
             </FormItem>
           )}
         />
