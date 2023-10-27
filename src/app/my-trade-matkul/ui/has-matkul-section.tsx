@@ -43,7 +43,7 @@ const HasMatkulSection = () => {
   const { control } = useFormContext();
   return (
     <div className='flex w-full flex-col gap-2'>
-      <Typography variant='h4'>Matkul yang dimiliki</Typography>
+      <Typography variant='h4'>Kelas yang dimiliki</Typography>
       <FormField
         control={control}
         name='hasMatkulSemester'
