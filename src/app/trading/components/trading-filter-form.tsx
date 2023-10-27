@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -95,7 +96,10 @@ const TradingFilterForm = () => {
           name='matkul'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mata Kuliah</FormLabel>
+              <FormLabel>Matkul yang dicari (Want)</FormLabel>
+              <FormDescription>
+                Pilih matkul yang ingin kamu cari atau kami inginkan (Want)
+              </FormDescription>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
