@@ -739,27 +739,27 @@
     "@tanstack/query-core" "4.36.1"
     use-sync-external-store "^1.2.0"
 
-"@trpc/client@^10.42.0":
-  version "10.42.0"
-  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-10.42.0.tgz#e94d4f81740ef9e03b7ed775963080326c1337c7"
-  integrity sha512-iHPBVUAvn4VTKE75KLZ2fUQL8wpRY5hiRLyRE8QhGUSDc/RW5Pym9wotryZqz47DHjs2J5Qd16MSGt3tNlclFA==
+"@trpc/client@^10.43.0":
+  version "10.43.0"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-10.43.0.tgz#b99dadc064c3d8352dc66c5cdf9ed75cd94cf3c6"
+  integrity sha512-8LbSpPHmIseb/Ke+GzL45y0itkKunGQWfxqHf2uy69RSRvER0vj+Gu67L8YD86FBgc/nsX/6GBuJiUet5lIDIw==
 
-"@trpc/next@^10.42.0":
-  version "10.42.0"
-  resolved "https://registry.yarnpkg.com/@trpc/next/-/next-10.42.0.tgz#7c1e044b054cd1ad83221b864ef62c87e9329aad"
-  integrity sha512-MIzmCxII+piZ4EaG2oQQ+/WBBHKdcUfNNR/GwYegu9rqTBXZFu8uiB3TQYmSgBXjKKpqLkBYcEdgaQ7EBMBjBA==
+"@trpc/next@^10.43.0":
+  version "10.43.0"
+  resolved "https://registry.yarnpkg.com/@trpc/next/-/next-10.43.0.tgz#5be72862d3fe5a99536c1e7f35f56eafdd324e95"
+  integrity sha512-yakRlkvf6+uc3igYZi8nPkppJ8jFaCyd/7kvSckgsdLC8ofM+N9rrBkfqdfS5Pd53awkK/MMK8js9v/vabKb6A==
   dependencies:
     react-ssr-prepass "^1.5.0"
 
-"@trpc/react-query@^10.42.0":
-  version "10.42.0"
-  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-10.42.0.tgz#b7e862a3cf9ac475971782b96e9f91e13d39d625"
-  integrity sha512-Yzpg/WMrLo9HwWQtpgNutEFB6V/OHvMJf7nziKGPGrHrWJFkRtpQvc9ruDlJUFik+YxXwFRvtGBXbstlNsyhcQ==
+"@trpc/react-query@^10.43.0":
+  version "10.43.0"
+  resolved "https://registry.yarnpkg.com/@trpc/react-query/-/react-query-10.43.0.tgz#e2e9c3e78e55051ac3d45a34cf4c966835cd338f"
+  integrity sha512-5+pBnnV9QqnwpO5Li9T60hXHylV1USEjFkRjrnd7mJul/t2dKxs5ouv+YDRnOJ36oD9wDki5lBGk2sOgFrzGUw==
 
-"@trpc/server@^10.42.0":
-  version "10.42.0"
-  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-10.42.0.tgz#3a37ed80253e1c20e403f71eec7e31bc9758c453"
-  integrity sha512-s0QuK72orW+pYce60sd4I36N3xJKzypS2k+8GJ7phH4KqO4XjBXezOFmGMcXTznsVqEiX5zs5ujLfQdJ9X3Y2g==
+"@trpc/server@^10.43.0":
+  version "10.43.0"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-10.43.0.tgz#3435feeeb83337b0333a441ff15b181d4bf101f5"
+  integrity sha512-1/h9KCPkTNNmpN5VKfKO4kPcl/W4Y9VQla4YGg4pydSh/+4b//0IPfvk3Oz4tz/tvWyAUlBKkBVhD3GfDLcAQA==
 
 "@types/bcryptjs@^2.4.5":
   version "2.4.5"
