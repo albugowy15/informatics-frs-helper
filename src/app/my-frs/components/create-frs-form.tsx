@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -53,6 +54,7 @@ const CreateFRSForm = ({
   planDetail?: PlanDetailProps;
   planId?: string;
 }) => {
+  const router = useRouter();
   const form = useForm<CreateFRSFormType>({
     resolver: zodResolver(createFRSFormSchema),
     defaultValues: {
@@ -70,12 +72,12 @@ const CreateFRSForm = ({
 
   const mutateUpdatePlan = api.frs.updatePlan.useMutation({
     onSuccess: () => {
-      window.location.replace('/my-frs');
+      router.replace('/my-frs');
     },
   });
   const mutateCreatePlan = api.frs.createPlan.useMutation({
     onSuccess: () => {
-      window.location.replace('/my-frs');
+      router.replace('/my-frs');
     },
   });
 

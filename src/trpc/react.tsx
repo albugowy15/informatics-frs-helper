@@ -9,7 +9,16 @@ import { type AppRouter } from '@/server/api/root';
 
 import { getUrl, transformer } from './shared';
 
-export const api = createTRPCReact<AppRouter>();
+export const api = createTRPCReact<AppRouter>({
+  overrides: {
+    useMutation: {
+      async onSuccess(opts) {
+        await opts.originalFn();
+        await opts.queryClient.invalidateQueries();
+      },
+    },
+  },
+});
 
 export function TRPCReactProvider(props: {
   children: React.ReactNode;
