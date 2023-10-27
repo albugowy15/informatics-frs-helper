@@ -2,7 +2,6 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -62,7 +61,6 @@ const CreateFRSForm = ({
       semester: planDetail ? planDetail.semester.toString() : '',
     },
   });
-  const router = useRouter();
   const context = useContext(ClassContext);
   const [sks, setSks] = useState(0);
   useEffect(() => {
@@ -93,7 +91,7 @@ const CreateFRSForm = ({
                 title: 'Success',
                 description: 'Berhasil memperbarui rencana FRS',
               });
-              router.replace('/my-frs');
+              window.location.replace('/my-frs');
             }
           })
           .catch((err) => {
@@ -116,7 +114,7 @@ const CreateFRSForm = ({
                 title: 'Success',
                 description: 'Berhasil membuat rencana FRS',
               });
-              router.replace('/my-frs');
+              window.location.replace('/my-frs');
             }
           })
           .catch((err) => {
