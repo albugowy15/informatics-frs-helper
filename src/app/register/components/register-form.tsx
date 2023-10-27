@@ -21,7 +21,9 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
 
 const registerSchema = z.object({
-  username: z.string().min(1, { message: 'Username tidak boleh kosong' }),
+  username: z
+    .string({ required_error: 'Username wajib diisi' })
+    .min(1, { message: 'Username tidak boleh kosong' }),
   email: z
     .string()
     .email({ message: 'Email harus valid' })

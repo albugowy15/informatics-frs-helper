@@ -17,7 +17,7 @@ import { api } from '@/trpc/react';
 const editProfileForm = z.object({
   fullname: z.string().optional(),
   username: z
-    .string()
+    .string({ required_error: 'Username wajib diisi' })
     .min(6, { message: 'Username minimal 6 karakter' })
     .max(12, { message: 'Username maksimal 12 karakter' }),
   email: z.string().email({ message: 'Email tidak valid' }),

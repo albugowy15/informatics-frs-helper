@@ -1,37 +1,30 @@
 import { z } from 'zod';
 
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from '@/server/api/trpc';
+import { createTRPCRouter, publicProcedure } from '@/server/api/trpc';
 import { prisma } from '@/server/db';
 
 export const commonRouter = createTRPCRouter({
-  getClassByMatkul: protectedProcedure
+  getClassBySubject: publicProcedure
     .input(
       z.object({
-        matkulName: z.string(),
+        subjectId: z.string(),
       }),
     )
-    .query(({ input }) => {
-      const classes = prisma.class
-        .findMany({
-          select: {
-            code: true,
+    .query(async ({ input }) => {
+      const classes = await prisma.class.findMany({
+        select: {
+          id: true,
+          code: true,
+        },
+        where: {
+          Matkul: {
+            id: input.subjectId,
           },
-          where: {
-            Matkul: {
-              name: {
-                equals: input.matkulName,
-              },
-            },
-          },
-          orderBy: {
-            code: 'asc',
-          },
-        })
-        .then((res) => res.map((item) => item.code));
+        },
+        orderBy: {
+          code: 'asc',
+        },
+      });
 
       return classes;
     }),
@@ -85,110 +78,24 @@ export const commonRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      const listSubject = prisma.matkul
-        .findMany({
-          select: {
-            name: true,
-          },
-          where: {
-            semester: input.semester,
-          },
-          orderBy: {
-            name: 'asc',
-          },
-        })
-        .then((res) => {
-          return res.map((item) => item.name);
-        });
-
-      if (input.withAll == true) {
-        (await listSubject).unshift('Semua');
-      }
-      return listSubject;
-    }),
-  getSubjectMappedWithSemester: publicProcedure.query(async () => {
-    const subjects = await prisma.matkul.findMany({
-      select: {
-        name: true,
-        semester: true,
-      },
-      orderBy: {
-        semester: 'asc',
-      },
-    });
-    const semesterToSubjectMap: { [key: number]: string[] } = subjects.reduce(
-      (result, subject) => {
-        const { name, semester } = subject;
-        if (!result[semester]) {
-          result[semester] = [];
-        }
-        result[semester]?.push(name);
-        return result;
-      },
-      {} as { [key: number]: string[] },
-    );
-    return semesterToSubjectMap;
-  }),
-  getClassOptions: publicProcedure.query(async () => {
-    const listSemester = [
-      { id: 1, semester: 1 },
-      { id: 2, semester: 2 },
-      { id: 3, semester: 3 },
-      { id: 4, semester: 4 },
-      { id: 5, semester: 5 },
-      { id: 6, semester: 6 },
-      { id: 7, semester: 7 },
-      { id: 8, semester: 8 },
-    ];
-
-    const listSubject = await prisma.matkul
-      .findMany({
+      const listSubject = await prisma.matkul.findMany({
         select: {
           id: true,
           name: true,
-          semester: true,
+        },
+        where: {
+          semester: input.semester,
         },
         orderBy: {
           name: 'asc',
         },
-      })
-      .then((res) => {
-        return res.map((item) => {
-          return {
-            id: item.id,
-            matkul: item.name,
-            semesterId: item.semester,
-          };
-        });
       });
 
-    const listClass = await prisma.class
-      .findMany({
-        select: {
-          id: true,
-          code: true,
-          matkulId: true,
-        },
-        orderBy: {
-          code: 'asc',
-        },
-      })
-      .then((res) => {
-        return res.map((item) => {
-          return {
-            id: item.id,
-            class: item.code,
-            matkulId: item.matkulId,
-          };
-        });
-      });
-
-    return {
-      listSemester,
-      listSubject,
-      listClass,
-    };
-  }),
+      if (input.withAll == true) {
+        listSubject.unshift({ id: '', name: 'Semua' });
+      }
+      return listSubject;
+    }),
   getTrendingClasses: publicProcedure.query(async () => {
     const classes = await prisma.class.findMany({
       select: {

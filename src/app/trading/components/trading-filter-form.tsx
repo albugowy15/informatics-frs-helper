@@ -107,8 +107,8 @@ const TradingFilterForm = () => {
                   {listSubjects.data ? (
                     <>
                       {listSubjects.data.map((item, index) => (
-                        <SelectItem key={index} value={item}>
-                          {item}
+                        <SelectItem key={index} value={item.name}>
+                          {item.name}
                         </SelectItem>
                       ))}
                     </>

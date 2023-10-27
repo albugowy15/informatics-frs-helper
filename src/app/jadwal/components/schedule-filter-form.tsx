@@ -27,7 +27,12 @@ import {
 import { api } from '@/trpc/react';
 
 const filterSchema = z.object({
-  semester: z.string().min(1, { message: 'Silahkan pilih semester' }),
+  semester: z
+    .string({
+      required_error: 'Silahkan pilih semester',
+      invalid_type_error: 'Semester bertip string',
+    })
+    .min(1, { message: 'Silahkan pilih semester' }),
   matkul: z.string().optional(),
 });
 
@@ -100,12 +105,12 @@ const ScheduleFilterForm = () => {
                     <SelectValue placeholder='Pilih Mata kuliah' />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className='overflow-scroll max-h-52'>
+                <SelectContent className='overflow-y-auto max-h-52'>
                   {listSubjects.data ? (
                     <>
-                      {listSubjects.data.map((item, index) => (
-                        <SelectItem key={index} value={item}>
-                          {item}
+                      {listSubjects.data.map((item) => (
+                        <SelectItem key={item.id} value={item.name}>
+                          {item.name}
                         </SelectItem>
                       ))}
                     </>
