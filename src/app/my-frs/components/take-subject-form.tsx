@@ -5,8 +5,6 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Semester } from '@/utils/contatnts';
-
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -24,6 +22,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+import { Semester } from '@/config/contants';
 import { api } from '@/trpc/react';
 
 const takeClassSchema = z.object({

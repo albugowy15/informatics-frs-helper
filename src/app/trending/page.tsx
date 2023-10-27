@@ -1,16 +1,16 @@
 import { Metadata } from 'next';
 
-import { renderPageTitle } from '@/utils/page';
-
 import ClassCard from '@/components/class-card';
 import Typography from '@/components/typography';
 
+import { renderPageTitle } from '@/lib/utils';
 import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {
   title: renderPageTitle('Trending'),
-  description: 'Top 10 kelas paling banya diambil',
+  description: 'Top 12 kelas paling banya diambil',
 };
+
 export default async function TrendingPage() {
   const trendingClass = await api.common.getTrendingClasses.query();
   return (

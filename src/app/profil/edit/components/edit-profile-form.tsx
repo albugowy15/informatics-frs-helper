@@ -5,13 +5,12 @@ import { Loader2, Save } from 'lucide-react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { asOptionalField } from '@/utils/zod';
-
 import { Button } from '@/components/ui/button';
 import { FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 
+import { asOptionalField } from '@/lib/utils';
 import { api } from '@/trpc/react';
 
 const editProfileForm = z.object({

@@ -2,17 +2,17 @@ import { Book, Calendar } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
-import { renderPageTitle } from '@/utils/page';
-
 import Typography from '@/components/typography';
 import { Button } from '@/components/ui/button';
 
 import ScheduleStatusAlert from '@/app/components/schedule-status';
+import { renderPageTitle } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: renderPageTitle('Home'),
   description: 'Informatics FRS Helper',
 };
+
 export default async function Home() {
   return (
     <>

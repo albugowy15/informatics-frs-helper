@@ -1,11 +1,10 @@
 'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
-
-import { Semester } from '@/utils/contatnts';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -24,6 +23,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+import { Semester } from '@/config/contants';
 import { api } from '@/trpc/react';
 
 const filterSchema = z.object({

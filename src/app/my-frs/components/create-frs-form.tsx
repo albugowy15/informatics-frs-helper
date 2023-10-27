@@ -6,8 +6,6 @@ import { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { Semester } from '@/utils/contatnts';
-
 import ClassCard from '@/components/class-card';
 import Typography from '@/components/typography';
 import { Button } from '@/components/ui/button';
@@ -31,6 +29,7 @@ import { toast } from '@/components/ui/use-toast';
 
 import { ClassContext } from '@/app/my-frs/components/class-context';
 import { PlanDetailProps } from '@/app/my-frs/type';
+import { Semester } from '@/config/contants';
 import { api } from '@/trpc/react';
 
 const createFRSFormSchema = z.object({

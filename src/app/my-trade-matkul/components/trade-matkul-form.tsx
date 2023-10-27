@@ -19,9 +19,8 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 
+import ChooseClassSection from '@/app/my-trade-matkul/components/choose-class-section';
 import { TradeMatkul } from '@/app/my-trade-matkul/types';
-import HasMatkulSection from '@/app/my-trade-matkul/ui/has-matkul-section';
-import WantMatkulSection from '@/app/my-trade-matkul/ui/want-matkul-section';
 import { api } from '@/trpc/react';
 
 const createTradeMatkulFormSchema = z.object({
@@ -152,9 +151,8 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
     <Form {...form}>
       <form className='flex flex-col' onSubmit={form.handleSubmit(onSubmit)}>
         <div className='flex flex-col gap-3 md:flex-row md:justify-between'>
-          <HasMatkulSection />
-
-          <WantMatkulSection />
+          <ChooseClassSection variant='has' />
+          <ChooseClassSection variant='want' />
         </div>
 
         <div className='py-2' />
@@ -195,7 +193,6 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
             ) : (
               'Simpan'
             )}
-            Simpan
           </Button>
           <Button
             variant='outline'

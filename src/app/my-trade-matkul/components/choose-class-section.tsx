@@ -1,9 +1,6 @@
 'use client';
 
-import { SelectValue } from '@radix-ui/react-select';
 import { useFormContext, useWatch } from 'react-hook-form';
-
-import { Semester } from '@/utils/contatnts';
 
 import Typography from '@/components/typography';
 import {
@@ -18,20 +15,31 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
+  SelectValue,
 } from '@/components/ui/select';
 
 import { CreateTradeMatkulFormSchema } from '@/app/my-trade-matkul/components/trade-matkul-form';
+import { Semester } from '@/config/contants';
 import { api } from '@/trpc/react';
 
-const WantMatkulSection = () => {
+type ChooseClassSectionProps = {
+  variant: 'has' | 'want';
+};
+
+const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
   const formCtx = useFormContext<CreateTradeMatkulFormSchema>();
+  const semesterField =
+    variant == 'has' ? 'hasMatkulSemester' : 'searchMatkulSemester';
+  const subjectField = variant == 'has' ? 'hasMatkul' : 'searchMatkul';
+  const classField = variant == 'has' ? 'hasClass' : 'searchClass';
+
   const semesterWatch = useWatch({
     control: formCtx.control,
-    name: 'searchMatkulSemester',
+    name: semesterField,
   });
   const subjectWatch = useWatch({
     control: formCtx.control,
-    name: 'searchMatkul',
+    name: subjectField,
   });
   const listSubject = api.common.getSubject.useQuery({
     semester: parseInt(semesterWatch),
@@ -40,13 +48,14 @@ const WantMatkulSection = () => {
     subjectId: subjectWatch,
   });
 
-  const { control } = useFormContext();
   return (
     <div className='flex w-full flex-col gap-2'>
-      <Typography variant='h4'>Kelas yang dicari</Typography>
+      <Typography variant='h4'>
+        Kelas yang ${variant == 'has' ? 'Dimiliki' : 'Diinginkan'}
+      </Typography>
       <FormField
-        control={control}
-        name='searchMatkulSemester'
+        control={formCtx.control}
+        name={semesterField}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Pilih semester</FormLabel>
@@ -69,8 +78,8 @@ const WantMatkulSection = () => {
         )}
       />
       <FormField
-        control={control}
-        name='searchMatkul'
+        control={formCtx.control}
+        name={subjectField}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Pilih matkul</FormLabel>
@@ -101,8 +110,8 @@ const WantMatkulSection = () => {
         )}
       />
       <FormField
-        control={control}
-        name='searchClass'
+        control={formCtx.control}
+        name={classField}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Pilih kelas</FormLabel>
@@ -136,4 +145,4 @@ const WantMatkulSection = () => {
   );
 };
 
-export default WantMatkulSection;
+export default ChooseClassSection;

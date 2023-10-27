@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 
-import { renderPageTitle } from '@/utils/page';
-
 import {
   Card,
   CardContent,
@@ -11,6 +9,7 @@ import {
 } from '@/components/ui/card';
 
 import ForgotPasswordForm from '@/app/lupa-password/components/forgot-password-form';
+import { renderPageTitle } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: renderPageTitle('Lupa Password'),

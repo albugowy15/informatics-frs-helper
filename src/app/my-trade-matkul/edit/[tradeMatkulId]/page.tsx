@@ -1,8 +1,7 @@
 import { Metadata } from 'next';
 
-import { renderPageTitle } from '@/utils/page';
-
 import TradeMatkulForm from '@/app/my-trade-matkul/components/trade-matkul-form';
+import { renderPageTitle } from '@/lib/utils';
 import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {

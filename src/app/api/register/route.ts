@@ -7,7 +7,6 @@ const handler = async (req: NextRequest) => {
   const data = await req.json();
   const { username, password, email, confirmPassword } = data;
 
-  // check if password and confirm password match
   if (password !== confirmPassword) {
     return NextResponse.json(
       {

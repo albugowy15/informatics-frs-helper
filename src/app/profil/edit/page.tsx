@@ -3,8 +3,6 @@ import { Metadata } from 'next';
 import { getServerAuthSession } from '@/server/auth';
 import { prisma } from '@/server/db';
 
-import { renderPageTitle } from '@/utils/page';
-
 import {
   Card,
   CardContent,
@@ -14,6 +12,7 @@ import {
 } from '@/components/ui/card';
 
 import EditProfileForm from '@/app/profil/edit/components/edit-profile-form';
+import { renderPageTitle } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: renderPageTitle('Edit Profil'),
@@ -33,16 +32,14 @@ export default async function EditProfilePage() {
   });
 
   return (
-    <>
-      <Card className='w-full min-w-fit sm:w-[500px] mx-auto'>
-        <CardHeader>
-          <CardTitle>Edit Profil Akun</CardTitle>
-          <CardDescription>Silahkan edit profil akun Anda</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <EditProfileForm userProfile={userProfile!} />
-        </CardContent>
-      </Card>
-    </>
+    <Card className='w-full min-w-fit sm:w-[500px] mx-auto'>
+      <CardHeader>
+        <CardTitle>Edit Profil Akun</CardTitle>
+        <CardDescription>Silahkan edit profil akun Anda</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <EditProfileForm userProfile={userProfile!} />
+      </CardContent>
+    </Card>
   );
 }

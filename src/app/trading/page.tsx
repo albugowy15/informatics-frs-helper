@@ -1,8 +1,6 @@
 import { SlidersHorizontal } from 'lucide-react';
 import { Metadata } from 'next';
 
-import { renderPageTitle } from '@/utils/page';
-
 import Typography from '@/components/typography';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,6 +20,7 @@ import {
 } from '@/components/ui/dialog';
 
 import TradingFilterForm from '@/app/trading/components/trading-filter-form';
+import { renderPageTitle } from '@/lib/utils';
 import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {
@@ -46,86 +45,83 @@ export default async function TradingMatkulPage({
   });
 
   return (
-    <>
-      <div className='gap-4 mt-4 lg:flex'>
-        <aside className='sticky top-4 hidden h-fit w-[26%] flex-shrink-0 lg:block'>
-          <Card>
-            <CardHeader>
-              <CardTitle>Filter Trading Kelas</CardTitle>
-              <CardDescription>
-                Silahkan filter trading kelas berdasarkan semester dan mata
+    <main className='gap-4 mt-4 lg:flex'>
+      <aside className='sticky top-4 hidden h-fit w-[26%] flex-shrink-0 lg:block'>
+        <Card>
+          <CardHeader>
+            <CardTitle>Filter Trading Kelas</CardTitle>
+            <CardDescription>
+              Silahkan filter trading kelas berdasarkan semester dan mata kuliah
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <TradingFilterForm />
+          </CardContent>
+        </Card>
+      </aside>
+      <section className='flex flex-col mb-7 lg:hidden'>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant='outline'>
+              <SlidersHorizontal className='mr-2 h-4 w-4' />
+              Filter
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Filter Trade Matkul</DialogTitle>
+              <DialogDescription>
+                Silahkan filter trade matkul berdasarkan semester dan mata
                 kuliah
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+              </DialogDescription>
+            </DialogHeader>
+            <div className='overflow-scroll py-3 px-2'>
               <TradingFilterForm />
-            </CardContent>
-          </Card>
-        </aside>
-        <section className='flex flex-col mb-7 lg:hidden'>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant='outline'>
-                <SlidersHorizontal className='mr-2 h-4 w-4' />
-                Filter
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Filter Trade Matkul</DialogTitle>
-                <DialogDescription>
-                  Silahkan filter trade matkul berdasarkan semester dan mata
-                  kuliah
-                </DialogDescription>
-              </DialogHeader>
-              <div className='overflow-scroll py-3 px-2'>
-                <TradingFilterForm />
+            </div>
+          </DialogContent>
+        </Dialog>
+      </section>
+      <main className='grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3'>
+        {listTrades.length == 0 ? (
+          <Typography variant='h4' className='text-center lg:text-left'>
+            Tidak ada trade matkul
+          </Typography>
+        ) : null}
+        {listTrades.map((trade) => (
+          <>
+            <div className='border rounded-md p-4'>
+              <Typography variant='body1' className='font-medium'>
+                {trade.User?.fullname}
+              </Typography>
+              <Typography variant='label1'>{trade.User?.username}</Typography>
+              <div className='py-1' />
+              <Typography variant='body1'>
+                <span className='font-medium text-red-600'>Want</span> :{' '}
+                {trade.searchMatkul.Matkul.name} {trade.searchMatkul.code}
+              </Typography>
+              <Typography
+                variant='body1'
+                className='[&:not(:first-child)]:mt-0'
+              >
+                <span className='font-medium text-green-600'>Have</span> :{' '}
+                {trade.hasMatkul.Matkul.name} {trade.hasMatkul.code}
+              </Typography>
+              <Typography variant='body1'>{trade.description}</Typography>
+              <Typography variant='body1' className='font-medium'>
+                Kontak
+              </Typography>
+              <div className='flex items-center gap-4'>
+                <Typography variant='label1' className='leading-6'>
+                  WA : {trade.User?.whatsapp ? trade.User.whatsapp : '-'}
+                </Typography>
+                <Typography variant='label1' className='leading-6'>
+                  Line : {trade.User?.idLine ? trade.User.idLine : '-'}
+                </Typography>
               </div>
-            </DialogContent>
-          </Dialog>
-        </section>
-        <main className='grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3'>
-          {listTrades.length == 0 ? (
-            <Typography variant='h4' className='text-center lg:text-left'>
-              Tidak ada trade matkul
-            </Typography>
-          ) : null}
-          {listTrades.map((trade) => (
-            <>
-              <div className='border rounded-md p-4'>
-                <Typography variant='body1' className='font-medium'>
-                  {trade.User?.fullname}
-                </Typography>
-                <Typography variant='label1'>{trade.User?.username}</Typography>
-                <div className='py-1' />
-                <Typography variant='body1'>
-                  <span className='font-medium text-red-600'>Want</span> :{' '}
-                  {trade.searchMatkul.Matkul.name} {trade.searchMatkul.code}
-                </Typography>
-                <Typography
-                  variant='body1'
-                  className='[&:not(:first-child)]:mt-0'
-                >
-                  <span className='font-medium text-green-600'>Have</span> :{' '}
-                  {trade.hasMatkul.Matkul.name} {trade.hasMatkul.code}
-                </Typography>
-                <Typography variant='body1'>{trade.description}</Typography>
-                <Typography variant='body1' className='font-medium'>
-                  Kontak
-                </Typography>
-                <div className='flex items-center gap-4'>
-                  <Typography variant='label1' className='leading-6'>
-                    WA : {trade.User?.whatsapp ? trade.User.whatsapp : '-'}
-                  </Typography>
-                  <Typography variant='label1' className='leading-6'>
-                    Line : {trade.User?.idLine ? trade.User.idLine : '-'}
-                  </Typography>
-                </div>
-              </div>
-            </>
-          ))}
-        </main>
-      </div>
-    </>
+            </div>
+          </>
+        ))}
+      </main>
+    </main>
   );
 }

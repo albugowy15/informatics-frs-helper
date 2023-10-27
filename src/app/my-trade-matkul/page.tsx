@@ -2,12 +2,11 @@ import { Plus } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
-import { renderPageTitle } from '@/utils/page';
-
 import Typography from '@/components/typography';
 import { Button } from '@/components/ui/button';
 
 import TradeMatkulAction from '@/app/my-trade-matkul/components/trade-matkul-action';
+import { renderPageTitle } from '@/lib/utils';
 import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {

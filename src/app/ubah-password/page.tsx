@@ -1,10 +1,9 @@
 import { Metadata } from 'next';
 
-import { renderPageTitle } from '@/utils/page';
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import ChangePasswordForm from '@/app/ubah-password/components/change-password-form';
+import { renderPageTitle } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: renderPageTitle('Ubah Password'),

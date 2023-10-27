@@ -12,10 +12,8 @@ import {
 } from '@/server/api/trpc';
 import { prisma } from '@/server/db';
 
-import { asOptionalField } from '@/utils/zod';
-
 import { env } from '@/env.mjs';
-// import { EditProfileForm } from '@/pages/profile/edit';
+import { asOptionalField } from '@/lib/utils';
 
 export const userRouter = createTRPCRouter({
   getUserProfile: protectedProcedure.query(async ({ ctx }) => {

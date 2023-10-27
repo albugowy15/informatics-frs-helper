@@ -1,9 +1,8 @@
 import { Metadata } from 'next';
 
-import { renderPageTitle } from '@/utils/page';
-
 import { SearchParam } from '@/app/my-frs/type';
 import FrsUi from '@/app/my-frs/ui/frs-ui';
+import { renderPageTitle } from '@/lib/utils';
 import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {
@@ -22,9 +21,5 @@ export default async function CreateFRSPage({
     with_taken: true,
   });
 
-  return (
-    <>
-      <FrsUi classes={classes} />
-    </>
-  );
+  return <FrsUi classes={classes} />;
 }

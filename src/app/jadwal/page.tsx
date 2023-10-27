@@ -1,8 +1,6 @@
 import { SlidersHorizontal } from 'lucide-react';
 import { Metadata } from 'next';
 
-import { renderPageTitle } from '@/utils/page';
-
 import ClassCard from '@/components/class-card';
 import Typography from '@/components/typography';
 import {
@@ -29,6 +27,7 @@ import {
 } from '@/components/ui/dialog';
 
 import ScheduleFilterForm from '@/app/jadwal/components/schedule-filter-form';
+import { renderPageTitle } from '@/lib/utils';
 import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {
