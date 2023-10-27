@@ -16,7 +16,7 @@ import {
 import EditProfileForm from '@/app/profil/edit/components/edit-profile-form';
 
 export const metadata: Metadata = {
-  title: renderPageTitle('Edit Profile'),
+  title: renderPageTitle('Edit Profil'),
 };
 
 export default async function EditProfilePage() {

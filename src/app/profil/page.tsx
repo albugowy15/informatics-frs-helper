@@ -19,7 +19,7 @@ import { Separator } from '@/components/ui/separator';
 import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {
-  title: renderPageTitle('Profile'),
+  title: renderPageTitle('Profil'),
 };
 export default async function ProfilePage() {
   const userProfile = await api.user.getUserProfile.query();

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: renderPageTitle('Report'),
   description: 'Laporkan dan sarankan fitur untuk Informatics FRS Helper',
 };
+
 export default function ReportPage() {
   return (
     <main className='space-y-2'>
