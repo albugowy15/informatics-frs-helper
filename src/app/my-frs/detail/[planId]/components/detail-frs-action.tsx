@@ -7,7 +7,6 @@ import {
 } from '@radix-ui/react-alert-dialog';
 import { Loader2, Pencil, Trash } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import {
   AlertDialog,
@@ -30,7 +29,6 @@ const DetailFrsAction = ({
   planId: string;
 }) => {
   const mutateDeleteFrsPlan = api.frs.deletePlan.useMutation();
-  const router = useRouter();
   const handleDeleteFrsPlan = (planId: string) => {
     mutateDeleteFrsPlan
       .mutateAsync({ planId: planId })
@@ -40,7 +38,7 @@ const DetailFrsAction = ({
             title: 'Success',
             description: 'Berhasil menghapus rencana FRS',
           });
-          router.replace('/my-frs');
+          window.location.replace('/my-frs');
         }
       })
       .catch((err) => {
