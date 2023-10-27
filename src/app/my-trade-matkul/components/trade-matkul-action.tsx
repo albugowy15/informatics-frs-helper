@@ -1,48 +1,39 @@
 'use client';
 
-import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogTrigger,
-} from '@radix-ui/react-alert-dialog';
 import { Loader2, Pencil, Trash } from 'lucide-react';
 import Link from 'next/link';
 
 import {
   AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 
 import { api } from '@/trpc/react';
 
-const DetailFrsAction = ({
-  frsTitle,
-  planId,
-}: {
-  frsTitle: string;
-  planId: string;
-}) => {
-  const mutateDeleteFrsPlan = api.frs.deletePlan.useMutation({
-    onSuccess: () => {
-      window.location.replace('/my-frs');
-    },
-  });
-  const handleDeleteFrsPlan = () => {
-    mutateDeleteFrsPlan
-      .mutateAsync({ planId: planId })
-      .then((res) => {
-        if (res) {
-          toast({
-            title: 'Success',
-            description: 'Berhasil menghapus rencana FRS',
-          });
-        }
+const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
+  const mutateDeleteTradeMatkul =
+    api.tradeMatkul.deleteMyTradeMatkul.useMutation({
+      onSuccess: () => {
+        window.location.replace('/my-frs');
+      },
+    });
+  const handleDeleteTradeMatkul = () => {
+    mutateDeleteTradeMatkul
+      .mutateAsync({ tradeMatkulId: tradeMatkulId })
+      .then(() => {
+        toast({
+          title: 'Success',
+          description: 'Berhasil menghapus Trade matkul',
+        });
       })
       .catch((err) => {
         toast({
@@ -53,28 +44,17 @@ const DetailFrsAction = ({
       });
   };
   return (
-    <div className='flex items-center gap-3'>
-      <Button
-        variant='secondary'
-        asChild
-        disabled={mutateDeleteFrsPlan.isLoading}
-      >
-        {mutateDeleteFrsPlan.isLoading ? (
-          <>
-            <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-            Please wait..
-          </>
-        ) : (
-          <Link href={'/my-frs/edit/' + planId}>
-            <Pencil className='mr-2 h-4 w-4' />
-            Ubah
-          </Link>
-        )}
+    <div className='flex gap-2'>
+      <Button variant='secondary' asChild>
+        <Link href={'/my-trade-matkul/edit/' + tradeMatkulId}>
+          <Pencil className='mr-2 h-4 w-4' />
+          Update
+        </Link>
       </Button>
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button variant='destructive'>
-            {mutateDeleteFrsPlan.isLoading ? (
+            {mutateDeleteTradeMatkul.isLoading ? (
               <>
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' />
                 Please wait..
@@ -90,13 +70,12 @@ const DetailFrsAction = ({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Anda yakin menghapus plan FRS ini?
+              Anda yakin menghapus Trade Matkul ini?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Anda benar-benar yakin ingin menghapus rencana FRS :{' '}
-              <span className='text-orange-600 font-bold'>{frsTitle}</span>?
-              Tindakan ini akan menghapus rencana FRS tersebut secara permanen
-              dari akun Anda.
+              Anda benar-benar yakin ingin menghapus Trade Matkul ini? Tindakan
+              ini akan menghapus Trade matkul tersebut secara permanen dari akun
+              Anda.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -106,8 +85,8 @@ const DetailFrsAction = ({
             <AlertDialogAction asChild>
               <Button
                 variant='destructive'
-                disabled={mutateDeleteFrsPlan.isLoading}
-                onClick={handleDeleteFrsPlan}
+                disabled={mutateDeleteTradeMatkul.isLoading}
+                onClick={handleDeleteTradeMatkul}
               >
                 Ya, Hapus
               </Button>
@@ -119,4 +98,4 @@ const DetailFrsAction = ({
   );
 };
 
-export default DetailFrsAction;
+export default TradeMatkulAction;

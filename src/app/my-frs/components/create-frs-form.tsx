@@ -69,8 +69,16 @@ const CreateFRSForm = ({
     }
   }, [context, context?.classTaken]);
 
-  const mutateUpdatePlan = api.frs.updatePlan.useMutation();
-  const mutateCreatePlan = api.frs.createPlan.useMutation();
+  const mutateUpdatePlan = api.frs.updatePlan.useMutation({
+    onSuccess: () => {
+      window.location.replace('/my-frs');
+    },
+  });
+  const mutateCreatePlan = api.frs.createPlan.useMutation({
+    onSuccess: () => {
+      window.location.replace('/my-frs');
+    },
+  });
 
   const onSubmit: SubmitHandler<CreateFRSFormType> = (data) => {
     if (context && context.classTaken.length > 0) {
@@ -91,7 +99,6 @@ const CreateFRSForm = ({
                 title: 'Success',
                 description: 'Berhasil memperbarui rencana FRS',
               });
-              window.location.replace('/my-frs');
             }
           })
           .catch((err) => {
@@ -114,7 +121,6 @@ const CreateFRSForm = ({
                 title: 'Success',
                 description: 'Berhasil membuat rencana FRS',
               });
-              window.location.replace('/my-frs');
             }
           })
           .catch((err) => {

@@ -1,4 +1,4 @@
-import { Pencil, Plus, Trash } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -7,6 +7,7 @@ import { renderPageTitle } from '@/utils/page';
 import Typography from '@/components/typography';
 import { Button } from '@/components/ui/button';
 
+import TradeMatkulAction from '@/app/my-trade-matkul/components/trade-matkul-action';
 import { api } from '@/trpc/server';
 
 export const metadata: Metadata = {
@@ -51,18 +52,7 @@ export default async function MyTradeMatkulPage() {
                   <Typography variant='body1'>{post.description}</Typography>
 
                   <div className='py-2' />
-                  <div className='flex gap-2'>
-                    <Button variant='secondary' asChild>
-                      <Link href={'/my-trade-matkul/update/' + post.id}>
-                        <Pencil className='mr-2 h-4 w-4' />
-                        Update
-                      </Link>
-                    </Button>
-                    <Button variant='destructive'>
-                      <Trash className='mr-2 h-4 w-4' />
-                      Hapus
-                    </Button>
-                  </div>
+                  <TradeMatkulAction tradeMatkulId={post.id} />
                 </div>
               ))}
             </>
