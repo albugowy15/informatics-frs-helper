@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import RegisterForm from '@/app/register/components/register-form';
+import RegisterForm from '@/app/register/_components/register-form';
 import { renderPageTitle } from '@/lib/utils';
 
 export const metadata: Metadata = {

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Typography from '@/components/typography';
 import { Button } from '@/components/ui/button';
 
-import TradeMatkulAction from '@/app/my-trade-matkul/components/trade-matkul-action';
+import TradeMatkulAction from '@/app/my-trade-matkul/_components/trade-matkul-action';
 import { renderPageTitle } from '@/lib/utils';
 import { api } from '@/trpc/server';
 

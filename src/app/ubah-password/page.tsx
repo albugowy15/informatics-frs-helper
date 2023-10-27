@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-import ChangePasswordForm from '@/app/ubah-password/components/change-password-form';
+import ChangePasswordForm from '@/app/ubah-password/_components/change-password-form';
 import { renderPageTitle } from '@/lib/utils';
 
 export const metadata: Metadata = {

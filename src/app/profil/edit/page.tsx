@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import EditProfileForm from '@/app/profil/edit/components/edit-profile-form';
+import EditProfileForm from '@/app/profil/edit/_components/edit-profile-form';
 import { renderPageTitle } from '@/lib/utils';
 
 export const metadata: Metadata = {

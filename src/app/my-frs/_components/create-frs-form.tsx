@@ -28,8 +28,8 @@ import {
 } from '@/components/ui/select';
 import { toast } from '@/components/ui/use-toast';
 
-import { ClassContext } from '@/app/my-frs/components/class-context';
-import { PlanDetailProps } from '@/app/my-frs/type';
+import { ClassContext } from '@/app/my-frs/_components/class-context';
+import { PlanDetailProps } from '@/app/my-frs/types';
 import { Semester } from '@/config/contants';
 import { api } from '@/trpc/react';
 

@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import { CreateTradeMatkulFormSchema } from '@/app/my-trade-matkul/components/trade-matkul-form';
+import { CreateTradeMatkulFormSchema } from '@/app/my-trade-matkul/_components/trade-matkul-form';
 import { Semester } from '@/config/contants';
 import { api } from '@/trpc/react';
 

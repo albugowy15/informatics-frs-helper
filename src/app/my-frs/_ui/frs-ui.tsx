@@ -14,11 +14,11 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import ClassCardActionButton from '@/app/my-frs/components/class-card-action-button';
-import ClassContextProvider from '@/app/my-frs/components/class-context';
-import CreateFRSForm from '@/app/my-frs/components/create-frs-form';
-import TakeClassForm from '@/app/my-frs/components/take-subject-form';
-import { FrsUiProps } from '@/app/my-frs/type';
+import ClassCardActionButton from '@/app/my-frs/_components/class-card-action-button';
+import ClassContextProvider from '@/app/my-frs/_components/class-context';
+import CreateFRSForm from '@/app/my-frs/_components/create-frs-form';
+import TakeClassForm from '@/app/my-frs/_components/take-subject-form';
+import { FrsUiProps } from '@/app/my-frs/types';
 
 const FrsUi = ({ classes, planDetail, planId }: FrsUiProps) => {
   return (

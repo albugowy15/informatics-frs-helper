@@ -5,8 +5,8 @@ import { useContext, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 
-import { ClassContext } from '@/app/my-frs/components/class-context';
-import { PlanDetailClass } from '@/app/my-frs/type';
+import { ClassContext } from '@/app/my-frs/_components/class-context';
+import { PlanDetailClass } from '@/app/my-frs/types';
 import { api } from '@/trpc/react';
 
 const ClassCardActionButton = ({ data }: { data: PlanDetailClass }) => {

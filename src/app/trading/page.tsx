@@ -19,7 +19,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import TradingFilterForm from '@/app/trading/components/trading-filter-form';
+import TradingFilterForm from '@/app/trading/_components/trading-filter-form';
 import { renderPageTitle } from '@/lib/utils';
 import { api } from '@/trpc/server';
 

@@ -26,7 +26,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
-import ScheduleFilterForm from '@/app/jadwal/components/schedule-filter-form';
+import ScheduleFilterForm from '@/app/jadwal/_components/schedule-filter-form';
 import { renderPageTitle } from '@/lib/utils';
 import { api } from '@/trpc/server';
 

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Typography from '@/components/typography';
 import { Button } from '@/components/ui/button';
 
-import ScheduleStatusAlert from '@/app/components/schedule-status';
+import ScheduleStatusAlert from '@/app/_components/schedule-status';
 import { renderPageTitle } from '@/lib/utils';
 
 export const metadata: Metadata = {

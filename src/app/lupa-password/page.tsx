@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import ForgotPasswordForm from '@/app/lupa-password/components/forgot-password-form';
+import ForgotPasswordForm from '@/app/lupa-password/_components/forgot-password-form';
 import { renderPageTitle } from '@/lib/utils';
 
 export const metadata: Metadata = {
