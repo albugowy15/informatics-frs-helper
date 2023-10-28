@@ -36,7 +36,7 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
     resolver: zodResolver(resetPasswordSchema),
   });
   const mutateResetPassword = api.user.verifyResetPassword.useMutation();
-  const onSubmit: SubmitHandler<ResetPasswordForm> = async (data) => {
+  const onSubmit: SubmitHandler<ResetPasswordForm> = (data) => {
     mutateResetPassword
       .mutateAsync({
         token: token,

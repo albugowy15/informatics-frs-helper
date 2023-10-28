@@ -1,8 +1,8 @@
 'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -19,7 +19,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/use-toast';
 
 const loginSchema = z.object({
   username: z
@@ -44,9 +44,9 @@ const LoginForm = () => {
   });
   const { handleSubmit } = form;
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const { toast } = useToast();
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     setButtonDisabled(true);
+    const signIn = (await import('next-auth/react')).signIn;
     signIn('credentials', {
       username: data.username,
       password: data.password,

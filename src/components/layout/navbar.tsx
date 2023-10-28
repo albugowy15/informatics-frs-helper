@@ -1,33 +1,13 @@
 'use client';
 
-import {
-  DropdownMenuGroup,
-  DropdownMenuTrigger,
-} from '@radix-ui/react-dropdown-menu';
-import {
-  ArrowRightLeft,
-  KeyRound,
-  LogIn,
-  LogOut,
-  Menu,
-  Newspaper,
-  User,
-  User2,
-} from 'lucide-react';
+import { LogIn, Menu } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { Session } from 'next-auth';
-import { signIn, signOut } from 'next-auth/react';
+import { type Session } from 'next-auth';
 
 import { ThemeToggle } from '@/components/theme-toggle';
 import Typography from '@/components/typography';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -48,6 +28,10 @@ type NavbarProps = {
   items: Navigation[];
   session: Session | null;
 };
+
+const DynamicAccountDropdown = dynamic(() => import('./account-dropdown'), {
+  ssr: false,
+});
 
 const Navbar = ({ items, session }: NavbarProps) => {
   return (
@@ -90,58 +74,16 @@ const Navbar = ({ items, session }: NavbarProps) => {
       <div className='flex items-center gap-2'>
         <ThemeToggle />
         {session?.user ? (
-          <>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant='outline' size='icon'>
-                  <User />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className='w-56'>
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem asChild>
-                    <Link href='/profil'>
-                      <User2 className='mr-2 h-4 w-4' />
-                      <span>Profil</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href='/ubah-password'>
-                      <KeyRound className='mr-2 h-4 w-4' />
-                      <span>Ubah Password</span>
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem asChild>
-                    <Link href='/my-frs'>
-                      <Newspaper className='mr-2 h-4 w-4' />
-                      <span>myFRS</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href='/my-trade-matkul'>
-                      <ArrowRightLeft className='mr-2 h-4 w-4' />
-                      <span>myTradeMatkul</span>
-                    </Link>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem onClick={() => signOut()}>
-                    <LogOut className='mr-2 h-4 w-4' />
-                    <span>Logout</span>
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </>
+          <DynamicAccountDropdown />
         ) : (
           <>
-            <Button variant='outline' onClick={() => signIn()}>
+            <Button
+              variant='outline'
+              onClick={async () => {
+                const signIn = (await import('next-auth/react')).signIn;
+                signIn();
+              }}
+            >
               <LogIn className='mr-2 h-4 w-4' /> Masuk
             </Button>
           </>

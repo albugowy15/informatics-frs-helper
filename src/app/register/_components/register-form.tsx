@@ -1,6 +1,5 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -18,7 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from '@/components/ui/use-toast';
 
 const registerSchema = z.object({
   username: z
@@ -46,10 +45,10 @@ const RegisterForm = () => {
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
-  const { toast } = useToast();
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const onSubmit = async (data: RegisterForm) => {
     setButtonDisabled(true);
+    const axios = (await import('axios')).default;
     axios
       .post('/api/register', data)
       .then(() => {
