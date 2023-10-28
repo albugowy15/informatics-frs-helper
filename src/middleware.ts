@@ -8,14 +8,16 @@ export default async function middleware(
 ) {
   const token = await getToken({ req });
   const isAuthenticated = !!token;
-  if (isAuthenticated) {
-    if (
-      req.nextUrl.pathname.startsWith("/login") ||
-      req.nextUrl.pathname.startsWith("/register") ||
-      req.nextUrl.pathname.startsWith("/lupa-password") ||
-      req.nextUrl.pathname.startsWith("/reset-password")
-    ) {
+  if (
+    req.nextUrl.pathname.startsWith("/login") ||
+    req.nextUrl.pathname.startsWith("/register") ||
+    req.nextUrl.pathname.startsWith("/lupa-password") ||
+    req.nextUrl.pathname.startsWith("/reset-password")
+  ) {
+    if (isAuthenticated) {
       return NextResponse.redirect(new URL("/", req.url));
+    } else {
+      return NextResponse.next();
     }
   }
 
