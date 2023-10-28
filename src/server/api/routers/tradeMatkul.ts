@@ -1,12 +1,12 @@
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
 
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from '@/server/api/trpc';
-import { prisma } from '@/server/db';
+} from "@/server/api/trpc";
+import { prisma } from "@/server/db";
 
 export const tradeMatkulRouter = createTRPCRouter({
   createTradeMatkul: protectedProcedure
@@ -28,8 +28,8 @@ export const tradeMatkulRouter = createTRPCRouter({
       });
       if (!hasClass) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Kelas yang dimiliki tidak ditemukan',
+          code: "NOT_FOUND",
+          message: "Kelas yang dimiliki tidak ditemukan",
         });
       }
       const searchClass = await prisma.class.findUnique({
@@ -42,14 +42,14 @@ export const tradeMatkulRouter = createTRPCRouter({
       });
       if (!searchClass) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Kelas yang dicari tidak ditemukan',
+          code: "NOT_FOUND",
+          message: "Kelas yang dicari tidak ditemukan",
         });
       }
       if (hasClass.id === searchClass.id) {
         throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Tidak dapat bertukar dengan kelas yang sama',
+          code: "BAD_REQUEST",
+          message: "Tidak dapat bertukar dengan kelas yang sama",
         });
       }
       const result = prisma.tradeMatkul.create({
@@ -84,14 +84,14 @@ export const tradeMatkulRouter = createTRPCRouter({
       });
       if (!tradeMatkul) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Tidak dapat menemukan trade matkul',
+          code: "NOT_FOUND",
+          message: "Tidak dapat menemukan trade matkul",
         });
       }
       if (tradeMatkul.userId !== ctx.session.user.id) {
         throw new TRPCError({
-          code: 'UNAUTHORIZED',
-          message: 'Anda Tidak memiliki akses untuk mengubah trade matkul ini',
+          code: "UNAUTHORIZED",
+          message: "Anda Tidak memiliki akses untuk mengubah trade matkul ini",
         });
       }
       const hasClass = await prisma.class.findUnique({
@@ -104,8 +104,8 @@ export const tradeMatkulRouter = createTRPCRouter({
       });
       if (!hasClass) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Kelas yang dimiliki tidak ditemukan',
+          code: "NOT_FOUND",
+          message: "Kelas yang dimiliki tidak ditemukan",
         });
       }
       const searchClass = await prisma.class.findUnique({
@@ -118,14 +118,14 @@ export const tradeMatkulRouter = createTRPCRouter({
       });
       if (!searchClass) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Kelas yang dicari tidak ditemukan',
+          code: "NOT_FOUND",
+          message: "Kelas yang dicari tidak ditemukan",
         });
       }
       if (hasClass.id === searchClass.id) {
         throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Tidak dapat bertukar dengan kelas yang sama',
+          code: "BAD_REQUEST",
+          message: "Tidak dapat bertukar dengan kelas yang sama",
         });
       }
       const result = prisma.tradeMatkul.update({
@@ -192,14 +192,14 @@ export const tradeMatkulRouter = createTRPCRouter({
       });
       if (!returnedTradeMatkul) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Trade matkul tidak ditemukan',
+          code: "NOT_FOUND",
+          message: "Trade matkul tidak ditemukan",
         });
       }
       if (returnedTradeMatkul.userId !== ctx.session.user.id) {
         throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Tidak dapat menghapus trade matkul',
+          code: "FORBIDDEN",
+          message: "Tidak dapat menghapus trade matkul",
         });
       }
       try {
@@ -210,8 +210,8 @@ export const tradeMatkulRouter = createTRPCRouter({
         });
       } catch (e) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Matkul tidak ditemukan',
+          code: "NOT_FOUND",
+          message: "Matkul tidak ditemukan",
         });
       }
       return;
@@ -261,14 +261,14 @@ export const tradeMatkulRouter = createTRPCRouter({
       });
       if (!tradeMatkulPost) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Trade Matkul tidak ditemukan',
+          code: "NOT_FOUND",
+          message: "Trade Matkul tidak ditemukan",
         });
       }
       if (tradeMatkulPost.userId !== ctx.session.user.id) {
         throw new TRPCError({
-          code: 'FORBIDDEN',
-          message: 'Trade Matkul tidak dapat diakses',
+          code: "FORBIDDEN",
+          message: "Trade Matkul tidak dapat diakses",
         });
       }
       return tradeMatkulPost;
@@ -320,7 +320,7 @@ export const tradeMatkulRouter = createTRPCRouter({
             Matkul: {
               semester: input.semester ?? undefined,
               name:
-                input.matkul === '' || input.matkul === 'Semua'
+                input.matkul === "" || input.matkul === "Semua"
                   ? undefined
                   : input.matkul,
             },

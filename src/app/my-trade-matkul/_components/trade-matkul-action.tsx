@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Loader2, Pencil, Trash } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { Loader2, Pencil, Trash } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import {
   AlertDialog,
@@ -14,18 +14,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 
-import { api } from '@/trpc/react';
+import { api } from "@/trpc/react";
 
 const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
   const router = useRouter();
   const mutateDeleteTradeMatkul =
     api.tradeMatkul.deleteMyTradeMatkul.useMutation({
       onSuccess: () => {
-        router.replace('/my-frs');
+        router.replace("/my-frs");
       },
     });
   const handleDeleteTradeMatkul = () => {
@@ -33,37 +33,37 @@ const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
       .mutateAsync({ tradeMatkulId: tradeMatkulId })
       .then(() => {
         toast({
-          title: 'Success',
-          description: 'Berhasil menghapus Trade matkul',
+          title: "Success",
+          description: "Berhasil menghapus Trade matkul",
         });
       })
       .catch((err) => {
         toast({
-          variant: 'destructive',
-          title: 'Error',
+          variant: "destructive",
+          title: "Error",
           description: err.message,
         });
       });
   };
   return (
-    <div className='flex gap-2'>
-      <Button variant='secondary' asChild>
-        <Link href={'/my-trade-matkul/edit/' + tradeMatkulId}>
-          <Pencil className='mr-2 h-4 w-4' />
+    <div className="flex gap-2">
+      <Button variant="secondary" asChild>
+        <Link href={"/my-trade-matkul/edit/" + tradeMatkulId}>
+          <Pencil className="mr-2 h-4 w-4" />
           Update
         </Link>
       </Button>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant='destructive'>
+          <Button variant="destructive">
             {mutateDeleteTradeMatkul.isLoading ? (
               <>
-                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Please wait..
               </>
             ) : (
               <>
-                <Trash className='mr-2 h-4 w-4' />
+                <Trash className="mr-2 h-4 w-4" />
                 Hapus
               </>
             )}
@@ -82,11 +82,11 @@ const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel asChild>
-              <Button variant='outline'>Batal</Button>
+              <Button variant="outline">Batal</Button>
             </AlertDialogCancel>
             <AlertDialogAction asChild>
               <Button
-                variant='destructive'
+                variant="destructive"
                 disabled={mutateDeleteTradeMatkul.isLoading}
                 onClick={handleDeleteTradeMatkul}
               >

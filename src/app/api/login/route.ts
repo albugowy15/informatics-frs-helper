@@ -1,12 +1,12 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { NextRequest, NextResponse } from 'next/server';
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { type NextRequest, NextResponse } from "next/server";
 
-import { prisma } from '@/server/db';
+import { prisma } from "@/server/db";
 
-import { env } from '@/env.mjs';
+import { env } from "@/env.mjs";
 
-const KEY = env.NEXTAUTH_SECRET as string;
+const KEY = env.NEXTAUTH_SECRET!;
 
 export type LoginResponseData = {
   username: string;
@@ -16,11 +16,12 @@ export type LoginResponseData = {
 };
 
 const handler = async (req: NextRequest) => {
-  const data = await req.json();
+  const data = (await req.json()) as { username: string; password: string };
+
   const { username, password } = data;
   if (!username || !password) {
     return NextResponse.json(
-      { status: 'error', message: 'Method not implemented' },
+      { status: "error", message: "Method not implemented" },
       { status: 400 },
     );
   }
@@ -41,8 +42,8 @@ const handler = async (req: NextRequest) => {
   if (users.length === 0 || users.length > 1) {
     return NextResponse.json(
       {
-        status: 'error',
-        message: 'User tidak ditemukan',
+        status: "error",
+        message: "User tidak ditemukan",
       },
       {
         status: 401,
@@ -53,8 +54,8 @@ const handler = async (req: NextRequest) => {
   if (!user) {
     return NextResponse.json(
       {
-        status: 'error',
-        message: 'User tidak ditemukan',
+        status: "error",
+        message: "User tidak ditemukan",
       },
       {
         status: 401,
@@ -71,8 +72,8 @@ const handler = async (req: NextRequest) => {
   if (!isMatch) {
     return NextResponse.json(
       {
-        status: 'error',
-        message: 'Password incorrect',
+        status: "error",
+        message: "Password incorrect",
       },
       {
         status: 400,
@@ -85,16 +86,16 @@ const handler = async (req: NextRequest) => {
     email: userEmail,
   };
   try {
-    const token = jwt.sign(payload, KEY, { expiresIn: '1d' });
+    const token = jwt.sign(payload, KEY, { expiresIn: "1d" });
     return NextResponse.json(
       {
-        status: 'success',
-        message: 'User successfully logged in',
+        status: "success",
+        message: "User successfully logged in",
         data: {
           id: userId,
           username: userUsername,
           email: userEmail,
-          accessToken: token as string,
+          accessToken: token,
         },
       },
       {
@@ -104,8 +105,8 @@ const handler = async (req: NextRequest) => {
   } catch (e) {
     return NextResponse.json(
       {
-        status: 'error',
-        message: 'ERROR SIGN TOKEN',
+        status: "error",
+        message: "ERROR SIGN TOKEN",
       },
       {
         status: 500,

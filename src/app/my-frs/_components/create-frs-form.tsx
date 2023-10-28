@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 
-import ClassCard from '@/components/class-card';
-import Typography from '@/components/typography';
-import { Button } from '@/components/ui/button';
+import ClassCard from "@/components/class-card";
+import Typography from "@/components/typography";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -17,32 +17,32 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { toast } from '@/components/ui/use-toast';
+} from "@/components/ui/select";
+import { toast } from "@/components/ui/use-toast";
 
-import { ClassContext } from '@/app/my-frs/_components/class-context';
-import { PlanDetailProps } from '@/app/my-frs/types';
-import { Semester } from '@/config/contants';
-import { api } from '@/trpc/react';
+import { ClassContext } from "@/app/my-frs/_components/class-context";
+import { type PlanDetailProps } from "@/app/my-frs/types";
+import { Semester } from "@/config/contants";
+import { api } from "@/trpc/react";
 
 const createFRSFormSchema = z.object({
   title: z
     .string({
-      required_error: 'Judul rencana FRS tidak boleh kosong',
+      required_error: "Judul rencana FRS tidak boleh kosong",
     })
-    .min(1, { message: 'Judul rencana FRS tidak boleh kosong' })
-    .max(20, { message: 'Judul rencana FRS maksimal 20 karakter' }),
+    .min(1, { message: "Judul rencana FRS tidak boleh kosong" })
+    .max(20, { message: "Judul rencana FRS maksimal 20 karakter" }),
   semester: z
-    .string({ required_error: 'Semester tidak boleh kosong' })
-    .min(1, { message: 'Silahkan pilih semester' }),
+    .string({ required_error: "Semester tidak boleh kosong" })
+    .min(1, { message: "Silahkan pilih semester" }),
 });
 
 type CreateFRSFormType = z.infer<typeof createFRSFormSchema>;
@@ -58,8 +58,8 @@ const CreateFRSForm = ({
   const form = useForm<CreateFRSFormType>({
     resolver: zodResolver(createFRSFormSchema),
     defaultValues: {
-      title: planDetail?.title ?? '',
-      semester: planDetail ? planDetail.semester.toString() : '',
+      title: planDetail?.title ?? "",
+      semester: planDetail ? planDetail.semester.toString() : "",
     },
   });
   const context = useContext(ClassContext);
@@ -72,12 +72,12 @@ const CreateFRSForm = ({
 
   const mutateUpdatePlan = api.frs.updatePlan.useMutation({
     onSuccess: () => {
-      router.replace('/my-frs');
+      router.replace("/my-frs");
     },
   });
   const mutateCreatePlan = api.frs.createPlan.useMutation({
     onSuccess: () => {
-      router.replace('/my-frs');
+      router.replace("/my-frs");
     },
   });
 
@@ -92,20 +92,20 @@ const CreateFRSForm = ({
               semester: parseInt(data.semester),
               matkul: subjects,
             },
-            planId: planId ?? '',
+            planId: planId ?? "",
           })
           .then((res) => {
             if (res) {
               toast({
-                title: 'Success',
-                description: 'Berhasil memperbarui rencana FRS',
+                title: "Success",
+                description: "Berhasil memperbarui rencana FRS",
               });
             }
           })
           .catch((err) => {
             toast({
-              variant: 'destructive',
-              title: 'Error',
+              variant: "destructive",
+              title: "Error",
               description: err.message,
             });
           });
@@ -119,24 +119,24 @@ const CreateFRSForm = ({
           .then((res) => {
             if (res) {
               toast({
-                title: 'Success',
-                description: 'Berhasil membuat rencana FRS',
+                title: "Success",
+                description: "Berhasil membuat rencana FRS",
               });
             }
           })
           .catch((err) => {
             toast({
-              variant: 'destructive',
-              title: 'Error',
+              variant: "destructive",
+              title: "Error",
               description: err.message,
             });
           });
       }
     } else {
       toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: 'Kamu belum mengambil kelas sama sekali',
+        variant: "destructive",
+        title: "Error",
+        description: "Kamu belum mengambil kelas sama sekali",
       });
     }
   };
@@ -149,10 +149,10 @@ const CreateFRSForm = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name='title'
+          name="title"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Judul Plan</FormLabel>
@@ -163,14 +163,14 @@ const CreateFRSForm = ({
         />
         <FormField
           control={form.control}
-          name='semester'
+          name="semester"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Pilih Semester</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder='Pilih semester' />
+                    <SelectValue placeholder="Pilih semester" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -187,10 +187,10 @@ const CreateFRSForm = ({
         />
 
         <div>
-          <Typography variant='h4'>Matkul yang diambil</Typography>
+          <Typography variant="h4">Matkul yang diambil</Typography>
           {context && context.classTaken.length > 0 ? (
             <>
-              <div className='space-y-2'>
+              <div className="space-y-2">
                 {context.classTaken.map((item, index) => (
                   <ClassCard
                     data={{
@@ -202,11 +202,11 @@ const CreateFRSForm = ({
                       day: item.day,
                       sessionTime: item.Session?.session_time,
                     }}
-                    size='sm'
+                    size="sm"
                     key={item.id}
                   >
                     <Button
-                      variant='destructive'
+                      variant="destructive"
                       onClick={() => handleDropTakenClass(index)}
                     >
                       Drop
@@ -216,20 +216,20 @@ const CreateFRSForm = ({
               </div>
             </>
           ) : (
-            <Typography variant='label1' className='font-normal pt-2'>
+            <Typography variant="label1" className="pt-2 font-normal">
               Kamu belum mengambil matkul apapun
             </Typography>
           )}
         </div>
 
-        <Typography variant='h4'>Total SKS : {sks}</Typography>
+        <Typography variant="h4">Total SKS : {sks}</Typography>
         <Button
-          type='submit'
+          type="submit"
           disabled={mutateCreatePlan.isLoading || mutateUpdatePlan.isLoading}
         >
           {mutateCreatePlan.isLoading || mutateUpdatePlan.isLoading ? (
             <>
-              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Please wait..
             </>
           ) : (

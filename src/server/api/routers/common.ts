@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from '@/server/api/trpc';
-import { prisma } from '@/server/db';
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { prisma } from "@/server/db";
 
 export const commonRouter = createTRPCRouter({
   getClassBySubject: publicProcedure
@@ -22,7 +22,7 @@ export const commonRouter = createTRPCRouter({
           },
         },
         orderBy: {
-          code: 'asc',
+          code: "asc",
         },
       });
 
@@ -59,12 +59,12 @@ export const commonRouter = createTRPCRouter({
               taken: input.with_taken ? input.with_taken : false,
             },
             orderBy: {
-              code: 'asc',
+              code: "asc",
             },
           },
         },
         orderBy: {
-          name: 'asc',
+          name: "asc",
         },
       });
 
@@ -87,12 +87,12 @@ export const commonRouter = createTRPCRouter({
           semester: input.semester,
         },
         orderBy: {
-          name: 'asc',
+          name: "asc",
         },
       });
 
       if (input.withAll == true) {
-        listSubject.unshift({ id: '', name: 'Semua' });
+        listSubject.unshift({ id: "", name: "Semua" });
       }
       return listSubject;
     }),
@@ -115,7 +115,7 @@ export const commonRouter = createTRPCRouter({
         },
       },
       orderBy: {
-        taken: 'desc',
+        taken: "desc",
       },
       take: 12,
     });

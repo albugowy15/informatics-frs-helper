@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import Typography from '@/components/typography';
+import Typography from "@/components/typography";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 export type ClassCardProps = {
   data: {
@@ -14,7 +14,7 @@ export type ClassCardProps = {
     taken: number;
     sks: number;
   };
-  size?: 'base' | 'sm';
+  size?: "base" | "sm";
   children?: React.ReactNode;
 };
 
@@ -23,26 +23,26 @@ const CounterBadge = ({
   size,
 }: {
   count: number;
-  size?: 'base' | 'sm';
+  size?: "base" | "sm";
 }) => {
   return (
     <Typography
-      variant='label1'
-      className={cn([size == 'sm' && 'text-xs'], 'pt-1')}
+      variant="label1"
+      className={cn([size == "sm" && "text-xs"], "pt-1")}
     >
-      Diambil{' '}
+      Diambil{" "}
       <span
         className={cn(
           [
-            count <= 10 && 'text-green-600',
-            count >= 11 && count <= 20 && 'text-yellow-500',
-            count >= 21 && 'text-red-600',
+            count <= 10 && "text-green-600",
+            count >= 11 && count <= 20 && "text-yellow-500",
+            count >= 21 && "text-red-600",
           ],
-          'font-medium',
+          "font-medium",
         )}
       >
         {count}
-      </span>{' '}
+      </span>{" "}
       kali
     </Typography>
   );
@@ -51,20 +51,20 @@ const CounterBadge = ({
 export const ClassCard = ({
   data,
   children,
-  size = 'base',
+  size = "base",
 }: ClassCardProps) => {
   return (
-    <div className='rounded-md border p-2 lg:p-3 space-y-1'>
+    <div className="space-y-1 rounded-md border p-2 lg:p-3">
       <Typography
-        variant='body1'
-        className={cn([size == 'sm' && 'text-sm'], 'font-medium')}
+        variant="body1"
+        className={cn([size == "sm" && "text-sm"], "font-medium")}
       >
         {data.subjectName} {data.subjectCode} ({data.sks} sks)
       </Typography>
       {data.lecturers.map((lecturer) => (
         <Typography
-          variant='label1'
-          className={cn([size == 'sm' && 'text-xs'], 'font-normal')}
+          variant="label1"
+          className={cn([size == "sm" && "text-xs"], "font-normal")}
           key={lecturer.id}
         >
           {lecturer.fullname}
@@ -72,15 +72,15 @@ export const ClassCard = ({
       ))}
       {data.day != null && data.sessionTime != null ? (
         <Typography
-          variant='label1'
-          className={cn([size == 'sm' && 'text-xs'], 'font-normal')}
+          variant="label1"
+          className={cn([size == "sm" && "text-xs"], "font-normal")}
         >
           {data.day}, {data.sessionTime} WIB
         </Typography>
       ) : null}
 
       <CounterBadge count={data.taken} size={size} />
-      <div className='py-1' />
+      <div className="py-1" />
       {children}
     </div>
   );

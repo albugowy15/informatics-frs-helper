@@ -1,17 +1,24 @@
-import bcrypt from 'bcryptjs';
-import { NextRequest, NextResponse } from 'next/server';
+import bcrypt from "bcryptjs";
+import { type NextRequest, NextResponse } from "next/server";
 
-import { prisma } from '@/server/db';
+import { prisma } from "@/server/db";
+
+type RegisterRequestBody = {
+  username: string;
+  password: string;
+  email: string;
+  confirmPassword: string;
+};
 
 const handler = async (req: NextRequest) => {
-  const data = await req.json();
+  const data = (await req.json()) as RegisterRequestBody;
   const { username, password, email, confirmPassword } = data;
 
   if (password !== confirmPassword) {
     return NextResponse.json(
       {
-        status: 'error',
-        message: 'Password dan konfirmasi password tidak sama',
+        status: "error",
+        message: "Password dan konfirmasi password tidak sama",
       },
       {
         status: 400,
@@ -30,8 +37,8 @@ const handler = async (req: NextRequest) => {
 
     return NextResponse.json(
       {
-        status: 'success',
-        message: 'Berhasil membuat akun',
+        status: "success",
+        message: "Berhasil membuat akun",
         data: {
           id: user.id,
         },
@@ -43,8 +50,8 @@ const handler = async (req: NextRequest) => {
   } catch (error) {
     return NextResponse.json(
       {
-        status: 'error',
-        message: 'Username atau email telah digunakan',
+        status: "error",
+        message: "Username atau email telah digunakan",
       },
       { status: 400 },
     );

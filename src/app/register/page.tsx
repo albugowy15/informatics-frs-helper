@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { type Metadata } from "next";
 
 import {
   Card,
@@ -6,18 +6,18 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 
-import RegisterForm from '@/app/register/_components/register-form';
-import { renderPageTitle } from '@/lib/utils';
+import RegisterForm from "@/app/register/_components/register-form";
+import { renderPageTitle } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: renderPageTitle('Register'),
+  title: renderPageTitle("Register"),
 };
 
 export default function RegisterPage() {
   return (
-    <Card className='mx-auto mt-6 md:w-96 w-full'>
+    <Card className="mx-auto mt-6 w-full md:w-96">
       <CardHeader>
         <CardTitle>Silahkan Register</CardTitle>
         <CardDescription>

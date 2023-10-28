@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,49 +15,49 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Textarea } from '@/components/ui/textarea';
-import { toast } from '@/components/ui/use-toast';
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
 
-import ChooseClassSection from '@/app/my-trade-matkul/_components/choose-class-section';
-import { TradeMatkul } from '@/app/my-trade-matkul/types';
-import { api } from '@/trpc/react';
+import ChooseClassSection from "@/app/my-trade-matkul/_components/choose-class-section";
+import { type TradeMatkul } from "@/app/my-trade-matkul/types";
+import { api } from "@/trpc/react";
 
 const createTradeMatkulFormSchema = z.object({
   hasMatkul: z
     .string({
-      required_error: 'Pilih matkul yang kamu miliki',
+      required_error: "Pilih matkul yang kamu miliki",
     })
-    .min(1, { message: 'Pilih matkul yang kamu miliki' }),
+    .min(1, { message: "Pilih matkul yang kamu miliki" }),
   hasClass: z
-    .string({ required_error: 'Pilih kelas yang kamu miliki' })
+    .string({ required_error: "Pilih kelas yang kamu miliki" })
     .min(1, {
-      message: 'Pilih kelas yang kamu miliki',
+      message: "Pilih kelas yang kamu miliki",
     }),
   hasMatkulSemester: z
     .string({
-      required_error: 'Pilih semester dari kelas yang kamu miliki',
+      required_error: "Pilih semester dari kelas yang kamu miliki",
     })
-    .min(1, { message: 'Pilih semester dari kelas yang kamu miliki' }),
+    .min(1, { message: "Pilih semester dari kelas yang kamu miliki" }),
   searchMatkul: z
     .string({
-      required_error: 'Pilih matkul yang kamu cari',
+      required_error: "Pilih matkul yang kamu cari",
     })
-    .min(1, { message: 'Pilih matkul yang kamu cari' }),
+    .min(1, { message: "Pilih matkul yang kamu cari" }),
   searchClass: z
-    .string({ required_error: 'Pilih kelas yang kamu cari' })
+    .string({ required_error: "Pilih kelas yang kamu cari" })
     .min(1, {
-      message: 'Pilih kelas yang kamu cari',
+      message: "Pilih kelas yang kamu cari",
     }),
   searchMatkulSemester: z
     .string({
-      required_error: 'Pilih semester dari kelas yang kamu cari',
+      required_error: "Pilih semester dari kelas yang kamu cari",
     })
-    .min(1, { message: 'Pilih semester dari kelas yang kamu cari' }),
+    .min(1, { message: "Pilih semester dari kelas yang kamu cari" }),
   description: z
-    .string({ required_error: 'Deskripsi tidak boleh kosong' })
-    .max(150, { message: 'Deskripsi tidak boleh lebih dari 150 karakter' })
-    .min(1, { message: 'Deskripsi tidak boleh kosong' }),
+    .string({ required_error: "Deskripsi tidak boleh kosong" })
+    .max(150, { message: "Deskripsi tidak boleh lebih dari 150 karakter" })
+    .min(1, { message: "Deskripsi tidak boleh kosong" }),
 });
 
 export type CreateTradeMatkulFormSchema = z.infer<
@@ -86,14 +86,14 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
   const mutateCreateTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation(
     {
       onSuccess: () => {
-        router.replace('/my-trade-matkul/');
+        router.replace("/my-trade-matkul/");
       },
     },
   );
   const mutateUpdateTradeMatkul = api.tradeMatkul.updateTradeMatkul.useMutation(
     {
       onSuccess: () => {
-        router.replace('/my-trade-matkul/');
+        router.replace("/my-trade-matkul/");
       },
     },
   );
@@ -110,15 +110,15 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
         .then((res) => {
           if (res) {
             toast({
-              title: 'Success',
-              description: 'Berhasil membuat post trade matkul',
+              title: "Success",
+              description: "Berhasil membuat post trade matkul",
             });
           }
         })
         .catch((err) => {
           toast({
-            variant: 'destructive',
-            title: 'Error',
+            variant: "destructive",
+            title: "Error",
             description: err.message,
           });
         });
@@ -132,15 +132,15 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
         .then((res) => {
           if (res) {
             toast({
-              title: 'Success',
-              description: 'Berhasil membuat post trade matkul',
+              title: "Success",
+              description: "Berhasil membuat post trade matkul",
             });
           }
         })
         .catch((err) => {
           toast({
-            variant: 'destructive',
-            title: 'Error',
+            variant: "destructive",
+            title: "Error",
             description: err.message,
           });
         });
@@ -149,22 +149,22 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
 
   return (
     <Form {...form}>
-      <form className='flex flex-col' onSubmit={form.handleSubmit(onSubmit)}>
-        <div className='flex flex-col gap-3 md:flex-row md:justify-between'>
-          <ChooseClassSection variant='has' />
-          <ChooseClassSection variant='want' />
+      <form className="flex flex-col" onSubmit={form.handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-3 md:flex-row md:justify-between">
+          <ChooseClassSection variant="has" />
+          <ChooseClassSection variant="want" />
         </div>
 
-        <div className='py-2' />
+        <div className="py-2" />
         <FormField
           control={form.control}
-          name='description'
+          name="description"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Deskripsi</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder='Plisss... yang mau nuker dapat pahala'
+                  placeholder="Plisss... yang mau nuker dapat pahala"
                   {...field}
                 ></Textarea>
               </FormControl>
@@ -175,10 +175,10 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
             </FormItem>
           )}
         />
-        <div className='py-4' />
-        <div className='flex items-center gap-4'>
+        <div className="py-4" />
+        <div className="flex items-center gap-4">
           <Button
-            type='submit'
+            type="submit"
             disabled={
               mutateCreateTradeMatkul.isLoading ||
               mutateUpdateTradeMatkul.isLoading
@@ -187,15 +187,15 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
             {mutateCreateTradeMatkul.isLoading ||
             mutateUpdateTradeMatkul.isLoading ? (
               <>
-                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Please wait..
               </>
             ) : (
-              'Simpan'
+              "Simpan"
             )}
           </Button>
           <Button
-            variant='outline'
+            variant="outline"
             disabled={
               mutateCreateTradeMatkul.isLoading ||
               mutateUpdateTradeMatkul.isLoading

@@ -1,22 +1,22 @@
-import { SlidersHorizontal } from 'lucide-react';
-import { Metadata } from 'next';
+import { SlidersHorizontal } from "lucide-react";
+import { type Metadata } from "next";
 
-import ClassCard from '@/components/class-card';
-import Typography from '@/components/typography';
+import ClassCard from "@/components/class-card";
+import Typography from "@/components/typography";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -24,15 +24,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 
-import ScheduleFilterForm from '@/app/jadwal/_components/schedule-filter-form';
-import { renderPageTitle } from '@/lib/utils';
-import { api } from '@/trpc/server';
+import ScheduleFilterForm from "@/app/jadwal/_components/schedule-filter-form";
+import { renderPageTitle } from "@/lib/utils";
+import { api } from "@/trpc/server";
 
 export const metadata: Metadata = {
-  title: renderPageTitle('Informasi Jadwal'),
-  description: 'Informasi Jadwal Mata Kuliah Informatika ITS',
+  title: renderPageTitle("Informasi Jadwal"),
+  description: "Informasi Jadwal Mata Kuliah Informatika ITS",
 };
 
 type SearchParam = {
@@ -47,15 +47,15 @@ export default async function SchedulePage({
 }) {
   const { semester = undefined, subject = undefined } = searchParams;
   const classes = await api.common.getClass.query({
-    semester: semester === undefined ? parseInt('0') : parseInt(semester),
-    matkul: subject === 'Semua' || subject === undefined ? undefined : subject,
+    semester: semester === undefined ? parseInt("0") : parseInt(semester),
+    matkul: subject === "Semua" || subject === undefined ? undefined : subject,
     with_taken: true,
   });
 
   return (
     <>
-      <div className='gap-4 mt-4 lg:flex'>
-        <aside className='sticky top-4 hidden h-fit w-[26%] flex-shrink-0 lg:block'>
+      <div className="mt-4 gap-4 lg:flex">
+        <aside className="sticky top-4 hidden h-fit w-[26%] flex-shrink-0 lg:block">
           <Card>
             <CardHeader>
               <CardTitle>Filter Jadwal</CardTitle>
@@ -68,11 +68,11 @@ export default async function SchedulePage({
             </CardContent>
           </Card>
         </aside>
-        <section className='flex flex-col mb-7 lg:hidden'>
+        <section className="mb-7 flex flex-col lg:hidden">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant='outline'>
-                <SlidersHorizontal className='mr-2 h-4 w-4' />
+              <Button variant="outline">
+                <SlidersHorizontal className="mr-2 h-4 w-4" />
                 Filter
               </Button>
             </DialogTrigger>
@@ -83,36 +83,36 @@ export default async function SchedulePage({
                   Silahkan filter jadwal berdasarkan semester dan mata kuliah
                 </DialogDescription>
               </DialogHeader>
-              <div className='overflow-scroll py-3 px-2'>
+              <div className="overflow-scroll px-2 py-3">
                 <ScheduleFilterForm />
               </div>
             </DialogContent>
           </Dialog>
         </section>
-        <main className='flex w-full flex-col gap-3 lg:px-3'>
+        <main className="flex w-full flex-col gap-3 lg:px-3">
           {classes.length == 0 ? (
-            <Typography variant='h4' className='text-center lg:text-left'>
+            <Typography variant="h4" className="text-center lg:text-left">
               Tidak ada kelas
             </Typography>
           ) : null}
           {classes.map((matkul) => (
             <>
-              <Accordion type='single' collapsible>
+              <Accordion type="single" collapsible>
                 <AccordionItem value={matkul.name}>
                   <AccordionTrigger>
-                    <div className='text-left'>
-                      <Typography variant='body1'>{matkul.name}</Typography>
-                      <Typography variant='label1'>
-                        Semester {matkul.semester} | {matkul.sks} sks |{' '}
+                    <div className="text-left">
+                      <Typography variant="body1">{matkul.name}</Typography>
+                      <Typography variant="label1">
+                        Semester {matkul.semester} | {matkul.sks} sks |{" "}
                         {matkul.Class.length} kelas
                       </Typography>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className='grid gap-2 md:grid-cols-3'>
+                    <div className="grid gap-2 md:grid-cols-3">
                       {matkul.Class.length == 0 ? (
                         <>
-                          <Typography variant='body1'>
+                          <Typography variant="body1">
                             Tidak ada kelas
                           </Typography>
                         </>

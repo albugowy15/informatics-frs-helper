@@ -5,27 +5,27 @@ export type Navigation = {
 
 export const homeNavigation: Navigation[] = [
   {
-    name: 'Home',
-    url: '/',
+    name: "Home",
+    url: "/",
   },
   {
-    name: 'Jadwal Kelas',
-    url: '/jadwal',
+    name: "Jadwal Kelas",
+    url: "/jadwal",
   },
   {
-    name: 'Trading Kelas',
-    url: '/trading',
+    name: "Trading Kelas",
+    url: "/trading",
   },
   {
-    name: 'Kelas Trending',
-    url: '/trending',
+    name: "Kelas Trending",
+    url: "/trending",
   },
   {
-    name: 'Panduan',
-    url: '/panduan',
+    name: "Panduan",
+    url: "/panduan",
   },
   {
-    name: 'Report',
-    url: '/report',
+    name: "Report",
+    url: "/report",
   },
 ];

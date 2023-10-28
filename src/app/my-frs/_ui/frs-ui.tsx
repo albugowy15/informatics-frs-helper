@@ -1,30 +1,30 @@
-import ClassCard from '@/components/class-card';
-import Typography from '@/components/typography';
+import ClassCard from "@/components/class-card";
+import Typography from "@/components/typography";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
+} from "@/components/ui/accordion";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 
-import ClassCardActionButton from '@/app/my-frs/_components/class-card-action-button';
-import ClassContextProvider from '@/app/my-frs/_components/class-context';
-import CreateFRSForm from '@/app/my-frs/_components/create-frs-form';
-import TakeClassForm from '@/app/my-frs/_components/take-subject-form';
-import { FrsUiProps } from '@/app/my-frs/types';
+import ClassCardActionButton from "@/app/my-frs/_components/class-card-action-button";
+import ClassContextProvider from "@/app/my-frs/_components/class-context";
+import CreateFRSForm from "@/app/my-frs/_components/create-frs-form";
+import TakeClassForm from "@/app/my-frs/_components/take-subject-form";
+import { type FrsUiProps } from "@/app/my-frs/types";
 
 const FrsUi = ({ classes, planDetail, planId }: FrsUiProps) => {
   return (
-    <main className='gap-4 mt-4 flex flex-col lg:flex-row'>
+    <main className="mt-4 flex flex-col gap-4 lg:flex-row">
       <ClassContextProvider planDetailClass={planDetail?.Class}>
-        <aside className='lg:sticky lg:top-4 h-fit lg:w-[30%] lg:flex-shrink-0 lg:overflow-y-auto'>
+        <aside className="h-fit lg:sticky lg:top-4 lg:w-[30%] lg:flex-shrink-0 lg:overflow-y-auto">
           <Card>
             <CardHeader>
               <CardTitle>Informasi Plan FRS</CardTitle>
@@ -37,7 +37,7 @@ const FrsUi = ({ classes, planDetail, planId }: FrsUiProps) => {
             </CardContent>
           </Card>
         </aside>
-        <section className='flex w-full flex-col'>
+        <section className="flex w-full flex-col">
           <Card>
             <CardHeader>
               <CardTitle>Form Ambil Matkul</CardTitle>
@@ -45,32 +45,32 @@ const FrsUi = ({ classes, planDetail, planId }: FrsUiProps) => {
             <CardContent>
               <TakeClassForm />
 
-              <div className='mt-3'>
+              <div className="mt-3">
                 {classes.length == 0 ? (
-                  <Typography variant='h4' className='text-center lg:text-left'>
+                  <Typography variant="h4" className="text-center lg:text-left">
                     Tidak ada kelas
                   </Typography>
                 ) : null}
                 {classes.map((matkul) => (
                   <>
-                    <Accordion type='single' collapsible>
+                    <Accordion type="single" collapsible>
                       <AccordionItem value={matkul.name}>
                         <AccordionTrigger>
-                          <div className='text-left'>
-                            <Typography variant='body1'>
+                          <div className="text-left">
+                            <Typography variant="body1">
                               {matkul.name}
                             </Typography>
-                            <Typography variant='label1'>
-                              Semester {matkul.semester} | {matkul.sks} sks |{' '}
+                            <Typography variant="label1">
+                              Semester {matkul.semester} | {matkul.sks} sks |{" "}
                               {matkul.Class.length} kelas
                             </Typography>
                           </div>
                         </AccordionTrigger>
                         <AccordionContent>
-                          <div className='grid gap-2 md:grid-cols-3'>
+                          <div className="grid gap-2 md:grid-cols-3">
                             {matkul.Class.length == 0 ? (
                               <>
-                                <Typography variant='body1'>
+                                <Typography variant="body1">
                                   Tidak ada kelas
                                 </Typography>
                               </>
@@ -87,7 +87,7 @@ const FrsUi = ({ classes, planDetail, planId }: FrsUiProps) => {
                                       taken: item.taken,
                                       sks: matkul.sks,
                                     }}
-                                    size='sm'
+                                    size="sm"
                                     key={item.id}
                                   >
                                     <ClassCardActionButton

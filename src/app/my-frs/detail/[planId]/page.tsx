@@ -1,14 +1,14 @@
-import { Metadata } from 'next';
+import { type Metadata } from "next";
 
-import ClassCard from '@/components/class-card';
-import Typography from '@/components/typography';
+import ClassCard from "@/components/class-card";
+import Typography from "@/components/typography";
 
-import DetailFrsAction from '@/app/my-frs/detail/[planId]/_components/detail-frs-action';
-import { renderPageTitle } from '@/lib/utils';
-import { api } from '@/trpc/server';
+import DetailFrsAction from "@/app/my-frs/detail/[planId]/_components/detail-frs-action";
+import { renderPageTitle } from "@/lib/utils";
+import { api } from "@/trpc/server";
 
 export const metadata: Metadata = {
-  title: renderPageTitle('Detail myFRS'),
+  title: renderPageTitle("Detail myFRS"),
 };
 
 export default async function PlanDetailPage({
@@ -25,19 +25,19 @@ export default async function PlanDetailPage({
       {plan ? (
         <>
           <section>
-            <Typography variant='h4' className='mb-1'>
+            <Typography variant="h4" className="mb-1">
               Informasi Plan FRS
             </Typography>
-            <Typography variant='body1'>Judul : {plan.title}</Typography>
-            <Typography variant='body1'>Semester : {plan.semester}</Typography>
-            <Typography variant='body1'>Total SKS : {plan.totalSks}</Typography>
+            <Typography variant="body1">Judul : {plan.title}</Typography>
+            <Typography variant="body1">Semester : {plan.semester}</Typography>
+            <Typography variant="body1">Total SKS : {plan.totalSks}</Typography>
           </section>
 
-          <div className='py-2' />
+          <div className="py-2" />
 
-          <section className='space-y-2'>
-            <Typography variant='h4'>Matkul yang diambil</Typography>
-            <div className='grid gap-2 lg:grid-cols-4'>
+          <section className="space-y-2">
+            <Typography variant="h4">Matkul yang diambil</Typography>
+            <div className="grid gap-2 lg:grid-cols-4">
               {plan.Class.map((kelas) => (
                 <ClassCard
                   key={kelas.id}
@@ -54,7 +54,7 @@ export default async function PlanDetailPage({
               ))}
             </div>
           </section>
-          <div className='py-2' />
+          <div className="py-2" />
           <DetailFrsAction
             frsTitle={plan.title}
             planId={plan.id}
@@ -62,7 +62,7 @@ export default async function PlanDetailPage({
           />
         </>
       ) : (
-        <Typography variant='body1'>Rencara FRS Tidak ditemukan</Typography>
+        <Typography variant="body1">Rencara FRS Tidak ditemukan</Typography>
       )}
     </>
   );

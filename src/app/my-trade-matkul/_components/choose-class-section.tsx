@@ -1,37 +1,37 @@
-'use client';
+"use client";
 
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from "react-hook-form";
 
-import Typography from '@/components/typography';
+import Typography from "@/components/typography";
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
-import { CreateTradeMatkulFormSchema } from '@/app/my-trade-matkul/_components/trade-matkul-form';
-import { Semester } from '@/config/contants';
-import { api } from '@/trpc/react';
+import { type CreateTradeMatkulFormSchema } from "@/app/my-trade-matkul/_components/trade-matkul-form";
+import { Semester } from "@/config/contants";
+import { api } from "@/trpc/react";
 
 type ChooseClassSectionProps = {
-  variant: 'has' | 'want';
+  variant: "has" | "want";
 };
 
 const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
   const formCtx = useFormContext<CreateTradeMatkulFormSchema>();
   const semesterField =
-    variant == 'has' ? 'hasMatkulSemester' : 'searchMatkulSemester';
-  const subjectField = variant == 'has' ? 'hasMatkul' : 'searchMatkul';
-  const classField = variant == 'has' ? 'hasClass' : 'searchClass';
+    variant == "has" ? "hasMatkulSemester" : "searchMatkulSemester";
+  const subjectField = variant == "has" ? "hasMatkul" : "searchMatkul";
+  const classField = variant == "has" ? "hasClass" : "searchClass";
 
   const semesterWatch = useWatch({
     control: formCtx.control,
@@ -49,9 +49,9 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
   });
 
   return (
-    <div className='flex w-full flex-col gap-2'>
-      <Typography variant='h4'>
-        Kelas yang ${variant == 'has' ? 'Dimiliki' : 'Diinginkan'}
+    <div className="flex w-full flex-col gap-2">
+      <Typography variant="h4">
+        Kelas yang ${variant == "has" ? "Dimiliki" : "Diinginkan"}
       </Typography>
       <FormField
         control={formCtx.control}
@@ -62,7 +62,7 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder='Pilih semester'></SelectValue>
+                  <SelectValue placeholder="Pilih semester"></SelectValue>
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
@@ -86,10 +86,10 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder='Pilih matkul'></SelectValue>
+                  <SelectValue placeholder="Pilih matkul"></SelectValue>
                 </SelectTrigger>
               </FormControl>
-              <SelectContent className='overflow-y-auto max-h-52'>
+              <SelectContent className="max-h-52 overflow-y-auto">
                 {listSubject.data && listSubject.data.length > 0 ? (
                   <>
                     {listSubject.data.map((subject) => (
@@ -99,7 +99,7 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
                     ))}
                   </>
                 ) : (
-                  <SelectItem disabled value='no-class'>
+                  <SelectItem disabled value="no-class">
                     --Tidak ada matkul--
                   </SelectItem>
                 )}
@@ -118,10 +118,10 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
             <Select onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder='Pilih kelas'></SelectValue>
+                  <SelectValue placeholder="Pilih kelas"></SelectValue>
                 </SelectTrigger>
               </FormControl>
-              <SelectContent className='overflow-y-auto max-h-52'>
+              <SelectContent className="max-h-52 overflow-y-auto">
                 {listClass.data && listClass.data.length > 0 ? (
                   <>
                     {listClass.data.map((kelas) => (
@@ -131,7 +131,7 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
                     ))}
                   </>
                 ) : (
-                  <SelectItem disabled value='no-class'>
+                  <SelectItem disabled value="no-class">
                     --Tidak ada kelas--
                   </SelectItem>
                 )}

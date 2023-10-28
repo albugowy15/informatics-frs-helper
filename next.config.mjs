@@ -1,17 +1,10 @@
-!process.env.SKIP_ENV_VALIDATION && (await import('./src/env.mjs'));
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint: {
-    dirs: ['src'],
-  },
-  experimental: {
-    serverActions: true,
-  },
-  reactStrictMode: true,
-  swcMinify: true,
-  images: {
-    domains: ['images.unsplash.com'],
-  },
-};
+/**
+ * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
+ * for Docker builds.
+ */
+await import("./src/env.mjs");
 
-export default nextConfig;
+/** @type {import("next").NextConfig} */
+const config = {};
+
+export default config;

@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { z } from "zod";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,25 +14,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
-import { Semester } from '@/config/contants';
-import { api } from '@/trpc/react';
+import { Semester } from "@/config/contants";
+import { api } from "@/trpc/react";
 
 const filterSchema = z.object({
   semester: z
     .string({
-      required_error: 'Silahkan pilih semester',
-      invalid_type_error: 'Semester bertip string',
+      required_error: "Silahkan pilih semester",
+      invalid_type_error: "Semester bertip string",
     })
-    .min(1, { message: 'Silahkan pilih semester' }),
+    .min(1, { message: "Silahkan pilih semester" }),
   matkul: z.string().optional(),
 });
 
@@ -45,11 +45,11 @@ const ScheduleFilterForm = () => {
   const form = useForm<FilterForm>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
-      matkul: searchParams?.get('subject') ?? '',
-      semester: searchParams?.get('semester') ?? '',
+      matkul: searchParams?.get("subject") ?? "",
+      semester: searchParams?.get("semester") ?? "",
     },
   });
-  const semesterWatch = useWatch({ control: form.control, name: 'semester' });
+  const semesterWatch = useWatch({ control: form.control, name: "semester" });
 
   const listSubjects = api.common.getSubject.useQuery({
     semester: parseInt(semesterWatch),
@@ -57,8 +57,8 @@ const ScheduleFilterForm = () => {
   });
   const onSubmit: SubmitHandler<FilterForm> = (data) => {
     const newParams = new URLSearchParams(searchParams?.toString());
-    newParams.set('semester', data.semester);
-    newParams.set('subject', data.matkul ?? 'Semua');
+    newParams.set("semester", data.semester);
+    newParams.set("subject", data.matkul ?? "Semua");
     router.push(`${pathname}?${newParams.toString()}`);
   };
 
@@ -66,18 +66,18 @@ const ScheduleFilterForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex flex-col gap-4'
+        className="flex flex-col gap-4"
       >
         <FormField
           control={form.control}
-          name='semester'
+          name="semester"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Semester</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder='Pilih semester' />
+                    <SelectValue placeholder="Pilih semester" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -95,17 +95,17 @@ const ScheduleFilterForm = () => {
 
         <FormField
           control={form.control}
-          name='matkul'
+          name="matkul"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Mata Kuliah</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder='Pilih Mata kuliah' />
+                    <SelectValue placeholder="Pilih Mata kuliah" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className='overflow-y-auto max-h-52'>
+                <SelectContent className="max-h-52 overflow-y-auto">
                   {listSubjects.data ? (
                     <>
                       {listSubjects.data.map((item) => (
@@ -121,7 +121,7 @@ const ScheduleFilterForm = () => {
             </FormItem>
           )}
         />
-        <Button type='submit'>Tampilkan Jadwal</Button>
+        <Button type="submit">Tampilkan Jadwal</Button>
       </form>
     </Form>
   );

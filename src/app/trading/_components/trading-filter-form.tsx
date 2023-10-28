@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { z } from "zod";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,17 +15,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
 
-import { Semester } from '@/config/contants';
-import { api } from '@/trpc/react';
+import { Semester } from "@/config/contants";
+import { api } from "@/trpc/react";
 
 const filterSchema = z.object({
   semester: z.string().optional(),
@@ -41,11 +41,11 @@ const TradingFilterForm = () => {
   const form = useForm<FilterForm>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
-      matkul: searchParams?.get('subject') ?? '',
-      semester: searchParams?.get('semester') ?? '',
+      matkul: searchParams?.get("subject") ?? "",
+      semester: searchParams?.get("semester") ?? "",
     },
   });
-  const semesterWatch = useWatch({ control: form.control, name: 'semester' });
+  const semesterWatch = useWatch({ control: form.control, name: "semester" });
 
   const listSubjects = api.common.getSubject.useQuery(
     {
@@ -56,8 +56,8 @@ const TradingFilterForm = () => {
   );
   const onSubmit: SubmitHandler<FilterForm> = (data) => {
     const newParams = new URLSearchParams(searchParams?.toString());
-    newParams.set('semester', data.semester ?? '');
-    newParams.set('subject', data.matkul ?? 'all');
+    newParams.set("semester", data.semester ?? "");
+    newParams.set("subject", data.matkul ?? "all");
     router.push(`${pathname}?${newParams.toString()}`);
   };
 
@@ -65,18 +65,18 @@ const TradingFilterForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex flex-col gap-4'
+        className="flex flex-col gap-4"
       >
         <FormField
           control={form.control}
-          name='semester'
+          name="semester"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Pilih Semester</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder='Pilih semester'></SelectValue>
+                    <SelectValue placeholder="Pilih semester"></SelectValue>
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -93,7 +93,7 @@ const TradingFilterForm = () => {
         />
         <FormField
           control={form.control}
-          name='matkul'
+          name="matkul"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Matkul yang dicari (Want)</FormLabel>
@@ -103,10 +103,10 @@ const TradingFilterForm = () => {
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder='Pilih Mata kuliah' />
+                    <SelectValue placeholder="Pilih Mata kuliah" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className='overflow-scroll max-h-52'>
+                <SelectContent className="max-h-52 overflow-scroll">
                   {listSubjects.data ? (
                     <>
                       {listSubjects.data.map((item, index) => (
@@ -122,7 +122,7 @@ const TradingFilterForm = () => {
             </FormItem>
           )}
         />
-        <Button type='submit'>Tampilkan Trading Matkul</Button>
+        <Button type="submit">Tampilkan Trading Matkul</Button>
       </form>
     </Form>
   );

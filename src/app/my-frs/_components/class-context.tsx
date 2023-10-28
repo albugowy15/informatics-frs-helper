@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState } from "react";
 
-import { PlanDetailClass } from '@/app/my-frs/types';
+import { type PlanDetailClass } from "@/app/my-frs/types";
 
 export const ClassContext = createContext<{
   classTaken: PlanDetailClass[];

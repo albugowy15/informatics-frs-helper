@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import { type Metadata } from "next";
 
 import {
   Card,
@@ -6,18 +6,18 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 
-import ForgotPasswordForm from '@/app/lupa-password/_components/forgot-password-form';
-import { renderPageTitle } from '@/lib/utils';
+import ForgotPasswordForm from "@/app/lupa-password/_components/forgot-password-form";
+import { renderPageTitle } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: renderPageTitle('Lupa Password'),
+  title: renderPageTitle("Lupa Password"),
 };
 
 export default function ForgotPasswordPage() {
   return (
-    <Card className='mx-auto mt-6 w-full md:w-96'>
+    <Card className="mx-auto mt-6 w-full md:w-96">
       <CardHeader>
         <CardTitle>Lupa Password</CardTitle>
         <CardDescription>

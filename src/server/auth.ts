@@ -1,35 +1,46 @@
-import { getServerSession, NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
+import {
+  type DefaultSession,
+  getServerSession,
+  type NextAuthOptions,
+} from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 
-import { LoginResponseData } from '@/app/api/login/route';
-import { env } from '@/env.mjs';
+import { type LoginResponseData } from "@/app/api/login/route";
+import { env } from "@/env.mjs";
 
-import { APIResponse } from '@/types/api';
+import { type APIResponse } from "@/types/api";
+
+declare module "next-auth" {
+  interface Session extends DefaultSession {
+    user: LoginResponseData & DefaultSession["user"];
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
         username: {
-          label: 'Username',
-          type: 'text',
+          label: "Username",
+          type: "text",
         },
         password: {
-          label: 'Password',
-          type: 'password',
+          label: "Password",
+          type: "password",
         },
       },
       async authorize(credentials) {
         const res = await fetch(`${env.BASE_URL}/api/login`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(credentials),
         });
 
-        const { data: user }: APIResponse<LoginResponseData> = await res.json();
+        const { data: user } =
+          (await res.json()) as APIResponse<LoginResponseData>;
         if (res.ok && user) {
           return user;
         } else {
@@ -39,10 +50,10 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    jwt({ token, user }) {
       return { ...token, ...user };
     },
-    async session({ session, token }) {
+    session({ session, token }) {
       return {
         ...session,
         user: {
@@ -54,10 +65,10 @@ export const authOptions: NextAuthOptions = {
   },
   secret: env.NEXTAUTH_SECRET,
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
   },
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
   jwt: {
     secret: env.NEXTAUTH_SECRET,

@@ -1,19 +1,19 @@
-import { TRPCError } from '@trpc/server';
-import { kv } from '@vercel/kv';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { Resend } from 'resend';
-import { z } from 'zod';
+import { TRPCError } from "@trpc/server";
+import { kv } from "@vercel/kv";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { Resend } from "resend";
+import { z } from "zod";
 
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from '@/server/api/trpc';
-import { prisma } from '@/server/db';
+} from "@/server/api/trpc";
+import { prisma } from "@/server/db";
 
-import { env } from '@/env.mjs';
-import { asOptionalField } from '@/lib/utils';
+import { env } from "@/env.mjs";
+import { asOptionalField } from "@/lib/utils";
 
 export const userRouter = createTRPCRouter({
   getUserProfile: protectedProcedure.query(async ({ ctx }) => {
@@ -29,8 +29,8 @@ export const userRouter = createTRPCRouter({
     });
     if (!userProfile) {
       throw new TRPCError({
-        code: 'NOT_FOUND',
-        message: 'User tidak ditemukan',
+        code: "NOT_FOUND",
+        message: "User tidak ditemukan",
       });
     }
     return userProfile;
@@ -41,21 +41,21 @@ export const userRouter = createTRPCRouter({
         fullname: z.string().optional(),
         username: z
           .string()
-          .min(6, { message: 'Username minimal 6 karakter' })
-          .max(12, { message: 'Username maksimal 12 karakter' }),
-        email: z.string().email({ message: 'Email tidak valid' }),
+          .min(6, { message: "Username minimal 6 karakter" })
+          .max(12, { message: "Username maksimal 12 karakter" }),
+        email: z.string().email({ message: "Email tidak valid" }),
         idLine: asOptionalField(
           z
             .string()
-            .startsWith('@', { message: 'Id Line ditulis dengan awalan @' }),
+            .startsWith("@", { message: "Id Line ditulis dengan awalan @" }),
         ),
         whatsapp: asOptionalField(
           z
             .string()
-            .min(9, { message: 'No. Whatsapp minimal 9 angka' })
-            .max(14, { message: 'No. Whatsapp maksima 9 angka' })
-            .startsWith('08', { message: 'No. Whatsapp tidak valid' })
-            .regex(/^[0-9]*$/, { message: 'No. Whatsapp tidak valid' }),
+            .min(9, { message: "No. Whatsapp minimal 9 angka" })
+            .max(14, { message: "No. Whatsapp maksima 9 angka" })
+            .startsWith("08", { message: "No. Whatsapp tidak valid" })
+            .regex(/^[0-9]*$/, { message: "No. Whatsapp tidak valid" }),
         ),
       }),
     )
@@ -80,10 +80,10 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         old_password: z.string({
-          required_error: 'Password lama tidak boleh kosong',
+          required_error: "Password lama tidak boleh kosong",
         }),
         new_password: z
-          .string({ required_error: 'Password baru tidak boleh kosong' })
+          .string({ required_error: "Password baru tidak boleh kosong" })
           .min(8)
           .max(16),
       }),
@@ -99,8 +99,8 @@ export const userRouter = createTRPCRouter({
       });
       if (!oldPassword) {
         throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Password lama salah',
+          code: "BAD_REQUEST",
+          message: "Password lama salah",
         });
       }
       const match = await bcrypt.compare(
@@ -109,8 +109,8 @@ export const userRouter = createTRPCRouter({
       );
       if (!match) {
         throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Password lama salah',
+          code: "BAD_REQUEST",
+          message: "Password lama salah",
         });
       }
       const hashNewPassword = await bcrypt.hash(input.new_password, 10);
@@ -146,8 +146,8 @@ export const userRouter = createTRPCRouter({
       });
       if (!user) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'User tidak ditemukan',
+          code: "NOT_FOUND",
+          message: "User tidak ditemukan",
         });
       }
       const savedTimeRedis = await kv.get<string>(user.id);
@@ -163,7 +163,7 @@ export const userRouter = createTRPCRouter({
             (fiveMinsMS - difference) / (1000 * 60),
           );
           throw new TRPCError({
-            code: 'TOO_MANY_REQUESTS',
+            code: "TOO_MANY_REQUESTS",
             message: `Tunggu ${nextAttemptMn} menit lagi untuk mengirim link reset password berikutnya`,
           });
         }
@@ -174,15 +174,15 @@ export const userRouter = createTRPCRouter({
         username: user.username,
       };
       const token = jwt.sign(payload, env.RESET_SECRET, {
-        expiresIn: '30m',
+        expiresIn: "30m",
       });
       const tokenUrl = `${env.BASE_URL}/reset-password/${token}`;
       const resend = new Resend(env.RESEND_API_KEY);
       try {
         await resend.emails.send({
-          from: 'TC FRS Helper <no-reply@tc-frs-helper.live>',
+          from: "TC FRS Helper <no-reply@tc-frs-helper.live>",
           to: [user.email],
-          subject: 'Permintaan Reset Password - TC FRS Helper',
+          subject: "Permintaan Reset Password - TC FRS Helper",
           html: `
           <h1>Konfirmasi Reset Password</h1>
           <p>Hallo <strong>${user.username}</strong></p>
@@ -198,16 +198,16 @@ export const userRouter = createTRPCRouter({
           await kv.set(user.id, currentTime.toISOString());
         } catch (error) {
           throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
+            code: "INTERNAL_SERVER_ERROR",
           });
         }
         return {
-          message: 'Email reset password berhasil dikirim',
+          message: "Email reset password berhasil dikirim",
         };
       } catch (error) {
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Gagal mengirimkan email reset password',
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Gagal mengirimkan email reset password",
         });
       }
     }),
@@ -216,7 +216,10 @@ export const userRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const decoded: any = jwt.verify(input.token, env.RESET_SECRET);
+        const decoded = jwt.verify(input.token, env.RESET_SECRET) as {
+          userId: string;
+          username: string;
+        };
         const userId = decoded.userId;
         const username = decoded.username;
         const user = await prisma.user.findUnique({
@@ -231,14 +234,14 @@ export const userRouter = createTRPCRouter({
         });
         if (!user) {
           throw new TRPCError({
-            code: 'NOT_FOUND',
-            message: 'User tidak ditemukan',
+            code: "NOT_FOUND",
+            message: "User tidak ditemukan",
           });
         }
         if (user.username !== username) {
           throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: 'Token tidak valid',
+            code: "BAD_REQUEST",
+            message: "Token tidak valid",
           });
         }
         try {
@@ -255,18 +258,18 @@ export const userRouter = createTRPCRouter({
             },
           });
           return {
-            message: 'Password berhasil diubah',
+            message: "Password berhasil diubah",
           };
         } catch (e) {
           throw new TRPCError({
-            code: 'INTERNAL_SERVER_ERROR',
-            message: 'Gagal mengubah password',
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Gagal mengubah password",
           });
         }
       } catch (error) {
         throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Token tidak valid',
+          code: "BAD_REQUEST",
+          message: "Token tidak valid",
         });
       }
     }),

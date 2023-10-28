@@ -20,11 +20,11 @@
     "check": "yarn typecheck && yarn lint && yarn format",
     "build": "next build",
     "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
     "start": "next start",
-    "db:start": "pscale connect informatics-frs dev --port 3309",
     "lint": "next lint",
     "lint:fix": "eslint src --fix && yarn format",
-    "lint:strict": "eslint --max-warnings=0 src",
     "typecheck": "tsc --noEmit --incremental false",
     "format": "prettier -w .",
     "format:check": "prettier -c ."
@@ -49,7 +49,6 @@
     "@trpc/next": "^10.43.0",
     "@trpc/react-query": "^10.43.0",
     "@trpc/server": "^10.43.0",
-    "@vercel/analytics": "^1.1.1",
     "@vercel/edge-config": "^0.4.1",
     "@vercel/kv": "^0.2.3",
     "axios": "^1.5.1",
@@ -66,11 +65,13 @@
     "resend": "^1.1.0",
     "superjson": "^2.2.0",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^18.0.0",
+    "@next/bundle-analyzer": "^14.0.0",
     "@tailwindcss/forms": "^0.5.6",
+    "@types/eslint": "^8.44.2",
     "@types/bcryptjs": "^2.4.5",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/node": "20.8.8",
@@ -82,15 +83,12 @@
     "clsx": "^2.0.0",
     "eslint": "8.52.0",
     "eslint-config-next": "13.5.6",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.6",
     "prisma": "^5.5.0",
     "tailwindcss": "^3.3.3",
-    "typescript": "5.2.2",
-    "zod": "^3.22.4"
+    "typescript": "5.2.2"
   }
 }

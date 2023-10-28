@@ -18,17 +18,7 @@
     "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/pages/*": ["./src/pages/*"],
-      "@/styles/*": ["./src/styles/*"],
-      "@/utils/*": ["./src/utils/*"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/server/*": ["./src/server/*"],
-      "@/public/*": ["./public/*"],
-      "@/assets/*": ["./src/assets/*"],
-      "@/types/*": ["./src/types/*"],
-      "@/ui/*": ["./src/ui/*"]
+      "@/*": ["./src/*"]
     },
     "plugins": [
       {
@@ -37,7 +27,7 @@
     ]
   },
   "include": [
-    ".eslintrc.js",
+    ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

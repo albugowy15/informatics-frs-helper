@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,18 +14,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { toast } from '@/components/ui/use-toast';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
 
-import { api } from '@/trpc/react';
+import { api } from "@/trpc/react";
 
 const changePasswordForm = z.object({
   old_password: z.string({
-    required_error: 'Password lama tidak boleh kosong',
+    required_error: "Password lama tidak boleh kosong",
   }),
   new_password: z
-    .string({ required_error: 'Password baru tidak boleh kosong' })
+    .string({ required_error: "Password baru tidak boleh kosong" })
     .min(8)
     .max(16),
 });
@@ -47,31 +47,31 @@ const ChangePasswordForm = () => {
       .then((res) => {
         if (res) {
           toast({
-            title: 'Success',
-            description: 'Password berhasil diubah',
+            title: "Success",
+            description: "Password berhasil diubah",
           });
         }
       })
       .catch((err) => {
         toast({
-          title: 'Error',
-          variant: 'destructive',
+          title: "Error",
+          variant: "destructive",
           description: err.message,
         });
       });
   };
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className='space-y-3'>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
         <FormField
           control={form.control}
-          name='old_password'
+          name="old_password"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password lama</FormLabel>
               <FormDescription>Masukkan password lama Anda</FormDescription>
               <FormControl>
-                <Input type='password' placeholder='Password lama' {...field} />
+                <Input type="password" placeholder="Password lama" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,13 +79,13 @@ const ChangePasswordForm = () => {
         />
         <FormField
           control={form.control}
-          name='new_password'
+          name="new_password"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password baru</FormLabel>
               <FormDescription>Masukkan password baru Anda</FormDescription>
               <FormControl>
-                <Input type='password' placeholder='Password baru' {...field} />
+                <Input type="password" placeholder="Password baru" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -93,13 +93,13 @@ const ChangePasswordForm = () => {
         />
 
         <Button
-          className='flex w-full justify-center'
-          type='submit'
+          className="flex w-full justify-center"
+          type="submit"
           disabled={mutatePassword.isLoading}
         >
           {mutatePassword.isLoading ? (
             <>
-              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Please wait..
             </>
           ) : (

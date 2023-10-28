@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useContext, useState } from 'react';
+import { useContext, useState } from "react";
 
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 
-import { ClassContext } from '@/app/my-frs/_components/class-context';
-import { PlanDetailClass } from '@/app/my-frs/types';
-import { api } from '@/trpc/react';
+import { ClassContext } from "@/app/my-frs/_components/class-context";
+import { type PlanDetailClass } from "@/app/my-frs/types";
+import { api } from "@/trpc/react";
 
 const ClassCardActionButton = ({ data }: { data: PlanDetailClass }) => {
   const context = useContext(ClassContext);
@@ -33,15 +33,15 @@ const ClassCardActionButton = ({ data }: { data: PlanDetailClass }) => {
       .then((res) => {
         if (res) {
           toast({
-            title: 'Success',
-            description: 'Berhasil mengambil kelas',
+            title: "Success",
+            description: "Berhasil mengambil kelas",
           });
         }
       })
       .catch((err) => {
         toast({
-          variant: 'destructive',
-          title: 'Error',
+          variant: "destructive",
+          title: "Error",
           description: err.message,
         });
       });
@@ -54,7 +54,7 @@ const ClassCardActionButton = ({ data }: { data: PlanDetailClass }) => {
   };
 
   return (
-    <Button variant='secondary' onClick={() => handleTakeClass(data)}>
+    <Button variant="secondary" onClick={() => handleTakeClass(data)}>
       Ambil
     </Button>
   );

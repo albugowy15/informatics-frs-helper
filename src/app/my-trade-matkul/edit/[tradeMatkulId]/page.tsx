@@ -1,11 +1,11 @@
-import { Metadata } from 'next';
+import { type Metadata } from "next";
 
-import TradeMatkulForm from '@/app/my-trade-matkul/_components/trade-matkul-form';
-import { renderPageTitle } from '@/lib/utils';
-import { api } from '@/trpc/server';
+import TradeMatkulForm from "@/app/my-trade-matkul/_components/trade-matkul-form";
+import { renderPageTitle } from "@/lib/utils";
+import { api } from "@/trpc/server";
 
 export const metadata: Metadata = {
-  title: renderPageTitle('Edit myTradeMatkul'),
+  title: renderPageTitle("Edit myTradeMatkul"),
 };
 
 export default async function EditTradeMatkulPage({

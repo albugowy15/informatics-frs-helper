@@ -1,7 +1,7 @@
-import { Metadata } from 'next';
+import { type Metadata } from "next";
 
-import { getServerAuthSession } from '@/server/auth';
-import { prisma } from '@/server/db';
+import { getServerAuthSession } from "@/server/auth";
+import { prisma } from "@/server/db";
 
 import {
   Card,
@@ -9,13 +9,13 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
+} from "@/components/ui/card";
 
-import EditProfileForm from '@/app/profil/edit/_components/edit-profile-form';
-import { renderPageTitle } from '@/lib/utils';
+import EditProfileForm from "@/app/profil/edit/_components/edit-profile-form";
+import { renderPageTitle } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: renderPageTitle('Edit Profil'),
+  title: renderPageTitle("Edit Profil"),
 };
 
 export default async function EditProfilePage() {
@@ -32,7 +32,7 @@ export default async function EditProfilePage() {
   });
 
   return (
-    <Card className='w-full min-w-fit sm:w-[500px] mx-auto'>
+    <Card className="mx-auto w-full min-w-fit sm:w-[500px]">
       <CardHeader>
         <CardTitle>Edit Profil Akun</CardTitle>
         <CardDescription>Silahkan edit profil akun Anda</CardDescription>
