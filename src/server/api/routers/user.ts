@@ -69,8 +69,8 @@ export const userRouter = createTRPCRouter({
             fullname: input.fullname,
             username: input.username,
             email: input.email,
-            idLine: input.idLine,
-            whatsapp: input.whatsapp,
+            idLine: input.whatsapp ?? null,
+            whatsapp: input.idLine ?? null,
           },
         })
         .then((res) => res.id);
