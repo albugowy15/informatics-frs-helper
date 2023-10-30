@@ -7,7 +7,6 @@ import {
 } from "@radix-ui/react-alert-dialog";
 import { Loader2, Pencil, Trash } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import {
   AlertDialog,
@@ -29,10 +28,9 @@ const DetailFrsAction = ({
   frsTitle: string;
   planId: string;
 }) => {
-  const router = useRouter();
   const mutateDeleteFrsPlan = api.frs.deletePlan.useMutation({
     onSuccess: () => {
-      router.replace("/my-frs");
+      window.location.replace("/my-frs");
     },
   });
   const handleDeleteFrsPlan = () => {

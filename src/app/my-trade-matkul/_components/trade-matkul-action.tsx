@@ -2,7 +2,6 @@
 
 import { Loader2, Pencil, Trash } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import {
   AlertDialog,
@@ -21,11 +20,10 @@ import { toast } from "@/components/ui/use-toast";
 import { api } from "@/trpc/react";
 
 const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
-  const router = useRouter();
   const mutateDeleteTradeMatkul =
     api.tradeMatkul.deleteMyTradeMatkul.useMutation({
       onSuccess: () => {
-        router.replace("/my-frs");
+        window.location.replace("/my-frs");
       },
     });
   const handleDeleteTradeMatkul = () => {

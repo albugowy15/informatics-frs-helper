@@ -86,14 +86,14 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
   const mutateCreateTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation(
     {
       onSuccess: () => {
-        router.replace("/my-trade-matkul/");
+        window.location.replace("/my-trade-matkul/");
       },
     },
   );
   const mutateUpdateTradeMatkul = api.tradeMatkul.updateTradeMatkul.useMutation(
     {
       onSuccess: () => {
-        router.replace("/my-trade-matkul/");
+        window.location.replace("/my-trade-matkul/");
       },
     },
   );
