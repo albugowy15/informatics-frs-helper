@@ -22,9 +22,9 @@ import { type FrsUiProps } from "@/app/my-frs/types";
 
 const FrsUi = ({ classes, planDetail, planId }: FrsUiProps) => {
   return (
-    <main className="mt-4 flex flex-col gap-4 lg:flex-row">
+    <main className="relative mt-4 flex flex-col gap-2 lg:flex-row">
       <ClassContextProvider planDetailClass={planDetail?.Class}>
-        <aside className="h-fit lg:sticky lg:top-4 lg:w-[30%] lg:flex-shrink-0 lg:overflow-y-auto">
+        <aside className="lg:sticky lg:top-4 lg:max-h-screen lg:w-[30%] lg:flex-shrink-0 lg:overflow-y-auto lg:pr-2">
           <Card>
             <CardHeader>
               <CardTitle>Informasi Plan FRS</CardTitle>
