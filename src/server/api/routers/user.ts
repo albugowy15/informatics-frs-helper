@@ -14,7 +14,7 @@ import { prisma } from "@/server/db";
 
 import { env } from "@/env.mjs";
 import { asOptionalField } from "@/lib/utils";
-import { registerSchema } from "@/app/register/_components/register-form";
+import { registerSchema } from "@/app/register/_schema/register-schema";
 
 export const userRouter = createTRPCRouter({
   register: publicProcedure

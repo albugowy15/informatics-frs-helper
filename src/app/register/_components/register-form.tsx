@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
@@ -19,34 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { api } from "@/trpc/react";
-
-export const registerSchema = z.object({
-  username: z
-    .string({ required_error: "Username wajib diisi" })
-    .regex(/^\S+$/gm, {
-      message: "Username tidak boleh terdapat spasi",
-    })
-    .min(1, { message: "Username tidak boleh kosong" })
-    .max(20, { message: "Username maksimal 20 karakter" }),
-  email: z
-    .string({ required_error: "Email wajib diisi" })
-    .email({ message: "Email harus valid" })
-    .min(1, { message: "Email tidak boleh kosong" }),
-  password: z
-    .string({ required_error: "Password wajib diisi" })
-    .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\S]+$/gm, {
-      message: "Password wajib terdiri dari huruf dan angka",
-    })
-    .min(8, { message: "Password minimal 8 karakter" })
-    .max(16, { message: "Password maksimal 16 karakter" }),
-  confirmPassword: z
-    .string({ required_error: "Konfirmasi password wajib diisi" })
-    .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\S]+$/gm, {
-      message: "Password wajib terdiri dari huruf dan angka",
-    })
-    .min(8, { message: "Password minimal 8 karakter" })
-    .max(16, { message: "Password maksimal 16 karakter" }),
-});
+import { registerSchema } from "../_schema/register-schema";
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
