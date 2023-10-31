@@ -1,9 +1,9 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import Typography from "@/components/typography";
@@ -18,23 +18,32 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
+import { api } from "@/trpc/react";
 
-const registerSchema = z.object({
+export const registerSchema = z.object({
   username: z
     .string({ required_error: "Username wajib diisi" })
-    .min(1, { message: "Username tidak boleh kosong" }),
+    .regex(/^\S+$/gm, {
+      message: "Username tidak boleh terdapat spasi",
+    })
+    .min(1, { message: "Username tidak boleh kosong" })
+    .max(20, { message: "Username maksimal 20 karakter" }),
   email: z
-    .string()
+    .string({ required_error: "Email wajib diisi" })
     .email({ message: "Email harus valid" })
     .min(1, { message: "Email tidak boleh kosong" }),
   password: z
-    .string()
-    .min(1, { message: "Password tidak boleh kosong" })
+    .string({ required_error: "Password wajib diisi" })
+    .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\S]+$/gm, {
+      message: "Password wajib terdiri dari huruf dan angka",
+    })
     .min(8, { message: "Password minimal 8 karakter" })
     .max(16, { message: "Password maksimal 16 karakter" }),
   confirmPassword: z
-    .string()
-    .min(1, { message: "Password tidak boleh kosong" })
+    .string({ required_error: "Konfirmasi password wajib diisi" })
+    .regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\S]+$/gm, {
+      message: "Password wajib terdiri dari huruf dan angka",
+    })
     .min(8, { message: "Password minimal 8 karakter" })
     .max(16, { message: "Password maksimal 16 karakter" }),
 });
@@ -45,27 +54,24 @@ const RegisterForm = () => {
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-  const onSubmit = async (data: RegisterForm) => {
-    setButtonDisabled(true);
-    const axios = (await import("axios")).default;
-    axios
-      .post("/api/register", data)
-      .then(() => {
-        toast({
-          title: "Success",
-          description: "Akun berhasil dibuat, silahkan login",
-        });
-        window.location.replace("/login");
-        setButtonDisabled(false);
-      })
-      .catch((err) => {
-        toast({
-          title: "Error",
-          description: err.response.data.message,
-        });
-        setButtonDisabled(false);
+  const mutateRegister = api.user.register.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Akun berhasil dibuat, silahkan login",
       });
+      window.location.replace("/login");
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+      });
+    },
+  });
+
+  const onSubmit: SubmitHandler<RegisterForm> = (data) => {
+    mutateRegister.mutate(data);
   };
   return (
     <Form {...form}>
@@ -123,8 +129,8 @@ const RegisterForm = () => {
           )}
         />
         <div className="flex flex-col">
-          <Button type="submit" disabled={buttonDisabled}>
-            {buttonDisabled ? (
+          <Button type="submit" disabled={mutateRegister.isLoading}>
+            {mutateRegister.isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Please wait

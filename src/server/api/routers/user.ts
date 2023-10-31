@@ -14,8 +14,40 @@ import { prisma } from "@/server/db";
 
 import { env } from "@/env.mjs";
 import { asOptionalField } from "@/lib/utils";
+import { registerSchema } from "@/app/register/_components/register-form";
 
 export const userRouter = createTRPCRouter({
+  register: publicProcedure
+    .input(registerSchema)
+    .mutation(async ({ input }) => {
+      if (input.password !== input.confirmPassword) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Password dan konfirmasi password tidak sama",
+        });
+      }
+      const hashedPassword = await bcrypt.hash(input.password, 10);
+      try {
+        const user = await prisma.user.create({
+          data: {
+            username: input.username,
+            email: input.email,
+            password: hashedPassword,
+          },
+        });
+
+        return {
+          data: {
+            id: user.id,
+          },
+        };
+      } catch (error) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Username atau email telah digunakan",
+        });
+      }
+    }),
   getUserProfile: protectedProcedure.query(async ({ ctx }) => {
     const userProfile = await prisma.user.findUnique({
       where: { id: ctx.session.user.id },
@@ -177,8 +209,10 @@ export const userRouter = createTRPCRouter({
         expiresIn: "30m",
       });
       const tokenUrl = `${env.BASE_URL}/reset-password/${token}`;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       const resend = new Resend(env.RESEND_API_KEY);
       try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         await resend.emails.send({
           from: "TC FRS Helper <no-reply@tc-frs-helper.live>",
           to: [user.email],
