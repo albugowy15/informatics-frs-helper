@@ -106,7 +106,7 @@ const TradingFilterForm = () => {
                     <SelectValue placeholder="Pilih Mata kuliah" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className="max-h-52 overflow-scroll">
+                <SelectContent className="max-h-64 overflow-y-auto">
                   {listSubjects.data ? (
                     <>
                       {listSubjects.data.map((item, index) => (

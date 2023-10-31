@@ -89,7 +89,7 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
                   <SelectValue placeholder="Pilih matkul"></SelectValue>
                 </SelectTrigger>
               </FormControl>
-              <SelectContent className="max-h-52 overflow-y-auto">
+              <SelectContent className="max-h-64 overflow-y-auto">
                 {listSubject.data && listSubject.data.length > 0 ? (
                   <>
                     {listSubject.data.map((subject) => (
@@ -121,7 +121,7 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
                   <SelectValue placeholder="Pilih kelas"></SelectValue>
                 </SelectTrigger>
               </FormControl>
-              <SelectContent className="max-h-52 overflow-y-auto">
+              <SelectContent className="max-h-64 overflow-y-auto">
                 {listClass.data && listClass.data.length > 0 ? (
                   <>
                     {listClass.data.map((kelas) => (
