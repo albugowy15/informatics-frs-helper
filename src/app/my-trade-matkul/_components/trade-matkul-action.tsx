@@ -27,7 +27,7 @@ const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
           title: "Success",
           description: "Berhasil menghapus Trade matkul",
         });
-        window.location.replace("/my-frs");
+        window.location.replace("/my-trade-matkul");
       },
       onError: (error) => {
         toast({

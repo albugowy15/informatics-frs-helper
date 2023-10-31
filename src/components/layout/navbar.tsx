@@ -51,7 +51,7 @@ const Navbar = ({ items, session }: NavbarProps) => {
       </NavigationMenu>
       <Sheet>
         <SheetTrigger className="md:hidden" asChild>
-          <Button variant="outline" size="icon">
+          <Button aria-label="Menu" variant="outline" size="icon">
             <Menu className="h-4 w-4" />
           </Button>
         </SheetTrigger>
@@ -78,6 +78,7 @@ const Navbar = ({ items, session }: NavbarProps) => {
         ) : (
           <>
             <Button
+              aria-label="Masuk"
               variant="outline"
               onClick={async () => {
                 const signIn = (await import("next-auth/react")).signIn;

@@ -3,6 +3,7 @@ import React from "react";
 import Typography from "@/components/typography";
 
 import { cn } from "@/lib/utils";
+import { Card } from "./ui/card";
 
 export type ClassCardProps = {
   data: {
@@ -54,35 +55,37 @@ export const ClassCard = ({
   size = "base",
 }: ClassCardProps) => {
   return (
-    <div className="space-y-1 rounded-md border p-2 lg:p-3">
-      <Typography
-        variant="body1"
-        className={cn([size == "sm" && "text-sm"], "font-medium")}
-      >
-        {data.subjectName} {data.subjectCode} ({data.sks} sks)
-      </Typography>
-      {data.lecturers.map((lecturer) => (
+    <Card>
+      <div className="space-y-1 p-2 lg:p-3">
         <Typography
-          variant="label1"
-          className={cn([size == "sm" && "text-xs"], "font-normal")}
-          key={lecturer.id}
+          variant="body1"
+          className={cn([size == "sm" && "text-sm"], "font-medium")}
         >
-          {lecturer.fullname}
+          {data.subjectName} {data.subjectCode} ({data.sks} sks)
         </Typography>
-      ))}
-      {data.day != null && data.sessionTime != null ? (
-        <Typography
-          variant="label1"
-          className={cn([size == "sm" && "text-xs"], "font-normal")}
-        >
-          {data.day}, {data.sessionTime} WIB
-        </Typography>
-      ) : null}
+        {data.lecturers.map((lecturer) => (
+          <Typography
+            variant="label1"
+            className={cn([size == "sm" && "text-xs"], "font-normal")}
+            key={lecturer.id}
+          >
+            {lecturer.fullname}
+          </Typography>
+        ))}
+        {data.day != null && data.sessionTime != null ? (
+          <Typography
+            variant="label1"
+            className={cn([size == "sm" && "text-xs"], "font-normal")}
+          >
+            {data.day}, {data.sessionTime} WIB
+          </Typography>
+        ) : null}
 
-      <CounterBadge count={data.taken} size={size} />
-      <div className="py-1" />
-      {children}
-    </div>
+        <CounterBadge count={data.taken} size={size} />
+        <div className="py-1" />
+        {children}
+      </div>
+    </Card>
   );
 };
 

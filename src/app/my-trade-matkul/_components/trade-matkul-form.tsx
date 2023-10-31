@@ -90,7 +90,14 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
           title: "Success",
           description: "Berhasil membuat post trade matkul",
         });
-        window.location.replace("/my-trade-matkul/");
+        window.location.replace("/my-trade-matkul");
+      },
+      onError: (error) => {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: error.message,
+        });
       },
     },
   );
