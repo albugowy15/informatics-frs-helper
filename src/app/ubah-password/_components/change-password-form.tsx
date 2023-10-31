@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,22 +19,13 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 
 import { api } from "@/trpc/react";
+import { changePasswordSchema } from "../_schema/change-password-schema";
 
-const changePasswordForm = z.object({
-  old_password: z.string({
-    required_error: "Password lama tidak boleh kosong",
-  }),
-  new_password: z
-    .string({ required_error: "Password baru tidak boleh kosong" })
-    .min(8)
-    .max(16),
-});
-
-type CreatePasswordForm = z.infer<typeof changePasswordForm>;
+type CreatePasswordForm = z.infer<typeof changePasswordSchema>;
 
 const ChangePasswordForm = () => {
   const form = useForm<CreatePasswordForm>({
-    resolver: zodResolver(changePasswordForm),
+    resolver: zodResolver(changePasswordSchema),
   });
   const { handleSubmit } = form;
   const mutatePassword = api.user.changePassword.useMutation({

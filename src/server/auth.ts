@@ -8,7 +8,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { type LoginResponseData } from "@/app/api/login/route";
 import { env } from "@/env.mjs";
 
-import { type APIResponse } from "@/types/api";
+type APIResponse<TData> = {
+  status: "success" | "error";
+  message: string;
+  data?: TData;
+};
 
 declare module "next-auth" {
   interface Session extends DefaultSession {

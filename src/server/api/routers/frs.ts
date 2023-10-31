@@ -8,8 +8,11 @@ export const frsRouter = createTRPCRouter({
   createPlan: protectedProcedure
     .input(
       z.object({
-        title: z.string(),
-        semester: z.number().min(1).max(8),
+        title: z.string().min(1, { message: "Judul kosong" }),
+        semester: z
+          .number()
+          .min(1, { message: "semester kosong" })
+          .max(8, { message: "Semester lebih dari 8" }),
         matkul: z.string().array(),
       }),
     )

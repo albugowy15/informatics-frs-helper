@@ -13,8 +13,11 @@ import {
 import { prisma } from "@/server/db";
 
 import { env } from "@/env.mjs";
-import { asOptionalField } from "@/lib/utils";
 import { registerSchema } from "@/app/register/_schema/register-schema";
+import { changePasswordSchema } from "@/app/ubah-password/_schema/change-password-schema";
+import { passwordSchema } from "@/app/reset-password/[token]/_schema/reset-password-schema";
+import { editProfileSchema } from "@/app/profil/edit/_schema/edit-profile-schema";
+import { forgotPasswordSchema } from "@/app/lupa-password/_schema/forgot-password-schema";
 
 export const userRouter = createTRPCRouter({
   register: publicProcedure
@@ -68,58 +71,24 @@ export const userRouter = createTRPCRouter({
     return userProfile;
   }),
   updateProfile: protectedProcedure
-    .input(
-      z.object({
-        fullname: z.string().optional(),
-        username: z
-          .string()
-          .min(6, { message: "Username minimal 6 karakter" })
-          .max(12, { message: "Username maksimal 12 karakter" }),
-        email: z.string().email({ message: "Email tidak valid" }),
-        idLine: asOptionalField(
-          z
-            .string()
-            .startsWith("@", { message: "Id Line ditulis dengan awalan @" }),
-        ),
-        whatsapp: asOptionalField(
-          z
-            .string()
-            .min(9, { message: "No. Whatsapp minimal 9 angka" })
-            .max(14, { message: "No. Whatsapp maksima 9 angka" })
-            .startsWith("08", { message: "No. Whatsapp tidak valid" })
-            .regex(/^[0-9]*$/, { message: "No. Whatsapp tidak valid" }),
-        ),
-      }),
-    )
-    .mutation(({ input, ctx }) => {
-      const updatedProfile = prisma.user
-        .update({
-          where: {
-            id: ctx.session.user.id,
-          },
-          data: {
-            fullname: input.fullname,
-            username: input.username,
-            email: input.email,
-            idLine: input.whatsapp ?? null,
-            whatsapp: input.idLine ?? null,
-          },
-        })
-        .then((res) => res.id);
-      return updatedProfile;
+    .input(editProfileSchema)
+    .mutation(async ({ input, ctx }) => {
+      const updatedProfile = await prisma.user.update({
+        where: {
+          id: ctx.session.user.id,
+        },
+        data: {
+          fullname: input.fullname,
+          username: input.username,
+          email: input.email,
+          idLine: input.whatsapp ?? null,
+          whatsapp: input.idLine ?? null,
+        },
+      });
+      return updatedProfile.id;
     }),
   changePassword: protectedProcedure
-    .input(
-      z.object({
-        old_password: z.string({
-          required_error: "Password lama tidak boleh kosong",
-        }),
-        new_password: z
-          .string({ required_error: "Password baru tidak boleh kosong" })
-          .min(8)
-          .max(16),
-      }),
-    )
+    .input(changePasswordSchema)
     .mutation(async ({ input, ctx }) => {
       const oldPassword = await prisma.user.findUnique({
         select: {
@@ -160,11 +129,7 @@ export const userRouter = createTRPCRouter({
       return changePassword;
     }),
   resetPassword: publicProcedure
-    .input(
-      z.object({
-        email: z.string().email(),
-      }),
-    )
+    .input(forgotPasswordSchema)
     .mutation(async ({ input }) => {
       const user = await prisma.user.findUnique({
         select: {
@@ -246,7 +211,12 @@ export const userRouter = createTRPCRouter({
       }
     }),
   verifyResetPassword: publicProcedure
-    .input(z.object({ token: z.string(), newPassword: z.string() }))
+    .input(
+      z.object({
+        token: z.string().min(1, { message: "Reset password token kosong" }),
+        newPassword: passwordSchema,
+      }),
+    )
     .mutation(async ({ input }) => {
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

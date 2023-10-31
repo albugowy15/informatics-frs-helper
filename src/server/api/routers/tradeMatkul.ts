@@ -12,9 +12,12 @@ export const tradeMatkulRouter = createTRPCRouter({
   createTradeMatkul: protectedProcedure
     .input(
       z.object({
-        description: z.string().max(150),
-        hasClassId: z.string(),
-        searchClassId: z.string(),
+        description: z
+          .string()
+          .min(1, { message: "Deskripsi kosong" })
+          .max(150),
+        hasClassId: z.string().min(1, { message: "hasClassId kosong" }),
+        searchClassId: z.string().min(1, { message: "searchClassId kosong" }),
       }),
     )
     .mutation(async ({ input, ctx }) => {

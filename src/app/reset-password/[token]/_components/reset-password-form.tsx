@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,16 +18,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 
 import { api } from "@/trpc/react";
-
-const resetPasswordSchema = z.object({
-  newPassword: z
-    .string({
-      required_error: "Password wajib diisi",
-      invalid_type_error: "Password tidak valid",
-    })
-    .min(8, { message: "Password minimal 8 karakter" })
-    .max(16, { message: "Password maksimal 16 karakter" }),
-});
+import { resetPasswordSchema } from "../_schema/reset-password-schema";
 
 type ResetPasswordForm = z.infer<typeof resetPasswordSchema>;
 

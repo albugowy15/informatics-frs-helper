@@ -51,7 +51,7 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
   return (
     <div className="flex w-full flex-col gap-2">
       <Typography variant="h4">
-        Kelas yang ${variant == "has" ? "Dimiliki" : "Diinginkan"}
+        Kelas yang {variant == "has" ? "Dimiliki" : "Diinginkan"}
       </Typography>
       <FormField
         control={formCtx.control}

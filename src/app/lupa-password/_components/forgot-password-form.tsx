@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,16 +18,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 
 import { api } from "@/trpc/react";
-
-const forgotPasswordSchema = z.object({
-  email: z
-    .string({
-      required_error: "Email tidak boleh kosong",
-      invalid_type_error: "Email tidal valid",
-    })
-    .email({ message: "Email tidak valid" })
-    .min(1, { message: "Email tidak boleh kosong" }),
-});
+import { forgotPasswordSchema } from "../_schema/forgot-password-schema";
 
 type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
 

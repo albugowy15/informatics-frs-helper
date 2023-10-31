@@ -14,11 +14,9 @@ export default async function middleware(
     req.nextUrl.pathname.startsWith("/lupa-password") ||
     req.nextUrl.pathname.startsWith("/reset-password")
   ) {
-    if (isAuthenticated) {
-      return NextResponse.redirect(new URL("/", req.url));
-    } else {
-      return NextResponse.next();
-    }
+    return isAuthenticated
+      ? NextResponse.redirect(new URL("/", req.url))
+      : NextResponse.next();
   }
 
   const authMiddleware = withAuth({
