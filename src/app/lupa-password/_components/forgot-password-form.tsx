@@ -35,28 +35,26 @@ const ForgotPasswordForm = () => {
   const form = useForm<ForgotPasswordForm>({
     resolver: zodResolver(forgotPasswordSchema),
   });
-  const mutateForgotPassword = api.user.resetPassword.useMutation();
-  const onSubmit: SubmitHandler<ForgotPasswordForm> = (data) => {
-    mutateForgotPassword
-      .mutateAsync({
-        email: data.email,
-      })
-      .then((res) => {
-        if (res) {
-          toast({
-            variant: "default",
-            title: "Success",
-            description: "Reset password berhasil, silahkan cek email",
-          });
-        }
-      })
-      .catch((err) => {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: err.message,
-        });
+  const mutateForgotPassword = api.user.resetPassword.useMutation({
+    onSuccess: () => {
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "Reset password berhasil, silahkan cek email",
       });
+    },
+    onError(error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.message,
+      });
+    },
+  });
+  const onSubmit: SubmitHandler<ForgotPasswordForm> = (data) => {
+    mutateForgotPassword.mutate({
+      email: data.email,
+    });
   };
   return (
     <Form {...form}>

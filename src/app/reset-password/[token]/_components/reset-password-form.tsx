@@ -35,28 +35,26 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
   const form = useForm<ResetPasswordForm>({
     resolver: zodResolver(resetPasswordSchema),
   });
-  const mutateResetPassword = api.user.verifyResetPassword.useMutation();
-  const onSubmit: SubmitHandler<ResetPasswordForm> = (data) => {
-    mutateResetPassword
-      .mutateAsync({
-        token: token,
-        newPassword: data.newPassword,
-      })
-      .then((res) => {
-        if (res) {
-          toast({
-            title: "Success",
-            description: "Password berhasil diperbarui",
-          });
-        }
-      })
-      .catch((err) => {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: err.message,
-        });
+  const mutateResetPassword = api.user.verifyResetPassword.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Password berhasil diperbarui",
       });
+    },
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.message,
+      });
+    },
+  });
+  const onSubmit: SubmitHandler<ResetPasswordForm> = (data) => {
+    mutateResetPassword.mutate({
+      token: token,
+      newPassword: data.newPassword,
+    });
   };
 
   return (

@@ -23,25 +23,22 @@ const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
   const mutateDeleteTradeMatkul =
     api.tradeMatkul.deleteMyTradeMatkul.useMutation({
       onSuccess: () => {
-        window.location.replace("/my-frs");
-      },
-    });
-  const handleDeleteTradeMatkul = () => {
-    mutateDeleteTradeMatkul
-      .mutateAsync({ tradeMatkulId: tradeMatkulId })
-      .then(() => {
         toast({
           title: "Success",
           description: "Berhasil menghapus Trade matkul",
         });
-      })
-      .catch((err) => {
+        window.location.replace("/my-frs");
+      },
+      onError: (error) => {
         toast({
           variant: "destructive",
           title: "Error",
-          description: err.message,
+          description: error.message,
         });
-      });
+      },
+    });
+  const handleDeleteTradeMatkul = () => {
+    mutateDeleteTradeMatkul.mutate({ tradeMatkulId: tradeMatkulId });
   };
   return (
     <div className="flex gap-2">

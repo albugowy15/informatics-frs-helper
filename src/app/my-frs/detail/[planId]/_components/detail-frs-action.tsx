@@ -30,27 +30,22 @@ const DetailFrsAction = ({
 }) => {
   const mutateDeleteFrsPlan = api.frs.deletePlan.useMutation({
     onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Berhasil menghapus rencana FRS",
+      });
       window.location.replace("/my-frs");
+    },
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.message,
+      });
     },
   });
   const handleDeleteFrsPlan = () => {
-    mutateDeleteFrsPlan
-      .mutateAsync({ planId: planId })
-      .then((res) => {
-        if (res) {
-          toast({
-            title: "Success",
-            description: "Berhasil menghapus rencana FRS",
-          });
-        }
-      })
-      .catch((err) => {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: err.message,
-        });
-      });
+    mutateDeleteFrsPlan.mutate({ planId: planId });
   };
   return (
     <div className="flex items-center gap-3">

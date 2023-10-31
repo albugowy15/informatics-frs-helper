@@ -70,11 +70,26 @@ const CreateFRSForm = ({
 
   const mutateUpdatePlan = api.frs.updatePlan.useMutation({
     onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Berhasil memperbarui rencana FRS",
+      });
       window.location.replace("/my-frs");
+    },
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.message,
+      });
     },
   });
   const mutateCreatePlan = api.frs.createPlan.useMutation({
     onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Berhasil membuat rencana FRS",
+      });
       window.location.replace("/my-frs");
     },
   });
@@ -83,52 +98,20 @@ const CreateFRSForm = ({
     if (context && context.classTaken.length > 0) {
       const subjects = context.classTaken.map((val) => val.id);
       if (planDetail) {
-        mutateUpdatePlan
-          .mutateAsync({
-            data: {
-              title: data.title,
-              semester: parseInt(data.semester),
-              matkul: subjects,
-            },
-            planId: planId ?? "",
-          })
-          .then((res) => {
-            if (res) {
-              toast({
-                title: "Success",
-                description: "Berhasil memperbarui rencana FRS",
-              });
-            }
-          })
-          .catch((err) => {
-            toast({
-              variant: "destructive",
-              title: "Error",
-              description: err.message,
-            });
-          });
-      } else {
-        mutateCreatePlan
-          .mutateAsync({
+        mutateUpdatePlan.mutate({
+          data: {
             title: data.title,
             semester: parseInt(data.semester),
             matkul: subjects,
-          })
-          .then((res) => {
-            if (res) {
-              toast({
-                title: "Success",
-                description: "Berhasil membuat rencana FRS",
-              });
-            }
-          })
-          .catch((err) => {
-            toast({
-              variant: "destructive",
-              title: "Error",
-              description: err.message,
-            });
-          });
+          },
+          planId: planId ?? "",
+        });
+      } else {
+        mutateCreatePlan.mutate({
+          title: data.title,
+          semester: parseInt(data.semester),
+          matkul: subjects,
+        });
       }
     } else {
       toast({
@@ -205,6 +188,7 @@ const CreateFRSForm = ({
                   >
                     <Button
                       variant="destructive"
+                      size="sm"
                       onClick={() => handleDropTakenClass(index)}
                     >
                       Drop

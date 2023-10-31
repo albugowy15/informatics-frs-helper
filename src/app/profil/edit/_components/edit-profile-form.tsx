@@ -12,6 +12,7 @@ import { toast } from "@/components/ui/use-toast";
 
 import { asOptionalField } from "@/lib/utils";
 import { api } from "@/trpc/react";
+import { type RouterOutputs } from "@/trpc/shared";
 
 const editProfileForm = z.object({
   fullname: z.string().optional(),
@@ -35,13 +36,7 @@ const editProfileForm = z.object({
 
 type EditProfileFormType = z.infer<typeof editProfileForm>;
 
-type UserProfile = {
-  fullname: string | null;
-  username: string;
-  email: string;
-  idLine: string | null;
-  whatsapp: string | null;
-};
+type UserProfile = RouterOutputs["user"]["getUserProfile"];
 
 const EditProfileForm = ({ userProfile }: { userProfile: UserProfile }) => {
   const form = useForm<EditProfileFormType>({
@@ -56,32 +51,32 @@ const EditProfileForm = ({ userProfile }: { userProfile: UserProfile }) => {
     },
   });
 
-  const mutation = api.user.updateProfile.useMutation();
+  const mutation = api.user.updateProfile.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Profil berhasil diperbarui",
+      });
+      window.location.replace("/profil");
+    },
+    onError(error) {
+      toast({
+        title: "Error",
+        description: error.message,
+      });
+    },
+  });
 
   const onSubmit: SubmitHandler<EditProfileFormType> = (data) => {
-    mutation
-      .mutateAsync({
-        email: data.email,
-        fullname: data.fullname,
-        idLine: data.idLine,
-        whatsapp: data.whatsapp,
-        username: data.username,
-      })
-      .then((res) => {
-        if (res) {
-          toast({
-            title: "Success",
-            description: "Profil berhasil diperbarui",
-          });
-        }
-      })
-      .catch((err) => {
-        toast({
-          title: "Error",
-          description: err.message,
-        });
-      });
+    mutation.mutate({
+      email: data.email,
+      fullname: data.fullname,
+      idLine: data.idLine,
+      whatsapp: data.whatsapp,
+      username: data.username,
+    });
   };
+
   return (
     <>
       <FormProvider {...form}>

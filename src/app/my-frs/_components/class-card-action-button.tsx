@@ -20,31 +20,26 @@ const ClassCardActionButton = ({ data }: { data: PlanDetailClass }) => {
           pickClass,
         ]);
       }
+      toast({
+        title: "Success",
+        description: "Berhasil mengambil kelas",
+      });
+    },
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: error.message,
+      });
     },
   });
 
   const handleTakeClass = (kelas: PlanDetailClass) => {
     const takenClass = context?.classTaken.map((val) => val.id);
-    validateClassTaken
-      .mutateAsync({
-        classTaken: takenClass ?? [],
-        incomingClass: kelas.id,
-      })
-      .then((res) => {
-        if (res) {
-          toast({
-            title: "Success",
-            description: "Berhasil mengambil kelas",
-          });
-        }
-      })
-      .catch((err) => {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: err.message,
-        });
-      });
+    validateClassTaken.mutate({
+      classTaken: takenClass ?? [],
+      incomingClass: kelas.id,
+    });
 
     const data: PlanDetailClass = {
       ...kelas,
@@ -54,7 +49,7 @@ const ClassCardActionButton = ({ data }: { data: PlanDetailClass }) => {
   };
 
   return (
-    <Button variant="secondary" onClick={() => handleTakeClass(data)}>
+    <Button variant="secondary" size="sm" onClick={() => handleTakeClass(data)}>
       Ambil
     </Button>
   );

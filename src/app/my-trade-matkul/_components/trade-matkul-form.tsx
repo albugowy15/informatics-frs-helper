@@ -86,6 +86,10 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
   const mutateCreateTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation(
     {
       onSuccess: () => {
+        toast({
+          title: "Success",
+          description: "Berhasil membuat post trade matkul",
+        });
         window.location.replace("/my-trade-matkul/");
       },
     },
@@ -93,57 +97,36 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
   const mutateUpdateTradeMatkul = api.tradeMatkul.updateTradeMatkul.useMutation(
     {
       onSuccess: () => {
+        toast({
+          title: "Success",
+          description: "Berhasil membuat post trade matkul",
+        });
         window.location.replace("/my-trade-matkul/");
+      },
+      onError: (error) => {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: error.message,
+        });
       },
     },
   );
 
   const onSubmit: SubmitHandler<CreateTradeMatkulFormSchema> = (data) => {
     if (prevData) {
-      mutateUpdateTradeMatkul
-        .mutateAsync({
-          description: data.description,
-          hasClassId: data.hasClass,
-          searchClassId: data.searchClass,
-          tradeMatkulId: prevData.id,
-        })
-        .then((res) => {
-          if (res) {
-            toast({
-              title: "Success",
-              description: "Berhasil membuat post trade matkul",
-            });
-          }
-        })
-        .catch((err) => {
-          toast({
-            variant: "destructive",
-            title: "Error",
-            description: err.message,
-          });
-        });
+      mutateUpdateTradeMatkul.mutate({
+        description: data.description,
+        hasClassId: data.hasClass,
+        searchClassId: data.searchClass,
+        tradeMatkulId: prevData.id,
+      });
     } else {
-      mutateCreateTradeMatkul
-        .mutateAsync({
-          description: data.description,
-          hasClassId: data.hasClass,
-          searchClassId: data.searchClass,
-        })
-        .then((res) => {
-          if (res) {
-            toast({
-              title: "Success",
-              description: "Berhasil membuat post trade matkul",
-            });
-          }
-        })
-        .catch((err) => {
-          toast({
-            variant: "destructive",
-            title: "Error",
-            description: err.message,
-          });
-        });
+      mutateCreateTradeMatkul.mutate({
+        description: data.description,
+        hasClassId: data.hasClass,
+        searchClassId: data.searchClass,
+      });
     }
   };
 

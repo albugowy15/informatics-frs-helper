@@ -37,28 +37,26 @@ const ChangePasswordForm = () => {
     resolver: zodResolver(changePasswordForm),
   });
   const { handleSubmit } = form;
-  const mutatePassword = api.user.changePassword.useMutation();
-  const onSubmit: SubmitHandler<CreatePasswordForm> = (data) => {
-    mutatePassword
-      .mutateAsync({
-        new_password: data.new_password,
-        old_password: data.old_password,
-      })
-      .then((res) => {
-        if (res) {
-          toast({
-            title: "Success",
-            description: "Password berhasil diubah",
-          });
-        }
-      })
-      .catch((err) => {
-        toast({
-          title: "Error",
-          variant: "destructive",
-          description: err.message,
-        });
+  const mutatePassword = api.user.changePassword.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Password berhasil diubah",
       });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        variant: "destructive",
+        description: error.message,
+      });
+    },
+  });
+  const onSubmit: SubmitHandler<CreatePasswordForm> = (data) => {
+    mutatePassword.mutate({
+      new_password: data.new_password,
+      old_password: data.old_password,
+    });
   };
   return (
     <Form {...form}>
