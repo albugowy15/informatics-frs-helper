@@ -26,7 +26,7 @@ export default async function RootLayout({
 }) {
   const session = await getServerAuthSession();
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html lang="en" className={inter.className}>
       <head />
       <body className="flex min-h-screen flex-col bg-background font-sans antialiased">
         <TRPCReactProvider headers={headers()}>
