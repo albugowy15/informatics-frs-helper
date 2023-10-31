@@ -1,23 +1,3 @@
-export type TradeMatkul = {
-  id: string;
-  searchMatkul: {
-    code: string;
-    Matkul: {
-      semester: number;
-      id: string;
-      name: string;
-    };
-    id: string;
-  };
-  hasMatkul: {
-    code: string;
-    Matkul: {
-      semester: number;
-      id: string;
-      name: string;
-    };
-    id: string;
-  };
-  description: string;
-  userId: string;
-};
+import { type RouterOutputs } from "@/trpc/shared";
+
+export type TradeMatkul = RouterOutputs["tradeMatkul"]["getTradeMatkul"];

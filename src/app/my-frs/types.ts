@@ -1,28 +1,11 @@
+import { type RouterOutputs } from "@/trpc/shared";
+
 export type SearchParam = {
   semester: string;
   subject: string;
 };
 
-export type FilteredClass = {
-  name: string;
-  semester: number;
-  Class: {
-    code: string;
-    Session: {
-      session_time: string;
-    } | null;
-    Lecturer: {
-      code: string;
-      id: string;
-      fullname: string;
-    }[];
-    id: string;
-    day: string | null;
-    taken: number;
-  }[];
-  id: string;
-  sks: number;
-};
+export type FilteredClass = RouterOutputs["common"]["getClass"][0];
 
 export type FrsUiProps = {
   planId?: string;
@@ -30,31 +13,6 @@ export type FrsUiProps = {
   classes: FilteredClass[];
 };
 
-export type PlanDetailClass = {
-  id: string;
-  code: string;
-  taken: number;
-  Matkul: {
-    semester: number;
-    name: string;
-    sks: number;
-    id: string;
-  };
-  Session?: {
-    session_time: string;
-  } | null;
-  Lecturer: {
-    id: string;
-    fullname: string;
-  }[];
-  day?: string | null;
-};
+export type PlanDetailProps = RouterOutputs["frs"]["getPlanDetail"];
 
-export type PlanDetailProps = {
-  title: string;
-  semester: number;
-  userId: string | null;
-  Class: PlanDetailClass[];
-  id: string;
-  totalSks: number;
-};
+export type PlanDetailClass = PlanDetailProps["Class"][0];
