@@ -51,7 +51,6 @@
     "@trpc/server": "^10.43.0",
     "@vercel/edge-config": "^0.4.1",
     "@vercel/kv": "^0.2.3",
-    "axios": "^1.5.1",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "jsonwebtoken": "^9.0.2",
