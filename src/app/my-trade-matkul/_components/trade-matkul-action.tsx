@@ -76,17 +76,12 @@ const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel asChild>
-              <Button variant="outline">Batal</Button>
-            </AlertDialogCancel>
-            <AlertDialogAction asChild>
-              <Button
-                variant="destructive"
-                disabled={mutateDeleteTradeMatkul.isLoading}
-                onClick={handleDeleteTradeMatkul}
-              >
-                Ya, Hapus
-              </Button>
+            <AlertDialogCancel>Batal</AlertDialogCancel>
+            <AlertDialogAction
+              disabled={mutateDeleteTradeMatkul.isLoading}
+              onClick={handleDeleteTradeMatkul}
+            >
+              Ya, Hapus
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

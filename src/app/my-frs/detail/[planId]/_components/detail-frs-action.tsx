@@ -1,20 +1,18 @@
 "use client";
 
-import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogTrigger,
-} from "@radix-ui/react-alert-dialog";
 import { Loader2, Pencil, Trash } from "lucide-react";
 import Link from "next/link";
 
 import {
   AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
@@ -95,17 +93,12 @@ const DetailFrsAction = ({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel asChild>
-              <Button variant="outline">Batal</Button>
-            </AlertDialogCancel>
-            <AlertDialogAction asChild>
-              <Button
-                variant="destructive"
-                disabled={mutateDeleteFrsPlan.isLoading}
-                onClick={handleDeleteFrsPlan}
-              >
-                Ya, Hapus
-              </Button>
+            <AlertDialogCancel>Batal</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteFrsPlan}
+              disabled={mutateDeleteFrsPlan.isLoading}
+            >
+              Ya, Hapus
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

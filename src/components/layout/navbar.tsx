@@ -6,7 +6,6 @@ import Link from "next/link";
 import { type Session } from "next-auth";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -38,6 +37,13 @@ const Navbar = ({ items, session }: NavbarProps) => {
     <header className="flex items-center justify-between border-b px-3 py-2 md:container">
       <NavigationMenu className="hidden md:block">
         <NavigationMenuList>
+          <NavigationMenuItem>
+            <Link href="/" legacyBehavior passHref>
+              <NavigationMenuLink>
+                <span className="mr-2 text-lg font-bold">TC FRS Helper</span>
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
           {items.map((item) => (
             <NavigationMenuItem key={item.name}>
               <Link href={item.url} legacyBehavior passHref>
@@ -56,15 +62,16 @@ const Navbar = ({ items, session }: NavbarProps) => {
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
-          <div className="flex flex-col items-start py-4">
-            <Typography variant="h4">TC FRS Helper</Typography>
+          <div className="flex flex-col items-start gap-3 py-4">
+            <Link href="/" className="font-bold">
+              TC FRS Helper
+            </Link>
+
             {items.map((item, index) => (
               <SheetClose key={index} asChild>
-                <Button variant="link" className="px-0" asChild>
-                  <Link href={item.url} className="text-lg" key={item.name}>
-                    {item.name}
-                  </Link>
-                </Button>
+                <Link href={item.url} key={item.name}>
+                  {item.name}
+                </Link>
               </SheetClose>
             ))}
           </div>

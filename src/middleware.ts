@@ -1,6 +1,7 @@
 import { type NextFetchEvent, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { type NextRequestWithAuth, withAuth } from "next-auth/middleware";
+import { protectedPaths } from "./config/middleware";
 
 export default async function middleware(
   req: NextRequestWithAuth,
@@ -8,12 +9,7 @@ export default async function middleware(
 ) {
   const token = await getToken({ req });
   const isAuthenticated = !!token;
-  if (
-    req.nextUrl.pathname.startsWith("/login") ||
-    req.nextUrl.pathname.startsWith("/register") ||
-    req.nextUrl.pathname.startsWith("/lupa-password") ||
-    req.nextUrl.pathname.startsWith("/reset-password")
-  ) {
+  if (protectedPaths.some((path) => req.nextUrl.pathname.startsWith(path))) {
     return isAuthenticated
       ? NextResponse.redirect(new URL("/", req.url))
       : NextResponse.next();

@@ -38,7 +38,7 @@ export default async function RootLayout({
           >
             <Toaster />
             <Navbar items={homeNavigation} session={session} />
-            <div className="px-3 py-5 md:container">{children}</div>
+            <div className="px-3 pt-5 md:container">{children}</div>
             <Footer />
           </ThemeProvider>
         </TRPCReactProvider>

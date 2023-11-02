@@ -5,10 +5,6 @@ export type Navigation = {
 
 export const homeNavigation: Navigation[] = [
   {
-    name: "Home",
-    url: "/",
-  },
-  {
     name: "Jadwal Kelas",
     url: "/jadwal",
   },
