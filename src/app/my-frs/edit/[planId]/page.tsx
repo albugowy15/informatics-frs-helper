@@ -16,19 +16,18 @@ export default async function EditFrsPage({
   params: { planId: string };
   searchParams: SearchParam;
 }) {
-  const { semester = undefined, subject = undefined } = searchParams;
-  const classes = await api.common.getClass.query({
-    semester: semester === undefined ? parseInt("0") : parseInt(semester),
-    matkul: subject === "Semua" || subject === undefined ? undefined : subject,
-    with_taken: true,
-  });
   const planDetail = await api.frs.getPlanDetail.query({
     planId: params.planId,
   });
+  const { semester = "1", subject = "Semua" } = searchParams;
 
   return (
     <>
-      <FrsUi classes={classes} planDetail={planDetail} planId={params.planId} />
+      <FrsUi
+        params={{ semester, subject }}
+        planDetail={planDetail}
+        planId={params.planId}
+      />
     </>
   );
 }

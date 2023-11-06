@@ -24,11 +24,13 @@ import {
 
 import { Semester } from "@/config/contants";
 import { api } from "@/trpc/react";
+import { Filter } from "lucide-react";
 
 const takeClassSchema = z.object({
   semester: z
     .string({
       required_error: "Silahkan pilih semester",
+      invalid_type_error: "Semester bertipe string",
     })
     .min(1, { message: "Silahkan pilih semester" }),
   matkul: z.string().optional(),
@@ -43,8 +45,8 @@ const TakeClassForm = () => {
   const form = useForm({
     resolver: zodResolver(takeClassSchema),
     defaultValues: {
-      matkul: searchParams?.get("subject") ?? "",
-      semester: searchParams?.get("semester") ?? "",
+      matkul: searchParams?.get("subject") ?? "Semua",
+      semester: searchParams?.get("semester") ?? "1",
     },
   });
   const semesterWatch = useWatch({ control: form.control, name: "semester" });
@@ -121,7 +123,8 @@ const TakeClassForm = () => {
           )}
         />
 
-        <Button type="submit" className="w-fit">
+        <Button type="submit" variant="outline" className="w-fit">
+          <Filter className="mr-2 h-4 w-4" />
           Filter
         </Button>
       </form>

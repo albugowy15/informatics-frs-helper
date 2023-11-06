@@ -46,7 +46,7 @@ const createFRSFormSchema = z.object({
 
 type CreateFRSFormType = z.infer<typeof createFRSFormSchema>;
 
-const CreateFRSForm = ({
+const FRSForm = ({
   planDetail,
   planId,
 }: {
@@ -91,6 +91,12 @@ const CreateFRSForm = ({
         description: "Berhasil membuat rencana FRS",
       });
       window.location.replace("/my-frs");
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+      });
     },
   });
 
@@ -223,4 +229,4 @@ const CreateFRSForm = ({
   );
 };
 
-export default CreateFRSForm;
+export default FRSForm;
