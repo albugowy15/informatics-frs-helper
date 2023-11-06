@@ -57,7 +57,7 @@ const ForgotPasswordForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormDescription>Masukkan email yang terdaftar</FormDescription>
-              <Input placeholder="email" {...field} />
+              <Input placeholder="Email" {...field} />
               <FormMessage />
             </FormItem>
           )}

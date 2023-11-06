@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,9 +16,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-
 import { api } from "@/trpc/react";
 import { changePasswordSchema } from "../_schema/change-password-schema";
+import { useRouter } from "next/navigation";
 
 type CreatePasswordForm = z.infer<typeof changePasswordSchema>;
 
@@ -27,13 +26,14 @@ const ChangePasswordForm = () => {
   const form = useForm<CreatePasswordForm>({
     resolver: zodResolver(changePasswordSchema),
   });
-  const { handleSubmit } = form;
+  const router = useRouter();
   const mutatePassword = api.user.changePassword.useMutation({
     onSuccess: () => {
       toast({
         title: "Success",
         description: "Password berhasil diubah",
       });
+      router.push("/");
     },
     onError: (error) => {
       toast({
@@ -51,7 +51,7 @@ const ChangePasswordForm = () => {
   };
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
         <FormField
           control={form.control}
           name="old_password"
