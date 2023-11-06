@@ -15,9 +15,9 @@ import { prisma } from "@/server/db";
 import { env } from "@/env.mjs";
 import { registerSchema } from "@/app/register/_schema/register-schema";
 import { changePasswordSchema } from "@/app/ubah-password/_schema/change-password-schema";
-import { passwordSchema } from "@/app/reset-password/[token]/_schema/reset-password-schema";
 import { editProfileSchema } from "@/app/profil/edit/_schema/edit-profile-schema";
 import { forgotPasswordSchema } from "@/app/lupa-password/_schema/forgot-password-schema";
+import { resetPasswordSchema } from "@/app/reset-password/[token]/_schema/reset-password-schema";
 
 export const userRouter = createTRPCRouter({
   register: publicProcedure
@@ -174,10 +174,9 @@ export const userRouter = createTRPCRouter({
         expiresIn: "30m",
       });
       const tokenUrl = `${env.BASE_URL}/reset-password/${token}`;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
       const resend = new Resend(env.RESEND_API_KEY);
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         await resend.emails.send({
           from: "TC FRS Helper <no-reply@tc-frs-helper.live>",
           to: [user.email],
@@ -214,12 +213,11 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         token: z.string().min(1, { message: "Reset password token kosong" }),
-        newPassword: passwordSchema,
+        newPassword: resetPasswordSchema.shape.newPassword,
       }),
     )
     .mutation(async ({ input }) => {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const decoded = jwt.verify(input.token, env.RESET_SECRET) as {
           userId: string;
           username: string;
