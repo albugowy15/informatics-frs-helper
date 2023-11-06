@@ -21,7 +21,7 @@ const handler = async (req: NextRequest) => {
   const { username, password } = data;
   if (!username || !password) {
     return NextResponse.json(
-      { status: "error", message: "Method not implemented" },
+      { status: "error", message: "Username dan password kosong" },
       { status: 400 },
     );
   }
@@ -63,17 +63,12 @@ const handler = async (req: NextRequest) => {
     );
   }
 
-  const userId = user.id,
-    userEmail = user.email,
-    userPassword = user.password,
-    userUsername = user.username;
-
-  const isMatch = await bcrypt.compare(password, userPassword);
+  const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     return NextResponse.json(
       {
         status: "error",
-        message: "Password incorrect",
+        message: "Password salah",
       },
       {
         status: 400,
@@ -81,9 +76,9 @@ const handler = async (req: NextRequest) => {
     );
   }
   const payload = {
-    id: userId,
-    username: userUsername,
-    email: userEmail,
+    id: user.id,
+    username: user.username,
+    email: user.email,
   };
   try {
     const token = jwt.sign(payload, KEY, { expiresIn: "1d" });
@@ -92,9 +87,9 @@ const handler = async (req: NextRequest) => {
         status: "success",
         message: "User successfully logged in",
         data: {
-          id: userId,
-          username: userUsername,
-          email: userEmail,
+          id: user.id,
+          username: user.username,
+          email: user.email,
           accessToken: token,
         },
       },
