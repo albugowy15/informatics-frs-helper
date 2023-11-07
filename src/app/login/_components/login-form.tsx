@@ -109,7 +109,7 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col text-center">
           <Button type="submit" disabled={buttonDisabled}>
             {buttonDisabled ? (
               <>
@@ -120,15 +120,23 @@ const LoginForm = () => {
               "Login"
             )}
           </Button>
-          <Button variant="link" asChild>
-            <Link href="/lupa-password">Lupa Password?</Link>
-          </Button>
+
+          <Link
+            href="/lupa-password"
+            className="mt-2 text-sm underline transition-colors hover:text-primary"
+          >
+            Lupa Password?
+          </Link>
         </div>
+
         <Typography variant="body1" className="text-center">
           Belum punya akun?
-          <Button variant="link" asChild>
-            <Link href="/register">Daftar</Link>
-          </Button>
+          <Link
+            href="/register"
+            className="ml-2 underline transition-colors hover:text-primary"
+          >
+            Daftar
+          </Link>
         </Typography>
       </form>
     </Form>

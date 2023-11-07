@@ -2,10 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-
 import ClassCard from "@/components/class-card";
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
@@ -26,11 +24,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
-
 import { ClassContext } from "@/app/my-frs/_components/class-context";
 import { type PlanDetailProps } from "@/app/my-frs/types";
 import { Semester } from "@/config/contants";
 import { api } from "@/trpc/react";
+import React from "react";
 
 const createFRSFormSchema = z.object({
   title: z
@@ -60,9 +58,9 @@ const FRSForm = ({
       semester: planDetail ? planDetail.semester.toString() : "",
     },
   });
-  const context = useContext(ClassContext);
-  const [sks, setSks] = useState(0);
-  useEffect(() => {
+  const context = React.useContext(ClassContext);
+  const [sks, setSks] = React.useState(0);
+  React.useEffect(() => {
     if (context) {
       setSks(context.classTaken.reduce((acc, cur) => acc + cur.Matkul.sks, 0));
     }

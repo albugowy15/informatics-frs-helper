@@ -1,17 +1,15 @@
 "use client";
 
-import { useContext, useState } from "react";
-
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-
 import { ClassContext } from "@/app/my-frs/_components/class-context";
 import { type PlanDetailClass } from "@/app/my-frs/types";
 import { api } from "@/trpc/react";
+import React from "react";
 
 const ClassCardActionButton = ({ data }: { data: PlanDetailClass }) => {
-  const context = useContext(ClassContext);
-  const [pickClass, setPickClass] = useState<PlanDetailClass>();
+  const context = React.useContext(ClassContext);
+  const [pickClass, setPickClass] = React.useState<PlanDetailClass>();
   const validateClassTaken = api.frs.validatePlan.useMutation({
     onSuccess: () => {
       if (pickClass) {

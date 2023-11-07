@@ -21,8 +21,8 @@ import {
 import ScheduleFilterForm from "@/app/jadwal/_components/schedule-filter-form";
 import { renderPageTitle } from "@/lib/utils";
 import ClassAccordion from "./_components/class-accordion";
-import { Suspense } from "react";
 import Loader from "@/components/loader";
+import React from "react";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Informasi Jadwal"),
@@ -79,9 +79,9 @@ export default function SchedulePage({
           </Dialog>
         </section>
         <main className="flex w-full flex-col gap-3 lg:px-3">
-          <Suspense fallback={<Loader message="Memfilter jadwal" />}>
+          <React.Suspense fallback={<Loader message="Memfilter jadwal" />}>
             <ClassAccordion semester={semester} subject={subject} />
-          </Suspense>
+          </React.Suspense>
         </main>
       </div>
     </>
