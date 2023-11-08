@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { ClassContext } from "@/app/my-frs/_components/class-context";
-import { type PlanDetailClass } from "@/app/my-frs/types";
+import { type PlanDetailClass } from "@/app/my-frs/_types";
 import { api } from "@/trpc/react";
 import React from "react";
 

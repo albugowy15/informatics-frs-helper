@@ -25,15 +25,12 @@ import {
 import { Semester } from "@/config/contants";
 import { api } from "@/trpc/react";
 import { Filter } from "lucide-react";
+import { matkulSchema } from "../_schema";
+import { requiredSemesterStringSchema } from "@/lib/schema";
 
 const takeClassSchema = z.object({
-  semester: z
-    .string({
-      required_error: "Silahkan pilih semester",
-      invalid_type_error: "Semester bertipe string",
-    })
-    .min(1, { message: "Silahkan pilih semester" }),
-  matkul: z.string().optional(),
+  semester: requiredSemesterStringSchema,
+  matkul: matkulSchema,
 });
 
 type TakeClassFormType = z.infer<typeof takeClassSchema>;

@@ -1,13 +1,11 @@
+import { emailSchema, usernameSchema } from "@/lib/schema";
 import { asOptionalField } from "@/lib/utils";
 import { z } from "zod";
 
 export const editProfileSchema = z.object({
   fullname: z.string().optional(),
-  username: z
-    .string({ required_error: "Username wajib diisi" })
-    .min(6, { message: "Username minimal 6 karakter" })
-    .max(12, { message: "Username maksimal 12 karakter" }),
-  email: z.string().email({ message: "Email tidak valid" }),
+  username: usernameSchema,
+  email: emailSchema,
   idLine: asOptionalField(
     z.string().startsWith("@", { message: "Id Line ditulis dengan awalan @" }),
   ),

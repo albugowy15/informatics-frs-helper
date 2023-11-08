@@ -13,11 +13,12 @@ import {
 import { prisma } from "@/server/db";
 
 import { env } from "@/env.mjs";
-import { registerSchema } from "@/app/register/_schema/register-schema";
-import { changePasswordSchema } from "@/app/ubah-password/_schema/change-password-schema";
-import { editProfileSchema } from "@/app/profil/edit/_schema/edit-profile-schema";
-import { forgotPasswordSchema } from "@/app/lupa-password/_schema/forgot-password-schema";
-import { resetPasswordSchema } from "@/app/reset-password/[token]/_schema/reset-password-schema";
+
+import { passwordSchema } from "@/lib/schema";
+import { registerSchema } from "@/app/register/_schema";
+import { editProfileSchema } from "@/app/profil/_schema";
+import { changePasswordSchema } from "@/app/ubah-password/_schema";
+import { forgotPasswordSchema } from "@/app/lupa-password/_schema";
 
 export const userRouter = createTRPCRouter({
   register: publicProcedure
@@ -213,7 +214,7 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         token: z.string().min(1, { message: "Reset password token kosong" }),
-        newPassword: resetPasswordSchema.shape.newPassword,
+        newPassword: passwordSchema,
       }),
     )
     .mutation(async ({ input }) => {

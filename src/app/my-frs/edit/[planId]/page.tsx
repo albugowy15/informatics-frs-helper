@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 
 import FrsUi from "@/app/my-frs/_ui/frs-ui";
-import { type SearchParam } from "@/app/my-frs/types";
+import { type SearchParam } from "@/app/my-frs/_types";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
 

@@ -25,21 +25,16 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 import { ClassContext } from "@/app/my-frs/_components/class-context";
-import { type PlanDetailProps } from "@/app/my-frs/types";
+import { type PlanDetailProps } from "@/app/my-frs/_types";
 import { Semester } from "@/config/contants";
 import { api } from "@/trpc/react";
 import React from "react";
+import { titleSchema } from "../_schema";
+import { requiredSemesterStringSchema } from "@/lib/schema";
 
 const createFRSFormSchema = z.object({
-  title: z
-    .string({
-      required_error: "Judul rencana FRS tidak boleh kosong",
-    })
-    .min(1, { message: "Judul rencana FRS tidak boleh kosong" })
-    .max(20, { message: "Judul rencana FRS maksimal 20 karakter" }),
-  semester: z
-    .string({ required_error: "Semester tidak boleh kosong" })
-    .min(1, { message: "Silahkan pilih semester" }),
+  title: titleSchema,
+  semester: requiredSemesterStringSchema,
 });
 
 type CreateFRSFormType = z.infer<typeof createFRSFormSchema>;

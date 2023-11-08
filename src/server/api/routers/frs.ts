@@ -3,19 +3,20 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { prisma } from "@/server/db";
+import { titleSchema } from "@/app/my-frs/_schema";
+
+const frsPlanSchema = z.object({
+  title: titleSchema,
+  semester: z
+    .number()
+    .min(1, { message: "semester kosong" })
+    .max(8, { message: "Semester lebih dari 8" }),
+  matkul: z.string().array(),
+});
 
 export const frsRouter = createTRPCRouter({
   createPlan: protectedProcedure
-    .input(
-      z.object({
-        title: z.string().min(1, { message: "Judul kosong" }),
-        semester: z
-          .number()
-          .min(1, { message: "semester kosong" })
-          .max(8, { message: "Semester lebih dari 8" }),
-        matkul: z.string().array(),
-      }),
-    )
+    .input(frsPlanSchema)
     .mutation(async ({ input, ctx }) => {
       const classes = await prisma.class.findMany({
         select: {
@@ -194,12 +195,10 @@ export const frsRouter = createTRPCRouter({
   updatePlan: protectedProcedure
     .input(
       z.object({
-        planId: z.string(),
-        data: z.object({
-          title: z.string(),
-          semester: z.number().min(1).max(8),
-          matkul: z.string().array(),
-        }),
+        planId: z
+          .string({ required_error: "Id plan wajib diisi" })
+          .min(1, { message: "Id plan kosong" }),
+        data: frsPlanSchema,
       }),
     )
     .mutation(async ({ input, ctx }) => {

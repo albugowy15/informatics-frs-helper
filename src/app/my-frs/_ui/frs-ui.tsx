@@ -5,10 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import ClassContextProvider from "@/app/my-frs/_components/class-context";
 import TakeClassForm from "@/app/my-frs/_components/take-subject-form";
-import { type FrsUiProps } from "@/app/my-frs/types";
+import { type FrsUiProps } from "@/app/my-frs/_types";
 import { Suspense } from "react";
 import Loader from "@/components/loader";
 import ClassAccordion from "../_components/class-accordion";

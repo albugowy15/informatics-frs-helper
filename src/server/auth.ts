@@ -43,8 +43,7 @@ export const authOptions: NextAuthOptions = {
           body: JSON.stringify(credentials),
         });
 
-        const { data: user } =
-          (await res.json()) as APIResponse<LoginResponseData>;
+        const { data: user }: APIResponse<LoginResponseData> = await res.json();
         if (res.ok && user) {
           return user;
         } else {
