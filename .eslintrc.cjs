@@ -12,9 +12,9 @@ module.exports = {
   ],
   rules: {
     "@typescript-eslint/array-type": "off",
-    "@typescript-eslint/consistent-type-definitions": "off",
-    "@typescript-eslint/no-unsafe-member-access": "off",
-    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/consistent-type-definitions": "warn",
+    "@typescript-eslint/no-unsafe-member-access": "warn",
+    "@typescript-eslint/no-unsafe-assignment": "warn",
 
     "@typescript-eslint/consistent-type-imports": [
       "warn",

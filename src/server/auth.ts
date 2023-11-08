@@ -8,11 +8,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { type LoginResponseData } from "@/app/api/login/route";
 import { env } from "@/env.mjs";
 
-type APIResponse<TData> = {
+interface APIResponse<TData> {
   status: "success" | "error";
   message: string;
   data?: TData;
-};
+}
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
           body: JSON.stringify(credentials),
         });
 
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const { data: user }: APIResponse<LoginResponseData> = await res.json();
         if (res.ok && user) {
           return user;

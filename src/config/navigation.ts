@@ -1,7 +1,7 @@
-export type Navigation = {
+export interface Navigation {
   name: string;
   url: string;
-};
+}
 
 export const homeNavigation: Navigation[] = [
   {

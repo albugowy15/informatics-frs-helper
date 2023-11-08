@@ -5,7 +5,7 @@ import Typography from "@/components/typography";
 import { cn } from "@/lib/utils";
 import { Card } from "./ui/card";
 
-export type ClassCardProps = {
+export interface ClassCardProps {
   data: {
     subjectName: string;
     subjectCode: string;
@@ -17,7 +17,7 @@ export type ClassCardProps = {
   };
   size?: "base" | "sm";
   children?: React.ReactNode;
-};
+}
 
 const CounterBadge = ({
   count,

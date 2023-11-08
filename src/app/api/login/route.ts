@@ -8,12 +8,12 @@ import { env } from "@/env.mjs";
 
 const KEY = env.NEXTAUTH_SECRET!;
 
-export type LoginResponseData = {
+export interface LoginResponseData {
   username: string;
   email: string;
   accessToken: string;
   id: string;
-};
+}
 
 const handler = async (req: NextRequest) => {
   const data = (await req.json()) as { username: string; password: string };

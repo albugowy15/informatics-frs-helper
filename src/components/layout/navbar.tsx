@@ -14,9 +14,9 @@ import { type Navigation } from "@/config/navigation";
 import UserNav from "./header/user-nav";
 import React from "react";
 
-type NavbarProps = {
+interface NavbarProps {
   items: Navigation[];
-};
+}
 
 const Navbar = ({ items }: NavbarProps) => {
   return (

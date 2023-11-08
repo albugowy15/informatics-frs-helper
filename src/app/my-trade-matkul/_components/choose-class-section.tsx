@@ -22,9 +22,9 @@ import { type CreateTradeMatkulFormSchema } from "@/app/my-trade-matkul/_compone
 import { Semester } from "@/config/contants";
 import { api } from "@/trpc/react";
 
-type ChooseClassSectionProps = {
+interface ChooseClassSectionProps {
   variant: "has" | "want";
-};
+}
 
 const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
   const formCtx = useFormContext<CreateTradeMatkulFormSchema>();

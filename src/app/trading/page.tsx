@@ -29,10 +29,10 @@ export const metadata: Metadata = {
   description: "Tempat untuk trade kelas informatika ITS",
 };
 
-type SearchParam = {
+interface SearchParam {
   semester: string;
   subject: string;
-};
+}
 
 export default async function TradingMatkulPage({
   searchParams,

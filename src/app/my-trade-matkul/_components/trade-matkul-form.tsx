@@ -64,9 +64,9 @@ export type CreateTradeMatkulFormSchema = z.infer<
   typeof createTradeMatkulFormSchema
 >;
 
-type TradeMatkulFormProps = {
+interface TradeMatkulFormProps {
   prevData?: TradeMatkul;
-};
+}
 
 const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
   const router = useRouter();

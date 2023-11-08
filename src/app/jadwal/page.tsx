@@ -30,10 +30,10 @@ export const metadata: Metadata = {
   description: "Informasi Jadwal Mata Kuliah Informatika ITS",
 };
 
-export type SearchParam = {
+export interface SearchParam {
   semester: string;
   subject: string;
-};
+}
 
 export default function SchedulePage({
   searchParams,

@@ -26,7 +26,6 @@
     "typecheck": "tsc --noEmit --incremental false",
     "format": "prettier -w .",
     "format:check": "prettier -c .",
-    "check": "yarn typecheck && yarn lint && yarn format",
     "lint:fix": "eslint src --fix && yarn format",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
