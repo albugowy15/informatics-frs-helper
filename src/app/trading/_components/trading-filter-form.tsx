@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -34,7 +33,11 @@ const filterSchema = z.object({
 
 type FilterForm = z.infer<typeof filterSchema>;
 
-const TradingFilterForm = () => {
+const TradingFilterForm = ({
+  submitAction,
+}: {
+  submitAction?: React.ReactNode;
+}) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -122,7 +125,7 @@ const TradingFilterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Tampilkan Trading Matkul</Button>
+        {submitAction}
       </form>
     </Form>
   );

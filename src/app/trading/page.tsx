@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -55,7 +56,11 @@ export default async function TradingMatkulPage({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <TradingFilterForm />
+            <TradingFilterForm
+              submitAction={
+                <Button type="submit">Tampilkan Trading Matkul</Button>
+              }
+            />
           </CardContent>
         </Card>
       </aside>
@@ -76,7 +81,13 @@ export default async function TradingMatkulPage({
               </DialogDescription>
             </DialogHeader>
             <div className="overflow-scroll px-2 py-3">
-              <TradingFilterForm />
+              <TradingFilterForm
+                submitAction={
+                  <DialogClose asChild>
+                    <Button type="submit">Tampilkan Trading Matkul</Button>
+                  </DialogClose>
+                }
+              />
             </div>
           </DialogContent>
         </Dialog>

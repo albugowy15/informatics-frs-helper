@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -53,7 +54,9 @@ export default function SchedulePage({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ScheduleFilterForm />
+              <ScheduleFilterForm
+                submitAction={<Button type="submit">Tampilkan Jadwal</Button>}
+              />
             </CardContent>
           </Card>
         </aside>
@@ -73,7 +76,13 @@ export default function SchedulePage({
                 </DialogDescription>
               </DialogHeader>
               <div className="overflow-scroll px-2 py-3">
-                <ScheduleFilterForm />
+                <ScheduleFilterForm
+                  submitAction={
+                    <DialogClose asChild>
+                      <Button type="submit">Tampilkan Jadwal</Button>
+                    </DialogClose>
+                  }
+                />
               </div>
             </DialogContent>
           </Dialog>

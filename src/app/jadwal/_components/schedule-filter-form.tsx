@@ -4,9 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -25,20 +24,15 @@ import {
 
 import { Semester } from "@/config/contants";
 import { api } from "@/trpc/react";
-
-const filterSchema = z.object({
-  semester: z
-    .string({
-      required_error: "Silahkan pilih semester",
-      invalid_type_error: "Semester bertipe string",
-    })
-    .min(1, { message: "Silahkan pilih semester" }),
-  matkul: z.string().optional(),
-});
+import { filterSchema } from "../_schema";
 
 type FilterForm = z.infer<typeof filterSchema>;
 
-const ScheduleFilterForm = () => {
+const ScheduleFilterForm = ({
+  submitAction,
+}: {
+  submitAction?: React.ReactNode;
+}) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -121,7 +115,7 @@ const ScheduleFilterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Tampilkan Jadwal</Button>
+        {submitAction}
       </form>
     </Form>
   );
