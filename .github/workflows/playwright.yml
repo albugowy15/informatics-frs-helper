@@ -11,7 +11,17 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  SKIP_ENV_VALIDATION: true
+  KV_REST_API_TOKEN: ${{secrets.KV_REST_API_TOKEN}}
+  KV_REST_API_READ_ONLY_TOKEN: ${{secrets.KV_REST_API_READ_ONLY_TOKEN}}
+  KV_URL: ${{secrets.KV_URL}}
+  KV_REST_API_URL: ${{secrets.KV_REST_API_URL}}
+  NEXTAUTH_URL: ${{secrets.NEXTAUTH_URL}}
+  BASE_URL: ${{secrets.BASE_URL}}
+  RESEND_API_KEY: ${{secrets.RESEND_API_KEY}}
+  EDGE_CONFIG: ${{secrets.EDGE_CONFIG}}
+  RESET_SECRET: ${{secrets.RESET_SECRET}}
+  DATABASE_URL: ${{secrets.DATABASE_URL}}
+  NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
 
 jobs:
   e2e_test:
