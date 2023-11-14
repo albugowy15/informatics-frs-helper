@@ -6,7 +6,13 @@ import { FormProvider, type SubmitHandler, useForm } from "react-hook-form";
 import { type z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { FormField, FormItem, FormLabel } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 
@@ -70,7 +76,10 @@ const EditProfileForm = ({ userProfile }: { userProfile: UserProfile }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nama Lengkap</FormLabel>
-                <Input {...field} placeholder="Contoh: John Doe" />
+                <FormControl>
+                  <Input {...field} placeholder="Contoh: John Doe" />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -81,7 +90,10 @@ const EditProfileForm = ({ userProfile }: { userProfile: UserProfile }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Username</FormLabel>
-                <Input {...field} placeholder="Contoh: johndoe" />
+                <FormControl>
+                  <Input {...field} placeholder="Contoh: johndoe" />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -92,7 +104,10 @@ const EditProfileForm = ({ userProfile }: { userProfile: UserProfile }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
-                <Input {...field} placeholder="Contoh: johndoe@gmail.com" />
+                <FormControl>
+                  <Input {...field} placeholder="Contoh: johndoe@gmail.com" />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -103,7 +118,10 @@ const EditProfileForm = ({ userProfile }: { userProfile: UserProfile }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>ID Line</FormLabel>
-                <Input {...field} placeholder="Contoh: @johndoe" />
+                <FormControl>
+                  <Input {...field} placeholder="Contoh: @johndoe" />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -113,7 +131,10 @@ const EditProfileForm = ({ userProfile }: { userProfile: UserProfile }) => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Whatsapp</FormLabel>
-                <Input {...field} placeholder="Contoh: 081234567890" />
+                <FormControl>
+                  <Input {...field} placeholder="Contoh: 081234567890" />
+                </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
