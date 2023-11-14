@@ -5,6 +5,6 @@ export const titleSchema = z
     required_error: "Judul rencana FRS tidak boleh kosong",
   })
   .min(1, { message: "Judul rencana FRS tidak boleh kosong" })
-  .max(20, { message: "Judul rencana FRS maksimal 20 karakter" });
+  .max(50, { message: "Judul rencana FRS maksimal 20 karakter" });
 
 export const matkulSchema = z.string().optional();

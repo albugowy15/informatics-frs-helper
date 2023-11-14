@@ -19,7 +19,7 @@ export const usernameSchema = z
     message: "Username tidak boleh terdapat spasi",
   })
   .min(1, { message: "Username tidak boleh kosong" })
-  .max(20, { message: "Username maksimal 20 karakter" });
+  .max(50, { message: "Username maksimal 20 karakter" });
 
 export const requiredSemesterStringSchema = z
   .string({ required_error: "Semester wajib diisi" })
