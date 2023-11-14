@@ -17,7 +17,8 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "dev": "next dev",
-    "start": "next start",
+    "preview": "next start",
+    "start": "next build && next start",
     "lint": "next lint",
     "build": "next build",
     "postinstall": "prisma generate",
