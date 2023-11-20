@@ -1,4 +1,4 @@
-import { Book, Calendar } from "lucide-react";
+import { Book, Star } from "lucide-react";
 import { type Metadata } from "next";
 import Link from "next/link";
 
@@ -26,17 +26,17 @@ export default function Home() {
         </Typography>
         <div className="py-1" />
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-6">
-          <Button variant="outline" asChild>
-            <Link href="/jadwal">
-              <Calendar className="mr-2 h-4 w-4" />
-              Lihat Jadwal
-            </Link>
-          </Button>
-          <Button variant="outline" asChild>
+          <Button asChild>
             <Link href="/panduan">
               <Book className="mr-2 h-4 w-4" />
               Baca Panduan
             </Link>
+          </Button>
+          <Button variant="secondary" asChild>
+            <a href="https://github.com/albugowy15/informatics-frs-helper">
+              <Star className="mr-2 h-4 w-4" />
+              Star me on GitHub
+            </a>
           </Button>
         </div>
       </main>
