@@ -103,7 +103,7 @@ const TakeClassForm = () => {
                     <SelectValue placeholder="Pilih Mata kuliah" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className="max-h-64 overflow-y-auto">
+                <SelectContent>
                   {listSubjects.data ? (
                     <>
                       {listSubjects.data.map((item) => (
