@@ -35,7 +35,7 @@ export default function RootLayout({
           >
             <Toaster />
             <Navbar items={homeNavigation} />
-            <div className="px-3 pt-5 md:container">{children}</div>
+            <div className="px-3 py-5 md:container">{children}</div>
             <Footer />
           </ThemeProvider>
         </TRPCReactProvider>
