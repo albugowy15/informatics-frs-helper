@@ -15,10 +15,10 @@ import { prisma } from "@/server/db";
 import { env } from "@/env.mjs";
 
 import { passwordSchema } from "@/lib/schema";
-import { registerSchema } from "@/app/register/_schema";
-import { editProfileSchema } from "@/app/profil/_schema";
-import { changePasswordSchema } from "@/app/ubah-password/_schema";
-import { forgotPasswordSchema } from "@/app/lupa-password/_schema";
+import { registerSchema } from "@/app/register/schema";
+import { editProfileSchema } from "@/app/profil/schema";
+import { changePasswordSchema } from "@/app/ubah-password/schema";
+import { forgotPasswordSchema } from "@/app/lupa-password/schema";
 
 export const userRouter = createTRPCRouter({
   register: publicProcedure

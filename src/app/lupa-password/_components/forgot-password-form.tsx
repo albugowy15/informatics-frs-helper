@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 
 import { api } from "@/trpc/react";
-import { forgotPasswordSchema } from "../_schema";
+import { forgotPasswordSchema } from "../schema";
 
 type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
 

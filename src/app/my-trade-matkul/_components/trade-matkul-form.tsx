@@ -20,7 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 
 import ChooseClassSection from "@/app/my-trade-matkul/_components/choose-class-section";
-import { type TradeMatkul } from "@/app/my-trade-matkul/_types";
+import { type TradeMatkul } from "@/app/my-trade-matkul/types";
 import { api } from "@/trpc/react";
 
 const createTradeMatkulFormSchema = z.object({

@@ -9,21 +9,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 import ScheduleFilterForm from "@/app/jadwal/_components/schedule-filter-form";
 import { renderPageTitle } from "@/lib/utils";
 import ClassAccordion from "./_components/class-accordion";
 import Loader from "@/components/loader";
 import React from "react";
+import {
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import Typography from "@/components/typography";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Informasi Jadwal"),
@@ -60,32 +58,36 @@ export default function SchedulePage({
             </CardContent>
           </Card>
         </aside>
-        <section className="mb-7 flex flex-col lg:hidden">
-          <Dialog>
-            <DialogTrigger asChild>
+        <section className="mb-7 flex items-center justify-between lg:hidden">
+          <Typography variant="h4">Jadwal Kelas</Typography>
+          <Popover>
+            <PopoverTrigger asChild>
               <Button variant="outline">
                 <SlidersHorizontal className="mr-2 h-4 w-4" />
                 Filter
               </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Filter Jadwal</DialogTitle>
-                <DialogDescription>
-                  Silahkan filter jadwal berdasarkan semester dan mata kuliah
-                </DialogDescription>
-              </DialogHeader>
-              <div className="overflow-scroll px-2 py-3">
-                <ScheduleFilterForm
-                  submitAction={
-                    <DialogClose asChild>
-                      <Button type="submit">Tampilkan Jadwal</Button>
-                    </DialogClose>
-                  }
-                />
+            </PopoverTrigger>
+            <PopoverContent align="end">
+              <div className="grid gap-4">
+                <div className="space-y-2">
+                  <h4 className="font-medium leading-none">Filter Jadwal</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Silahkan filter jadwal berdasarkan semester dan mata kuliah
+                  </p>
+                </div>
+                <div className="grid gap-2">
+                  <ScheduleFilterForm
+                    submitAction={
+                      <PopoverClose asChild>
+                        <Button type="submit">Tampilkan Jadwal</Button>
+                      </PopoverClose>
+                    }
+                  />
+                </div>
               </div>
-            </DialogContent>
-          </Dialog>
+              <div className="overflow-scroll px-2 py-3"></div>
+            </PopoverContent>
+          </Popover>
         </section>
         <main className="flex w-full flex-col gap-3 lg:px-3">
           <React.Suspense fallback={<Loader message="Memfilter jadwal" />}>

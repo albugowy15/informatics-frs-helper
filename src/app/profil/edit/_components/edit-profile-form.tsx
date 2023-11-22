@@ -18,7 +18,7 @@ import { toast } from "@/components/ui/use-toast";
 
 import { api } from "@/trpc/react";
 import { type RouterOutputs } from "@/trpc/shared";
-import { editProfileSchema } from "../../_schema";
+import { editProfileSchema } from "../../schema";
 
 type EditProfileFormType = z.infer<typeof editProfileSchema>;
 

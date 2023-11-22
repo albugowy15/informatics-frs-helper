@@ -25,7 +25,7 @@ import {
 import { Semester } from "@/config/contants";
 import { api } from "@/trpc/react";
 import { Filter } from "lucide-react";
-import { matkulSchema } from "../_schema";
+import { matkulSchema } from "../schema";
 import { requiredSemesterStringSchema } from "@/lib/schema";
 
 const takeClassSchema = z.object({

@@ -2,7 +2,7 @@
 
 import React, { createContext, useState } from "react";
 
-import { type PlanDetailClass } from "@/app/my-frs/_types";
+import { type PlanDetailClass } from "@/app/my-frs/types";
 
 export const ClassContext = createContext<{
   classTaken: PlanDetailClass[];

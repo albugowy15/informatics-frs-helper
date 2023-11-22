@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { api } from "@/trpc/react";
-import { registerSchema } from "../_schema";
+import { registerSchema } from "../schema";
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
