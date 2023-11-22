@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { prisma } from "@/server/db";
-import { titleSchema } from "@/app/my-frs/_schema";
+import { titleSchema } from "@/app/my-frs/schema";
 
 const frsPlanSchema = z.object({
   title: titleSchema,

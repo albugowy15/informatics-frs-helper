@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 
 import { api } from "@/trpc/react";
-import { resetPasswordSchema } from "../_schema";
+import { resetPasswordSchema } from "../schema";
 import { useRouter } from "next/navigation";
 
 type ResetPasswordForm = z.infer<typeof resetPasswordSchema>;

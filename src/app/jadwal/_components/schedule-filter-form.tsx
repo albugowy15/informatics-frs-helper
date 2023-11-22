@@ -24,7 +24,7 @@ import {
 
 import { Semester } from "@/config/contants";
 import { api } from "@/trpc/react";
-import { filterSchema } from "../_schema";
+import { filterSchema } from "../schema";
 
 type FilterForm = z.infer<typeof filterSchema>;
 

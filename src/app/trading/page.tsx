@@ -10,19 +10,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 import TradingFilterForm from "@/app/trading/_components/trading-filter-form";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
+import {
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Trading Kelas"),
@@ -64,33 +61,37 @@ export default async function TradingMatkulPage({
           </CardContent>
         </Card>
       </aside>
-      <section className="mb-7 flex flex-col lg:hidden">
-        <Dialog>
-          <DialogTrigger asChild>
+      <section className="mb-7 flex items-center justify-between lg:hidden">
+        <Typography variant="h4">Trade Matkul</Typography>
+        <Popover>
+          <PopoverTrigger asChild>
             <Button variant="outline">
               <SlidersHorizontal className="mr-2 h-4 w-4" />
               Filter
             </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Filter Trade Matkul</DialogTitle>
-              <DialogDescription>
-                Silahkan filter trade matkul berdasarkan semester dan mata
-                kuliah
-              </DialogDescription>
-            </DialogHeader>
-            <div className="overflow-scroll px-2 py-3">
-              <TradingFilterForm
-                submitAction={
-                  <DialogClose asChild>
-                    <Button type="submit">Tampilkan Trading Matkul</Button>
-                  </DialogClose>
-                }
-              />
+          </PopoverTrigger>
+          <PopoverContent align="end">
+            <div className="grid gap-4">
+              <div className="space-y-2">
+                <h4 className="font-medium leading-none">Filter Trading</h4>
+                <p className="text-sm text-muted-foreground">
+                  Silahkan filter trading kelas berdasarkan semester dan mata
+                  kuliah
+                </p>
+              </div>
+              <div className="grid gap-2">
+                <TradingFilterForm
+                  submitAction={
+                    <PopoverClose asChild>
+                      <Button type="submit">Tampilkan Trading Matkul</Button>
+                    </PopoverClose>
+                  }
+                />
+              </div>
             </div>
-          </DialogContent>
-        </Dialog>
+            <div className="overflow-scroll px-2 py-3"></div>
+          </PopoverContent>
+        </Popover>
       </section>
       <main className="grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3">
         {listTrades.length == 0 ? (

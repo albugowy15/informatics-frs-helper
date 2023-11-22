@@ -25,11 +25,11 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 import { ClassContext } from "@/app/my-frs/_components/class-context";
-import { type PlanDetailProps } from "@/app/my-frs/_types";
+import { type PlanDetailProps } from "@/app/my-frs/types";
 import { Semester } from "@/config/contants";
 import { api } from "@/trpc/react";
 import React from "react";
-import { titleSchema } from "../_schema";
+import { titleSchema } from "../schema";
 import { requiredSemesterStringSchema } from "@/lib/schema";
 
 const createFRSFormSchema = z.object({
