@@ -49,8 +49,8 @@ const Navbar = ({ items }: NavbarProps) => {
             <Link href="/" className="font-bold">
               TC FRS Helper
             </Link>
-            {items.map((item, index) => (
-              <SheetClose key={index} asChild>
+            {items.map((item) => (
+              <SheetClose key={item.url} asChild>
                 <Link href={item.url} key={item.name}>
                   {item.name}
                 </Link>

@@ -154,9 +154,9 @@ const FRSForm = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {Semester.map((item, index) => (
-                    <SelectItem key={index} value={item}>
-                      {item}
+                  {Semester.map((item) => (
+                    <SelectItem key={item.key} value={item.value}>
+                      {item.value}
                     </SelectItem>
                   ))}
                 </SelectContent>
