@@ -20,9 +20,9 @@ export default async function TrendingPage() {
       </Typography>
       <div className="py-2" />
       <main className="mx-auto grid gap-2 md:grid-cols-2 lg:grid-cols-4">
-        {trendingClass.map((kelas, index) => (
+        {trendingClass.map((kelas) => (
           <ClassCard
-            key={index}
+            key={kelas.id}
             data={{
               day: kelas.day,
               sessionTime: kelas.Session?.session_time,

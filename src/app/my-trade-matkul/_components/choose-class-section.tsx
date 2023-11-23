@@ -66,9 +66,9 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {Semester.map((semester, index) => (
-                  <SelectItem value={semester} key={index}>
-                    {semester}
+                {Semester.map((semester) => (
+                  <SelectItem value={semester.key} key={semester.value}>
+                    {semester.value}
                   </SelectItem>
                 ))}
               </SelectContent>

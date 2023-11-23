@@ -83,9 +83,9 @@ const TradingFilterForm = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {Semester.map((item, index) => (
-                    <SelectItem key={index} value={item}>
-                      {item}
+                  {Semester.map((item) => (
+                    <SelectItem key={item.key} value={item.value}>
+                      {item.value}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -112,8 +112,8 @@ const TradingFilterForm = ({
                 <SelectContent>
                   {listSubjects.data ? (
                     <>
-                      {listSubjects.data.map((item, index) => (
-                        <SelectItem key={index} value={item.name}>
+                      {listSubjects.data.map((item) => (
+                        <SelectItem key={item.id} value={item.name}>
                           {item.name}
                         </SelectItem>
                       ))}
