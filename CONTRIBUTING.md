@@ -20,6 +20,7 @@ git checkout -b feature-name
 ```
 
 ## Making Changes
+
 - Follow the coding style and guidelines used in the project.
 - Make changes and test thoroughly.
 
