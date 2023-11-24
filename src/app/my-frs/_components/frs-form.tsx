@@ -26,7 +26,7 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import { ClassContext } from "@/app/my-frs/_components/class-context";
 import { type PlanDetailProps } from "@/app/my-frs/types";
-import { Semester } from "@/config/contants";
+import { SemesterWithKey } from "@/config/contants";
 import { api } from "@/trpc/react";
 import React from "react";
 import { titleSchema } from "../schema";
@@ -54,12 +54,11 @@ const FRSForm = ({
     },
   });
   const context = React.useContext(ClassContext);
-  const [sks, setSks] = React.useState(0);
-  React.useEffect(() => {
-    if (context) {
-      setSks(context.classTaken.reduce((acc, cur) => acc + cur.Matkul.sks, 0));
-    }
-  }, [context, context?.classTaken]);
+  const sks = React.useMemo(() => {
+    return context
+      ? context.classTaken.reduce((acc, cur) => acc + cur.Matkul.sks, 0)
+      : 0;
+  }, [context]);
 
   const mutateUpdatePlan = api.frs.updatePlan.useMutation({
     onSuccess: () => {
@@ -154,8 +153,8 @@ const FRSForm = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {Semester.map((item) => (
-                    <SelectItem key={item.key} value={item.value}>
+                  {SemesterWithKey.map((item) => (
+                    <SelectItem key={item.id} value={item.value}>
                       {item.value}
                     </SelectItem>
                   ))}
