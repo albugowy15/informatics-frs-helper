@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { Semester } from "@/config/contants";
+import { SemesterWithKey } from "@/config/contants";
 import { api } from "@/trpc/react";
 import { filterSchema } from "../schema";
 
@@ -75,8 +75,8 @@ const ScheduleFilterForm = ({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {Semester.map((item) => (
-                    <SelectItem key={item.key} value={item.value}>
+                  {SemesterWithKey.map((item) => (
+                    <SelectItem key={item.id} value={item.value}>
                       {item.value}
                     </SelectItem>
                   ))}

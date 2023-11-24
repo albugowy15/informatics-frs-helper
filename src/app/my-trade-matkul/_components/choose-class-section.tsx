@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 
 import { type CreateTradeMatkulFormSchema } from "@/app/my-trade-matkul/_components/trade-matkul-form";
-import { Semester } from "@/config/contants";
+import { SemesterWithKey } from "@/config/contants";
 import { api } from "@/trpc/react";
 
 interface ChooseClassSectionProps {
@@ -66,8 +66,8 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {Semester.map((semester) => (
-                  <SelectItem value={semester.key} key={semester.value}>
+                {SemesterWithKey.map((semester) => (
+                  <SelectItem value={semester.id} key={semester.value}>
                     {semester.value}
                   </SelectItem>
                 ))}
