@@ -23,7 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toast } from "@/components/ui/use-toast";
 import { ClassContext } from "@/app/my-frs/_components/class-context";
 import { type PlanDetailProps } from "@/app/my-frs/types";
 import { SemesterWithKey } from "@/config/contants";
@@ -31,6 +30,7 @@ import { api } from "@/trpc/react";
 import React from "react";
 import { titleSchema } from "../schema";
 import { requiredSemesterStringSchema } from "@/lib/schema";
+import { useToast } from "@/components/ui/use-toast";
 
 const createFRSFormSchema = z.object({
   title: titleSchema,
@@ -59,6 +59,7 @@ const FRSForm = ({
       ? context.classTaken.reduce((acc, cur) => acc + cur.Matkul.sks, 0)
       : 0;
   }, [context]);
+  const { toast } = useToast();
 
   const mutateUpdatePlan = api.frs.updatePlan.useMutation({
     onSuccess: () => {

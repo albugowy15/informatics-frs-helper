@@ -14,11 +14,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-
 import { api } from "@/trpc/react";
 import { type RouterOutputs } from "@/trpc/shared";
 import { editProfileSchema } from "../../schema";
+import { useToast } from "@/components/ui/use-toast";
 
 type EditProfileFormType = z.infer<typeof editProfileSchema>;
 
@@ -36,6 +35,7 @@ const EditProfileForm = ({ userProfile }: { userProfile: UserProfile }) => {
       whatsapp: userProfile.whatsapp ?? "",
     },
   });
+  const { toast } = useToast();
 
   const mutation = api.user.updateProfile.useMutation({
     onSuccess: () => {

@@ -15,11 +15,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
-
 import { api } from "@/trpc/react";
+import { useToast } from "@/components/ui/use-toast";
 
 const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
+  const { toast } = useToast();
   const mutateDeleteTradeMatkul =
     api.tradeMatkul.deleteMyTradeMatkul.useMutation({
       onSuccess: () => {

@@ -19,7 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 const loginSchema = z.object({
   username: z
@@ -44,6 +44,7 @@ const LoginForm = () => {
   });
   const { handleSubmit } = form;
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const { toast } = useToast();
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     setButtonDisabled(true);
     const signIn = (await import("next-auth/react")).signIn;

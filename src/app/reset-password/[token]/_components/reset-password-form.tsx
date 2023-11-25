@@ -15,11 +15,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-
 import { api } from "@/trpc/react";
 import { resetPasswordSchema } from "../schema";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 type ResetPasswordForm = z.infer<typeof resetPasswordSchema>;
 
@@ -28,6 +27,7 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
     resolver: zodResolver(resetPasswordSchema),
   });
   const router = useRouter();
+  const { toast } = useToast();
   const mutateResetPassword = api.user.verifyResetPassword.useMutation({
     onSuccess: () => {
       toast({

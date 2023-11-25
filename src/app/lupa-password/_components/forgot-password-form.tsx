@@ -15,14 +15,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
-
 import { api } from "@/trpc/react";
 import { forgotPasswordSchema } from "../schema";
+import { useToast } from "@/components/ui/use-toast";
 
 type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
 
 const ForgotPasswordForm = () => {
+  const { toast } = useToast();
   const form = useForm<ForgotPasswordForm>({
     resolver: zodResolver(forgotPasswordSchema),
   });

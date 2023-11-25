@@ -17,11 +17,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/components/ui/use-toast";
-
 import ChooseClassSection from "@/app/my-trade-matkul/_components/choose-class-section";
 import { type TradeMatkul } from "@/app/my-trade-matkul/types";
 import { api } from "@/trpc/react";
+import { useToast } from "@/components/ui/use-toast";
 
 const createTradeMatkulFormSchema = z.object({
   hasMatkul: z
@@ -82,6 +81,7 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
       searchMatkulSemester: prevData?.searchMatkul.Matkul.semester.toString(),
     },
   });
+  const { toast } = useToast();
 
   const mutateCreateTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation(
     {

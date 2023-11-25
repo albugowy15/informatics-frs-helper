@@ -17,9 +17,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
 import { api } from "@/trpc/react";
 import { registerSchema } from "../schema";
+import { useToast } from "@/components/ui/use-toast";
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
@@ -27,6 +27,7 @@ const RegisterForm = () => {
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
+  const { toast } = useToast();
   const mutateRegister = api.user.register.useMutation({
     onSuccess: () => {
       toast({
