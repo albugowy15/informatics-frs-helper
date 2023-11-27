@@ -67,7 +67,7 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
               </FormControl>
               <SelectContent>
                 {SemesterWithKey.map((semester) => (
-                  <SelectItem value={semester.id} key={semester.value}>
+                  <SelectItem value={semester.value} key={semester.id}>
                     {semester.value}
                   </SelectItem>
                 ))}
