@@ -44,9 +44,7 @@ const ClassAccordion = async ({
               <AccordionContent>
                 <div className="grid gap-2 md:grid-cols-3">
                   {matkul.Class.length == 0 ? (
-                    <>
-                      <Typography variant="body1">Tidak ada kelas</Typography>
-                    </>
+                    <Typography variant="body1">Tidak ada kelas</Typography>
                   ) : (
                     <>
                       {matkul.Class.map((item) => (

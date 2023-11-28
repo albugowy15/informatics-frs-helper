@@ -30,52 +30,50 @@ const ClassAccordion = async ({
         </Typography>
       ) : null}
       {classes.map((matkul) => (
-        <>
-          <Accordion type="single" collapsible>
-            <AccordionItem value={matkul.name}>
-              <AccordionTrigger>
-                <div className="text-left">
-                  <Typography variant="body1">{matkul.name}</Typography>
-                  <Typography variant="label1">
-                    Semester {matkul.semester} | {matkul.sks} sks |{" "}
-                    {matkul.Class.length} kelas
-                  </Typography>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="grid gap-2 md:grid-cols-3">
-                  {matkul.Class.length == 0 ? (
-                    <>
-                      <Typography variant="body1">Tidak ada kelas</Typography>
-                    </>
-                  ) : (
-                    <>
-                      {matkul.Class.map((item) => (
-                        <ClassCard
-                          data={{
-                            day: item.day,
-                            lecturers: item.Lecturer,
-                            sessionTime: item.Session?.session_time,
-                            subjectCode: item.code,
-                            subjectName: matkul.name,
-                            taken: item.taken,
-                            sks: matkul.sks,
-                          }}
-                          size="sm"
-                          key={item.id}
-                        >
-                          <ClassCardActionButton
-                            data={{ Matkul: matkul, ...item }}
-                          />
-                        </ClassCard>
-                      ))}
-                    </>
-                  )}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </>
+        <Accordion type="single" key={matkul.id} collapsible>
+          <AccordionItem value={matkul.name}>
+            <AccordionTrigger>
+              <div className="text-left">
+                <Typography variant="body1">{matkul.name}</Typography>
+                <Typography variant="label1">
+                  Semester {matkul.semester} | {matkul.sks} sks |{" "}
+                  {matkul.Class.length} kelas
+                </Typography>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="grid gap-2 md:grid-cols-3">
+                {matkul.Class.length == 0 ? (
+                  <>
+                    <Typography variant="body1">Tidak ada kelas</Typography>
+                  </>
+                ) : (
+                  <>
+                    {matkul.Class.map((item) => (
+                      <ClassCard
+                        data={{
+                          day: item.day,
+                          lecturers: item.Lecturer,
+                          sessionTime: item.Session?.session_time,
+                          subjectCode: item.code,
+                          subjectName: matkul.name,
+                          taken: item.taken,
+                          sks: matkul.sks,
+                        }}
+                        size="sm"
+                        key={item.id}
+                      >
+                        <ClassCardActionButton
+                          data={{ Matkul: matkul, ...item }}
+                        />
+                      </ClassCard>
+                    ))}
+                  </>
+                )}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       ))}
     </>
   );
