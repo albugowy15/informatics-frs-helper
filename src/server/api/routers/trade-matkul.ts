@@ -55,16 +55,22 @@ export const tradeMatkulRouter = createTRPCRouter({
           message: "Tidak dapat bertukar dengan kelas yang sama",
         });
       }
-      const result = prisma.tradeMatkul.create({
-        data: {
-          description: input.description,
-          userId: ctx.session.user.id,
-          hasMatkulId: hasClass.id,
-          searchMatkulId: searchClass.id,
-          closed: false,
-        },
-      });
-      return result;
+      try {
+        await prisma.tradeMatkul.create({
+          data: {
+            description: input.description,
+            userId: ctx.session.user.id,
+            hasMatkulId: hasClass.id,
+            searchMatkulId: searchClass.id,
+            closed: false,
+          },
+        });
+      } catch (e) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Gagal membuat trade matkul",
+        });
+      }
     }),
   updateTradeMatkul: protectedProcedure
     .input(
@@ -131,21 +137,27 @@ export const tradeMatkulRouter = createTRPCRouter({
           message: "Tidak dapat bertukar dengan kelas yang sama",
         });
       }
-      const result = prisma.tradeMatkul.update({
-        where: {
-          id: tradeMatkul.id,
-        },
-        data: {
-          description: input.description,
-          hasMatkulId: hasClass.id,
-          searchMatkulId: searchClass.id,
-          closed: false,
-        },
-      });
-      return result;
+      try {
+        await prisma.tradeMatkul.update({
+          where: {
+            id: tradeMatkul.id,
+          },
+          data: {
+            description: input.description,
+            hasMatkulId: hasClass.id,
+            searchMatkulId: searchClass.id,
+            closed: false,
+          },
+        });
+      } catch (e) {
+        throw new TRPCError({
+          message: "Gagal memperbarui trade matkul",
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
     }),
-  getAllMyTradeMatkul: protectedProcedure.query(({ ctx }) => {
-    const tradeMatkul = prisma.tradeMatkul.findMany({
+  getAllMyTradeMatkul: protectedProcedure.query(async ({ ctx }) => {
+    return await prisma.tradeMatkul.findMany({
       select: {
         id: true,
         description: true,
@@ -175,7 +187,6 @@ export const tradeMatkulRouter = createTRPCRouter({
         userId: ctx.session.user.id,
       },
     });
-    return tradeMatkul;
   }),
   deleteMyTradeMatkul: protectedProcedure
     .input(
@@ -217,7 +228,6 @@ export const tradeMatkulRouter = createTRPCRouter({
           message: "Matkul tidak ditemukan",
         });
       }
-      return;
     }),
   getTradeMatkul: protectedProcedure
     .input(
@@ -285,7 +295,7 @@ export const tradeMatkulRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      const tradeMatkulPosts = await prisma.tradeMatkul.findMany({
+      return await prisma.tradeMatkul.findMany({
         include: {
           hasMatkul: {
             select: {
@@ -330,6 +340,5 @@ export const tradeMatkulRouter = createTRPCRouter({
           },
         },
       });
-      return tradeMatkulPosts;
     }),
 });

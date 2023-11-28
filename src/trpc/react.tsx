@@ -3,39 +3,30 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { unstable_httpBatchStreamLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
-import React from "react";
+import { useState } from "react";
 
 import { type AppRouter } from "@/server/api/root";
-
 import { getUrl, transformer } from "./shared";
 
-export const api = createTRPCReact<AppRouter>({
-  overrides: {
-    useMutation: {
-      async onSuccess(opts) {
-        await opts.originalFn();
-        await opts.queryClient.invalidateQueries();
-      },
-    },
-  },
-});
+export const api = createTRPCReact<AppRouter>();
 
 export function TRPCReactProvider(props: {
   children: React.ReactNode;
-  headers: Headers;
+  cookies: string;
 }) {
-  const [queryClient] = React.useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient());
 
-  const [trpcClient] = React.useState(() =>
+  const [trpcClient] = useState(() =>
     api.createClient({
       transformer,
       links: [
         unstable_httpBatchStreamLink({
           url: getUrl(),
           headers() {
-            const heads = new Map(props.headers);
-            heads.set("x-trpc-source", "react");
-            return Object.fromEntries(heads);
+            return {
+              cookie: props.cookies,
+              "x-trpc-source": "react",
+            };
           },
         }),
       ],

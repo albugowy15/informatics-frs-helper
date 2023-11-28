@@ -74,19 +74,25 @@ export const userRouter = createTRPCRouter({
   updateProfile: protectedProcedure
     .input(editProfileSchema)
     .mutation(async ({ input, ctx }) => {
-      const updatedProfile = await prisma.user.update({
-        where: {
-          id: ctx.session.user.id,
-        },
-        data: {
-          fullname: input.fullname,
-          username: input.username,
-          email: input.email,
-          idLine: input.whatsapp ?? null,
-          whatsapp: input.idLine ?? null,
-        },
-      });
-      return updatedProfile.id;
+      try {
+        await prisma.user.update({
+          where: {
+            id: ctx.session.user.id,
+          },
+          data: {
+            fullname: input.fullname,
+            username: input.username,
+            email: input.email,
+            idLine: input.idLine ?? null,
+            whatsapp: input.whatsapp ?? null,
+          },
+        });
+      } catch (e) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Gagal memperbarui profil",
+        });
+      }
     }),
   changePassword: protectedProcedure
     .input(changePasswordSchema)

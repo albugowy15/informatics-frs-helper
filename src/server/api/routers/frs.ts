@@ -40,7 +40,7 @@ export const frsRouter = createTRPCRouter({
           userId: ctx.session.user.id,
         },
       });
-      if (totalPlan == 3) {
+      if (totalPlan >= 3) {
         throw new TRPCError({
           code: "PRECONDITION_FAILED",
           message: "Telah mencapai batas plan yang dapat dibuat",

@@ -1,6 +1,6 @@
 import { commonRouter } from "@/server/api/routers/common";
 import { frsRouter } from "@/server/api/routers/frs";
-import { tradeMatkulRouter } from "@/server/api/routers/tradeMatkul";
+import { tradeMatkulRouter } from "@/server/api/routers/trade-matkul";
 import { userRouter } from "@/server/api/routers/user";
 import { createTRPCRouter } from "@/server/api/trpc";
 

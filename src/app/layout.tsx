@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 import React from "react";
 
 import "@/styles/globals.css";
@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en" className={inter.className}>
       <head />
       <body className="flex min-h-screen flex-col bg-background font-sans antialiased">
-        <TRPCReactProvider headers={headers()}>
+        <TRPCReactProvider cookies={cookies().toString()}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
