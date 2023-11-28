@@ -169,33 +169,31 @@ const FRSForm = ({
         <div>
           <Typography variant="h4">Matkul yang diambil</Typography>
           {context && context.classTaken.length > 0 ? (
-            <>
-              <div className="space-y-2">
-                {context.classTaken.map((item, index) => (
-                  <ClassCard
-                    data={{
-                      lecturers: item.Lecturer,
-                      sks: item.Matkul.sks,
-                      subjectCode: item.code,
-                      subjectName: item.Matkul.name,
-                      taken: item.taken,
-                      day: item.day,
-                      sessionTime: item.Session?.session_time,
-                    }}
+            <div className="space-y-2">
+              {context.classTaken.map((item, index) => (
+                <ClassCard
+                  data={{
+                    lecturers: item.Lecturer,
+                    sks: item.Matkul.sks,
+                    subjectCode: item.code,
+                    subjectName: item.Matkul.name,
+                    taken: item.taken,
+                    day: item.day,
+                    sessionTime: item.Session?.session_time,
+                  }}
+                  size="sm"
+                  key={item.id}
+                >
+                  <Button
+                    variant="destructive"
                     size="sm"
-                    key={item.id}
+                    onClick={() => handleDropTakenClass(index)}
                   >
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => handleDropTakenClass(index)}
-                    >
-                      Drop
-                    </Button>
-                  </ClassCard>
-                ))}
-              </div>
-            </>
+                    Drop
+                  </Button>
+                </ClassCard>
+              ))}
+            </div>
           ) : (
             <Typography variant="label1" className="pt-2 font-normal">
               Kamu belum mengambil matkul apapun

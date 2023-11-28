@@ -31,12 +31,10 @@ export default async function FRSPage() {
           </Link>
         </Button>
       ) : (
-        <>
-          <Typography variant="body1" className="my-4">
-            Kamu tidak dapat membuat plan baru karena telah mencapai maksimal
-            jumlah plan yang dapat dibuat sebanyak 3
-          </Typography>
-        </>
+        <Typography variant="body1" className="my-4">
+          Kamu tidak dapat membuat plan baru karena telah mencapai maksimal
+          jumlah plan yang dapat dibuat sebanyak 3
+        </Typography>
       )}
 
       <div className="grid gap-2 lg:grid-cols-3">
@@ -58,11 +56,9 @@ export default async function FRSPage() {
             ))}
           </>
         ) : (
-          <>
-            <Typography variant="body1">
-              Kamu belum membuat rencana frs
-            </Typography>
-          </>
+          <Typography variant="body1">
+            Kamu belum membuat rencana frs
+          </Typography>
         )}
       </div>
     </main>

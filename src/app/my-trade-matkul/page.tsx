@@ -56,11 +56,9 @@ export default async function MyTradeMatkulPage() {
               ))}
             </>
           ) : (
-            <>
-              <Typography variant="body1">
-                Kamu belum membuat post trade matkul
-              </Typography>
-            </>
+            <Typography variant="body1">
+              Kamu belum membuat post trade matkul
+            </Typography>
           )}
         </div>
       </main>
