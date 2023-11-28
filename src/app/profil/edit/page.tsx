@@ -1,8 +1,5 @@
 import { type Metadata } from "next";
 
-import { getServerAuthSession } from "@/server/auth";
-import { prisma } from "@/server/db";
-
 import {
   Card,
   CardContent,
@@ -13,23 +10,14 @@ import {
 
 import EditProfileForm from "@/app/profil/edit/_components/edit-profile-form";
 import { renderPageTitle } from "@/lib/utils";
+import { api } from "@/trpc/server";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Edit Profil"),
 };
 
 export default async function EditProfilePage() {
-  const session = await getServerAuthSession();
-  const userProfile = await prisma.user.findUnique({
-    where: { id: session?.user.id },
-    select: {
-      email: true,
-      fullname: true,
-      idLine: true,
-      username: true,
-      whatsapp: true,
-    },
-  });
+  const userProfile = await api.user.getUserProfile.query();
 
   return (
     <Card className="mx-auto w-full min-w-fit sm:w-[500px]">
@@ -38,7 +26,7 @@ export default async function EditProfilePage() {
         <CardDescription>Silahkan edit profil akun Anda</CardDescription>
       </CardHeader>
       <CardContent>
-        <EditProfileForm userProfile={userProfile!} />
+        <EditProfileForm userProfile={userProfile} />
       </CardContent>
     </Card>
   );

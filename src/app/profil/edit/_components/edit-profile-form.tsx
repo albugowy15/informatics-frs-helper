@@ -54,108 +54,100 @@ const EditProfileForm = ({ userProfile }: { userProfile: UserProfile }) => {
   });
 
   const onSubmit: SubmitHandler<EditProfileFormType> = (data) => {
-    mutation.mutate({
-      email: data.email,
-      fullname: data.fullname,
-      idLine: data.idLine,
-      whatsapp: data.whatsapp,
-      username: data.username,
-    });
+    mutation.mutate(data);
   };
 
   return (
-    <>
-      <FormProvider {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-3"
-        >
-          <FormField
-            control={form.control}
-            name="fullname"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nama Lengkap</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Contoh: John Doe" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <FormProvider {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-3"
+      >
+        <FormField
+          control={form.control}
+          name="fullname"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nama Lengkap</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Contoh: John Doe" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Contoh: johndoe" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Contoh: johndoe" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Contoh: johndoe@gmail.com" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Contoh: johndoe@gmail.com" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <FormField
-            control={form.control}
-            name="idLine"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>ID Line</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Contoh: @johndoe" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="whatsapp"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Whatsapp</FormLabel>
-                <FormControl>
-                  <Input {...field} placeholder="Contoh: 081234567890" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="idLine"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ID Line</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Contoh: @johndoe" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="whatsapp"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Whatsapp</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Contoh: 081234567890" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-          <div className="py-2" />
-          <Button type="submit" disabled={mutation.isLoading}>
-            {mutation.isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Please wait..
-              </>
-            ) : (
-              <>
-                <Save className="mr-2 h-4 w-4" />
-                Perbarui Profil
-              </>
-            )}
-          </Button>
-        </form>
-      </FormProvider>
-    </>
+        <div className="py-2" />
+        <Button type="submit" disabled={mutation.isLoading}>
+          {mutation.isLoading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait..
+            </>
+          ) : (
+            <>
+              <Save className="mr-2 h-4 w-4" />
+              Perbarui Profil
+            </>
+          )}
+        </Button>
+      </form>
+    </FormProvider>
   );
 };
 
