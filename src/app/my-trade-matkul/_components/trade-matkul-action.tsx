@@ -38,11 +38,15 @@ const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
       },
     });
   const handleDeleteTradeMatkul = () => {
-    mutateDeleteTradeMatkul.mutate({ tradeMatkulId: tradeMatkulId });
+    mutateDeleteTradeMatkul.mutate({ tradeMatkulId });
   };
   return (
     <div className="flex gap-2">
-      <Button variant="secondary" asChild>
+      <Button
+        variant="secondary"
+        asChild
+        disabled={mutateDeleteTradeMatkul.isLoading}
+      >
         <Link href={"/my-trade-matkul/edit/" + tradeMatkulId}>
           <Pencil className="mr-2 h-4 w-4" />
           Update
@@ -50,7 +54,10 @@ const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
       </Button>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive">
+          <Button
+            variant="destructive"
+            disabled={mutateDeleteTradeMatkul.isLoading}
+          >
             {mutateDeleteTradeMatkul.isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
