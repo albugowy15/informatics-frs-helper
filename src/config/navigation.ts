@@ -24,4 +24,8 @@ export const homeNavigation: Navigation[] = [
     name: "Report",
     url: "/report",
   },
+  {
+    name: "Statistik",
+    url: "/statistik",
+  },
 ];

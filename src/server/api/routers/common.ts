@@ -3,6 +3,19 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { prisma } from "@/server/db";
 
+export interface StatisticData {
+  id: string;
+  title: string;
+  value: number;
+  type: "user" | "frs" | "trade" | "class";
+  description: string;
+}
+
+export interface FrsBySemester {
+  key: number;
+  value: number;
+}
+
 export const commonRouter = createTRPCRouter({
   getClassBySubject: publicProcedure
     .input(
@@ -121,5 +134,51 @@ export const commonRouter = createTRPCRouter({
     });
 
     return classes;
+  }),
+  getStatistic: publicProcedure.query(async () => {
+    const statistic: StatisticData[] = [
+      {
+        id: crypto.randomUUID(),
+        title: "Total Kelas",
+        value: await prisma.class.count(),
+        type: "class",
+        description: "Kelas dapat diambil",
+      },
+      {
+        id: crypto.randomUUID(),
+        title: "Total User",
+        value: await prisma.user.count(),
+        type: "user",
+        description: "User terdaftar",
+      },
+      {
+        id: crypto.randomUUID(),
+        title: "Total Plan FRS",
+        value: await prisma.plan.count(),
+        type: "frs",
+        description: "Rencana FRS dibuat",
+      },
+      {
+        id: crypto.randomUUID(),
+        title: "Total Trade Kelas",
+        value: await prisma.tradeMatkul.count(),
+        type: "trade",
+        description: "Post Trade Kelas dibuat",
+      },
+    ];
+
+    const frsBySemester = await prisma.plan
+      .groupBy({
+        by: "semester",
+        orderBy: {
+          semester: "asc",
+        },
+        _count: true,
+      })
+      .then((val) =>
+        val.map((item) => ({ key: item.semester, value: item._count })),
+      );
+
+    return { statistic, frsBySemester };
   }),
 });
