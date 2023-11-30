@@ -57,7 +57,7 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "jsonwebtoken": "^9.0.2",
-    "lucide-react": "^0.292.0",
+    "lucide-react": "^0.294.0",
     "next": "^14.0.3",
     "next-auth": "^4.24.5",
     "next-themes": "^0.2.1",
@@ -68,21 +68,21 @@
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "undici": "^5.28.0",
+    "undici": "^5.28.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.0.3",
-    "@playwright/test": "^1.40.0",
+    "@playwright/test": "^1.40.1",
     "@tailwindcss/forms": "^0.5.7",
     "@types/bcryptjs": "^2.4.6",
-    "@types/eslint": "^8.44.7",
+    "@types/eslint": "^8.44.8",
     "@types/jsonwebtoken": "^9.0.5",
-    "@types/node": "20.9.0",
-    "@types/react": "18.2.37",
-    "@types/react-dom": "18.2.15",
-    "@typescript-eslint/eslint-plugin": "^6.12.0",
-    "@typescript-eslint/parser": "^6.12.0",
+    "@types/node": "20.10.0",
+    "@types/react": "18.2.39",
+    "@types/react-dom": "18.2.17",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
     "autoprefixer": "^10.4.16",
     "clsx": "^2.0.0",
     "eslint": "8.54.0",
@@ -93,6 +93,6 @@
     "prettier-plugin-tailwindcss": "^0.5.7",
     "prisma": "^5.6.0",
     "tailwindcss": "^3.3.5",
-    "typescript": "5.2.2"
+    "typescript": "5.3.2"
   }
 }
