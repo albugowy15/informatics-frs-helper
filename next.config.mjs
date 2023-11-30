@@ -7,7 +7,13 @@ await import("./src/env.mjs");
 import bundleAnalyzer from "@next/bundle-analyzer";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
+};
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
