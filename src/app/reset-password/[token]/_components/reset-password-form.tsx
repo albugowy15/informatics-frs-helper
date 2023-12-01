@@ -78,7 +78,7 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
               Please wait..
             </>
           ) : (
-            <>Perbarui Password</>
+            "Perbarui Password"
           )}
         </Button>
       </form>

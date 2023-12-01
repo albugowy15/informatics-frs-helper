@@ -1,7 +1,6 @@
 "use client";
 
 import React, { createContext, useState } from "react";
-
 import { type PlanDetailClass } from "@/app/my-frs/types";
 
 export const ClassContext = createContext<{

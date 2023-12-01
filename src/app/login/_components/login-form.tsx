@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
-
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import {
@@ -65,7 +64,7 @@ const LoginForm = () => {
           toast({
             variant: "destructive",
             title: "Error",
-            description: "Username atau password salah",
+            description: res?.error,
           });
           setButtonDisabled(false);
         }

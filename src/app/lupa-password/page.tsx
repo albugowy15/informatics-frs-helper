@@ -1,5 +1,4 @@
 import { type Metadata } from "next";
-
 import {
   Card,
   CardContent,
@@ -7,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import ForgotPasswordForm from "@/app/lupa-password/_components/forgot-password-form";
 import { renderPageTitle } from "@/lib/utils";
 

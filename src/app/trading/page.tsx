@@ -100,38 +100,33 @@ export default async function TradingMatkulPage({
           </Typography>
         ) : null}
         {listTrades.map((trade) => (
-          <>
-            <div className="rounded-md border p-4">
-              <Typography variant="body1" className="font-medium">
-                {trade.User?.fullname}
+          <div className="rounded-md border p-4">
+            <Typography variant="body1" className="font-medium">
+              {trade.User?.fullname}
+            </Typography>
+            <Typography variant="label1">{trade.User?.username}</Typography>
+            <div className="py-1" />
+            <Typography variant="body1">
+              <span className="font-medium text-red-600">Want</span> :{" "}
+              {trade.searchMatkul.Matkul.name} {trade.searchMatkul.code}
+            </Typography>
+            <Typography variant="body1" className="[&:not(:first-child)]:mt-0">
+              <span className="font-medium text-green-600">Have</span> :{" "}
+              {trade.hasMatkul.Matkul.name} {trade.hasMatkul.code}
+            </Typography>
+            <Typography variant="body1">{trade.description}</Typography>
+            <Typography variant="body1" className="font-medium">
+              Kontak
+            </Typography>
+            <div className="flex items-center gap-4">
+              <Typography variant="label1" className="leading-6">
+                WA : {trade.User?.whatsapp ? trade.User.whatsapp : "-"}
               </Typography>
-              <Typography variant="label1">{trade.User?.username}</Typography>
-              <div className="py-1" />
-              <Typography variant="body1">
-                <span className="font-medium text-red-600">Want</span> :{" "}
-                {trade.searchMatkul.Matkul.name} {trade.searchMatkul.code}
+              <Typography variant="label1" className="leading-6">
+                Line : {trade.User?.idLine ? trade.User.idLine : "-"}
               </Typography>
-              <Typography
-                variant="body1"
-                className="[&:not(:first-child)]:mt-0"
-              >
-                <span className="font-medium text-green-600">Have</span> :{" "}
-                {trade.hasMatkul.Matkul.name} {trade.hasMatkul.code}
-              </Typography>
-              <Typography variant="body1">{trade.description}</Typography>
-              <Typography variant="body1" className="font-medium">
-                Kontak
-              </Typography>
-              <div className="flex items-center gap-4">
-                <Typography variant="label1" className="leading-6">
-                  WA : {trade.User?.whatsapp ? trade.User.whatsapp : "-"}
-                </Typography>
-                <Typography variant="label1" className="leading-6">
-                  Line : {trade.User?.idLine ? trade.User.idLine : "-"}
-                </Typography>
-              </div>
             </div>
-          </>
+          </div>
         ))}
       </main>
     </main>

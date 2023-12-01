@@ -1,8 +1,6 @@
 import { type Metadata } from "next";
-
 import ClassCard from "@/components/class-card";
 import Typography from "@/components/typography";
-
 import DetailFrsAction from "@/app/my-frs/detail/[planId]/_components/detail-frs-action";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";

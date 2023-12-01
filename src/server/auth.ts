@@ -5,18 +5,70 @@ import {
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { type LoginResponseData } from "@/app/api/login/route";
 import { env } from "@/env.mjs";
+import { prisma } from "./db";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
-interface APIResponse<TData> {
-  status: "success" | "error";
-  message: string;
-  data?: TData;
+export interface LoginResponseData {
+  username: string;
+  email: string;
+  accessToken: string;
+  id: string;
 }
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: LoginResponseData & DefaultSession["user"];
+  }
+}
+
+const KEY = env.NEXTAUTH_SECRET!;
+
+async function handleLogin(username: string, password: string) {
+  if (!username || !password) {
+    throw new Error("Username dan password tidak ada");
+  }
+
+  const users = await prisma.user.findMany({
+    where: {
+      OR: [
+        {
+          username: username,
+        },
+        {
+          email: username,
+        },
+      ],
+    },
+  });
+  if (users.length === 0 || users.length > 1) {
+    throw new Error("User tidak ditemukan");
+  }
+  const user = users[0];
+  if (!user) {
+    throw new Error("User tidak ditemukan");
+  }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    throw new Error("Password salah");
+  }
+  const payload = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+  };
+  try {
+    const token = jwt.sign(payload, KEY, { expiresIn: "1d" });
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      accessToken: token,
+    };
+  } catch (e) {
+    console.log(e);
+    throw new Error("ERROR SIGN TOKEN");
   }
 }
 
@@ -35,20 +87,21 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        const res = await fetch(`${env.BASE_URL}/api/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(credentials),
-        });
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const { data: user }: APIResponse<LoginResponseData> = await res.json();
-        if (res.ok && user) {
-          return user;
-        } else {
+        if (!credentials) {
           return null;
+        }
+        try {
+          const res = await handleLogin(
+            credentials.username,
+            credentials.password,
+          );
+          return res;
+        } catch (e: unknown) {
+          if (e instanceof Error) {
+            throw new Error(e.message);
+          } else {
+            throw new Error("An unknown error occurred");
+          }
         }
       },
     }),

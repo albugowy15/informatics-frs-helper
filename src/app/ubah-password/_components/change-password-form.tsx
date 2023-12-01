@@ -93,7 +93,7 @@ const ChangePasswordForm = () => {
               Please wait..
             </>
           ) : (
-            <>Ubah Password</>
+            "Ubah Password"
           )}
         </Button>
       </form>

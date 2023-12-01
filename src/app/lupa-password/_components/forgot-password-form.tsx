@@ -69,7 +69,7 @@ const ForgotPasswordForm = () => {
               Please wait..
             </>
           ) : (
-            <>Reset Password</>
+            "Reset Password"
           )}
         </Button>
       </form>

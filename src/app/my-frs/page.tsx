@@ -1,10 +1,8 @@
 import { Plus } from "lucide-react";
 import { type Metadata } from "next";
 import Link from "next/link";
-
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
-
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
 

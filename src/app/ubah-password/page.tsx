@@ -11,15 +11,13 @@ export const metadata: Metadata = {
 
 export default function ChangePasswordPage() {
   return (
-    <>
-      <Card className="mx-auto mt-6 w-full md:w-96">
-        <CardHeader>
-          <CardTitle>Silahkan Ubah Password Anda</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ChangePasswordForm />
-        </CardContent>
-      </Card>
-    </>
+    <Card className="mx-auto mt-6 w-full md:w-96">
+      <CardHeader>
+        <CardTitle>Silahkan Ubah Password Anda</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ChangePasswordForm />
+      </CardContent>
+    </Card>
   );
 }

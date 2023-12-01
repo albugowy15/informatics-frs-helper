@@ -102,8 +102,8 @@ dependencies:
     specifier: ^7.48.2
     version: 7.48.2(react@18.2.0)
   recharts:
-    specifier: ^2.10.2
-    version: 2.10.2(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^2.10.3
+    version: 2.10.3(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
   resend:
     specifier: ^2.0.0
     version: 2.0.0
@@ -117,8 +117,8 @@ dependencies:
     specifier: ^1.0.7
     version: 1.0.7(tailwindcss@3.3.5)
   undici:
-    specifier: ^5.28.1
-    version: 5.28.1
+    specifier: ^5.28.2
+    version: 5.28.2
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -143,8 +143,8 @@ devDependencies:
     specifier: ^9.0.5
     version: 9.0.5
   "@types/node":
-    specifier: 20.10.0
-    version: 20.10.0
+    specifier: 20.10.1
+    version: 20.10.1
   "@types/react":
     specifier: 18.2.39
     version: 18.2.39
@@ -273,10 +273,10 @@ packages:
     engines: { node: ">=14" }
     dev: false
 
-  /@floating-ui/core@1.5.0:
+  /@floating-ui/core@1.5.1:
     resolution:
       {
-        integrity: sha512-kK1h4m36DQ0UHGj5Ah4db7R0rHemTqqO0QLvUqi1/mUUp3LuAWbWxdxSIf/XsnH9VS6rRVPLJCncjRzUvyCLXg==,
+        integrity: sha512-QgcKYwzcc8vvZ4n/5uklchy8KVdjJwcOeI+HnnTNclJjs2nYsy23DOCf+sSV1kBwD9yDAoVKCkv/gEPzgQU3Pw==,
       }
     dependencies:
       "@floating-ui/utils": 0.1.6
@@ -288,7 +288,7 @@ packages:
         integrity: sha512-ClAbQnEqJAKCJOEbbLo5IUlZHkNszqhuxS4fHAVxRPXPya6Ysf2G8KypnYcOTpx6I8xcgF9bbHb6g/2KpbV8qA==,
       }
     dependencies:
-      "@floating-ui/core": 1.5.0
+      "@floating-ui/core": 1.5.1
       "@floating-ui/utils": 0.1.6
     dev: false
 
@@ -1852,13 +1852,13 @@ packages:
         integrity: sha512-VRLSGzik+Unrup6BsouBeHsf4d1hOEgYWTm/7Nmw1sXoN1+tRly/Gy/po3yeahnP4jfnQWWAhQAqcNfH7ngOkA==,
       }
     dependencies:
-      "@types/node": 20.10.0
+      "@types/node": 20.10.1
     dev: true
 
-  /@types/node@20.10.0:
+  /@types/node@20.10.1:
     resolution:
       {
-        integrity: sha512-D0WfRmU9TQ8I9PFx9Yc+EBHw+vSpIub4IDvQivcp26PtPrdMGAq5SDcpXEo/epqa/DXotVpekHiLNTg3iaKXBQ==,
+        integrity: sha512-T2qwhjWwGH81vUEx4EXmBKsTJRXFXNZTL4v0gi01+zyBmCwzE6TyHszqX01m+QHTEq+EZNo13NeJIdEqf+Myrg==,
       }
     dependencies:
       undici-types: 5.26.5
@@ -2444,7 +2444,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001565
-      electron-to-chromium: 1.4.597
+      electron-to-chromium: 1.4.599
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
     dev: true
@@ -2992,10 +2992,10 @@ packages:
       semver: 7.5.4
     dev: false
 
-  /electron-to-chromium@1.4.597:
+  /electron-to-chromium@1.4.599:
     resolution:
       {
-        integrity: sha512-0XOQNqHhg2YgRVRUrS4M4vWjFCFIP2ETXcXe/0KIQBjXE9Cpy+tgzzYfuq6HGai3hWq0YywtG+5XK8fyG08EjA==,
+        integrity: sha512-FdLI0/h+PvShEqmBMnZCdbgabAuQiiM9Ph8hVGmPOR5GU1XXZgwLRCMogE63OrUxcDEOBlEMVYAgtkJjWFnhRA==,
       }
     dev: true
 
@@ -3064,7 +3064,7 @@ packages:
       is-weakref: 1.0.2
       object-inspect: 1.13.1
       object-keys: 1.1.1
-      object.assign: 4.1.4
+      object.assign: 4.1.5
       regexp.prototype.flags: 1.5.1
       safe-array-concat: 1.0.1
       safe-regex-test: 1.0.0
@@ -4460,7 +4460,7 @@ packages:
     dependencies:
       array-includes: 3.1.7
       array.prototype.flat: 1.3.2
-      object.assign: 4.1.4
+      object.assign: 4.1.5
       object.values: 1.1.7
     dev: true
 
@@ -4943,10 +4943,10 @@ packages:
     engines: { node: ">= 0.4" }
     dev: true
 
-  /object.assign@4.1.4:
+  /object.assign@4.1.5:
     resolution:
       {
-        integrity: sha512-1mxKf0e58bvyjSCtKYY4sRe9itRk3PJpquJOjeIkz885CczcI4IvJJDLPS72oowuSh+pBxUFROpX+TU++hxhZQ==,
+        integrity: sha512-byy+U7gp+FVwmyzKPYhW2h5l3crpmGsxl7X2s8y43IgxvG4g3QZ6CffDtsNQy1WsmZpQbO+ybo0AlW7TY6DcBQ==,
       }
     engines: { node: ">= 0.4" }
     dependencies:
@@ -5627,10 +5627,10 @@ packages:
       decimal.js-light: 2.5.1
     dev: false
 
-  /recharts@2.10.2(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
+  /recharts@2.10.3(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
-        integrity: sha512-goasBqGqpH8SLty+a24xG1KkZWowo793mgoNVrOkBRXZCG2xX+BUbCgaWrB/G+DGIpN2AX/arCttLuHdg/A6LQ==,
+        integrity: sha512-G4J96fKTZdfFQd6aQnZjo2nVNdXhp+uuLb00+cBTGLo85pChvm1+E67K3wBOHDE/77spcYb2Cy9gYWVqiZvQCg==,
       }
     engines: { node: ">=14" }
     peerDependencies:
@@ -6334,10 +6334,10 @@ packages:
       }
     dev: true
 
-  /undici@5.28.1:
+  /undici@5.28.2:
     resolution:
       {
-        integrity: sha512-xcIIvj1LOQH9zAL54iWFkuDEaIVEjLrru7qRpa3GrEEHk6OBhb/LycuUY2m7VCcTuDeLziXCxobQVyKExyGeIA==,
+        integrity: sha512-wh1pHJHnUeQV5Xa8/kyQhO7WFa8M34l026L5P/+2TYiakvGy5Rdc8jWZVyG7ieht/0WgJLEd3kcU5gKx+6GC8w==,
       }
     engines: { node: ">=14.0" }
     dependencies:

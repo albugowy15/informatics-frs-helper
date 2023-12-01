@@ -1,10 +1,9 @@
 import { get } from "@vercel/edge-config";
 import { Terminal } from "lucide-react";
-
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default async function ScheduleStatusAlert() {
-  const scheduleStatus: string | undefined = await get("schedule");
+  const scheduleStatus = await get<"UPDATED" | "OUTDATED">("schedule");
   return (
     <Alert
       variant={scheduleStatus === "UPDATED" ? "default" : "destructive"}

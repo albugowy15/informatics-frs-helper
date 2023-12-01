@@ -1,6 +1,5 @@
 import { SlidersHorizontal } from "lucide-react";
 import { type Metadata } from "next";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,10 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import ScheduleFilterForm from "@/app/jadwal/_components/schedule-filter-form";
 import { renderPageTitle } from "@/lib/utils";
-import ClassAccordion from "./_components/class-accordion";
+import ClassAccordion from "../_components/class-accordion";
 import Loader from "@/components/loader";
 import React from "react";
 import {

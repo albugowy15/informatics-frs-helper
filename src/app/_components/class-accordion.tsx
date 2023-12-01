@@ -7,14 +7,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { api } from "@/trpc/server";
-import ClassCardActionButton from "./class-card-action-button";
+import ClassCardActionButton from "../my-frs/_components/class-card-action-button";
 
 const ClassAccordion = async ({
   semester,
   subject,
+  withAction = false,
 }: {
   semester?: string;
   subject?: string;
+  withAction?: boolean;
 }) => {
   const classes = await api.common.getClass.query({
     semester: semester === undefined ? parseInt("1") : parseInt(semester),
@@ -30,7 +32,7 @@ const ClassAccordion = async ({
         </Typography>
       ) : null}
       {classes.map((matkul) => (
-        <Accordion type="single" key={matkul.id} collapsible>
+        <Accordion type="single" collapsible key={matkul.id}>
           <AccordionItem value={matkul.name}>
             <AccordionTrigger>
               <div className="text-left">
@@ -44,9 +46,7 @@ const ClassAccordion = async ({
             <AccordionContent>
               <div className="grid gap-2 md:grid-cols-3">
                 {matkul.Class.length == 0 ? (
-                  <>
-                    <Typography variant="body1">Tidak ada kelas</Typography>
-                  </>
+                  <Typography variant="body1">Tidak ada kelas</Typography>
                 ) : (
                   <>
                     {matkul.Class.map((item) => (
@@ -60,12 +60,13 @@ const ClassAccordion = async ({
                           taken: item.taken,
                           sks: matkul.sks,
                         }}
-                        size="sm"
                         key={item.id}
                       >
-                        <ClassCardActionButton
-                          data={{ Matkul: matkul, ...item }}
-                        />
+                        {withAction ? (
+                          <ClassCardActionButton
+                            data={{ Matkul: matkul, ...item }}
+                          />
+                        ) : null}
                       </ClassCard>
                     ))}
                   </>

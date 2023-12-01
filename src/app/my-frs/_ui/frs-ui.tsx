@@ -10,8 +10,8 @@ import TakeClassForm from "@/app/my-frs/_components/take-subject-form";
 import { type FrsUiProps } from "@/app/my-frs/types";
 import { Suspense } from "react";
 import Loader from "@/components/loader";
-import ClassAccordion from "../_components/class-accordion";
 import FRSForm from "@/app/my-frs/_components/frs-form";
+import ClassAccordion from "@/app/_components/class-accordion";
 
 const FrsUi = ({ planDetail, planId, params }: FrsUiProps) => {
   return (
@@ -41,6 +41,7 @@ const FrsUi = ({ planDetail, planId, params }: FrsUiProps) => {
               <div className="mt-3">
                 <Suspense fallback={<Loader message="Memfilter jadwal" />}>
                   <ClassAccordion
+                    withAction
                     semester={params.semester}
                     subject={params.subject}
                   />

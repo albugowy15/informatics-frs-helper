@@ -5,7 +5,6 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { type z } from "zod";
-
 import {
   Form,
   FormControl,
@@ -21,7 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { SemesterWithKey } from "@/config/contants";
 import { api } from "@/trpc/react";
 import { filterSchema } from "../schema";

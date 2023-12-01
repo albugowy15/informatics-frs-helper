@@ -212,7 +212,7 @@ const FRSForm = ({
               Please wait..
             </>
           ) : (
-            <>Simpan</>
+            "Simpan"
           )}
         </Button>
       </form>
