@@ -24,7 +24,7 @@ export const commonRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      const classes = await prisma.class.findMany({
+      return await prisma.class.findMany({
         select: {
           id: true,
           code: true,
@@ -38,8 +38,6 @@ export const commonRouter = createTRPCRouter({
           code: "asc",
         },
       });
-
-      return classes;
     }),
   getClass: publicProcedure
     .input(
@@ -50,7 +48,7 @@ export const commonRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      const matkul = await prisma.matkul.findMany({
+      return await prisma.matkul.findMany({
         where: {
           semester: input.semester,
           name: input.matkul,
@@ -80,8 +78,6 @@ export const commonRouter = createTRPCRouter({
           name: "asc",
         },
       });
-
-      return matkul;
     }),
   getSubject: publicProcedure
     .input(
@@ -103,14 +99,12 @@ export const commonRouter = createTRPCRouter({
           name: "asc",
         },
       });
-
-      if (input.withAll == true) {
-        listSubject.unshift({ id: "", name: "Semua" });
-      }
-      return listSubject;
+      return input.withAll === true
+        ? [{ id: "", name: "Semua" }, ...listSubject]
+        : listSubject;
     }),
   getTrendingClasses: publicProcedure.query(async () => {
-    const classes = await prisma.class.findMany({
+    return await prisma.class.findMany({
       select: {
         code: true,
         day: true,
@@ -132,52 +126,57 @@ export const commonRouter = createTRPCRouter({
       },
       take: 12,
     });
-
-    return classes;
   }),
   getStatistic: publicProcedure.query(async () => {
+    const [totalClasses, totalUsers, totalPlans, totalTrades, frsBySemester] =
+      await Promise.all([
+        prisma.class.count(),
+        prisma.user.count(),
+        prisma.plan.count(),
+        prisma.tradeMatkul.count(),
+        prisma.plan
+          .groupBy({
+            by: "semester",
+            orderBy: {
+              semester: "asc",
+            },
+            _count: true,
+          })
+          .then((val) =>
+            val.map((item) => ({ key: item.semester, value: item._count })),
+          ),
+      ]);
+
     const statistic: StatisticData[] = [
       {
         id: crypto.randomUUID(),
         title: "Total Kelas",
-        value: await prisma.class.count(),
+        value: totalClasses,
         type: "class",
         description: "Kelas dapat diambil",
       },
       {
         id: crypto.randomUUID(),
         title: "Total User",
-        value: await prisma.user.count(),
+        value: totalUsers,
         type: "user",
         description: "User terdaftar",
       },
       {
         id: crypto.randomUUID(),
         title: "Total Plan FRS",
-        value: await prisma.plan.count(),
+        value: totalPlans,
         type: "frs",
         description: "Rencana FRS dibuat",
       },
       {
         id: crypto.randomUUID(),
         title: "Total Trade Kelas",
-        value: await prisma.tradeMatkul.count(),
+        value: totalTrades,
         type: "trade",
         description: "Post Trade Kelas dibuat",
       },
     ];
-
-    const frsBySemester = await prisma.plan
-      .groupBy({
-        by: "semester",
-        orderBy: {
-          semester: "asc",
-        },
-        _count: true,
-      })
-      .then((val) =>
-        val.map((item) => ({ key: item.semester, value: item._count })),
-      );
 
     return { statistic, frsBySemester };
   }),

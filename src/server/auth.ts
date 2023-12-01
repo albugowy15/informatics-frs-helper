@@ -88,19 +88,15 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials) {
-          return null;
+          throw new Error("Username dan password kosong");
         }
         try {
-          const res = await handleLogin(
-            credentials.username,
-            credentials.password,
-          );
-          return res;
+          return await handleLogin(credentials.username, credentials.password);
         } catch (e: unknown) {
           if (e instanceof Error) {
             throw new Error(e.message);
           } else {
-            throw new Error("An unknown error occurred");
+            throw new Error("INTERNAL ERROR");
           }
         }
       },
