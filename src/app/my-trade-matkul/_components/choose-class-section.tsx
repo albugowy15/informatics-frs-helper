@@ -26,12 +26,12 @@ interface ChooseClassSectionProps {
   variant: "has" | "want";
 }
 
-const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
+const ChooseClassSection = (props: ChooseClassSectionProps) => {
   const formCtx = useFormContext<CreateTradeMatkulFormSchema>();
   const semesterField =
-    variant == "has" ? "hasMatkulSemester" : "searchMatkulSemester";
-  const subjectField = variant == "has" ? "hasMatkul" : "searchMatkul";
-  const classField = variant == "has" ? "hasClass" : "searchClass";
+    props.variant == "has" ? "hasMatkulSemester" : "searchMatkulSemester";
+  const subjectField = props.variant == "has" ? "hasMatkul" : "searchMatkul";
+  const classField = props.variant == "has" ? "hasClass" : "searchClass";
 
   const semesterWatch = useWatch({
     control: formCtx.control,
@@ -51,7 +51,7 @@ const ChooseClassSection = ({ variant }: ChooseClassSectionProps) => {
   return (
     <div className="flex w-full flex-col gap-2">
       <Typography variant="h4">
-        Kelas yang {variant == "has" ? "Dimiliki" : "Diinginkan"}
+        Kelas yang {props.variant == "has" ? "Dimiliki" : "Diinginkan"}
       </Typography>
       <FormField
         control={formCtx.control}

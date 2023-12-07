@@ -33,11 +33,7 @@ const filterSchema = z.object({
 
 type FilterForm = z.infer<typeof filterSchema>;
 
-const TradingFilterForm = ({
-  submitAction,
-}: {
-  submitAction?: React.ReactNode;
-}) => {
+const TradingFilterForm = (props: { submitAction?: React.ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -125,7 +121,7 @@ const TradingFilterForm = ({
             </FormItem>
           )}
         />
-        {submitAction}
+        {props.submitAction}
       </form>
     </Form>
   );

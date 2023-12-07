@@ -34,8 +34,8 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
     "@planetscale/database": "^1.11.0",
-    "@prisma/adapter-planetscale": "^5.6.0",
-    "@prisma/client": "^5.6.0",
+    "@prisma/adapter-planetscale": "^5.7.0",
+    "@prisma/client": "^5.7.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -66,10 +66,11 @@
     "react-hook-form": "^7.48.2",
     "recharts": "^2.10.3",
     "resend": "^2.0.0",
+    "server-only": "^0.0.1",
     "superjson": "^2.2.1",
-    "tailwind-merge": "^2.0.0",
+    "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
-    "undici": "^5.28.2",
+    "undici": "^6.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -79,11 +80,11 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/eslint": "^8.44.8",
     "@types/jsonwebtoken": "^9.0.5",
-    "@types/node": "20.10.2",
-    "@types/react": "18.2.40",
+    "@types/node": "20.10.3",
+    "@types/react": "18.2.42",
     "@types/react-dom": "18.2.17",
-    "@typescript-eslint/eslint-plugin": "^6.13.1",
-    "@typescript-eslint/parser": "^6.13.1",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
     "autoprefixer": "^10.4.16",
     "clsx": "^2.0.0",
     "eslint": "8.55.0",
@@ -91,9 +92,9 @@
     "eslint-plugin-unused-imports": "^3.0.0",
     "postcss": "^8.4.32",
     "prettier": "^3.1.0",
-    "prettier-plugin-tailwindcss": "^0.5.7",
-    "prisma": "^5.6.0",
-    "tailwindcss": "^3.3.5",
+    "prettier-plugin-tailwindcss": "^0.5.9",
+    "prisma": "^5.7.0",
+    "tailwindcss": "^3.3.6",
     "typescript": "5.3.2"
   }
 }

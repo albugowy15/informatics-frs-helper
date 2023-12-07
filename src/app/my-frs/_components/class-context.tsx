@@ -8,19 +8,18 @@ export const ClassContext = createContext<{
   setClassTaken: React.Dispatch<React.SetStateAction<PlanDetailClass[]>>;
 } | null>(null);
 
-const ClassContextProvider = ({
-  children,
-  planDetailClass,
-}: {
+interface ClassContextProvider {
   children: React.ReactNode;
   planDetailClass?: PlanDetailClass[];
-}) => {
+}
+
+const ClassContextProvider = (props: ClassContextProvider) => {
   const [classTaken, setClassTaken] = useState<PlanDetailClass[]>(
-    planDetailClass ? planDetailClass : [],
+    props.planDetailClass ? props.planDetailClass : [],
   );
   return (
     <ClassContext.Provider value={{ classTaken, setClassTaken }}>
-      {children}
+      {props.children}
     </ClassContext.Provider>
   );
 };

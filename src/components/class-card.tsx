@@ -19,41 +19,31 @@ export interface ClassCardProps {
   children?: React.ReactNode;
 }
 
-const CounterBadge = ({
-  count,
-  size,
-}: {
-  count: number;
-  size?: "base" | "sm";
-}) => {
+const CounterBadge = (props: { count: number; size?: "base" | "sm" }) => {
   return (
     <Typography
       variant="label1"
-      className={cn([size == "sm" && "text-xs"], "pt-1")}
+      className={cn([props.size == "sm" && "text-xs"], "pt-1")}
     >
       Diambil{" "}
       <span
         className={cn(
           [
-            count <= 10 && "text-green-600",
-            count >= 11 && count <= 20 && "text-yellow-500",
-            count >= 21 && "text-red-600",
+            props.count <= 10 && "text-green-600",
+            props.count >= 11 && props.count <= 20 && "text-yellow-500",
+            props.count >= 21 && "text-red-600",
           ],
           "font-medium",
         )}
       >
-        {count}
+        {props.count}
       </span>{" "}
       kali
     </Typography>
   );
 };
 
-export const ClassCard = ({
-  data,
-  children,
-  size = "base",
-}: ClassCardProps) => {
+export const ClassCard = ({ size = "base", ...props }: ClassCardProps) => {
   return (
     <Card>
       <div className="space-y-1 p-2 lg:p-3">
@@ -61,9 +51,10 @@ export const ClassCard = ({
           variant="body1"
           className={cn([size == "sm" && "text-sm"], "font-medium")}
         >
-          {data.subjectName} {data.subjectCode} ({data.sks} sks)
+          {props.data.subjectName} {props.data.subjectCode} ({props.data.sks}{" "}
+          sks)
         </Typography>
-        {data.lecturers.map((lecturer) => (
+        {props.data.lecturers.map((lecturer) => (
           <Typography
             variant="label1"
             className={cn([size == "sm" && "text-xs"], "font-normal")}
@@ -72,18 +63,18 @@ export const ClassCard = ({
             {lecturer.fullname}
           </Typography>
         ))}
-        {data.day != null && data.sessionTime != null ? (
+        {props.data.day != null && props.data.sessionTime != null ? (
           <Typography
             variant="label1"
             className={cn([size == "sm" && "text-xs"], "font-normal")}
           >
-            {data.day}, {data.sessionTime} WIB
+            {props.data.day}, {props.data.sessionTime} WIB
           </Typography>
         ) : null}
 
-        <CounterBadge count={data.taken} size={size} />
+        <CounterBadge count={props.data.taken} size={size} />
         <div className="py-1" />
-        {children}
+        {props.children}
       </div>
     </Card>
   );

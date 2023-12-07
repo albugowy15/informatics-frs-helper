@@ -22,7 +22,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 type ResetPasswordForm = z.infer<typeof resetPasswordSchema>;
 
-const ResetPasswordForm = ({ token }: { token: string }) => {
+const ResetPasswordForm = (props: { token: string }) => {
   const form = useForm<ResetPasswordForm>({
     resolver: zodResolver(resetPasswordSchema),
   });
@@ -46,7 +46,7 @@ const ResetPasswordForm = ({ token }: { token: string }) => {
   });
   const onSubmit: SubmitHandler<ResetPasswordForm> = (data) => {
     mutateResetPassword.mutate({
-      token: token,
+      token: props.token,
       newPassword: data.newPassword,
     });
   };

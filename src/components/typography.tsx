@@ -1,8 +1,12 @@
 import { cn } from "@/lib/utils";
 
-export type TypographyVariants = "h1" | "h2" | "h3" | "h4" | "body1" | "label1";
-
+type TypographyVariants = "h1" | "h2" | "h3" | "h4" | "body1" | "label1";
 type Heading = "h1" | "h2" | "h3" | "h4";
+type TypographyProps<T extends React.ElementType> = {
+  variant: TypographyVariants;
+  children: React.ReactNode;
+  className?: string;
+} & React.ComponentPropsWithoutRef<T>;
 
 const variantsMapping: Record<TypographyVariants, Heading | "p"> = {
   h1: "h1",
@@ -12,12 +16,6 @@ const variantsMapping: Record<TypographyVariants, Heading | "p"> = {
   body1: "p",
   label1: "p",
 };
-
-type TypographyProps<T extends React.ElementType> = {
-  variant: TypographyVariants;
-  children: React.ReactNode;
-  className?: string;
-} & React.ComponentPropsWithoutRef<T>;
 
 const Typography = <T extends React.ElementType>({
   variant,

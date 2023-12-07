@@ -7,7 +7,7 @@ import { api } from "@/trpc/react";
 import React from "react";
 import { useToast } from "@/components/ui/use-toast";
 
-const ClassCardActionButton = ({ data }: { data: PlanDetailClass }) => {
+const ClassCardActionButton = (props: { data: PlanDetailClass }) => {
   const context = React.useContext(ClassContext);
   const [pickClass, setPickClass] = React.useState<PlanDetailClass>();
   const { toast } = useToast();
@@ -48,7 +48,11 @@ const ClassCardActionButton = ({ data }: { data: PlanDetailClass }) => {
   };
 
   return (
-    <Button variant="secondary" size="sm" onClick={() => handleTakeClass(data)}>
+    <Button
+      variant="secondary"
+      size="sm"
+      onClick={() => handleTakeClass(props.data)}
+    >
       Ambil
     </Button>
   );

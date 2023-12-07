@@ -26,11 +26,7 @@ import { filterSchema } from "../schema";
 
 type FilterForm = z.infer<typeof filterSchema>;
 
-const ScheduleFilterForm = ({
-  submitAction,
-}: {
-  submitAction?: React.ReactNode;
-}) => {
+const ScheduleFilterForm = (props: { submitAction?: React.ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -113,7 +109,7 @@ const ScheduleFilterForm = ({
             </FormItem>
           )}
         />
-        {submitAction}
+        {props.submitAction}
       </form>
     </Form>
   );

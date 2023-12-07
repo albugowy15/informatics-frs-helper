@@ -39,18 +39,12 @@ const createFRSFormSchema = z.object({
 
 type CreateFRSFormType = z.infer<typeof createFRSFormSchema>;
 
-const FRSForm = ({
-  planDetail,
-  planId,
-}: {
-  planDetail?: PlanDetailProps;
-  planId?: string;
-}) => {
+const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
   const form = useForm<CreateFRSFormType>({
     resolver: zodResolver(createFRSFormSchema),
     defaultValues: {
-      title: planDetail?.title ?? "",
-      semester: planDetail ? planDetail.semester.toString() : "",
+      title: props.planDetail?.title ?? "",
+      semester: props.planDetail ? props.planDetail.semester.toString() : "",
     },
   });
   const context = React.useContext(ClassContext);
@@ -96,14 +90,14 @@ const FRSForm = ({
   const onSubmit: SubmitHandler<CreateFRSFormType> = (data) => {
     if (context && context.classTaken.length > 0) {
       const subjects = context.classTaken.map((val) => val.id);
-      if (planDetail) {
+      if (props.planDetail) {
         mutateUpdatePlan.mutate({
           data: {
             title: data.title,
             semester: parseInt(data.semester),
             matkul: subjects,
           },
-          planId: planId ?? "",
+          planId: props.planId ?? "",
         });
       } else {
         mutateCreatePlan.mutate({

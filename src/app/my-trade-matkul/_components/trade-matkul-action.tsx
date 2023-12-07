@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
 import { useToast } from "@/components/ui/use-toast";
 
-const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
+const TradeMatkulAction = (props: { tradeMatkulId: string }) => {
   const { toast } = useToast();
   const mutateDeleteTradeMatkul =
     api.tradeMatkul.deleteMyTradeMatkul.useMutation({
@@ -38,7 +38,7 @@ const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
       },
     });
   const handleDeleteTradeMatkul = () => {
-    mutateDeleteTradeMatkul.mutate({ tradeMatkulId });
+    mutateDeleteTradeMatkul.mutate({ tradeMatkulId: props.tradeMatkulId });
   };
   return (
     <div className="flex gap-2">
@@ -47,7 +47,7 @@ const TradeMatkulAction = ({ tradeMatkulId }: { tradeMatkulId: string }) => {
         asChild
         disabled={mutateDeleteTradeMatkul.isLoading}
       >
-        <Link href={"/my-trade-matkul/edit/" + tradeMatkulId}>
+        <Link href={"/my-trade-matkul/edit/" + props.tradeMatkulId}>
           <Pencil className="mr-2 h-4 w-4" />
           Update
         </Link>

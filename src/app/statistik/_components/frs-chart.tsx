@@ -3,7 +3,7 @@
 import { type FrsBySemester } from "@/server/api/routers/common";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
-export const FrsSemesterChart = ({ data }: { data: FrsBySemester[] }) => {
+export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
   const renderCustomBarLabel = ({
     x,
     y,
@@ -31,7 +31,7 @@ export const FrsSemesterChart = ({ data }: { data: FrsBySemester[] }) => {
 
   return (
     <ResponsiveContainer width="100%" height={350}>
-      <BarChart data={data}>
+      <BarChart data={props.data}>
         <XAxis
           dataKey="key"
           stroke="#888888"

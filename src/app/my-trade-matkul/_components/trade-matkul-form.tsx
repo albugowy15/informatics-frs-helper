@@ -67,18 +67,19 @@ interface TradeMatkulFormProps {
   prevData?: TradeMatkul;
 }
 
-const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
+const TradeMatkulForm = (props: TradeMatkulFormProps) => {
   const router = useRouter();
   const form = useForm<CreateTradeMatkulFormSchema>({
     resolver: zodResolver(createTradeMatkulFormSchema),
     defaultValues: {
-      hasClass: prevData?.hasMatkul.id,
-      description: prevData?.description,
-      hasMatkul: prevData?.hasMatkul.Matkul.id,
-      hasMatkulSemester: prevData?.hasMatkul.Matkul.semester.toString(),
-      searchClass: prevData?.searchMatkul.id,
-      searchMatkul: prevData?.searchMatkul.Matkul.id,
-      searchMatkulSemester: prevData?.searchMatkul.Matkul.semester.toString(),
+      hasClass: props.prevData?.hasMatkul.id,
+      description: props.prevData?.description,
+      hasMatkul: props.prevData?.hasMatkul.Matkul.id,
+      hasMatkulSemester: props.prevData?.hasMatkul.Matkul.semester.toString(),
+      searchClass: props.prevData?.searchMatkul.id,
+      searchMatkul: props.prevData?.searchMatkul.Matkul.id,
+      searchMatkulSemester:
+        props.prevData?.searchMatkul.Matkul.semester.toString(),
     },
   });
   const { toast } = useToast();
@@ -121,12 +122,12 @@ const TradeMatkulForm = ({ prevData }: TradeMatkulFormProps) => {
   );
 
   const onSubmit: SubmitHandler<CreateTradeMatkulFormSchema> = (data) => {
-    if (prevData) {
+    if (props.prevData) {
       mutateUpdateTradeMatkul.mutate({
         description: data.description,
         hasClassId: data.hasClass,
         searchClassId: data.searchClass,
-        tradeMatkulId: prevData.id,
+        tradeMatkulId: props.prevData.id,
       });
     } else {
       mutateCreateTradeMatkul.mutate({

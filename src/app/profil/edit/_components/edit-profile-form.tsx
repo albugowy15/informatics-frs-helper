@@ -23,16 +23,16 @@ type EditProfileFormType = z.infer<typeof editProfileSchema>;
 
 type UserProfile = RouterOutputs["user"]["getUserProfile"];
 
-const EditProfileForm = ({ userProfile }: { userProfile: UserProfile }) => {
+const EditProfileForm = (props: { userProfile: UserProfile }) => {
   const form = useForm<EditProfileFormType>({
     resolver: zodResolver(editProfileSchema),
 
     defaultValues: {
-      fullname: userProfile.fullname ?? "",
-      username: userProfile.username ?? "",
-      email: userProfile.email ?? "",
-      idLine: userProfile.idLine ?? "",
-      whatsapp: userProfile.whatsapp ?? "",
+      fullname: props.userProfile.fullname ?? "",
+      username: props.userProfile.username ?? "",
+      email: props.userProfile.email ?? "",
+      idLine: props.userProfile.idLine ?? "",
+      whatsapp: props.userProfile.whatsapp ?? "",
     },
   });
   const { toast } = useToast();

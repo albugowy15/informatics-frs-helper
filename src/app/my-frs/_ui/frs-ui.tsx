@@ -13,10 +13,10 @@ import Loader from "@/components/loader";
 import FRSForm from "@/app/my-frs/_components/frs-form";
 import ClassAccordion from "@/app/_components/class-accordion";
 
-const FrsUi = ({ planDetail, planId, params }: FrsUiProps) => {
+const FrsUi = (props: FrsUiProps) => {
   return (
     <main className="relative mt-4 flex flex-col gap-2 lg:flex-row">
-      <ClassContextProvider planDetailClass={planDetail?.Class}>
+      <ClassContextProvider planDetailClass={props.planDetail?.Class}>
         <aside className="lg:sticky lg:top-4 lg:max-h-screen lg:w-[30%] lg:flex-shrink-0 lg:overflow-y-auto lg:pr-2">
           <Card>
             <CardHeader>
@@ -26,7 +26,7 @@ const FrsUi = ({ planDetail, planId, params }: FrsUiProps) => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <FRSForm planId={planId} planDetail={planDetail} />
+              <FRSForm planId={props.planId} planDetail={props.planDetail} />
             </CardContent>
           </Card>
         </aside>
@@ -42,8 +42,8 @@ const FrsUi = ({ planDetail, planId, params }: FrsUiProps) => {
                 <Suspense fallback={<Loader message="Memfilter jadwal" />}>
                   <ClassAccordion
                     withAction
-                    semester={params.semester}
-                    subject={params.subject}
+                    semester={props.params.semester}
+                    subject={props.params.subject}
                   />
                 </Suspense>
               </div>

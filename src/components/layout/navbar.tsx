@@ -14,11 +14,7 @@ import { type Navigation } from "@/config/navigation";
 import UserNav from "./header/user-nav";
 import React from "react";
 
-interface NavbarProps {
-  items: Navigation[];
-}
-
-const Navbar = ({ items }: NavbarProps) => {
+const Navbar = (props: { items: Navigation[] }) => {
   return (
     <header className="flex items-center justify-between border-b px-3 py-2 md:container">
       <nav className="hidden items-center space-x-4 md:flex lg:space-x-6">
@@ -28,7 +24,7 @@ const Navbar = ({ items }: NavbarProps) => {
         >
           TC FRS Helper
         </Link>
-        {items.map((item) => (
+        {props.items.map((item) => (
           <Link
             key={item.url}
             href={item.url}
@@ -49,7 +45,7 @@ const Navbar = ({ items }: NavbarProps) => {
             <Link href="/" className="font-bold">
               TC FRS Helper
             </Link>
-            {items.map((item) => (
+            {props.items.map((item) => (
               <SheetClose key={item.url} asChild>
                 <Link href={item.url} key={item.name}>
                   {item.name}

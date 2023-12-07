@@ -9,18 +9,23 @@ import {
 import { api } from "@/trpc/server";
 import ClassCardActionButton from "../my-frs/_components/class-card-action-button";
 
-const ClassAccordion = async ({
-  semester,
-  subject,
-  withAction = false,
-}: {
+interface ClassAccordionProps {
   semester?: string;
   subject?: string;
   withAction?: boolean;
-}) => {
+}
+
+const ClassAccordion = async ({
+  withAction = false,
+  ...props
+}: ClassAccordionProps) => {
   const classes = await api.common.getClass.query({
-    semester: semester === undefined ? parseInt("1") : parseInt(semester),
-    matkul: subject === "Semua" || subject === undefined ? undefined : subject,
+    semester:
+      props.semester === undefined ? parseInt("1") : parseInt(props.semester),
+    matkul:
+      props.subject === "Semua" || props.subject === undefined
+        ? undefined
+        : props.subject,
     with_taken: true,
   });
 

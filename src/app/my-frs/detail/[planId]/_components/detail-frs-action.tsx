@@ -17,13 +17,7 @@ import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
 import { useToast } from "@/components/ui/use-toast";
 
-const DetailFrsAction = ({
-  frsTitle,
-  planId,
-}: {
-  frsTitle: string;
-  planId: string;
-}) => {
+const DetailFrsAction = (props: { frsTitle: string; planId: string }) => {
   const { toast } = useToast();
   const mutateDeleteFrsPlan = api.frs.deletePlan.useMutation({
     onSuccess: () => {
@@ -42,7 +36,7 @@ const DetailFrsAction = ({
     },
   });
   const handleDeleteFrsPlan = () => {
-    mutateDeleteFrsPlan.mutate({ planId: planId });
+    mutateDeleteFrsPlan.mutate({ planId: props.planId });
   };
   return (
     <div className="flex items-center gap-3">
@@ -57,7 +51,7 @@ const DetailFrsAction = ({
             Please wait..
           </>
         ) : (
-          <Link href={"/my-frs/edit/" + planId}>
+          <Link href={"/my-frs/edit/" + props.planId}>
             <Pencil className="mr-2 h-4 w-4" />
             Ubah
           </Link>
@@ -86,8 +80,10 @@ const DetailFrsAction = ({
             </AlertDialogTitle>
             <AlertDialogDescription>
               Anda benar-benar yakin ingin menghapus rencana FRS :{" "}
-              <span className="font-bold text-orange-600">{frsTitle}</span>?
-              Tindakan ini akan menghapus rencana FRS tersebut secara permanen
+              <span className="font-bold text-orange-600">
+                {props.frsTitle}
+              </span>
+              ? Tindakan ini akan menghapus rencana FRS tersebut secara permanen
               dari akun Anda.
             </AlertDialogDescription>
           </AlertDialogHeader>
