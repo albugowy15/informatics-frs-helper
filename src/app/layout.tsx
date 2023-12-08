@@ -1,14 +1,13 @@
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 import React from "react";
-
 import "@/styles/globals.css";
-
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-
 import { homeNavigation } from "@/config/navigation";
 import { TRPCReactProvider } from "@/trpc/react";
 
@@ -39,6 +38,8 @@ export default function RootLayout({
             <Footer />
           </ThemeProvider>
         </TRPCReactProvider>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
