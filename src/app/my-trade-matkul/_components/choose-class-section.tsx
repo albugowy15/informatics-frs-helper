@@ -1,7 +1,6 @@
 "use client";
 
 import { useFormContext, useWatch } from "react-hook-form";
-
 import Typography from "@/components/typography";
 import {
   FormControl,
@@ -17,7 +16,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { type CreateTradeMatkulFormSchema } from "@/app/my-trade-matkul/_components/trade-matkul-form";
 import { SemesterWithKey } from "@/config/contants";
 import { api } from "@/trpc/react";
@@ -32,6 +30,8 @@ const ChooseClassSection = (props: ChooseClassSectionProps) => {
     props.variant == "has" ? "hasMatkulSemester" : "searchMatkulSemester";
   const subjectField = props.variant == "has" ? "hasMatkul" : "searchMatkul";
   const classField = props.variant == "has" ? "hasClass" : "searchClass";
+  const sectionTitle =
+    props.variant == "has" ? "Dimiliki (Have)" : "Diinginkan (Want)";
 
   const semesterWatch = useWatch({
     control: formCtx.control,
@@ -50,9 +50,7 @@ const ChooseClassSection = (props: ChooseClassSectionProps) => {
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <Typography variant="h4">
-        Kelas yang {props.variant == "has" ? "Dimiliki" : "Diinginkan"}
-      </Typography>
+      <Typography variant="h4">Kelas yang {sectionTitle}</Typography>
       <FormField
         control={formCtx.control}
         name={semesterField}
