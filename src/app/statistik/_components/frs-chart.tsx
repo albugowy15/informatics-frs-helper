@@ -1,7 +1,14 @@
 "use client";
 
 import { type FrsBySemester } from "@/server/api/routers/common";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  Label,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
   const renderCustomBarLabel = ({
@@ -38,13 +45,23 @@ export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
           fontSize={12}
           tickLine={false}
           axisLine={false}
-        />
-        <YAxis
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        />
+        >
+          <Label
+            position="insideBottom"
+            value="Semester"
+            fontSize={14}
+            offset={0}
+          />
+        </XAxis>
+        <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false}>
+          <Label
+            position="insideLeft"
+            fontSize={12}
+            offset={15}
+            value="Total FRS"
+            angle={-90}
+          />
+        </YAxis>
         <Bar
           dataKey="value"
           fill="#adfa1d"
