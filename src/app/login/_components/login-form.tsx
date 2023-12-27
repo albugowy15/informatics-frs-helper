@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 const loginSchema = z.object({
   username: z
@@ -43,7 +43,6 @@ const LoginForm = () => {
   });
   const { handleSubmit } = form;
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const { toast } = useToast();
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     setButtonDisabled(true);
     const signIn = (await import("next-auth/react")).signIn;
@@ -54,27 +53,16 @@ const LoginForm = () => {
     })
       .then((res) => {
         if (res?.ok) {
-          toast({
-            title: "Success",
-            description: "Login berhasil",
-          });
+          toast.success("Login Berhasil");
           setButtonDisabled(false);
           window.location.replace("/");
         } else {
-          toast({
-            variant: "destructive",
-            title: "Error",
-            description: res?.error,
-          });
+          toast.error(res?.error);
           setButtonDisabled(false);
         }
       })
       .catch(() => {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: "Terjadi kesalahan",
-        });
+        toast.error("Terjadi kesalahan");
       });
   };
 

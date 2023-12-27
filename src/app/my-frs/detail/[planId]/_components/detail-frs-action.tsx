@@ -15,24 +15,16 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 const DetailFrsAction = (props: { frsTitle: string; planId: string }) => {
-  const { toast } = useToast();
   const mutateDeleteFrsPlan = api.frs.deletePlan.useMutation({
     onSuccess: () => {
-      toast({
-        title: "Success",
-        description: "Berhasil menghapus rencana FRS",
-      });
+      toast.success("Berhasil menghapus rencana FRS");
       window.location.replace("/my-frs");
     },
     onError: (error) => {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.message,
-      });
+      toast.error(error.message);
     },
   });
   const handleDeleteFrsPlan = () => {

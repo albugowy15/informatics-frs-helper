@@ -16,29 +16,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { api } from "@/trpc/react";
 import { forgotPasswordSchema } from "../schema";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
 
 const ForgotPasswordForm = () => {
-  const { toast } = useToast();
   const form = useForm<ForgotPasswordForm>({
     resolver: zodResolver(forgotPasswordSchema),
   });
   const mutateForgotPassword = api.user.resetPassword.useMutation({
     onSuccess: () => {
-      toast({
-        variant: "default",
-        title: "Success",
-        description: "Reset password berhasil, silahkan cek email",
-      });
+      toast.success("Reset password berhasil, silahkan cek email");
     },
     onError(error) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.message,
-      });
+      toast.error(error.message);
     },
   });
   const onSubmit: SubmitHandler<ForgotPasswordForm> = (data) => {

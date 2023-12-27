@@ -7,9 +7,9 @@ import "@/styles/globals.css";
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
 import { homeNavigation } from "@/config/navigation";
 import { TRPCReactProvider } from "@/trpc/react";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,7 +32,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Toaster />
+            <Toaster closeButton richColors expand={false} />
             <Navbar items={homeNavigation} />
             <div className="px-3 py-5 md:container">{children}</div>
             <Footer />
