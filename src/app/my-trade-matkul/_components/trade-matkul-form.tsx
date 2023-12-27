@@ -20,7 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import ChooseClassSection from "@/app/my-trade-matkul/_components/choose-class-section";
 import { type TradeMatkul } from "@/app/my-trade-matkul/types";
 import { api } from "@/trpc/react";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 const createTradeMatkulFormSchema = z.object({
   hasMatkul: z
@@ -82,41 +82,25 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
         props.prevData?.searchMatkul.Matkul.semester.toString(),
     },
   });
-  const { toast } = useToast();
-
   const mutateCreateTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation(
     {
       onSuccess: () => {
-        toast({
-          title: "Success",
-          description: "Berhasil membuat post trade matkul",
-        });
+        toast.success("Berhasil membuat post trade matkul");
         window.location.replace("/my-trade-matkul");
       },
       onError: (error) => {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: error.message,
-        });
+        toast.error(error.message);
       },
     },
   );
   const mutateUpdateTradeMatkul = api.tradeMatkul.updateTradeMatkul.useMutation(
     {
       onSuccess: () => {
-        toast({
-          title: "Success",
-          description: "Berhasil membuat post trade matkul",
-        });
+        toast.success("Berhasil memperbarui post trade matkul");
         window.location.replace("/my-trade-matkul/");
       },
       onError: (error) => {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: error.message,
-        });
+        toast.error(error.message);
       },
     },
   );

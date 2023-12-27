@@ -30,7 +30,7 @@ import { api } from "@/trpc/react";
 import React from "react";
 import { titleSchema } from "../schema";
 import { requiredSemesterStringSchema } from "@/lib/schema";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 const createFRSFormSchema = z.object({
   title: titleSchema,
@@ -53,37 +53,23 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
       ? context.classTaken.reduce((acc, cur) => acc + cur.Matkul.sks, 0)
       : 0;
   }, [context]);
-  const { toast } = useToast();
 
   const mutateUpdatePlan = api.frs.updatePlan.useMutation({
     onSuccess: () => {
-      toast({
-        title: "Success",
-        description: "Berhasil memperbarui rencana FRS",
-      });
+      toast.success("Berhasil memperbarui rencana FRS");
       window.location.replace("/my-frs");
     },
     onError: (error) => {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.message,
-      });
+      toast.error(error.message);
     },
   });
   const mutateCreatePlan = api.frs.createPlan.useMutation({
     onSuccess: () => {
-      toast({
-        title: "Success",
-        description: "Berhasil membuat rencana FRS",
-      });
+      toast.success("Berhasil membuat rencana FRS");
       window.location.replace("/my-frs");
     },
     onError: (error) => {
-      toast({
-        title: "Error",
-        description: error.message,
-      });
+      toast.error(error.message);
     },
   });
 
@@ -107,11 +93,7 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
         });
       }
     } else {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: "Kamu belum mengambil kelas sama sekali",
-      });
+      toast.error("Kamu belum mengambil kelas sama sekali");
     }
   };
 

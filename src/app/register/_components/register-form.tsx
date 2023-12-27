@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { api } from "@/trpc/react";
 import { registerSchema } from "../schema";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
@@ -27,20 +27,13 @@ const RegisterForm = () => {
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
-  const { toast } = useToast();
   const mutateRegister = api.user.register.useMutation({
     onSuccess: () => {
-      toast({
-        title: "Success",
-        description: "Akun berhasil dibuat, silahkan login",
-      });
+      toast.success("Akun berhasil dibuat, silahkan login");
       window.location.replace("/login");
     },
     onError: (error) => {
-      toast({
-        title: "Error",
-        description: error.message,
-      });
+      toast.error(error.message);
     },
   });
 

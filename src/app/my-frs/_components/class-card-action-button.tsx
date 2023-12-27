@@ -5,12 +5,11 @@ import { ClassContext } from "@/app/my-frs/_components/class-context";
 import { type PlanDetailClass } from "@/app/my-frs/types";
 import { api } from "@/trpc/react";
 import React from "react";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 const ClassCardActionButton = (props: { data: PlanDetailClass }) => {
   const context = React.useContext(ClassContext);
   const [pickClass, setPickClass] = React.useState<PlanDetailClass>();
-  const { toast } = useToast();
   const validateClassTaken = api.frs.validatePlan.useMutation({
     onSuccess: () => {
       if (pickClass) {
@@ -19,17 +18,10 @@ const ClassCardActionButton = (props: { data: PlanDetailClass }) => {
           pickClass,
         ]);
       }
-      toast({
-        title: "Success",
-        description: "Berhasil mengambil kelas",
-      });
+      toast.success("Berhasil mengambil kelas");
     },
     onError: (error) => {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: error.message,
-      });
+      toast.error(error.message);
     },
   });
 

@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { api } from "@/trpc/react";
 import { changePasswordSchema } from "../schema";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 type CreatePasswordForm = z.infer<typeof changePasswordSchema>;
 
@@ -27,21 +27,13 @@ const ChangePasswordForm = () => {
     resolver: zodResolver(changePasswordSchema),
   });
   const router = useRouter();
-  const { toast } = useToast();
   const mutatePassword = api.user.changePassword.useMutation({
     onSuccess: () => {
-      toast({
-        title: "Success",
-        description: "Password berhasil diubah",
-      });
+      toast.success("Password berhasil diubah");
       router.push("/");
     },
     onError: (error) => {
-      toast({
-        title: "Error",
-        variant: "destructive",
-        description: error.message,
-      });
+      toast.error(error.message);
     },
   });
   const onSubmit: SubmitHandler<CreatePasswordForm> = (data) => {

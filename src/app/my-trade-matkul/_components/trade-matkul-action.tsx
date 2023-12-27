@@ -2,7 +2,6 @@
 
 import { Loader2, Pencil, Trash } from "lucide-react";
 import Link from "next/link";
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,25 +15,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 
 const TradeMatkulAction = (props: { tradeMatkulId: string }) => {
-  const { toast } = useToast();
   const mutateDeleteTradeMatkul =
     api.tradeMatkul.deleteMyTradeMatkul.useMutation({
       onSuccess: () => {
-        toast({
-          title: "Success",
-          description: "Berhasil menghapus Trade matkul",
-        });
+        toast.success("Berhasil menghapus Trade matkul");
         window.location.replace("/my-trade-matkul");
       },
       onError: (error) => {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: error.message,
-        });
+        toast.error(error.message);
       },
     });
   const handleDeleteTradeMatkul = () => {
