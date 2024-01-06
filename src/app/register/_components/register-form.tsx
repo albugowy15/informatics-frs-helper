@@ -107,11 +107,14 @@ const RegisterForm = () => {
             )}
           </Button>
         </div>
-        <Typography variant="body1" className="text-center">
+        <Typography variant="body1" className="text-center text-sm">
           Sudah punya akun?
-          <Button variant="link" asChild>
-            <Link href="/login">Login</Link>
-          </Button>
+          <Link
+            href="/login"
+            className="ml-2 font-bold underline transition-colors hover:text-primary"
+          >
+            Login
+          </Link>
         </Typography>
       </form>
     </Form>

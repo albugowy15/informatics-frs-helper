@@ -111,17 +111,17 @@ const LoginForm = () => {
 
           <Link
             href="/lupa-password"
-            className="mt-2 text-sm underline transition-colors hover:text-primary"
+            className="mt-2 text-xs underline transition-colors hover:text-primary"
           >
             Lupa Password?
           </Link>
         </div>
 
-        <Typography variant="body1" className="text-center">
+        <Typography variant="body1" className="text-center text-sm">
           Belum punya akun?
           <Link
             href="/register"
-            className="ml-2 underline transition-colors hover:text-primary"
+            className="ml-2 font-bold underline transition-colors hover:text-primary"
           >
             Daftar
           </Link>
