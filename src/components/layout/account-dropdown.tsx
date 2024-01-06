@@ -1,26 +1,19 @@
 "use client";
 
-import {
-  DropdownMenuGroup,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
-import {
-  ShuffleIcon,
-  LockClosedIcon,
-  ExitIcon,
-  PersonIcon,
-  FileTextIcon,
-  DashboardIcon,
-} from "@radix-ui/react-icons";
+import { ExitIcon, DashboardIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { menuNavigation } from "@/config/navigation";
+import React from "react";
 
 const AccountDropdown = () => {
   return (
@@ -34,35 +27,18 @@ const AccountDropdown = () => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/profil">
-              <PersonIcon className="mr-2 h-4 w-4" />
-              <span>Profil</span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/ubah-password">
-              <LockClosedIcon className="mr-2 h-4 w-4" />
-              <span>Ubah Password</span>
-            </Link>
-          </DropdownMenuItem>
+          {menuNavigation.map((menu) => (
+            <React.Fragment key={menu.id}>
+              <DropdownMenuItem asChild>
+                <Link href={menu.url}>
+                  {menu.icon}
+                  <span>{menu.name}</span>
+                </Link>
+              </DropdownMenuItem>
+              {menu.afterSeparator ? <DropdownMenuSeparator /> : null}
+            </React.Fragment>
+          ))}
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link href="/my-frs">
-              <FileTextIcon className="mr-2 h-4 w-4" />
-              <span>myFRS</span>
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/my-trade-matkul">
-              <ShuffleIcon className="mr-2 h-4 w-4" />
-              <span>myTradeMatkul</span>
-            </Link>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem
             onClick={async () => {
