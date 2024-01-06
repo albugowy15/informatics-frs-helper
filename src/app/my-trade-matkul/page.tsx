@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { PlusIcon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
 import Link from "next/link";
 
@@ -26,7 +26,7 @@ export default async function MyTradeMatkulPage() {
 
       <Button asChild className="my-6">
         <Link href="/my-trade-matkul/create">
-          <Plus className="mr-2 h-4 w-4" />
+          <PlusIcon className="mr-2 h-4 w-4" />
           Tambah Post Trade Matkul
         </Link>
       </Button>

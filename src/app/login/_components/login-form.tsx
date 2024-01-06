@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { UpdateIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
@@ -101,7 +101,7 @@ const LoginForm = () => {
           <Button type="submit" disabled={buttonDisabled}>
             {buttonDisabled ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
                 Please wait
               </>
             ) : (

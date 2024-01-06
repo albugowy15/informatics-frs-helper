@@ -1,6 +1,5 @@
-import { SlidersHorizontal } from "lucide-react";
+import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
-
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import TradingFilterForm from "@/app/trading/_components/trading-filter-form";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
@@ -66,7 +64,7 @@ export default async function TradingMatkulPage({
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline">
-              <SlidersHorizontal className="mr-2 h-4 w-4" />
+              <MixerHorizontalIcon className="mr-2 h-4 w-4" />
               Filter
             </Button>
           </PopoverTrigger>

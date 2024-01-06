@@ -5,15 +5,14 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import {
-  ArrowRightLeft,
-  KeyRound,
-  LogOut,
-  Newspaper,
-  User,
-  User2,
-} from "lucide-react";
+  ShuffleIcon,
+  LockClosedIcon,
+  ExitIcon,
+  PersonIcon,
+  FileTextIcon,
+  DashboardIcon,
+} from "@radix-ui/react-icons";
 import Link from "next/link";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -28,7 +27,7 @@ const AccountDropdown = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
-          <User />
+          <DashboardIcon className="h-[1.2rem] w-[1.2rem]" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -37,13 +36,13 @@ const AccountDropdown = () => {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link href="/profil">
-              <User2 className="mr-2 h-4 w-4" />
+              <PersonIcon className="mr-2 h-4 w-4" />
               <span>Profil</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/ubah-password">
-              <KeyRound className="mr-2 h-4 w-4" />
+              <LockClosedIcon className="mr-2 h-4 w-4" />
               <span>Ubah Password</span>
             </Link>
           </DropdownMenuItem>
@@ -52,13 +51,13 @@ const AccountDropdown = () => {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link href="/my-frs">
-              <Newspaper className="mr-2 h-4 w-4" />
+              <FileTextIcon className="mr-2 h-4 w-4" />
               <span>myFRS</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <Link href="/my-trade-matkul">
-              <ArrowRightLeft className="mr-2 h-4 w-4" />
+              <ShuffleIcon className="mr-2 h-4 w-4" />
               <span>myTradeMatkul</span>
             </Link>
           </DropdownMenuItem>
@@ -71,7 +70,7 @@ const AccountDropdown = () => {
               void signOut();
             }}
           >
-            <LogOut className="mr-2 h-4 w-4" />
+            <ExitIcon className="mr-2 h-4 w-4" />
             <span>Logout</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>

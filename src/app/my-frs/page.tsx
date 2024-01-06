@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { PlusIcon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
 import Link from "next/link";
 import Typography from "@/components/typography";
@@ -24,7 +24,7 @@ export default async function FRSPage() {
       {plans.length < 3 ? (
         <Button className="my-6" asChild>
           <Link href="/my-frs/create">
-            <Plus className="mr-2 h-4 w-4" />
+            <PlusIcon className="mr-2 h-4 w-4" />
             Tambah Rencana baru
           </Link>
         </Button>

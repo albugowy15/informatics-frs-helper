@@ -1,4 +1,4 @@
-import { SlidersHorizontal } from "lucide-react";
+import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import {
@@ -60,7 +60,7 @@ export default function SchedulePage({
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline">
-              <SlidersHorizontal className="mr-2 h-4 w-4" />
+              <MixerHorizontalIcon className="mr-2 h-4 w-4" />
               Filter
             </Button>
           </PopoverTrigger>

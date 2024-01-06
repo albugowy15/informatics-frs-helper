@@ -1,4 +1,4 @@
-import { Book, Star } from "lucide-react";
+import { ReaderIcon, StarIcon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
 import Link from "next/link";
 
@@ -28,13 +28,13 @@ export default function Home() {
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-6">
           <Button asChild>
             <Link href="/panduan">
-              <Book className="mr-2 h-4 w-4" />
+              <ReaderIcon className="mr-2 h-4 w-4" />
               Baca Panduan
             </Link>
           </Button>
           <Button variant="secondary" asChild>
             <a href="https://github.com/albugowy15/informatics-frs-helper">
-              <Star className="mr-2 h-4 w-4" />
+              <StarIcon className="mr-2 h-4 w-4" />
               Star me on GitHub
             </a>
           </Button>

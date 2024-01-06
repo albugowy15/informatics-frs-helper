@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, Pencil, Trash } from "lucide-react";
+import { UpdateIcon, Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import {
   AlertDialog,
@@ -39,12 +39,12 @@ const DetailFrsAction = (props: { frsTitle: string; planId: string }) => {
       >
         {mutateDeleteFrsPlan.isLoading ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
             Please wait..
           </>
         ) : (
           <Link href={"/my-frs/edit/" + props.planId}>
-            <Pencil className="mr-2 h-4 w-4" />
+            <Pencil1Icon className="mr-2 h-4 w-4" />
             Ubah
           </Link>
         )}
@@ -54,12 +54,12 @@ const DetailFrsAction = (props: { frsTitle: string; planId: string }) => {
           <Button variant="destructive">
             {mutateDeleteFrsPlan.isLoading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
                 Please wait..
               </>
             ) : (
               <>
-                <Trash className="mr-2 h-4 w-4" />
+                <TrashIcon className="mr-2 h-4 w-4" />
                 Hapus
               </>
             )}

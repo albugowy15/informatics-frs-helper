@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Save } from "lucide-react";
+import { UpdateIcon } from "@radix-ui/react-icons";
 import { FormProvider, type SubmitHandler, useForm } from "react-hook-form";
 import { type z } from "zod";
 
@@ -129,14 +129,11 @@ const EditProfileForm = (props: { userProfile: UserProfile }) => {
         <Button type="submit" disabled={mutation.isLoading}>
           {mutation.isLoading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
               Please wait..
             </>
           ) : (
-            <>
-              <Save className="mr-2 h-4 w-4" />
-              Perbarui Profil
-            </>
+            <>Perbarui Profil</>
           )}
         </Button>
       </form>

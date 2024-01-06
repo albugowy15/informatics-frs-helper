@@ -24,7 +24,7 @@ import {
 
 import { SemesterWithKey } from "@/config/contants";
 import { api } from "@/trpc/react";
-import { Filter } from "lucide-react";
+import { MixerVerticalIcon } from "@radix-ui/react-icons";
 import { matkulSchema } from "../schema";
 import { requiredSemesterStringSchema } from "@/lib/schema";
 
@@ -121,7 +121,7 @@ const TakeClassForm = () => {
         />
 
         <Button type="submit" variant="outline" className="w-fit">
-          <Filter className="mr-2 h-4 w-4" />
+          <MixerVerticalIcon className="mr-2 h-4 w-4" />
           Filter
         </Button>
       </form>

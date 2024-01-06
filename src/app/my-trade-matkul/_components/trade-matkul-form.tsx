@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { UpdateIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -162,7 +162,7 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
             {mutateCreateTradeMatkul.isLoading ||
             mutateUpdateTradeMatkul.isLoading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
                 Please wait..
               </>
             ) : (

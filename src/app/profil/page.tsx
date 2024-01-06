@@ -1,4 +1,4 @@
-import { Pencil } from "lucide-react";
+import { Pencil1Icon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
 import Link from "next/link";
 
@@ -76,7 +76,7 @@ export default async function ProfilePage() {
       <CardFooter className="flex flex-col">
         <Button asChild>
           <Link href="/profil/edit">
-            <Pencil className="mr-2 h-4 w-4" />
+            <Pencil1Icon className="mr-2 h-4 w-4" />
             Edit Profile
           </Link>
         </Button>

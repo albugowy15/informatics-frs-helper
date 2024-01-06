@@ -1,4 +1,4 @@
-import { Loader2, Menu } from "lucide-react";
+import { UpdateIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -37,7 +37,7 @@ const Navbar = (props: { items: Navigation[] }) => {
       <Sheet>
         <SheetTrigger className="md:hidden" asChild>
           <Button aria-label="Menu" variant="outline" size="icon">
-            <Menu className="h-4 w-4" />
+            <HamburgerMenuIcon className="h-4 w-4" />
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
@@ -55,7 +55,9 @@ const Navbar = (props: { items: Navigation[] }) => {
           </div>
         </SheetContent>
       </Sheet>
-      <React.Suspense fallback={<Loader2 className="h-4 w-4 animate-spin" />}>
+      <React.Suspense
+        fallback={<UpdateIcon className="h-4 w-4 animate-spin" />}
+      >
         <UserNav />
       </React.Suspense>
     </header>

@@ -1,5 +1,5 @@
 import { get } from "@vercel/edge-config";
-import { Terminal } from "lucide-react";
+import { RocketIcon } from "@radix-ui/react-icons";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export default async function ScheduleStatusAlert() {
@@ -9,7 +9,7 @@ export default async function ScheduleStatusAlert() {
       variant={scheduleStatus === "UPDATED" ? "default" : "destructive"}
       className="mx-auto mt-8 w-fit"
     >
-      <Terminal className="h-4 w-4" />
+      <RocketIcon className="h-4 w-4" />
       <AlertTitle>{scheduleStatus}</AlertTitle>
       <AlertDescription>
         {scheduleStatus === "UPDATED"

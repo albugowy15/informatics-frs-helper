@@ -1,5 +1,10 @@
 import Typography from "@/components/typography";
-import { Github, Globe, Linkedin, Twitter } from "lucide-react";
+import {
+  GitHubLogoIcon,
+  LinkedInLogoIcon,
+  TwitterLogoIcon,
+  GlobeIcon,
+} from "@radix-ui/react-icons";
 import {
   Tooltip,
   TooltipContent,
@@ -38,7 +43,7 @@ const Footer = () => {
                 href="https://github.com/albugowy15"
                 className="hover:text-primary"
               >
-                <Github className="h-5 w-5" />
+                <GitHubLogoIcon className="h-5 w-5" />
               </a>
             </TooltipTrigger>
             <TooltipContent>albugowy15</TooltipContent>
@@ -49,7 +54,7 @@ const Footer = () => {
           <Tooltip>
             <TooltipTrigger>
               <a href="https://bughowi.com" className="hover:text-primary">
-                <Globe className="h-5 w-5" />
+                <GlobeIcon className="h-5 w-5" />
               </a>
             </TooltipTrigger>
             <TooltipContent>https://bughowi.com</TooltipContent>
@@ -63,7 +68,7 @@ const Footer = () => {
                 href="https://twitter.com/bughowy"
                 className="hover:text-primary"
               >
-                <Twitter className="h-5 w-5" />
+                <TwitterLogoIcon className="h-5 w-5" />
               </a>
             </TooltipTrigger>
             <TooltipContent>@bughowy</TooltipContent>
@@ -77,7 +82,7 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/bughowi/"
                 className="hover:text-primary"
               >
-                <Linkedin className="h-5 w-5" />
+                <LinkedInLogoIcon className="h-5 w-5" />
               </a>
             </TooltipTrigger>
             <TooltipContent>bughowi</TooltipContent>
