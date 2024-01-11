@@ -16,14 +16,15 @@ export default function Home() {
     <>
       <section className="flex flex-col items-center justify-center gap-6">
         <ScheduleStatusAlert />
-        <Link
-          href="/public-api"
+        <a
+          href="https://api-informatics-frs-helper.fly.dev"
+          target="_blank"
           className="inline-flex items-center rounded-lg bg-muted px-3 py-1 text-sm font-medium"
         >
           🎉
           <span className="ml-3">Informatics FRS Helper Public API</span>
           <ArrowRightIcon className="ml-1" />
-        </Link>
+        </a>
       </section>
       <main className="mt-10 flex flex-col items-center justify-center space-y-2 ">
         <Typography variant="h1" className="text-center">

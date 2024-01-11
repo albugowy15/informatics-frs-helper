@@ -32,10 +32,6 @@ export const homeNavigation: Navigation[] = [
     url: "/report",
   },
   {
-    name: "API",
-    url: "/public-api",
-  },
-  {
     name: "Statistik",
     url: "/statistik",
   },
