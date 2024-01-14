@@ -143,7 +143,9 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
         />
 
         <div>
-          <Typography variant="h4">Matkul yang diambil</Typography>
+          <Typography variant="h4" className="text-base font-semibold">
+            Matkul yang diambil
+          </Typography>
           {context && context.classTaken.length > 0 ? (
             <div className="space-y-2">
               {context.classTaken.map((item, index) => (
@@ -171,13 +173,18 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
               ))}
             </div>
           ) : (
-            <Typography variant="label1" className="pt-2 font-normal">
+            <Typography
+              variant="label1"
+              className="pt-2 text-sm font-normal text-muted-foreground"
+            >
               Kamu belum mengambil matkul apapun
             </Typography>
           )}
         </div>
 
-        <Typography variant="h4">Total SKS : {sks}</Typography>
+        <Typography variant="h4" className="text-base font-semibold">
+          Total SKS : {sks}
+        </Typography>
         <Button
           type="submit"
           disabled={mutateCreatePlan.isLoading || mutateUpdatePlan.isLoading}

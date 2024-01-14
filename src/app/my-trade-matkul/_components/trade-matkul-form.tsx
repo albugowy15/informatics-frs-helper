@@ -105,6 +105,9 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
     },
   );
 
+  const isDisabled =
+    mutateCreateTradeMatkul.isLoading || mutateUpdateTradeMatkul.isLoading;
+
   const onSubmit: SubmitHandler<CreateTradeMatkulFormSchema> = (data) => {
     if (props.prevData) {
       mutateUpdateTradeMatkul.mutate({
@@ -125,7 +128,7 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
   return (
     <Form {...form}>
       <form className="flex flex-col" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex flex-col gap-3 md:flex-row md:justify-between">
+        <div className="flex flex-col gap-8 md:flex-row md:justify-between">
           <ChooseClassSection variant="has" />
           <ChooseClassSection variant="want" />
         </div>
@@ -140,6 +143,7 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
               <FormControl>
                 <Textarea
                   placeholder="Plisss... yang mau nuker dapat pahala"
+                  rows={5}
                   {...field}
                 ></Textarea>
               </FormControl>
@@ -152,15 +156,8 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
         />
         <div className="py-4" />
         <div className="flex items-center gap-4">
-          <Button
-            type="submit"
-            disabled={
-              mutateCreateTradeMatkul.isLoading ||
-              mutateUpdateTradeMatkul.isLoading
-            }
-          >
-            {mutateCreateTradeMatkul.isLoading ||
-            mutateUpdateTradeMatkul.isLoading ? (
+          <Button type="submit" disabled={isDisabled}>
+            {isDisabled ? (
               <>
                 <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
                 Please wait..
@@ -171,10 +168,7 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
           </Button>
           <Button
             variant="outline"
-            disabled={
-              mutateCreateTradeMatkul.isLoading ||
-              mutateUpdateTradeMatkul.isLoading
-            }
+            disabled={isDisabled}
             onClick={() => router.back()}
           >
             Batal
