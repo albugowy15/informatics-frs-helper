@@ -74,6 +74,45 @@ export const userRouter = createTRPCRouter({
   updateProfile: protectedProcedure
     .input(editProfileSchema)
     .mutation(async ({ input, ctx }) => {
+      // check email
+      const usersWithSameEmail = await prisma.user.findMany({
+        select: {
+          email: true,
+        },
+        where: {
+          NOT: {
+            id: ctx.session.user.id,
+          },
+          email: input.email,
+        },
+      });
+      if (usersWithSameEmail.length != 0) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Email telah digunakan, silahkan gunakan email lain.",
+        });
+      }
+
+      // check username
+      const userWithSameUsername = await prisma.user.findMany({
+        select: {
+          username: true,
+        },
+        where: {
+          NOT: {
+            id: ctx.session.user.id,
+          },
+          username: input.username,
+        },
+      });
+
+      if (userWithSameUsername.length != 0) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Username telah digunakan, silahkan gunakan username lain.",
+        });
+      }
+
       try {
         await prisma.user.update({
           where: {
