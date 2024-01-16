@@ -34,8 +34,8 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@planetscale/database": "^1.13.0",
-    "@prisma/adapter-planetscale": "^5.8.0",
-    "@prisma/client": "^5.8.0",
+    "@prisma/adapter-planetscale": "^5.8.1",
+    "@prisma/client": "^5.8.1",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -85,8 +85,8 @@
     "@types/node": "20.10.5",
     "@types/react": "18.2.46",
     "@types/react-dom": "18.2.18",
-    "@typescript-eslint/eslint-plugin": "^6.18.1",
-    "@typescript-eslint/parser": "^6.18.1",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
     "autoprefixer": "^10.4.16",
     "clsx": "^2.1.0",
     "eslint": "8.56.0",
@@ -95,7 +95,7 @@
     "postcss": "^8.4.33",
     "prettier": "^3.2.2",
     "prettier-plugin-tailwindcss": "^0.5.11",
-    "prisma": "^5.8.0",
+    "prisma": "^5.8.1",
     "tailwindcss": "^3.4.1",
     "typescript": "5.3.3"
   }
