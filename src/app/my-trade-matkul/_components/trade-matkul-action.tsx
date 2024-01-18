@@ -14,30 +14,23 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { api } from "@/trpc/react";
-import { toast } from "sonner";
+import { useToastMutate } from "@/lib/hooks";
+import { deleteMyTradeMatkulAction } from "../actions";
 
 const TradeMatkulAction = (props: { tradeMatkulId: string }) => {
-  const mutateDeleteTradeMatkul =
-    api.tradeMatkul.deleteMyTradeMatkul.useMutation({
-      onSuccess: () => {
-        toast.success("Berhasil menghapus Trade matkul");
-        window.location.replace("/my-trade-matkul");
-      },
-      onError: (error) => {
-        toast.error(error.message);
-      },
-    });
+  const mutation = useToastMutate({
+    success: "Berhasil menghapus Trade matkul",
+    loading: "Menghapus trade matkul",
+  });
+
   const handleDeleteTradeMatkul = () => {
-    mutateDeleteTradeMatkul.mutate({ tradeMatkulId: props.tradeMatkulId });
+    mutation.mutate(
+      deleteMyTradeMatkulAction({ tradeMatkulId: props.tradeMatkulId }),
+    );
   };
   return (
     <div className="flex gap-2">
-      <Button
-        variant="secondary"
-        asChild
-        disabled={mutateDeleteTradeMatkul.isLoading}
-      >
+      <Button variant="secondary" asChild disabled={mutation.isLoading}>
         <Link href={"/my-trade-matkul/edit/" + props.tradeMatkulId}>
           <Pencil1Icon className="mr-2 h-4 w-4" />
           Update
@@ -45,11 +38,8 @@ const TradeMatkulAction = (props: { tradeMatkulId: string }) => {
       </Button>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button
-            variant="destructive"
-            disabled={mutateDeleteTradeMatkul.isLoading}
-          >
-            {mutateDeleteTradeMatkul.isLoading ? (
+          <Button variant="destructive" disabled={mutation.isLoading}>
+            {mutation.isLoading ? (
               <>
                 <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
                 Please wait..
@@ -76,7 +66,7 @@ const TradeMatkulAction = (props: { tradeMatkulId: string }) => {
           <AlertDialogFooter>
             <AlertDialogCancel>Batal</AlertDialogCancel>
             <AlertDialogAction
-              disabled={mutateDeleteTradeMatkul.isLoading}
+              disabled={mutation.isLoading}
               onClick={handleDeleteTradeMatkul}
             >
               Ya, Hapus

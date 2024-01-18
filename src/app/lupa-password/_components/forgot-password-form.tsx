@@ -14,9 +14,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { api } from "@/trpc/react";
 import { forgotPasswordSchema } from "../schema";
-import { toast } from "sonner";
+import { useToastMutate } from "@/lib/hooks";
+import { resetPasswordAction } from "../actions";
 
 type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
 
@@ -24,18 +24,17 @@ const ForgotPasswordForm = () => {
   const form = useForm<ForgotPasswordForm>({
     resolver: zodResolver(forgotPasswordSchema),
   });
-  const mutateForgotPassword = api.user.resetPassword.useMutation({
-    onSuccess: () => {
-      toast.success("Reset password berhasil, silahkan cek email");
-    },
-    onError(error) {
-      toast.error(error.message);
-    },
+  const mutation = useToastMutate({
+    success: "Reset password berhasil, silahkan cek email",
+    loading: "Mereset password...",
   });
+
   const onSubmit: SubmitHandler<ForgotPasswordForm> = (data) => {
-    mutateForgotPassword.mutate({
-      email: data.email,
-    });
+    mutation.mutate(
+      resetPasswordAction({
+        email: data.email,
+      }),
+    );
   };
   return (
     <Form {...form}>
@@ -52,8 +51,8 @@ const ForgotPasswordForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={mutateForgotPassword.isLoading}>
-          {mutateForgotPassword.isLoading ? (
+        <Button type="submit" disabled={mutation.isLoading}>
+          {mutation.isLoading ? (
             <>
               <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
               Please wait..
