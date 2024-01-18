@@ -11,8 +11,6 @@ export async function createPlanAction(
 ) {
   try {
     await api.frs.createPlan.mutate(data);
-    revalidatePath("/my-frs");
-    redirect("/my-frs");
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return {
@@ -20,6 +18,8 @@ export async function createPlanAction(
       };
     }
   }
+  revalidatePath("/my-frs");
+  redirect("/my-frs");
 }
 
 export async function updatePlanAction(
@@ -27,9 +27,9 @@ export async function updatePlanAction(
 ) {
   try {
     await api.frs.updatePlan.mutate(data);
-    revalidatePath("/my-frs");
-    redirect("/my-frs");
   } catch (e) {
     if (e instanceof TRPCClientError) return { error: e.message };
   }
+  revalidatePath("/my-frs");
+  redirect("/my-frs");
 }

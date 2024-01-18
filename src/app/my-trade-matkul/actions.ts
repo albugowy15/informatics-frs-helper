@@ -11,8 +11,6 @@ export async function createTradeMatkulAction(
 ) {
   try {
     await api.tradeMatkul.createTradeMatkul.mutate(data);
-    revalidatePath("/my-trade-matkul");
-    redirect("/my-trade-matkul");
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return {
@@ -20,6 +18,8 @@ export async function createTradeMatkulAction(
       };
     }
   }
+  revalidatePath("/my-trade-matkul");
+  redirect("/my-trade-matkul");
 }
 
 export async function updateTradeMatkulAction(
@@ -27,8 +27,6 @@ export async function updateTradeMatkulAction(
 ) {
   try {
     await api.tradeMatkul.updateTradeMatkul.mutate(data);
-    revalidatePath("/my-trade-matkul");
-    redirect("/my-trade-matkul");
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return {
@@ -36,6 +34,8 @@ export async function updateTradeMatkulAction(
       };
     }
   }
+  revalidatePath("/my-trade-matkul");
+  redirect("/my-trade-matkul");
 }
 
 export async function deleteMyTradeMatkulAction(
@@ -43,8 +43,6 @@ export async function deleteMyTradeMatkulAction(
 ) {
   try {
     await api.tradeMatkul.deleteMyTradeMatkul.mutate(data);
-    revalidatePath("/my-trade-matkul");
-    redirect("/my-trade-matkul");
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return {
@@ -52,4 +50,6 @@ export async function deleteMyTradeMatkulAction(
       };
     }
   }
+  revalidatePath("/my-trade-matkul");
+  redirect("/my-trade-matkul");
 }

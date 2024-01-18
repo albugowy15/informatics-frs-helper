@@ -10,7 +10,6 @@ export async function registerUserAction(
 ) {
   try {
     await api.user.register.mutate(data);
-    redirect("/login");
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return {
@@ -18,4 +17,5 @@ export async function registerUserAction(
       };
     }
   }
+  redirect("/login");
 }
