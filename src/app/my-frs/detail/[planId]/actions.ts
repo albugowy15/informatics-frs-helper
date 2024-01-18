@@ -11,11 +11,11 @@ export async function deletePlanAction(
 ) {
   try {
     await api.frs.deletePlan.mutate(data);
-    revalidatePath("/my-frs");
-    redirect("/my-frs");
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return { error: e.message };
     }
   }
+  revalidatePath("/my-frs");
+  redirect("/my-frs");
 }

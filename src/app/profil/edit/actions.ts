@@ -9,11 +9,11 @@ import { TRPCClientError } from "@trpc/client";
 export async function updateProfileAction(data: EditProfileFormType) {
   try {
     await api.user.updateProfile.mutate(data);
-    revalidatePath("/profil");
-    redirect("/profil");
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return { error: e.message };
     }
   }
+  revalidatePath("/profil");
+  redirect("/profil");
 }
