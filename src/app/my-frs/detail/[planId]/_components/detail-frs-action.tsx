@@ -14,30 +14,22 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { api } from "@/trpc/react";
-import { toast } from "sonner";
+import { useToastMutate } from "@/lib/hooks";
+import { deletePlanAction } from "../actions";
 
 const DetailFrsAction = (props: { frsTitle: string; planId: string }) => {
-  const mutateDeleteFrsPlan = api.frs.deletePlan.useMutation({
-    onSuccess: () => {
-      toast.success("Berhasil menghapus rencana FRS");
-      window.location.replace("/my-frs");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
+  const mutation = useToastMutate({
+    success: "Berhasil menghapus rencana FRS",
+    loading: "Menghapus rencan FRS",
   });
+
   const handleDeleteFrsPlan = () => {
-    mutateDeleteFrsPlan.mutate({ planId: props.planId });
+    mutation.mutate(deletePlanAction({ planId: props.planId }));
   };
   return (
     <div className="flex items-center gap-3">
-      <Button
-        variant="secondary"
-        asChild
-        disabled={mutateDeleteFrsPlan.isLoading}
-      >
-        {mutateDeleteFrsPlan.isLoading ? (
+      <Button variant="secondary" asChild disabled={mutation.isLoading}>
+        {mutation.isLoading ? (
           <>
             <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
             Please wait..
@@ -52,7 +44,7 @@ const DetailFrsAction = (props: { frsTitle: string; planId: string }) => {
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button variant="destructive">
-            {mutateDeleteFrsPlan.isLoading ? (
+            {mutation.isLoading ? (
               <>
                 <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
                 Please wait..
@@ -83,7 +75,7 @@ const DetailFrsAction = (props: { frsTitle: string; planId: string }) => {
             <AlertDialogCancel>Batal</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteFrsPlan}
-              disabled={mutateDeleteFrsPlan.isLoading}
+              disabled={mutation.isLoading}
             >
               Ya, Hapus
             </AlertDialogAction>

@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
 import { FormProvider, type SubmitHandler, useForm } from "react-hook-form";
 import { type z } from "zod";
 
@@ -14,12 +13,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { api } from "@/trpc/react";
 import { type RouterOutputs } from "@/trpc/shared";
 import { editProfileSchema } from "../../schema";
-import { toast } from "sonner";
+import React from "react";
+import { useToastMutate } from "@/lib/hooks";
+import { UpdateIcon } from "@radix-ui/react-icons";
+import { updateProfileAction } from "../actions";
 
-type EditProfileFormType = z.infer<typeof editProfileSchema>;
+export type EditProfileFormType = z.infer<typeof editProfileSchema>;
 
 type UserProfile = RouterOutputs["user"]["getUserProfile"];
 
@@ -35,25 +36,19 @@ const EditProfileForm = (props: { userProfile: UserProfile }) => {
       whatsapp: props.userProfile.whatsapp ?? "",
     },
   });
-
-  const mutation = api.user.updateProfile.useMutation({
-    onSuccess: () => {
-      toast.success("Profil berhasil diperbarui");
-      window.location.replace("/profil");
-    },
-    onError(error) {
-      toast.error(error.message);
-    },
+  const mutation = useToastMutate({
+    success: "Profil berhasil diperbarui",
+    loading: "Memperbarui profil",
   });
 
-  const onSubmit: SubmitHandler<EditProfileFormType> = (data) => {
-    mutation.mutate(data);
+  const onFormSubmit: SubmitHandler<EditProfileFormType> = async (data) => {
+    mutation.mutate(updateProfileAction(data));
   };
 
   return (
     <FormProvider {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit((data) => onFormSubmit(data))}
         className="flex flex-col gap-3"
       >
         <FormField

@@ -19,8 +19,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import ChooseClassSection from "@/app/my-trade-matkul/_components/choose-class-section";
 import { type TradeMatkul } from "@/app/my-trade-matkul/types";
-import { api } from "@/trpc/react";
-import { toast } from "sonner";
+import { useToastMutate } from "@/lib/hooks";
+import { createTradeMatkulAction, updateTradeMatkulAction } from "../actions";
 
 const createTradeMatkulFormSchema = z.object({
   hasMatkul: z
@@ -82,46 +82,33 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
         props.prevData?.searchMatkul.Matkul.semester.toString(),
     },
   });
-  const mutateCreateTradeMatkul = api.tradeMatkul.createTradeMatkul.useMutation(
-    {
-      onSuccess: () => {
-        toast.success("Berhasil membuat post trade matkul");
-        window.location.replace("/my-trade-matkul");
-      },
-      onError: (error) => {
-        toast.error(error.message);
-      },
-    },
-  );
-  const mutateUpdateTradeMatkul = api.tradeMatkul.updateTradeMatkul.useMutation(
-    {
-      onSuccess: () => {
-        toast.success("Berhasil memperbarui post trade matkul");
-        window.location.replace("/my-trade-matkul/");
-      },
-      onError: (error) => {
-        toast.error(error.message);
-      },
-    },
-  );
-
-  const isDisabled =
-    mutateCreateTradeMatkul.isLoading || mutateUpdateTradeMatkul.isLoading;
+  const mutation = useToastMutate({
+    success: props.prevData
+      ? "Berhasil memperbarui post trade matkul"
+      : "Berhasil membuat post trade matkul",
+    loading: props.prevData
+      ? "Memperbarui post trade matkul..."
+      : "Membuat post trade matkul...",
+  });
 
   const onSubmit: SubmitHandler<CreateTradeMatkulFormSchema> = (data) => {
     if (props.prevData) {
-      mutateUpdateTradeMatkul.mutate({
-        description: data.description,
-        hasClassId: data.hasClass,
-        searchClassId: data.searchClass,
-        tradeMatkulId: props.prevData.id,
-      });
+      mutation.mutate(
+        updateTradeMatkulAction({
+          description: data.description,
+          hasClassId: data.hasClass,
+          searchClassId: data.searchClass,
+          tradeMatkulId: props.prevData.id,
+        }),
+      );
     } else {
-      mutateCreateTradeMatkul.mutate({
-        description: data.description,
-        hasClassId: data.hasClass,
-        searchClassId: data.searchClass,
-      });
+      mutation.mutate(
+        createTradeMatkulAction({
+          description: data.description,
+          hasClassId: data.hasClass,
+          searchClassId: data.searchClass,
+        }),
+      );
     }
   };
 
@@ -156,8 +143,8 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
         />
         <div className="py-4" />
         <div className="flex items-center gap-4">
-          <Button type="submit" disabled={isDisabled}>
-            {isDisabled ? (
+          <Button type="submit" disabled={mutation.isLoading}>
+            {mutation.isLoading ? (
               <>
                 <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
                 Please wait..
@@ -168,7 +155,7 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
           </Button>
           <Button
             variant="outline"
-            disabled={isDisabled}
+            disabled={mutation.isLoading}
             onClick={() => router.back()}
           >
             Batal

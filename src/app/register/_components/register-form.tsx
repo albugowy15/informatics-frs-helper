@@ -17,9 +17,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { api } from "@/trpc/react";
 import { registerSchema } from "../schema";
-import { toast } from "sonner";
+import { useToastMutate } from "@/lib/hooks";
+import { registerUserAction } from "../actions";
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
@@ -27,18 +27,14 @@ const RegisterForm = () => {
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
-  const mutateRegister = api.user.register.useMutation({
-    onSuccess: () => {
-      toast.success("Akun berhasil dibuat, silahkan login");
-      window.location.replace("/login");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
+
+  const mutation = useToastMutate({
+    success: "Akun berhasil dibuat, silahkan login",
+    loading: "Mohon tunggu...",
   });
 
   const onSubmit: SubmitHandler<RegisterForm> = (data) => {
-    mutateRegister.mutate(data);
+    mutation.mutate(registerUserAction(data));
   };
   return (
     <Form {...form}>
@@ -96,8 +92,8 @@ const RegisterForm = () => {
           )}
         />
         <div className="flex flex-col">
-          <Button type="submit" disabled={mutateRegister.isLoading}>
-            {mutateRegister.isLoading ? (
+          <Button type="submit" disabled={mutation.isLoading}>
+            {mutation.isLoading ? (
               <>
                 <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
                 Please wait

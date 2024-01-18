@@ -34,27 +34,30 @@ const Navbar = (props: { items: Navigation[] }) => {
           </Link>
         ))}
       </nav>
-      <Sheet>
-        <SheetTrigger className="md:hidden" asChild>
-          <Button aria-label="Menu" variant="outline" size="icon">
-            <HamburgerMenuIcon className="h-4 w-4" />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left">
-          <div className="flex flex-col items-start gap-3 py-4">
-            <Link href="/" className="font-bold">
-              TC FRS Helper
-            </Link>
-            {props.items.map((item) => (
-              <SheetClose key={item.url} asChild>
-                <Link href={item.url} key={item.name}>
-                  {item.name}
-                </Link>
-              </SheetClose>
-            ))}
-          </div>
-        </SheetContent>
-      </Sheet>
+      <nav className="flex items-center gap-3">
+        <Sheet>
+          <SheetTrigger className="md:hidden" asChild>
+            <Button aria-label="Menu" variant="outline" size="icon">
+              <HamburgerMenuIcon className="h-4 w-4" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left">
+            <div className="flex flex-col items-start gap-3 py-4">
+              <Link href="/" className="font-bold">
+                TC FRS Helper
+              </Link>
+              {props.items.map((item) => (
+                <SheetClose key={item.url} asChild>
+                  <Link href={item.url} key={item.name}>
+                    {item.name}
+                  </Link>
+                </SheetClose>
+              ))}
+            </div>
+          </SheetContent>
+        </Sheet>
+        <h1 className="text-lg font-bold md:hidden">TC FRS Helper</h1>
+      </nav>
       <React.Suspense
         fallback={<UpdateIcon className="h-4 w-4 animate-spin" />}
       >

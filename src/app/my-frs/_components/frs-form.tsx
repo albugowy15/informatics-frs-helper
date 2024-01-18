@@ -26,11 +26,12 @@ import {
 import { ClassContext } from "@/app/my-frs/_components/class-context";
 import { type PlanDetailProps } from "@/app/my-frs/types";
 import { SemesterWithKey } from "@/config/contants";
-import { api } from "@/trpc/react";
 import React from "react";
 import { titleSchema } from "../schema";
 import { requiredSemesterStringSchema } from "@/lib/schema";
 import { toast } from "sonner";
+import { useToastMutate } from "@/lib/hooks";
+import { createPlanAction, updatePlanAction } from "../actions";
 
 const createFRSFormSchema = z.object({
   title: titleSchema,
@@ -54,43 +55,37 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
       : 0;
   }, [context]);
 
-  const mutateUpdatePlan = api.frs.updatePlan.useMutation({
-    onSuccess: () => {
-      toast.success("Berhasil memperbarui rencana FRS");
-      window.location.replace("/my-frs");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-  const mutateCreatePlan = api.frs.createPlan.useMutation({
-    onSuccess: () => {
-      toast.success("Berhasil membuat rencana FRS");
-      window.location.replace("/my-frs");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
+  const mutation = useToastMutate({
+    success: props.planDetail
+      ? "Berhasil memperbarui rencana FRS"
+      : "Berhasil membuat rencana FRS",
+    loading: props.planDetail
+      ? "Memperbarui rencana FRS..."
+      : "Membuat rencana FRS...",
   });
 
   const onSubmit: SubmitHandler<CreateFRSFormType> = (data) => {
     if (context && context.classTaken.length > 0) {
       const subjects = context.classTaken.map((val) => val.id);
       if (props.planDetail) {
-        mutateUpdatePlan.mutate({
-          data: {
+        mutation.mutate(
+          updatePlanAction({
+            data: {
+              title: data.title,
+              semester: parseInt(data.semester),
+              matkul: subjects,
+            },
+            planId: props.planId ?? "",
+          }),
+        );
+      } else {
+        mutation.mutate(
+          createPlanAction({
             title: data.title,
             semester: parseInt(data.semester),
             matkul: subjects,
-          },
-          planId: props.planId ?? "",
-        });
-      } else {
-        mutateCreatePlan.mutate({
-          title: data.title,
-          semester: parseInt(data.semester),
-          matkul: subjects,
-        });
+          }),
+        );
       }
     } else {
       toast.error("Kamu belum mengambil kelas sama sekali");
@@ -185,11 +180,8 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
         <Typography variant="h4" className="text-base font-semibold">
           Total SKS : {sks}
         </Typography>
-        <Button
-          type="submit"
-          disabled={mutateCreatePlan.isLoading || mutateUpdatePlan.isLoading}
-        >
-          {mutateCreatePlan.isLoading || mutateUpdatePlan.isLoading ? (
+        <Button type="submit" disabled={mutation.isLoading}>
+          {mutation.isLoading ? (
             <>
               <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
               Please wait..
