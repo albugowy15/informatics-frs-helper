@@ -1,5 +1,4 @@
 import { Inter } from "next/font/google";
-import { cookies } from "next/headers";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import React from "react";
@@ -25,7 +24,7 @@ export default function RootLayout({
     <html lang="en" className={inter.className}>
       <head />
       <body className="flex min-h-screen flex-col bg-background font-sans antialiased">
-        <TRPCReactProvider cookies={cookies().toString()}>
+        <TRPCReactProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
