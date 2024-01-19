@@ -17,6 +17,12 @@ export interface LoginResponseData {
   id: string;
 }
 
+/**
+ * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
+ * object and keep type safety.
+ *
+ * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
+ */
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: LoginResponseData & DefaultSession["user"];
@@ -72,6 +78,11 @@ async function handleLogin(username: string, password: string) {
   }
 }
 
+/**
+ * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
+ *
+ * @see https://next-auth.js.org/configuration/options
+ */
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
