@@ -98,7 +98,7 @@ export default async function TradingMatkulPage({
           </Typography>
         ) : null}
         {listTrades.map((trade) => (
-          <div className="rounded-md border p-4">
+          <div className="rounded-md border p-4" key={trade.id}>
             <Typography variant="body1" className="font-medium">
               {trade.User?.fullname}
             </Typography>

@@ -5,6 +5,7 @@ import Typography from "@/components/typography";
 
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
+import { unstable_noStore } from "next/cache";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Trending"),
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function TrendingPage() {
+  unstable_noStore();
   const trendingClass = await api.common.getTrendingClasses.query();
   return (
     <>
