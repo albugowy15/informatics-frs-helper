@@ -5,12 +5,14 @@ import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
+import { unstable_noStore } from "next/cache";
 
 export const metadata: Metadata = {
   title: renderPageTitle("myFRS"),
 };
 
 export default async function FRSPage() {
+  unstable_noStore();
   const plans = await api.frs.getAllPlans.query();
   return (
     <main>

@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FrsSemesterChart } from "./_components/frs-chart";
+import { unstable_noStore } from "next/cache";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Statistik"),
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default async function PanduanPage() {
+  unstable_noStore();
   const statisticData = await api.common.getStatistic.query();
   return (
     <main className="space-y-4">

@@ -8,11 +8,13 @@ import { Button } from "@/components/ui/button";
 import TradeMatkulAction from "@/app/my-trade-matkul/_components/trade-matkul-action";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
+import { unstable_noStore } from "next/cache";
 
 export const metadata: Metadata = {
   title: renderPageTitle("myTradeMatkul"),
 };
 export default async function MyTradeMatkulPage() {
+  unstable_noStore();
   const tradeMatkulPosts = await api.tradeMatkul.getAllMyTradeMatkul.query();
 
   return (

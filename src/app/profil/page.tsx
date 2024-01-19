@@ -16,11 +16,13 @@ import { Separator } from "@/components/ui/separator";
 
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
+import { unstable_noStore } from "next/cache";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Profil"),
 };
 export default async function ProfilePage() {
+  unstable_noStore();
   const userProfile = await api.user.getUserProfile.query();
 
   return (
