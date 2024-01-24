@@ -106,15 +106,13 @@ const TradingFilterForm = (props: { submitAction?: React.ReactNode }) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {listSubjects.data ? (
-                    <>
-                      {listSubjects.data.map((item) => (
+                  {listSubjects.data
+                    ? listSubjects.data.map((item) => (
                         <SelectItem key={item.id} value={item.name}>
                           {item.name}
                         </SelectItem>
-                      ))}
-                    </>
-                  ) : null}
+                      ))
+                    : null}
                 </SelectContent>
               </Select>
               <FormMessage />

@@ -1,18 +1,17 @@
 import { PlusIcon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
 import Link from "next/link";
-
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
-
-import TradeMatkulAction from "@/app/my-trade-matkul/_components/trade-matkul-action";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
 import { unstable_noStore } from "next/cache";
+import MyTradeCard from "./_components/my-trade-card";
 
 export const metadata: Metadata = {
   title: renderPageTitle("myTradeMatkul"),
 };
+
 export default async function MyTradeMatkulPage() {
   unstable_noStore();
   const tradeMatkulPosts = await api.tradeMatkul.getAllMyTradeMatkul.query();
@@ -35,27 +34,9 @@ export default async function MyTradeMatkulPage() {
 
       <div className="grid gap-2 lg:grid-cols-3">
         {tradeMatkulPosts.length > 0 ? (
-          <>
-            {tradeMatkulPosts.map((post) => (
-              <div
-                key={post.id}
-                className="flex flex-col rounded-md border p-3"
-              >
-                <Typography variant="body1">
-                  <span className="font-semibold text-red-600">Want</span> :{" "}
-                  {post.searchMatkul.Matkul.name} {post.searchMatkul.code}
-                </Typography>
-                <Typography variant="body1">
-                  <span className="font-semibold text-green-600">Have</span> :{" "}
-                  {post.hasMatkul.Matkul.name} {post.hasMatkul.code}
-                </Typography>
-                <Typography variant="body1">{post.description}</Typography>
-
-                <div className="py-2" />
-                <TradeMatkulAction tradeMatkulId={post.id} />
-              </div>
-            ))}
-          </>
+          tradeMatkulPosts.map((post) => (
+            <MyTradeCard post={post} key={post.id} />
+          ))
         ) : (
           <Typography variant="body1">
             Kamu belum membuat post trade matkul

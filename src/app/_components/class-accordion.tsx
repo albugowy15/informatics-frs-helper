@@ -15,6 +15,16 @@ interface ClassAccordionProps {
   withAction?: boolean;
 }
 
+const NoClasses = ({ isClassEmpty }: { isClassEmpty: boolean }) => {
+  return (
+    isClassEmpty && (
+      <Typography variant="h4" className="text-center lg:text-left">
+        Tidak ada kelas
+      </Typography>
+    )
+  );
+};
+
 const ClassAccordion = async ({
   withAction = false,
   ...props
@@ -31,11 +41,7 @@ const ClassAccordion = async ({
 
   return (
     <>
-      {classes.length == 0 ? (
-        <Typography variant="h4" className="text-center lg:text-left">
-          Tidak ada kelas
-        </Typography>
-      ) : null}
+      <NoClasses isClassEmpty={classes.length === 0} />
       {classes.map((matkul) => (
         <Accordion type="single" collapsible key={matkul.id}>
           <AccordionItem value={matkul.name}>
@@ -50,31 +56,29 @@ const ClassAccordion = async ({
             </AccordionTrigger>
             <AccordionContent>
               <div className="grid gap-2 md:grid-cols-3">
-                {matkul.Class.length == 0 ? (
+                {matkul.Class.length === 0 ? (
                   <Typography variant="body1">Tidak ada kelas</Typography>
                 ) : (
-                  <>
-                    {matkul.Class.map((item) => (
-                      <ClassCard
-                        data={{
-                          day: item.day,
-                          lecturers: item.Lecturer,
-                          sessionTime: item.Session?.session_time,
-                          subjectCode: item.code,
-                          subjectName: matkul.name,
-                          taken: item.taken,
-                          sks: matkul.sks,
-                        }}
-                        key={item.id}
-                      >
-                        {withAction ? (
-                          <ClassCardActionButton
-                            data={{ Matkul: matkul, ...item }}
-                          />
-                        ) : null}
-                      </ClassCard>
-                    ))}
-                  </>
+                  matkul.Class.map((item) => (
+                    <ClassCard
+                      data={{
+                        day: item.day,
+                        lecturers: item.Lecturer,
+                        sessionTime: item.Session?.session_time,
+                        subjectCode: item.code,
+                        subjectName: matkul.name,
+                        taken: item.taken,
+                        sks: matkul.sks,
+                      }}
+                      key={item.id}
+                    >
+                      {withAction ? (
+                        <ClassCardActionButton
+                          data={{ Matkul: matkul, ...item }}
+                        />
+                      ) : null}
+                    </ClassCard>
+                  ))
                 )}
               </div>
             </AccordionContent>

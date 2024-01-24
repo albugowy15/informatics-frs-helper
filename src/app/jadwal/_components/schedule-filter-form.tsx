@@ -23,10 +23,15 @@ import {
 import { SemesterWithKey } from "@/config/contants";
 import { api } from "@/trpc/react";
 import { filterSchema } from "../schema";
+import React from "react";
 
 type FilterForm = z.infer<typeof filterSchema>;
 
-const ScheduleFilterForm = (props: { submitAction?: React.ReactNode }) => {
+interface ScheduleFilterFormProps {
+  children: React.ReactNode;
+}
+
+const ScheduleFilterForm = (props: ScheduleFilterFormProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -94,25 +99,31 @@ const ScheduleFilterForm = (props: { submitAction?: React.ReactNode }) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {listSubjects.data ? (
-                    <>
-                      {listSubjects.data.map((item) => (
+                  {listSubjects.data
+                    ? listSubjects.data.map((item) => (
                         <SelectItem key={item.id} value={item.name}>
                           {item.name}
                         </SelectItem>
-                      ))}
-                    </>
-                  ) : null}
+                      ))
+                    : null}
                 </SelectContent>
               </Select>
               <FormMessage />
             </FormItem>
           )}
         />
-        {props.submitAction}
+        {props.children}
       </form>
     </Form>
   );
 };
 
-export default ScheduleFilterForm;
+const ScheduleFilterFormAction = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
+  return children;
+};
+
+export { ScheduleFilterForm, ScheduleFilterFormAction };

@@ -1,11 +1,10 @@
-import { PlusIcon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
-import Link from "next/link";
 import Typography from "@/components/typography";
-import { Button } from "@/components/ui/button";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
 import { unstable_noStore } from "next/cache";
+import FrsPlanCard from "./_components/frs-plan-card";
+import CreateFrsButton from "./_components/create-frs-button";
 
 export const metadata: Metadata = {
   title: renderPageTitle("myFRS"),
@@ -22,39 +21,10 @@ export default async function FRSPage() {
         Plan FRS yang telah dibuat akan disimpan selama 1 semester dan akan
         dihapus di semester berikutnya.
       </Typography>
-
-      {plans.length < 3 ? (
-        <Button className="my-6" asChild>
-          <Link href="/my-frs/create">
-            <PlusIcon className="mr-2 h-4 w-4" />
-            Tambah Rencana baru
-          </Link>
-        </Button>
-      ) : (
-        <Typography variant="body1" className="my-4">
-          Kamu tidak dapat membuat plan baru karena telah mencapai maksimal
-          jumlah plan yang dapat dibuat sebanyak 3
-        </Typography>
-      )}
-
+      <CreateFrsButton isReachFRSLimit={plans.length >= 3} />
       <div className="grid gap-2 lg:grid-cols-3">
         {plans.length > 0 ? (
-          <>
-            {plans.map((plan) => (
-              <div key={plan.id} className="rounded-md border p-4">
-                <Link
-                  href={"/my-frs/detail/" + plan.id}
-                  className="text-xl font-semibold hover:underline"
-                >
-                  {plan.title}
-                </Link>
-                <Typography variant="body1">
-                  Semester {plan.semester}
-                </Typography>
-                <Typography variant="body1">{plan.totalSks} sks</Typography>
-              </div>
-            ))}
-          </>
+          plans.map((plan) => <FrsPlanCard plan={plan} key={plan.id} />)
         ) : (
           <Typography variant="body1">
             Kamu belum membuat rencana frs

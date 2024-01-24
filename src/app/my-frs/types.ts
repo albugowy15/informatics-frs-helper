@@ -7,7 +7,7 @@ export interface SearchParam {
 
 export type FilteredClass = RouterOutputs["common"]["getClass"][0];
 
-export interface FrsUiProps {
+export interface FrsLayoutProps {
   planId?: string;
   planDetail?: PlanDetailProps;
   params: SearchParam;

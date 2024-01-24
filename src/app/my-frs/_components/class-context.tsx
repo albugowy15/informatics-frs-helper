@@ -1,9 +1,9 @@
 "use client";
 
-import React, { createContext, useState } from "react";
+import React from "react";
 import { type PlanDetailClass } from "@/app/my-frs/types";
 
-export const ClassContext = createContext<{
+export const ClassContext = React.createContext<{
   classTaken: PlanDetailClass[];
   setClassTaken: React.Dispatch<React.SetStateAction<PlanDetailClass[]>>;
 } | null>(null);
@@ -14,7 +14,7 @@ interface ClassContextProvider {
 }
 
 const ClassContextProvider = (props: ClassContextProvider) => {
-  const [classTaken, setClassTaken] = useState<PlanDetailClass[]>(
+  const [classTaken, setClassTaken] = React.useState<PlanDetailClass[]>(
     props.planDetailClass ? props.planDetailClass : [],
   );
   return (

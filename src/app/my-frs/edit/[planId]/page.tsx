@@ -1,5 +1,5 @@
 import { type Metadata } from "next";
-import FrsUi from "@/app/my-frs/_ui/frs-ui";
+import FrsLayout from "@/app/my-frs/_layout/frs-layout";
 import { type SearchParam } from "@/app/my-frs/types";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
@@ -21,7 +21,7 @@ export default async function EditFrsPage({
   const { semester = "1", subject = "Semua" } = searchParams;
 
   return (
-    <FrsUi
+    <FrsLayout
       params={{ semester, subject }}
       planDetail={planDetail}
       planId={params.planId}
