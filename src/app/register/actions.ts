@@ -2,7 +2,7 @@
 
 import { api } from "@/trpc/server";
 import { type RouterInputs } from "@/trpc/shared";
-import { TRPCClientError } from "@trpc/client";
+import { TRPCError } from "@trpc/server";
 import { redirect } from "next/navigation";
 
 export async function registerUserAction(
@@ -11,7 +11,7 @@ export async function registerUserAction(
   try {
     await api.user.register.mutate(data);
   } catch (e) {
-    if (e instanceof TRPCClientError) {
+    if (e instanceof TRPCError) {
       return {
         error: e.message,
       };

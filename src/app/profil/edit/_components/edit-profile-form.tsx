@@ -128,7 +128,7 @@ const EditProfileForm = (props: { userProfile: UserProfile }) => {
               Please wait..
             </>
           ) : (
-            <>Perbarui Profil</>
+            "Perbarui Profil"
           )}
         </Button>
       </form>

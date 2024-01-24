@@ -89,13 +89,11 @@ const ChooseClassSection = (props: ChooseClassSectionProps) => {
               </FormControl>
               <SelectContent>
                 {listSubject.data && listSubject.data.length > 0 ? (
-                  <>
-                    {listSubject.data.map((subject) => (
-                      <SelectItem value={subject.id} key={subject.id}>
-                        {subject.name}
-                      </SelectItem>
-                    ))}
-                  </>
+                  listSubject.data.map((subject) => (
+                    <SelectItem value={subject.id} key={subject.id}>
+                      {subject.name}
+                    </SelectItem>
+                  ))
                 ) : (
                   <SelectItem disabled value="no-class">
                     --Tidak ada matkul--
@@ -121,13 +119,11 @@ const ChooseClassSection = (props: ChooseClassSectionProps) => {
               </FormControl>
               <SelectContent>
                 {listClass.data && listClass.data.length > 0 ? (
-                  <>
-                    {listClass.data.map((kelas) => (
-                      <SelectItem value={kelas.id} key={kelas.id}>
-                        {kelas.code}
-                      </SelectItem>
-                    ))}
-                  </>
+                  listClass.data.map((kelas) => (
+                    <SelectItem value={kelas.id} key={kelas.id}>
+                      {kelas.code}
+                    </SelectItem>
+                  ))
                 ) : (
                   <SelectItem disabled value="no-class">
                     --Tidak ada kelas--

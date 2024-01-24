@@ -1,9 +1,9 @@
 "use client";
 
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UpdateIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import Typography from "@/components/typography";
@@ -42,7 +42,7 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
   const { handleSubmit } = form;
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     setButtonDisabled(true);
     const signIn = (await import("next-auth/react")).signIn;

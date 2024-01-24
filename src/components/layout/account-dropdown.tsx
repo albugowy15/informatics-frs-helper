@@ -1,6 +1,4 @@
-"use client";
-
-import { ExitIcon, DashboardIcon } from "@radix-ui/react-icons";
+import { DashboardIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { menuNavigation } from "@/config/navigation";
 import React from "react";
+import LogoutButton from "./logout-button";
 
 const AccountDropdown = () => {
   return (
@@ -35,20 +34,12 @@ const AccountDropdown = () => {
                   <span>{menu.name}</span>
                 </Link>
               </DropdownMenuItem>
-              {menu.afterSeparator ? <DropdownMenuSeparator /> : null}
+              {menu.afterSeparator && <DropdownMenuSeparator />}
             </React.Fragment>
           ))}
         </DropdownMenuGroup>
         <DropdownMenuGroup>
-          <DropdownMenuItem
-            onClick={async () => {
-              const signOut = (await import("next-auth/react")).signOut;
-              void signOut();
-            }}
-          >
-            <ExitIcon className="mr-2 h-4 w-4" />
-            <span>Logout</span>
-          </DropdownMenuItem>
+          <LogoutButton />
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
