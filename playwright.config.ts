@@ -7,7 +7,7 @@ export default defineConfig({
     trace: "on",
   },
   webServer: {
-    command: "npm run start",
+    command: "next build && next start",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
   },
