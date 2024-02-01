@@ -68,6 +68,7 @@ export const tradeMatkulRouter = createTRPCRouter({
           },
         });
       } catch (e) {
+        console.error(e);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Gagal membuat trade matkul",
@@ -150,6 +151,7 @@ export const tradeMatkulRouter = createTRPCRouter({
           },
         });
       } catch (e) {
+        console.error(e);
         throw new TRPCError({
           message: "Gagal memperbarui trade matkul",
           code: "INTERNAL_SERVER_ERROR",

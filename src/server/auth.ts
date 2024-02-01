@@ -6,9 +6,9 @@ import {
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { env } from "@/env.mjs";
-import { prisma } from "./db";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { prisma } from "./db";
 
 export interface LoginResponseData {
   username: string;

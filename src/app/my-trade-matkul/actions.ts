@@ -2,7 +2,7 @@
 
 import { api } from "@/trpc/server";
 import { type RouterInputs } from "@/trpc/shared";
-import { TRPCError } from "@trpc/server";
+import { TRPCClientError } from "@trpc/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -12,7 +12,7 @@ export async function createTradeMatkulAction(
   try {
     await api.tradeMatkul.createTradeMatkul.mutate(data);
   } catch (e) {
-    if (e instanceof TRPCError) {
+    if (e instanceof TRPCClientError) {
       return {
         error: e.message,
       };
@@ -28,7 +28,7 @@ export async function updateTradeMatkulAction(
   try {
     await api.tradeMatkul.updateTradeMatkul.mutate(data);
   } catch (e) {
-    if (e instanceof TRPCError) {
+    if (e instanceof TRPCClientError) {
       return {
         error: e.message,
       };
@@ -44,7 +44,7 @@ export async function deleteMyTradeMatkulAction(
   try {
     await api.tradeMatkul.deleteMyTradeMatkul.mutate(data);
   } catch (e) {
-    if (e instanceof TRPCError) {
+    if (e instanceof TRPCClientError) {
       return {
         error: e.message,
       };

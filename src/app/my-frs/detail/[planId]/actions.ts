@@ -2,7 +2,7 @@
 
 import { api } from "@/trpc/server";
 import { type RouterInputs } from "@/trpc/shared";
-import { TRPCError } from "@trpc/server";
+import { TRPCClientError } from "@trpc/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -12,7 +12,7 @@ export async function deletePlanAction(
   try {
     await api.frs.deletePlan.mutate(data);
   } catch (e) {
-    if (e instanceof TRPCError) {
+    if (e instanceof TRPCClientError) {
       return { error: e.message };
     }
   }

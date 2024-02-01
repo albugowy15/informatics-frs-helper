@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { env } from "@/env.mjs";
+import { PrismaClient } from "@prisma/client";
 import { Client } from "@planetscale/database";
 import { fetch as undiciFetch } from "undici";
 import { PrismaPlanetScale } from "@prisma/adapter-planetscale";

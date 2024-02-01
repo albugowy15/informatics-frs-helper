@@ -30,6 +30,37 @@ export const userRouter = createTRPCRouter({
           message: "Password dan konfirmasi password tidak sama",
         });
       }
+      // check username
+      const sameUsername = await prisma.user.findFirst({
+        select: {
+          username: true,
+        },
+        where: {
+          username: input.username,
+        },
+      });
+      if (sameUsername) {
+        throw new TRPCError({
+          message: "Username telah terdaftar, silahkan gunakan username lain",
+          code: "BAD_REQUEST",
+        });
+      }
+      // check email
+      const sameEmail = await prisma.user.findFirst({
+        select: {
+          email: true,
+        },
+        where: {
+          email: input.email,
+        },
+      });
+      if (sameEmail) {
+        throw new TRPCError({
+          message: "Email telah terdaftar, silahkan gunakan email lain",
+          code: "BAD_REQUEST",
+        });
+      }
+
       const hashedPassword = await bcrypt.hash(input.password, 10);
       try {
         const user = await prisma.user.create({
@@ -46,9 +77,10 @@ export const userRouter = createTRPCRouter({
           },
         };
       } catch (error) {
+        console.error(error);
         throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Username atau email telah digunakan",
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Gagal membuat akun",
         });
       }
     }),
@@ -127,6 +159,7 @@ export const userRouter = createTRPCRouter({
           },
         });
       } catch (e) {
+        console.error(e);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Gagal memperbarui profil",
@@ -161,18 +194,26 @@ export const userRouter = createTRPCRouter({
         });
       }
       const hashNewPassword = await bcrypt.hash(input.new_password, 10);
-      const changePassword = await prisma.user.update({
-        select: {
-          id: true,
-        },
-        where: {
-          id: ctx.session.user.id,
-        },
-        data: {
-          password: hashNewPassword,
-        },
-      });
-      return changePassword;
+      try {
+        const changePassword = await prisma.user.update({
+          select: {
+            id: true,
+          },
+          where: {
+            id: ctx.session.user.id,
+          },
+          data: {
+            password: hashNewPassword,
+          },
+        });
+        return changePassword;
+      } catch (e) {
+        console.error(e);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Gagal memperbarui password",
+        });
+      }
     }),
   resetPassword: publicProcedure
     .input(forgotPasswordSchema)
@@ -241,6 +282,7 @@ export const userRouter = createTRPCRouter({
         try {
           await kv.set(user.id, currentTime.toISOString());
         } catch (error) {
+          console.error(error);
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",
           });
@@ -249,6 +291,7 @@ export const userRouter = createTRPCRouter({
           message: "Email reset password berhasil dikirim",
         };
       } catch (error) {
+        console.error(error);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Gagal mengirimkan email reset password",

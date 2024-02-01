@@ -57,34 +57,36 @@ export const frsRouter = createTRPCRouter({
       }
 
       try {
-        await prisma.plan.create({
-          data: {
-            title: input.title,
-            semester: input.semester,
-            userId: ctx.session.user.id,
-            totalSks: totalSks,
-            Class: {
-              connect: input.matkul.map((item) => ({
-                id: item,
-              })),
+        await prisma.$transaction([
+          prisma.plan.create({
+            data: {
+              title: input.title,
+              semester: input.semester,
+              userId: ctx.session.user.id,
+              totalSks: totalSks,
+              Class: {
+                connect: input.matkul.map((item) => ({
+                  id: item,
+                })),
+              },
             },
-          },
-        });
+          }),
 
-        await prisma.class.updateMany({
-          where: {
-            id: {
-              in: input.matkul.map((item) => item),
+          prisma.class.updateMany({
+            where: {
+              id: {
+                in: input.matkul.map((item) => item),
+              },
             },
-          },
-          data: {
-            taken: {
-              increment: 1,
+            data: {
+              taken: {
+                increment: 1,
+              },
             },
-          },
-        });
+          }),
+        ]);
       } catch (e) {
-        console.log(e);
+        console.error(e);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Gagal membuat rencana frs",
@@ -273,50 +275,53 @@ export const frsRouter = createTRPCRouter({
         });
       }
       try {
-        await prisma.plan.update({
-          select: {
-            id: true,
-          },
-          where: {
-            id: returnedPlanId.id,
-          },
-          data: {
-            title: input.data.title,
-            semester: input.data.semester,
-            userId: ctx.session.user.id,
-            totalSks: totalSks,
-            Class: {
-              set: input.data.matkul.map((item) => ({
-                id: item,
-              })),
+        await prisma.$transaction([
+          prisma.plan.update({
+            select: {
+              id: true,
             },
-          },
-        });
-        await prisma.class.updateMany({
-          where: {
-            id: {
-              in: droppedClasses.map((item) => item.id),
+            where: {
+              id: returnedPlanId.id,
             },
-          },
-          data: {
-            taken: {
-              decrement: 1,
+            data: {
+              title: input.data.title,
+              semester: input.data.semester,
+              userId: ctx.session.user.id,
+              totalSks: totalSks,
+              Class: {
+                set: input.data.matkul.map((item) => ({
+                  id: item,
+                })),
+              },
             },
-          },
-        });
-        await prisma.class.updateMany({
-          where: {
-            id: {
-              in: addedClasses.map((item) => item.id),
+          }),
+          prisma.class.updateMany({
+            where: {
+              id: {
+                in: droppedClasses.map((item) => item.id),
+              },
             },
-          },
-          data: {
-            taken: {
-              increment: 1,
+            data: {
+              taken: {
+                decrement: 1,
+              },
             },
-          },
-        });
+          }),
+          prisma.class.updateMany({
+            where: {
+              id: {
+                in: addedClasses.map((item) => item.id),
+              },
+            },
+            data: {
+              taken: {
+                increment: 1,
+              },
+            },
+          }),
+        ]);
       } catch (e) {
+        console.error(e);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Gagal memperbarui rencana FRS",
@@ -446,14 +451,6 @@ export const frsRouter = createTRPCRouter({
         });
       }
 
-      try {
-        await prisma.$queryRaw`DELETE FROM _ClassToPlan WHERE "A" = ${input.planId}`;
-      } catch (e) {
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Gagal menghapus kelas",
-        });
-      }
       if (previousClasses.length == 0) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
@@ -461,22 +458,26 @@ export const frsRouter = createTRPCRouter({
         });
       }
       try {
-        await prisma.class.updateMany({
-          where: {
-            id: {
-              in: previousClasses.map((item) => item.id),
+        await prisma.$transaction([
+          prisma.$queryRaw`DELETE FROM _ClassToPlan WHERE "A" = ${input.planId}`,
+          prisma.class.updateMany({
+            where: {
+              id: {
+                in: previousClasses.map((item) => item.id),
+              },
             },
-          },
-          data: {
-            taken: {
-              decrement: 1,
+            data: {
+              taken: {
+                decrement: 1,
+              },
             },
-          },
-        });
-      } catch (error) {
+          }),
+        ]);
+      } catch (e) {
+        console.error(e);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Gagal mengupdate kelas yang diambil sebelumnya",
+          message: "Gagal menghapus kelas",
         });
       }
       return;
