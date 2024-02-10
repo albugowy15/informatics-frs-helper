@@ -36,6 +36,8 @@ yarn-error.log*
 # local env files
 .env
 .env*.local
+.env.dev
+.env.prod
 
 # vercel
 .vercel
@@ -43,3 +45,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 /test-results
+
+commit_messages.txt
