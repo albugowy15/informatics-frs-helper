@@ -3,6 +3,9 @@ import { type Metadata } from "next";
 import Typography from "@/components/typography";
 
 import { renderPageTitle } from "@/lib/utils";
+import { DashboardIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Panduan Penggunaan"),
@@ -18,7 +21,7 @@ export default function PanduanPage() {
       <Typography variant="body1">
         Selamat datang di website yang dirancang khusus untuk membantu mahasiswa
         Informatika ITS dalam menyusun Rencana FRS (Formulir Rencana Studi).
-        Terdapat tiga fitur utama yang dapat membantu Anda dalam proses
+        Terdapat tiga fitur utama yang dapat membantu kamu dalam proses
         tersebut.
       </Typography>
       <Typography variant="h3">1. myFRS - Plan atau Rencana FRS</Typography>
@@ -41,7 +44,17 @@ export default function PanduanPage() {
       </Typography>
       <ol className="list-inside list-decimal">
         <li>
-          Buka menu <b>myFRS</b> pada ikon Profil.
+          Buka menu{" "}
+          <Link
+            href="/my-frs"
+            className="underline transition-colors hover:text-primary"
+          >
+            <b>myFRS</b>
+          </Link>{" "}
+          pada ikon Dashboard{" "}
+          <Button variant="outline" size="icon" className="">
+            <DashboardIcon className="h-5 w-5" />
+          </Button>
         </li>
         <li>
           Pilih <b>Buat Rencana Baru.</b>
@@ -59,12 +72,28 @@ export default function PanduanPage() {
       <Typography variant="h3">2. myTradeMatkul - Trading Matkul</Typography>
       <Typography variant="body1">
         myTradeMatkul berguna untuk mencari partner tukar matkul. Lihat daftar
-        postingan trade matkul di menu <b>Trading Matkul</b>. Untuk membuat
-        postingan, ikuti langkah-langkah berikut:
+        postingan trade matkul di menu{" "}
+        <Link
+          href="/trading"
+          className="underline transition-colors hover:text-primary"
+        >
+          <b>Trading Kelas</b>
+        </Link>
+        . Untuk membuat postingan, ikuti langkah-langkah berikut:
       </Typography>
       <ol className="list-inside list-decimal">
         <li>
-          Buka menut <b>myTradeMatkul</b> pada ikon Profil.
+          Buka menu{" "}
+          <Link
+            href="/my-trade-matkul"
+            className="underline transition-colors hover:text-primary"
+          >
+            <b>myTradeMatkul</b>
+          </Link>{" "}
+          pada ikon Dashboard{" "}
+          <Button variant="outline" size="icon" className="">
+            <DashboardIcon className="h-5 w-5" />
+          </Button>
         </li>
         <li>
           Pilih semester, nama mata kuliah, dan kode kelas yang telah diambil
@@ -85,7 +114,13 @@ export default function PanduanPage() {
       <div className="py-1" />
       <Typography variant="h3">3. Informasi Jadwal</Typography>
       <Typography variant="body1">
-        Cek jadwal setiap mata kuliah dan kelas melalui menu <b>Jadwal Kelas</b>
+        Cek jadwal setiap mata kuliah dan kelas melalui menu{" "}
+        <Link
+          href="/jadwal"
+          className="underline transition-colors hover:text-primary"
+        >
+          <b>Jadwal Kelas</b>
+        </Link>
         . Filter jadwal berdasarkan semester dan mata kuliah.
       </Typography>
       <div className="py-1" />

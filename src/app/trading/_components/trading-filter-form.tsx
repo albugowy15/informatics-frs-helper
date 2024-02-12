@@ -97,7 +97,7 @@ const TradingFilterForm = (props: { submitAction?: React.ReactNode }) => {
             <FormItem>
               <FormLabel>Matkul yang dicari (Want)</FormLabel>
               <FormDescription>
-                Pilih matkul yang ingin kamu cari atau kami inginkan (Want)
+                Pilih matkul yang ingin kamu cari atau kamu inginkan (Want)
               </FormDescription>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>

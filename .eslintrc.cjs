@@ -4,7 +4,7 @@ module.exports = {
   parserOptions: {
     project: true,
   },
-  plugins: ["@typescript-eslint", "unused-imports"],
+  plugins: ["@typescript-eslint"],
   extends: [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended-type-checked",
@@ -27,17 +27,6 @@ module.exports = {
       "error",
       {
         checksVoidReturn: { attributes: false },
-      },
-    ],
-
-    "unused-imports/no-unused-imports": "warn",
-    "unused-imports/no-unused-vars": [
-      "warn",
-      {
-        vars: "all",
-        varsIgnorePattern: "^_",
-        args: "after-used",
-        argsIgnorePattern: "^_",
       },
     ],
   },
