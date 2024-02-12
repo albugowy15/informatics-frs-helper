@@ -37,7 +37,7 @@ export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
   };
 
   return (
-    <ResponsiveContainer width="100%" height={350}>
+    <ResponsiveContainer width="100%" height={400}>
       <BarChart data={props.data}>
         <XAxis
           dataKey="key"
@@ -50,7 +50,7 @@ export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
             position="insideBottom"
             value="Semester"
             fontSize={14}
-            offset={0}
+            offset={-4}
           />
         </XAxis>
         <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false}>

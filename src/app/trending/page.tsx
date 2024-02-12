@@ -15,28 +15,38 @@ export const metadata: Metadata = {
 export default async function TrendingPage() {
   unstable_noStore();
   const trendingClass = await api.common.getTrendingClasses.query();
+  const isTrendingEmpty = trendingClass.length == 0;
   return (
     <>
       <Typography variant="h2" className="text-center">
-        Top 12 Kelas Paling Banyak Diambil
+        Daftar Kelas Paling Banyak Diambil
       </Typography>
       <div className="py-2" />
-      <main className="mx-auto grid gap-2 md:grid-cols-2 lg:grid-cols-4">
-        {trendingClass.map((kelas) => (
-          <ClassCard
-            key={kelas.id}
-            data={{
-              day: kelas.day,
-              sessionTime: kelas.Session?.session_time,
-              subjectCode: kelas.code,
-              subjectName: kelas.Matkul.name,
-              lecturers: kelas.Lecturer,
-              taken: kelas.taken,
-              sks: kelas.Matkul.sks,
-            }}
-          />
-        ))}
-      </main>
+      {!isTrendingEmpty ? (
+        <main className="mx-auto grid gap-2 md:grid-cols-2 lg:grid-cols-4">
+          {trendingClass.map((kelas) => (
+            <ClassCard
+              key={kelas.id}
+              data={{
+                day: kelas.day,
+                sessionTime: kelas.Session?.session_time,
+                subjectCode: kelas.code,
+                subjectName: kelas.Matkul.name,
+                lecturers: kelas.Lecturer,
+                taken: kelas.taken,
+                sks: kelas.Matkul.sks,
+              }}
+            />
+          ))}
+        </main>
+      ) : (
+        <Typography
+          variant="body1"
+          className="text-center text-lg font-semibold text-muted-foreground"
+        >
+          Belum ada kelas trending
+        </Typography>
+      )}
     </>
   );
 }

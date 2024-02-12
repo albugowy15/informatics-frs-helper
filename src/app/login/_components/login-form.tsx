@@ -75,9 +75,15 @@ const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email atau Username</FormLabel>
-              <FormDescription>Silahkan masukkan username</FormDescription>
+              <FormDescription>
+                Silahkan masukkan username atau email
+              </FormDescription>
               <FormControl>
-                <Input type="text" placeholder="Username" {...field} />
+                <Input
+                  type="text"
+                  placeholder="Username atau email"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

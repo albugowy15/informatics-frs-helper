@@ -49,7 +49,10 @@ export const ClassCard = ({ size = "base", ...props }: ClassCardProps) => {
       <div className="space-y-1 p-2 lg:p-3">
         <Typography
           variant="body1"
-          className={cn([size == "sm" && "text-sm"], "font-medium")}
+          className={cn(
+            [size == "sm" && "text-sm"],
+            "font-medium leading-normal",
+          )}
         >
           {props.data.subjectName} {props.data.subjectCode} ({props.data.sks}{" "}
           sks)
@@ -57,7 +60,10 @@ export const ClassCard = ({ size = "base", ...props }: ClassCardProps) => {
         {props.data.lecturers.map((lecturer) => (
           <Typography
             variant="label1"
-            className={cn([size == "sm" && "text-xs"], "font-normal")}
+            className={cn(
+              [size == "sm" && "text-xs"],
+              "font-normal leading-tight",
+            )}
             key={lecturer.id}
           >
             {lecturer.fullname}
