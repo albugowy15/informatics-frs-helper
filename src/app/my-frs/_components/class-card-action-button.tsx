@@ -1,19 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ClassContext } from "@/app/my-frs/_components/class-context";
+import { useClassContext } from "@/app/my-frs/_components/class-context";
 import { type PlanDetailClass } from "@/app/my-frs/types";
 import { api } from "@/trpc/react";
 import React from "react";
 import { toast } from "sonner";
 
 const ClassCardActionButton = (props: { data: PlanDetailClass }) => {
-  const context = React.useContext(ClassContext);
+  const classContext = useClassContext();
   const [pickClass, setPickClass] = React.useState<PlanDetailClass>();
   const validateClassTaken = api.frs.validatePlan.useMutation({
     onSuccess: () => {
       if (pickClass) {
-        context?.setClassTaken((prev: PlanDetailClass[]) => [
+        classContext.setClassTaken((prev: PlanDetailClass[]) => [
           ...prev,
           pickClass,
         ]);
@@ -26,7 +26,7 @@ const ClassCardActionButton = (props: { data: PlanDetailClass }) => {
   });
 
   const handleTakeClass = (kelas: PlanDetailClass) => {
-    const takenClass = context?.classTaken.map((val) => val.id);
+    const takenClass = classContext.classTaken.map((val) => val.id);
     validateClassTaken.mutate({
       classTaken: takenClass ?? [],
       incomingClass: kelas.id,

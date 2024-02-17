@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ClassContext } from "@/app/my-frs/_components/class-context";
+import { useClassContext } from "@/app/my-frs/_components/class-context";
 import { type PlanDetailProps } from "@/app/my-frs/types";
 import { SemesterWithKey } from "@/config/contants";
 import React from "react";
@@ -48,12 +48,13 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
       semester: props.planDetail ? props.planDetail.semester.toString() : "",
     },
   });
-  const context = React.useContext(ClassContext);
+  const classContext = useClassContext();
   const sks = React.useMemo(() => {
-    return context
-      ? context.classTaken.reduce((acc, cur) => acc + cur.Matkul.sks, 0)
-      : 0;
-  }, [context]);
+    return classContext.classTaken.reduce(
+      (acc, cur) => acc + cur.Matkul.sks,
+      0,
+    );
+  }, [classContext]);
 
   const mutation = useToastMutate({
     success: props.planDetail
@@ -65,8 +66,8 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
   });
 
   const onSubmit: SubmitHandler<CreateFRSFormType> = (data) => {
-    if (context && context.classTaken.length > 0) {
-      const subjects = context.classTaken.map((val) => val.id);
+    if (classContext.classTaken.length > 0) {
+      const subjects = classContext.classTaken.map((val) => val.id);
       if (props.planDetail) {
         mutation.mutate(
           updatePlanAction({
@@ -93,9 +94,9 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
   };
 
   const handleDropTakenClass = (index: number) => {
-    const classArr = context ? [...context.classTaken] : [];
+    const classArr = [...classContext.classTaken];
     classArr.splice(index, 1);
-    context?.setClassTaken(classArr);
+    classContext.setClassTaken(classArr);
   };
 
   return (
@@ -107,7 +108,9 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Judul Plan</FormLabel>
-              <Input {...field} />
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
@@ -141,9 +144,9 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
           <Typography variant="h4" className="text-base font-semibold">
             Matkul yang diambil
           </Typography>
-          {context && context.classTaken.length > 0 ? (
+          {classContext.classTaken.length > 0 ? (
             <div className="space-y-2">
-              {context.classTaken.map((item, index) => (
+              {classContext.classTaken.map((item, index) => (
                 <ClassCard
                   data={{
                     lecturers: item.Lecturer,
