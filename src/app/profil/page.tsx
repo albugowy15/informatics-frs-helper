@@ -1,9 +1,12 @@
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
 import Link from "next/link";
-
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { renderPageTitle } from "@/lib/utils";
+import { api } from "@/trpc/server";
+import { unstable_noStore } from "next/cache";
 import {
   Card,
   CardContent,
@@ -12,15 +15,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-
-import { renderPageTitle } from "@/lib/utils";
-import { api } from "@/trpc/server";
-import { unstable_noStore } from "next/cache";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Profil"),
 };
+
 export default async function ProfilePage() {
   unstable_noStore();
   const userProfile = await api.user.getUserProfile.query();
