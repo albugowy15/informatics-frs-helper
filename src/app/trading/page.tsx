@@ -1,9 +1,7 @@
-import { type Metadata } from "next";
 import Typography from "@/components/typography";
-
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
-
+import { type Metadata } from "next";
 import TradeCard from "./_components/trade-card";
 import TradeFilterWidget from "./_components/trade-filter-widget";
 

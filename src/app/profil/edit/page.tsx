@@ -1,5 +1,4 @@
-import { type Metadata } from "next";
-
+import EditProfileForm from "@/app/profil/edit/_components/edit-profile-form";
 import {
   Card,
   CardContent,
@@ -7,10 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import EditProfileForm from "@/app/profil/edit/_components/edit-profile-form";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
+import { type Metadata } from "next";
 import { unstable_noStore } from "next/cache";
 
 export const metadata: Metadata = {

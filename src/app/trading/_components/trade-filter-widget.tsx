@@ -1,3 +1,5 @@
+import Typography from "@/components/typography";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -5,9 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import TradingFilterForm from "./trading-filter-form";
-import { Button } from "@/components/ui/button";
-import Typography from "@/components/typography";
 import {
   Popover,
   PopoverClose,
@@ -15,6 +14,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
+import TradingFilterForm from "./trading-filter-form";
 
 const TradeFilterWidget = () => {
   return (

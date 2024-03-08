@@ -1,8 +1,6 @@
-import { type Metadata } from "next";
-
 import Typography from "@/components/typography";
-
 import { renderPageTitle } from "@/lib/utils";
+import { type Metadata } from "next";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Report"),

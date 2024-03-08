@@ -1,10 +1,8 @@
-import { type Metadata } from "next";
-
 import Typography from "@/components/typography";
-
+import { Button } from "@/components/ui/button";
 import { renderPageTitle } from "@/lib/utils";
 import { DashboardIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
+import { type Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {

@@ -1,11 +1,7 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
-import { useRouter } from "next/navigation";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
-
+import ChooseClassSection from "@/app/my-trade-matkul/_components/choose-class-section";
+import { type TradeMatkul } from "@/app/my-trade-matkul/types";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,9 +13,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import ChooseClassSection from "@/app/my-trade-matkul/_components/choose-class-section";
-import { type TradeMatkul } from "@/app/my-trade-matkul/types";
 import { useToastMutate } from "@/lib/hooks";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UpdateIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/navigation";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { z } from "zod";
 import { createTradeMatkulAction, updateTradeMatkulAction } from "../actions";
 
 const createTradeMatkulFormSchema = z.object({
@@ -147,7 +146,7 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
             {mutation.isLoading ? (
               <>
                 <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-                Please wait..
+                Tunggu...
               </>
             ) : (
               "Simpan"

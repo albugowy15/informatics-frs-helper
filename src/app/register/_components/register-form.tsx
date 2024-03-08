@@ -1,11 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { type z } from "zod";
-
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,9 +11,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { registerSchema } from "../schema";
 import { useToastMutate } from "@/lib/hooks";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UpdateIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { type z } from "zod";
 import { registerUserAction } from "../actions";
+import { registerSchema } from "../schema";
 
 type RegisterForm = z.infer<typeof registerSchema>;
 
@@ -96,7 +95,7 @@ const RegisterForm = () => {
             {mutation.isLoading ? (
               <>
                 <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-                Please wait
+                Tunggu
               </>
             ) : (
               "Register"

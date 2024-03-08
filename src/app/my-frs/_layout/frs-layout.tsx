@@ -1,3 +1,9 @@
+import ClassAccordion from "@/app/_components/class-accordion";
+import ClassContextProvider from "@/app/my-frs/_components/class-context";
+import FRSForm from "@/app/my-frs/_components/frs-form";
+import TakeClassForm from "@/app/my-frs/_components/take-subject-form";
+import { type FrsLayoutProps } from "@/app/my-frs/types";
+import Loader from "@/components/loader";
 import {
   Card,
   CardContent,
@@ -5,13 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import ClassContextProvider from "@/app/my-frs/_components/class-context";
-import TakeClassForm from "@/app/my-frs/_components/take-subject-form";
-import { type FrsLayoutProps } from "@/app/my-frs/types";
 import { Suspense } from "react";
-import Loader from "@/components/loader";
-import FRSForm from "@/app/my-frs/_components/frs-form";
-import ClassAccordion from "@/app/_components/class-accordion";
 
 const FrsLayout = (props: FrsLayoutProps) => {
   return (
