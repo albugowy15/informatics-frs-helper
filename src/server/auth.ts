@@ -4,11 +4,10 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
 import { env } from "@/env.mjs";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { prisma } from "./db";
+import prisma from "@/server/db";
 
 export interface LoginResponseData {
   username: string;

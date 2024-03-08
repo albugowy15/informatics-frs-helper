@@ -1,24 +1,21 @@
+import { forgotPasswordSchema } from "@/app/lupa-password/schema";
+import { editProfileSchema } from "@/app/profil/schema";
+import { registerSchema } from "@/app/register/schema";
+import { changePasswordSchema } from "@/app/ubah-password/schema";
+import { env } from "@/env.mjs";
+import { passwordSchema } from "@/lib/schema";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "@/server/api/trpc";
+import prisma from "@/server/db";
 import { TRPCError } from "@trpc/server";
 import { kv } from "@vercel/kv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Resend } from "resend";
 import { z } from "zod";
-
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "@/server/api/trpc";
-import { prisma } from "@/server/db";
-
-import { env } from "@/env.mjs";
-
-import { passwordSchema } from "@/lib/schema";
-import { registerSchema } from "@/app/register/schema";
-import { editProfileSchema } from "@/app/profil/schema";
-import { changePasswordSchema } from "@/app/ubah-password/schema";
-import { forgotPasswordSchema } from "@/app/lupa-password/schema";
 
 export const userRouter = createTRPCRouter({
   register: publicProcedure

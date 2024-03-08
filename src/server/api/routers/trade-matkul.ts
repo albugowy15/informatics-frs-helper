@@ -1,12 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "@/server/api/trpc";
-import { prisma } from "@/server/db";
+import prisma from "@/server/db";
 
 export const tradeMatkulRouter = createTRPCRouter({
   createTradeMatkul: protectedProcedure
