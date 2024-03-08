@@ -1,9 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, type SubmitHandler, useForm } from "react-hook-form";
-import { type z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
@@ -13,11 +9,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { type RouterOutputs } from "@/trpc/shared";
-import { editProfileSchema } from "../../schema";
-import React from "react";
 import { useToastMutate } from "@/lib/hooks";
+import { type RouterOutputs } from "@/trpc/shared";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { UpdateIcon } from "@radix-ui/react-icons";
+import React from "react";
+import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
+import { type z } from "zod";
+import { editProfileSchema } from "../../schema";
 import { updateProfileAction } from "../actions";
 
 export type EditProfileFormType = z.infer<typeof editProfileSchema>;
@@ -125,7 +124,7 @@ const EditProfileForm = (props: { userProfile: UserProfile }) => {
           {mutation.isLoading ? (
             <>
               <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-              Please wait..
+              Tunggu...
             </>
           ) : (
             "Perbarui Profil"

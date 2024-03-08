@@ -2,9 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,12 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { SemesterWithKey } from "@/config/contants";
+import { requiredSemesterStringSchema } from "@/lib/schema";
 import { api } from "@/trpc/react";
 import { MixerVerticalIcon } from "@radix-ui/react-icons";
 import { matkulSchema } from "../schema";
-import { requiredSemesterStringSchema } from "@/lib/schema";
 
 const takeClassSchema = z.object({
   semester: requiredSemesterStringSchema,

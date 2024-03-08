@@ -1,10 +1,8 @@
-import { type Metadata } from "next";
-
 import ClassCard from "@/components/class-card";
 import Typography from "@/components/typography";
-
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
+import { type Metadata } from "next";
 import { unstable_noStore } from "next/cache";
 
 export const metadata: Metadata = {

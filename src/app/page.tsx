@@ -1,10 +1,10 @@
+import ScheduleStatusAlert from "@/app/_components/schedule-status";
+import Typography from "@/components/typography";
+import { Button } from "@/components/ui/button";
+import { renderPageTitle } from "@/lib/utils";
 import { ArrowRightIcon, ReaderIcon, StarIcon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
 import Link from "next/link";
-import Typography from "@/components/typography";
-import { Button } from "@/components/ui/button";
-import ScheduleStatusAlert from "@/app/_components/schedule-status";
-import { renderPageTitle } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Home"),

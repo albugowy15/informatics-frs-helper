@@ -1,9 +1,7 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
+import { useClassContext } from "@/app/my-frs/_components/class-context";
+import { type PlanDetailProps } from "@/app/my-frs/types";
 import ClassCard from "@/components/class-card";
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
@@ -23,15 +21,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useClassContext } from "@/app/my-frs/_components/class-context";
-import { type PlanDetailProps } from "@/app/my-frs/types";
 import { SemesterWithKey } from "@/config/contants";
-import React from "react";
-import { titleSchema } from "../schema";
-import { requiredSemesterStringSchema } from "@/lib/schema";
-import { toast } from "sonner";
 import { useToastMutate } from "@/lib/hooks";
+import { requiredSemesterStringSchema } from "@/lib/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UpdateIcon } from "@radix-ui/react-icons";
+import React from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 import { createPlanAction, updatePlanAction } from "../actions";
+import { titleSchema } from "../schema";
 
 const createFRSFormSchema = z.object({
   title: titleSchema,
@@ -187,7 +187,7 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
           {mutation.isLoading ? (
             <>
               <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-              Please wait..
+              Tunggu...
             </>
           ) : (
             "Simpan"

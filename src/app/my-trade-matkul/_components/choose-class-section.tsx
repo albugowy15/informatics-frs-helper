@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormContext, useWatch } from "react-hook-form";
+import { type CreateTradeMatkulFormSchema } from "@/app/my-trade-matkul/_components/trade-matkul-form";
 import Typography from "@/components/typography";
 import {
   FormControl,
@@ -16,9 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { type CreateTradeMatkulFormSchema } from "@/app/my-trade-matkul/_components/trade-matkul-form";
 import { SemesterWithKey } from "@/config/contants";
 import { api } from "@/trpc/react";
+import { useFormContext, useWatch } from "react-hook-form";
 
 interface ChooseClassSectionProps {
   variant: "has" | "want";

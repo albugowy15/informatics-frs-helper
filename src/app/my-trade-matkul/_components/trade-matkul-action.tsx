@@ -1,7 +1,5 @@
 "use client";
 
-import { UpdateIcon, Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +13,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useToastMutate } from "@/lib/hooks";
+import { Pencil1Icon, TrashIcon, UpdateIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 import { deleteMyTradeMatkulAction } from "../actions";
 
 const TradeMatkulAction = (props: { tradeMatkulId: string }) => {
@@ -42,7 +42,7 @@ const TradeMatkulAction = (props: { tradeMatkulId: string }) => {
             {mutation.isLoading ? (
               <>
                 <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-                Please wait..
+                Tunggu...
               </>
             ) : (
               <>

@@ -1,11 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { type SubmitHandler, useForm, useWatch } from "react-hook-form";
-import { z } from "zod";
-
 import {
   Form,
   FormControl,
@@ -22,9 +16,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { SemesterWithKey } from "@/config/contants";
 import { api } from "@/trpc/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
+import { z } from "zod";
 
 const filterSchema = z.object({
   semester: z.string().optional(),

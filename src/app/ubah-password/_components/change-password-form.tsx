@@ -1,9 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
-import { type SubmitHandler, useForm } from "react-hook-form";
-import { type z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,9 +12,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { api } from "@/trpc/react";
-import { changePasswordSchema } from "../schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UpdateIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
+import { type z } from "zod";
+import { changePasswordSchema } from "../schema";
 
 type CreatePasswordForm = z.infer<typeof changePasswordSchema>;
 
@@ -82,7 +82,7 @@ const ChangePasswordForm = () => {
           {mutatePassword.isLoading ? (
             <>
               <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-              Please wait..
+              Tunggu...
             </>
           ) : (
             "Ubah Password"

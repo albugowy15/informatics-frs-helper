@@ -1,5 +1,4 @@
-import { type Metadata } from "next";
-
+import RegisterForm from "@/app/register/_components/register-form";
 import {
   Card,
   CardContent,
@@ -7,9 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import RegisterForm from "@/app/register/_components/register-form";
 import { renderPageTitle } from "@/lib/utils";
+import { type Metadata } from "next";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Register"),

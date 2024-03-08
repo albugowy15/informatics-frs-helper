@@ -1,5 +1,4 @@
-import { type Metadata } from "next";
-
+import ResetPasswordForm from "@/app/reset-password/[token]/_components/reset-password-form";
 import {
   Card,
   CardContent,
@@ -7,9 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import ResetPasswordForm from "@/app/reset-password/[token]/_components/reset-password-form";
 import { renderPageTitle } from "@/lib/utils";
+import { type Metadata } from "next";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Reset Password"),

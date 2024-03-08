@@ -1,10 +1,10 @@
 "use server";
 
 import { api } from "@/trpc/server";
-import { type EditProfileFormType } from "./_components/edit-profile-form";
+import { TRPCClientError } from "@trpc/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { TRPCClientError } from "@trpc/client";
+import { type EditProfileFormType } from "./_components/edit-profile-form";
 
 export async function updateProfileAction(data: EditProfileFormType) {
   try {

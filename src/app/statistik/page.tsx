@@ -1,10 +1,4 @@
-import { type Metadata } from "next";
-
 import Typography from "@/components/typography";
-
-import { renderPageTitle } from "@/lib/utils";
-import { StatisticCard } from "./_components/statistic-card";
-import { api } from "@/trpc/server";
 import {
   Card,
   CardContent,
@@ -12,8 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FrsSemesterChart } from "./_components/frs-chart";
+import { renderPageTitle } from "@/lib/utils";
+import { api } from "@/trpc/server";
+import { type Metadata } from "next";
 import { unstable_noStore } from "next/cache";
+import { FrsSemesterChart } from "./_components/frs-chart";
+import { StatisticCard } from "./_components/statistic-card";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Statistik"),

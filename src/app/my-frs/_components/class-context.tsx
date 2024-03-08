@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { type PlanDetailClass } from "@/app/my-frs/types";
+import React from "react";
 
 interface ClassContext {
   classTaken: PlanDetailClass[];

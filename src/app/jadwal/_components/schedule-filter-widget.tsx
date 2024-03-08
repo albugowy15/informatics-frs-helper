@@ -1,3 +1,5 @@
+import Typography from "@/components/typography";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,18 +8,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ScheduleFilterForm,
-  ScheduleFilterFormAction,
-} from "./schedule-filter-form";
-import { Button } from "@/components/ui/button";
-import Typography from "@/components/typography";
-import {
   Popover,
   PopoverClose,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
+import {
+  ScheduleFilterForm,
+  ScheduleFilterFormAction,
+} from "./schedule-filter-form";
 
 const ScheduleFilterWidget = () => {
   return (
