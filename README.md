@@ -11,9 +11,6 @@
   <a href="https://github.com/albugowy15/informatics-frs-helper/actions/workflows/test.yml">
     <img src="https://github.com/albugowy15/informatics-frs-helper/actions/workflows/test.yml/badge.svg" alt="Test"/>
   </a>
-  <a href="https://depfu.com/github/albugowy15/informatics-frs-helper?project_id=38194">
-    <img src="https://badges.depfu.com/badges/3a318ae2e6a5865de276354c9eadc98f/overview.svg" alt="Depfu"/>
-  </a>
   <a href="https://github.com/albugowy15/informatics-frs-helper/pulls">
     <img src="https://img.shields.io/badge/PRs-welcome-blue" alt="PR"/>
   </a>
@@ -64,10 +61,10 @@ For more detailed instructions, refer to the [Vercel documentation](https://verc
 
 ## Tech Stack
 
-- **Next.js**: A React framework that enables server-side rendering and generating static websites for React based web applications.
-- **tRPC**: A framework for building typesafe APIs, it eliminates the need for REST or GraphQL by allowing you to call your server's functions directly from your client.
-- **Prisma**: An open-source database toolkit. It includes an ORM, a query builder and a migration tool to make database access easy and intuitive.
-- **NextAuth**: A complete open source authentication solution for Next.js applications. It is designed from the ground up to support Next.js and Serverless.
-- **Tailwind**: A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup.
-- **Planetscale**: A MySQL-compatible, serverless database platform. It's designed to handle a high volume of traffic, and scales up or down automatically based on demand.
-- **Vercel**: A cloud platform for static sites and Serverless Functions that fits perfectly with your workflow. It enables developers to host Jamstack websites and web services that deploy instantly, scale automatically, and requires no supervision, all with no configuration.
+- **Next.js**: This is a React framework renowned for its ability to render pages on the server side and generate static websites for React-based web applications. It's a powerful tool for building highly performant and SEO-friendly web experiences.
+- **tRPC**: tRPC stands out as a framework tailored for constructing APIs in a type-safe manner. By facilitating direct calls to server functions from the client, it streamlines the development process, eliminating the need for traditional approaches like REST or GraphQL.
+- **Prisma**: Prisma offers a comprehensive database toolkit, encompassing an ORM, query builder, and migration tool. It simplifies database access, making tasks like data manipulation and schema migrations intuitive and straightforward.
+- **NextAuth**: A robust authentication solution designed explicitly for Next.js applications. It seamlessly integrates with Next.js and Serverless architectures, providing a hassle-free way to implement secure authentication flows.
+- **Tailwind**: Tailwind CSS is a utility-first CSS framework equipped with a plethora of pre-defined classes. Its unique approach allows developers to compose designs directly within their markup, offering unparalleled flexibility and efficiency in styling web applications.
+- **TiDB**: TiDB is a fully-managed Database-as-a-Service (DBaaS) solution, leveraging the strengths of the TiDB distributed SQL database in the cloud. It brings scalability, resilience, and performance to cloud-native applications, simplifying database management for developers.
+- **Vercel**: Vercel serves as a cloud platform tailored for hosting static sites and Serverless Functions. Its seamless integration with workflows enables developers to deploy Jamstack websites and web services instantly, with automatic scaling and minimal configuration required.
