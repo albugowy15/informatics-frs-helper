@@ -9,10 +9,6 @@ generator client {
 
 datasource db {
   provider     = "mysql"
-  // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-  // Further reading:
-  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
@@ -27,6 +23,9 @@ model User {
   whatsapp    String?
   Plan        Plan[]
   TradeMatkul TradeMatkul[]
+
+  @@index([username])
+  @@index([email])
 }
 
 model Plan {
@@ -47,13 +46,16 @@ model Matkul {
   Class    Class[]
   semester Int
   sks      Int
+
+  @@index([name])
+  @@index([semester])
 }
 
 model Class {
   id           String        @id @default(cuid())
   Matkul       Matkul        @relation(fields: [matkulId], references: [id])
   matkulId     String
-  Lecturer     Lecturer[]     
+  Lecturer     Lecturer[]
   day          String?
   code         String
   taken        Int
@@ -65,6 +67,7 @@ model Class {
 
   @@index([sessionId])
   @@index([matkulId])
+  @@index([taken])
 }
 
 model Session {
