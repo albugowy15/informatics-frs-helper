@@ -1,24 +1,17 @@
 import { env } from "@/env.mjs";
 import { PrismaClient } from "@prisma/client";
-import { Client } from "@planetscale/database";
-import { fetch as undiciFetch } from "undici";
-import { PrismaPlanetScale } from "@prisma/adapter-planetscale";
 
 const prismaClientSingleton = () => {
-  const client = new Client({ url: env.DATABASE_URL, fetch: undiciFetch });
-  const adapter = new PrismaPlanetScale(client);
-  return new PrismaClient({
-    log: env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
-    adapter,
-  });
+  return new PrismaClient();
 };
 
-type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
+declare global {
+  // eslint-disable-next-line no-var
+  var prisma: undefined | ReturnType<typeof prismaClientSingleton>;
+}
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClientSingleton | undefined;
-};
+const prisma = globalThis.prisma ?? prismaClientSingleton();
 
-export const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
+export default prisma;
 
-if (env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+if (env.NODE_ENV !== "production") globalThis.prisma = prisma;
