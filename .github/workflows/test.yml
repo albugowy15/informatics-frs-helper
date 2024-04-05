@@ -18,26 +18,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
       - uses: actions/setup-node@v3
-      - name: Download deps
-        run: npm install
+        with:
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
       - name: TypeScript
-        run: npm run typecheck
+        run: pnpm typecheck
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
       - uses: actions/setup-node@v3
-      - name: Download deps
-        run: npm install
+        with:
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
       - name: ESlint
-        run: npm run lint
+        run: pnpm lint
   prettier:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
       - uses: actions/setup-node@v3
-      - name: Download deps
-        run: npm install
+        with:
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
       - name: Prettier
-        run: npm run format:check
+        run: pnpm format:check
