@@ -5,9 +5,6 @@
 
   <p>A tool for ITS Informatics students to organize their FRS. This project is powered by <a href="https://create.t3.gg">T3 Stack</a>.</p>
 
-  <a href="https://github.com/albugowy15/informatics-frs-helper/actions/workflows/playwright.yml">
-    <img src="https://github.com/albugowy15/informatics-frs-helper/actions/workflows/playwright.yml/badge.svg" alt="Test"/>
-  </a>
   <a href="https://github.com/albugowy15/informatics-frs-helper/actions/workflows/test.yml">
     <img src="https://github.com/albugowy15/informatics-frs-helper/actions/workflows/test.yml/badge.svg" alt="Test"/>
   </a>
