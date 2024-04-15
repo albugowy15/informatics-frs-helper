@@ -34,6 +34,57 @@ Check the timetable for each subject and class in the Course Schedule (Jadwal Ke
 
 For details on how to use Informatics FRS Helper, check out the [documentation](https://tc-frs-helper.live/panduan).
 
+## Running Locally
+
+To run this project locally, ensure that you have installed all the necessary tools on your machine:
+
+- [Node.js LTS](https://nodejs.org/en)
+- [pnpm version 8 or higher](https://pnpm.io)
+- [Docker](https://www.docker.com)
+
+Then, you can follow these steps:
+
+1. Clone this repository
+
+```bash
+git clone https://github.com/albugowy/informatics-frs-helper.git
+cd informatics-frs-helper
+```
+
+2. Set all the required environment variables. You can find the necessary environment variables in the `.env.example` file.
+3. Install all dependencies
+
+```bash
+pnpm install
+```
+
+4. Start the MySQL database using Docker Compose
+
+```bash
+docker compose up -d db
+```
+
+5. Apply Prisma database migrations
+
+```bash
+pnpm db:push
+```
+
+6. Seed the database with prisma seeder
+
+```bash
+pnpm db:seed
+```
+
+7. Run your project in development mode
+
+```bash
+pnpm dev
+
+# or with turbopack
+pnpm dev --turbo
+```
+
 ## Contributing
 
 I appreciate contributions! Refer to [CONTRIBUTING.md](https://github.com/albugowy15/informatics-frs-helper/blob/main/CONTRIBUTING.md) for details on how you can contribute. Thanks for your valuable input!
