@@ -15,6 +15,9 @@
     "directory": "src"
   },
   "license": "GPL-3.0-or-later",
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "scripts": {
     "dev": "next dev",
     "start": "next start",
@@ -23,6 +26,7 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
+    "db:seed": "prisma db seed",
     "typecheck": "tsc --noEmit --incremental false",
     "format": "prettier -w .",
     "format:check": "prettier -c .",
@@ -54,13 +58,13 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "jsonwebtoken": "^9.0.2",
-    "next": "14.2.0",
+    "next": "14.2.1",
     "next-auth": "^4.24.7",
     "next-themes": "^0.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",
-    "recharts": "^2.12.4",
+    "recharts": "^2.12.5",
     "resend": "^3.2.0",
     "server-only": "^0.0.1",
     "sonner": "^1.4.41",
@@ -70,24 +74,26 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^14.2.0",
+    "@faker-js/faker": "^8.4.1",
+    "@next/bundle-analyzer": "^14.2.1",
     "@tailwindcss/forms": "^0.5.7",
     "@types/bcryptjs": "^2.4.6",
     "@types/eslint": "^8.56.9",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.7",
-    "@types/react": "^18.2.77",
+    "@types/react": "^18.2.78",
     "@types/react-dom": "^18.2.25",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
     "autoprefixer": "^10.4.19",
     "clsx": "^2.1.0",
     "eslint": "8.57.0",
-    "eslint-config-next": "14.2.0",
+    "eslint-config-next": "14.2.1",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prisma": "^5.12.1",
     "tailwindcss": "^3.4.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   }
 }
