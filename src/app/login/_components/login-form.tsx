@@ -2,7 +2,6 @@
 
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -104,15 +103,8 @@ const LoginForm = () => {
           )}
         />
         <div className="flex flex-col text-center">
-          <Button type="submit" disabled={buttonDisabled}>
-            {buttonDisabled ? (
-              <>
-                <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-                Tunggu...
-              </>
-            ) : (
-              "Login"
-            )}
+          <Button type="submit" loading={buttonDisabled}>
+            Login
           </Button>
 
           <Link

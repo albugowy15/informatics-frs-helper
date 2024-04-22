@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
@@ -61,16 +60,9 @@ const ResetPasswordForm = (props: { token: string }) => {
         <Button
           className="flex w-full justify-center"
           type="submit"
-          disabled={mutateResetPassword.isLoading}
+          loading={mutateResetPassword.isLoading}
         >
-          {mutateResetPassword.isLoading ? (
-            <>
-              <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-              Tunggu...
-            </>
-          ) : (
-            "Perbarui Password"
-          )}
+          Perbarui Password
         </Button>
       </form>
     </Form>

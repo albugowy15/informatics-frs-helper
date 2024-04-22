@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useToastMutate } from "@/lib/hooks";
-import { Pencil1Icon, TrashIcon, UpdateIcon } from "@radix-ui/react-icons";
+import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { deleteMyTradeMatkulAction } from "../actions";
 
@@ -38,18 +38,9 @@ const TradeMatkulAction = (props: { tradeMatkulId: string }) => {
       </Button>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive" disabled={mutation.isLoading}>
-            {mutation.isLoading ? (
-              <>
-                <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-                Tunggu...
-              </>
-            ) : (
-              <>
-                <TrashIcon className="mr-2 h-4 w-4" />
-                Hapus
-              </>
-            )}
+          <Button variant="destructive" loading={mutation.isLoading}>
+            <TrashIcon className="mr-2 h-4 w-4" />
+            Hapus
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>

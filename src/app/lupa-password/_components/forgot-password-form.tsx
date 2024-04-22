@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToastMutate } from "@/lib/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { type z } from "zod";
 import { resetPasswordAction } from "../actions";
@@ -51,15 +50,8 @@ const ForgotPasswordForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading ? (
-            <>
-              <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-              Tunggu...
-            </>
-          ) : (
-            "Reset Password"
-          )}
+        <Button type="submit" loading={mutation.isLoading}>
+          Reset Password
         </Button>
       </form>
     </Form>

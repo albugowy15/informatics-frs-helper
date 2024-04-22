@@ -12,7 +12,6 @@ import { Input } from "@/components/ui/input";
 import { useToastMutate } from "@/lib/hooks";
 import { type RouterOutputs } from "@/trpc/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
 import React from "react";
 import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
 import { type z } from "zod";
@@ -120,15 +119,8 @@ const EditProfileForm = (props: { userProfile: UserProfile }) => {
         />
 
         <div className="py-2" />
-        <Button type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading ? (
-            <>
-              <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-              Tunggu...
-            </>
-          ) : (
-            "Perbarui Profil"
-          )}
+        <Button type="submit" loading={mutation.isLoading}>
+          Perbarui Profil
         </Button>
       </form>
     </FormProvider>

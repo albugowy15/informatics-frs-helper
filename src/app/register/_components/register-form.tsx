@@ -13,7 +13,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToastMutate } from "@/lib/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { type z } from "zod";
@@ -91,15 +90,8 @@ const RegisterForm = () => {
           )}
         />
         <div className="flex flex-col">
-          <Button type="submit" disabled={mutation.isLoading}>
-            {mutation.isLoading ? (
-              <>
-                <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-                Tunggu
-              </>
-            ) : (
-              "Register"
-            )}
+          <Button type="submit" loading={mutation.isLoading}>
+            Register
           </Button>
         </div>
         <Typography variant="body1" className="text-center text-sm">
