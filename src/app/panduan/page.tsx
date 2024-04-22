@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "Panduan penggunaan aplikasi Informatics FRS Helper",
 };
 
+export const dynamic = "force-static";
+
 export default function PanduanPage() {
   return (
     <main className="space-y-2">
