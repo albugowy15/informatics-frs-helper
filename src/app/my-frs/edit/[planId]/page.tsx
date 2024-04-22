@@ -1,4 +1,4 @@
-import FrsLayout from "@/app/my-frs/_layout/frs-layout";
+import { FrsLayout } from "@/app/my-frs/_layout/frs-layout";
 import { type SearchParam } from "@/app/my-frs/types";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";

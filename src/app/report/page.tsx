@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Laporkan dan sarankan fitur untuk Informatics FRS Helper",
 };
 
+export const dynamic = "force-static";
+
 export default function ReportPage() {
   return (
     <main className="space-y-2">

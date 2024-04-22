@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Suspense } from "react";
 
-const FrsLayout = (props: FrsLayoutProps) => {
+function FrsLayout(props: FrsLayoutProps) {
   return (
     <main className="relative mt-4 flex flex-col gap-2 lg:flex-row">
       <ClassContextProvider planDetailClass={props.planDetail?.Class}>
@@ -53,6 +53,6 @@ const FrsLayout = (props: FrsLayoutProps) => {
       </ClassContextProvider>
     </main>
   );
-};
+}
 
-export default FrsLayout;
+export { FrsLayout };
