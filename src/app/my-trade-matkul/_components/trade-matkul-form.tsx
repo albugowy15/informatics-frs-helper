@@ -15,7 +15,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useToastMutate } from "@/lib/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
@@ -142,15 +141,8 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
         />
         <div className="py-4" />
         <div className="flex items-center gap-4">
-          <Button type="submit" disabled={mutation.isLoading}>
-            {mutation.isLoading ? (
-              <>
-                <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-                Tunggu...
-              </>
-            ) : (
-              "Simpan"
-            )}
+          <Button type="submit" loading={mutation.isLoading}>
+            Simpan
           </Button>
           <Button
             variant="outline"

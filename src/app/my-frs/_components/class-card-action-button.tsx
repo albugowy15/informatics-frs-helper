@@ -10,6 +10,7 @@ import { toast } from "sonner";
 const ClassCardActionButton = (props: { data: PlanDetailClass }) => {
   const classContext = useClassContext();
   const [pickClass, setPickClass] = React.useState<PlanDetailClass>();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const validateClassTaken = api.frs.validatePlan.useMutation({
     onSuccess: () => {
       if (pickClass) {
@@ -26,6 +27,7 @@ const ClassCardActionButton = (props: { data: PlanDetailClass }) => {
   });
 
   const handleTakeClass = (kelas: PlanDetailClass) => {
+    setIsLoading(true);
     const takenClass = classContext.classTaken.map((val) => val.id);
     validateClassTaken.mutate({
       classTaken: takenClass ?? [],
@@ -37,12 +39,14 @@ const ClassCardActionButton = (props: { data: PlanDetailClass }) => {
       Matkul: kelas.Matkul,
     };
     setPickClass(data);
+    setIsLoading(false);
   };
 
   return (
     <Button
       variant="secondary"
       size="sm"
+      loading={isLoading}
       onClick={() => handleTakeClass(props.data)}
     >
       Ambil

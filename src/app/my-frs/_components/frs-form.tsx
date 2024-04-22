@@ -25,7 +25,6 @@ import { SemesterWithKey } from "@/config/contants";
 import { useToastMutate } from "@/lib/hooks";
 import { requiredSemesterStringSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UpdateIcon } from "@radix-ui/react-icons";
 import React from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
@@ -183,15 +182,8 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
         <Typography variant="h4" className="text-base font-semibold">
           Total SKS : {sks}
         </Typography>
-        <Button type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading ? (
-            <>
-              <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-              Tunggu...
-            </>
-          ) : (
-            "Simpan"
-          )}
+        <Button type="submit" loading={mutation.isLoading}>
+          Simpan
         </Button>
       </form>
     </Form>

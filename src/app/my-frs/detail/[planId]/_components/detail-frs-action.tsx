@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useToastMutate } from "@/lib/hooks";
-import { Pencil1Icon, TrashIcon, UpdateIcon } from "@radix-ui/react-icons";
+import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { deletePlanAction } from "../actions";
 
@@ -28,33 +28,17 @@ const DetailFrsAction = (props: { frsTitle: string; planId: string }) => {
   };
   return (
     <div className="flex items-center gap-3">
-      <Button variant="secondary" asChild disabled={mutation.isLoading}>
-        {mutation.isLoading ? (
-          <>
-            <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-            Tunggu...
-          </>
-        ) : (
-          <Link href={"/my-frs/edit/" + props.planId}>
-            <Pencil1Icon className="mr-2 h-4 w-4" />
-            Ubah
-          </Link>
-        )}
+      <Button variant="secondary" asChild loading={mutation.isLoading}>
+        <Link href={"/my-frs/edit/" + props.planId}>
+          <Pencil1Icon className="mr-2 h-4 w-4" />
+          Ubah
+        </Link>
       </Button>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive">
-            {mutation.isLoading ? (
-              <>
-                <UpdateIcon className="mr-2 h-4 w-4 animate-spin" />
-                Tunggu...
-              </>
-            ) : (
-              <>
-                <TrashIcon className="mr-2 h-4 w-4" />
-                Hapus
-              </>
-            )}
+          <Button variant="destructive" loading={mutation.isLoading}>
+            <TrashIcon className="mr-2 h-4 w-4" />
+            Hapus
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
