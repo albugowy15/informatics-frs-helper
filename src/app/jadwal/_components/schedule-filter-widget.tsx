@@ -79,4 +79,4 @@ const ScheduleFilterWidget = () => {
   );
 };
 
-export default ScheduleFilterWidget;
+export { ScheduleFilterWidget };

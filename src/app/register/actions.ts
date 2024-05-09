@@ -16,6 +16,7 @@ export async function registerUserAction(
         error: e.message,
       };
     }
+    console.error("action err:", e);
   }
   redirect("/login");
 }

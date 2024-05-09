@@ -17,6 +17,7 @@ export async function createPlanAction(
         error: e.message,
       };
     }
+    console.error("action err:", e);
   }
   revalidatePath("/my-frs");
   redirect("/my-frs");
@@ -29,6 +30,7 @@ export async function updatePlanAction(
     await api.frs.updatePlan.mutate(data);
   } catch (e) {
     if (e instanceof TRPCClientError) return { error: e.message };
+    console.error("action err:", e);
   }
   revalidatePath("/my-frs");
   redirect("/my-frs");

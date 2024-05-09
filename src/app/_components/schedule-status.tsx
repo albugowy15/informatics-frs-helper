@@ -2,7 +2,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { RocketIcon } from "@radix-ui/react-icons";
 import { get } from "@vercel/edge-config";
 
-export default async function ScheduleStatusAlert() {
+async function ScheduleStatusAlert() {
   const scheduleStatus = await get<"UPDATED" | "OUTDATED">("schedule");
   return (
     <Alert
@@ -19,3 +19,5 @@ export default async function ScheduleStatusAlert() {
     </Alert>
   );
 }
+
+export { ScheduleStatusAlert };

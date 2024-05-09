@@ -16,43 +16,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SemesterWithKey } from "@/config/contants";
-import { api } from "@/trpc/react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
-import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
-import { type z } from "zod";
-import { filterSchema } from "../schema";
-
-type FilterForm = z.infer<typeof filterSchema>;
+import { useScheduleFilterForm } from "./use-schedule-filter-form";
 
 interface ScheduleFilterFormProps {
   children: React.ReactNode;
 }
 
 const ScheduleFilterForm = (props: ScheduleFilterFormProps) => {
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const form = useForm<FilterForm>({
-    resolver: zodResolver(filterSchema),
-    defaultValues: {
-      matkul: searchParams?.get("subject") ?? "Semua",
-      semester: searchParams?.get("semester") ?? "1",
-    },
-  });
-  const semesterWatch = useWatch({ control: form.control, name: "semester" });
-
-  const listSubjects = api.common.getSubject.useQuery({
-    semester: parseInt(semesterWatch),
-    withAll: true,
-  });
-  const onSubmit: SubmitHandler<FilterForm> = (data) => {
-    const newParams = new URLSearchParams(searchParams?.toString());
-    newParams.set("semester", data.semester);
-    newParams.set("subject", data.matkul ?? "Semua");
-    router.push(`${pathname}?${newParams.toString()}`);
-  };
+  const { form, onSubmit, listSubjects } = useScheduleFilterForm();
 
   return (
     <Form {...form}>

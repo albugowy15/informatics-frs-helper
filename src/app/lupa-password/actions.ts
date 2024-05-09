@@ -15,5 +15,6 @@ export async function resetPasswordAction(
         error: e.message,
       };
     }
+    console.error("action err:", e);
   }
 }

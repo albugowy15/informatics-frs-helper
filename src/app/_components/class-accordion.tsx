@@ -9,12 +9,6 @@ import {
 import { api } from "@/trpc/server";
 import ClassCardActionButton from "../my-frs/_components/class-card-action-button";
 
-interface ClassAccordionProps {
-  semester?: string;
-  subject?: string;
-  withAction?: boolean;
-}
-
 const NoClasses = ({ isClassEmpty }: { isClassEmpty: boolean }) => {
   return (
     isClassEmpty && (
@@ -24,6 +18,12 @@ const NoClasses = ({ isClassEmpty }: { isClassEmpty: boolean }) => {
     )
   );
 };
+
+interface ClassAccordionProps {
+  semester?: string;
+  subject?: string;
+  withAction?: boolean;
+}
 
 const ClassAccordion = async ({
   withAction = false,
@@ -89,4 +89,4 @@ const ClassAccordion = async ({
   );
 };
 
-export default ClassAccordion;
+export { ClassAccordion };
