@@ -1,9 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,42 +17,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SemesterWithKey } from "@/config/contants";
-import { requiredSemesterStringSchema } from "@/lib/schema";
-import { api } from "@/trpc/react";
 import { MixerVerticalIcon } from "@radix-ui/react-icons";
-import { matkulSchema } from "../schema";
-
-const takeClassSchema = z.object({
-  semester: requiredSemesterStringSchema,
-  matkul: matkulSchema,
-});
-
-type TakeClassFormType = z.infer<typeof takeClassSchema>;
+import { useTakeSubjectForm } from "./use-take-subject-form";
 
 const TakeClassForm = () => {
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const form = useForm({
-    resolver: zodResolver(takeClassSchema),
-    defaultValues: {
-      matkul: searchParams?.get("subject") ?? "Semua",
-      semester: searchParams?.get("semester") ?? "1",
-    },
-  });
-  const semesterWatch = useWatch({ control: form.control, name: "semester" });
-
-  const listSubjects = api.common.getSubject.useQuery({
-    semester: parseInt(semesterWatch),
-    withAll: true,
-  });
-
-  const onSubmit: SubmitHandler<TakeClassFormType> = (data) => {
-    const newParams = new URLSearchParams(searchParams?.toString());
-    newParams.set("semester", data.semester);
-    newParams.set("subject", data.matkul ?? "Semua");
-    router.push(`${pathname}?${newParams.toString()}`);
-  };
+  const { form, listSubjects, onSubmit } = useTakeSubjectForm();
 
   return (
     <Form {...form}>

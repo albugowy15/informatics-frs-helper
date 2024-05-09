@@ -1,7 +1,5 @@
 import React from "react";
-
 import Typography from "@/components/typography";
-
 import { cn } from "@/lib/utils";
 import { Card } from "./ui/card";
 

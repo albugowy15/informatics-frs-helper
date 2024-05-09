@@ -17,6 +17,7 @@ export async function createTradeMatkulAction(
         error: e.message,
       };
     }
+    console.error("action err:", e);
   }
   revalidatePath("/my-trade-matkul");
   redirect("/my-trade-matkul");
@@ -33,6 +34,7 @@ export async function updateTradeMatkulAction(
         error: e.message,
       };
     }
+    console.error("action err:", e);
   }
   revalidatePath("/my-trade-matkul");
   redirect("/my-trade-matkul");
@@ -49,6 +51,7 @@ export async function deleteMyTradeMatkulAction(
         error: e.message,
       };
     }
+    console.error("action err:", e);
   }
   revalidatePath("/my-trade-matkul");
   redirect("/my-trade-matkul");

@@ -13,6 +13,7 @@ export async function updateProfileAction(data: EditProfileFormType) {
     if (e instanceof TRPCClientError) {
       return { error: e.message };
     }
+    console.error("action err:", e);
   }
   revalidatePath("/profil");
   redirect("/profil");

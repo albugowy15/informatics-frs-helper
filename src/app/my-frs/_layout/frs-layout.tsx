@@ -1,4 +1,5 @@
-import ClassAccordion from "@/app/_components/class-accordion";
+import React from "react";
+import { ClassAccordion } from "@/app/_components/class-accordion";
 import ClassContextProvider from "@/app/my-frs/_components/class-context";
 import FRSForm from "@/app/my-frs/_components/frs-form";
 import TakeClassForm from "@/app/my-frs/_components/take-subject-form";
@@ -11,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Suspense } from "react";
 
 function FrsLayout(props: FrsLayoutProps) {
   return (
@@ -39,13 +39,15 @@ function FrsLayout(props: FrsLayoutProps) {
               <TakeClassForm />
 
               <div className="mt-3">
-                <Suspense fallback={<Loader message="Memfilter jadwal" />}>
+                <React.Suspense
+                  fallback={<Loader message="Memfilter jadwal" />}
+                >
                   <ClassAccordion
                     withAction
                     semester={props.params.semester}
                     subject={props.params.subject}
                   />
-                </Suspense>
+                </React.Suspense>
               </div>
             </CardContent>
           </Card>
