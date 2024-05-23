@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import React from "react";
 import {
   Form,
   FormControl,
@@ -22,6 +23,8 @@ import { changePasswordSchema } from "../schema";
 type CreatePasswordForm = z.infer<typeof changePasswordSchema>;
 
 const ChangePasswordForm = () => {
+  const [showOldPassword, setShowOldPassword] = React.useState(false);
+  const [showNewPassword, setShowNewPassword] = React.useState(false);
   const form = useForm<CreatePasswordForm>({
     resolver: zodResolver(changePasswordSchema),
   });
@@ -52,7 +55,23 @@ const ChangePasswordForm = () => {
               <FormLabel>Password lama</FormLabel>
               <FormDescription>Masukkan password lama Anda</FormDescription>
               <FormControl>
-                <Input type="password" placeholder="Password lama" {...field} />
+                <div>
+                  <Input
+                    type={showOldPassword ? "text" : "password"}
+                    placeholder="Password lama"
+                    {...field}
+                  />
+
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      className="text-sm py-1 font-medium text-primary cursor-pointer w-fit"
+                      onClick={() => setShowOldPassword(!showOldPassword)}
+                    >
+                      {showOldPassword ? "Sembunyikan" : "Tampilkan"} password
+                    </button>
+                  </div>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -66,7 +85,23 @@ const ChangePasswordForm = () => {
               <FormLabel>Password baru</FormLabel>
               <FormDescription>Masukkan password baru Anda</FormDescription>
               <FormControl>
-                <Input type="password" placeholder="Password baru" {...field} />
+                <div>
+                  <Input
+                    type={showNewPassword ? "text" : "password"}
+                    placeholder="Password baru"
+                    {...field}
+                  />
+
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      className="text-sm py-1 font-medium text-primary cursor-pointer w-fit"
+                      onClick={() => setShowNewPassword(!showNewPassword)}
+                    >
+                      {showNewPassword ? "Sembunyikan" : "Tampilkan"} password
+                    </button>
+                  </div>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
