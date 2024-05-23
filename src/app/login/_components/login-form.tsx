@@ -42,6 +42,7 @@ const LoginForm = () => {
   });
   const { handleSubmit } = form;
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     setButtonDisabled(true);
     const signIn = (await import("next-auth/react")).signIn;
@@ -96,7 +97,22 @@ const LoginForm = () => {
               <FormLabel>Password</FormLabel>
               <FormDescription>Silahkan masukkan password</FormDescription>
               <FormControl>
-                <Input type="password" placeholder="Password" {...field} />
+                <div>
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    {...field}
+                  />
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      className="text-sm py-1 font-medium text-primary cursor-pointer w-fit"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? "Sembunyikan" : "Tampilkan"} password
+                    </button>
+                  </div>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
