@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="id-ID" className={inter.className}>
       <head />
       <body className="flex min-h-screen flex-col bg-background font-sans antialiased">
         <TRPCReactProvider>
