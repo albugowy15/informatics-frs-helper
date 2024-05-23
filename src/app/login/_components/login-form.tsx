@@ -40,7 +40,6 @@ const LoginForm = () => {
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
   });
-  const { handleSubmit } = form;
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
@@ -68,7 +67,7 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
         <FormField
           control={form.control}
           name="username"
