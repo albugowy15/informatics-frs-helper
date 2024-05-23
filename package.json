@@ -30,7 +30,8 @@
     "typecheck": "tsc --noEmit --incremental false",
     "format": "prettier -w .",
     "format:check": "prettier -c .",
-    "lint:fix": "eslint src --fix && pnpm format"
+    "lint:fix": "eslint src --fix && pnpm format",
+    "check": "pnpm typecheck && pnpm lint && pnpm format:check"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
