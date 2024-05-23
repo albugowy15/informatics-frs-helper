@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,6 +22,7 @@ import { resetPasswordSchema } from "../schema";
 type ResetPasswordForm = z.infer<typeof resetPasswordSchema>;
 
 const ResetPasswordForm = (props: { token: string }) => {
+  const [showNewPassword, setShowNewPassword] = React.useState(false);
   const form = useForm<ResetPasswordForm>({
     resolver: zodResolver(resetPasswordSchema),
   });
@@ -51,7 +53,21 @@ const ResetPasswordForm = (props: { token: string }) => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormDescription>Masukkan password baru Anda</FormDescription>
-              <Input {...field} type="password" />
+              <div>
+                <Input
+                  {...field}
+                  type={showNewPassword ? "text" : "password"}
+                />
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    className="text-sm py-1 font-medium text-primary cursor-pointer w-fit"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                  >
+                    {showNewPassword ? "Sembunyikan" : "Tampilkan"} password
+                  </button>
+                </div>
+              </div>
               <FormMessage />
             </FormItem>
           )}

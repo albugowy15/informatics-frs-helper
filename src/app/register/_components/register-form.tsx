@@ -1,10 +1,12 @@
 "use client";
 
+import React from "react";
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -22,6 +24,9 @@ import { registerSchema } from "../schema";
 type RegisterForm = z.infer<typeof registerSchema>;
 
 const RegisterForm = () => {
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
   });
@@ -43,6 +48,9 @@ const RegisterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
+              <FormDescription>
+                Username maksimal 20 karakter tanpa spasi
+              </FormDescription>
               <FormControl>
                 <Input type="text" {...field} />
               </FormControl>
@@ -56,6 +64,9 @@ const RegisterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
+              <FormDescription>
+                Gunakan email yang valid dan belum terdaftar
+              </FormDescription>
               <FormControl>
                 <Input type="email" {...field} />
               </FormControl>
@@ -69,8 +80,22 @@ const RegisterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
+              <FormDescription>
+                Password 6 sampai 18 karakter terdiri dari huruf dan angka
+              </FormDescription>
               <FormControl>
-                <Input type="password" {...field} />
+                <div>
+                  <Input type={showPassword ? "text" : "password"} {...field} />
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      className="text-sm py-1 font-medium text-primary cursor-pointer w-fit"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? "Sembunyikan" : "Tampilkan"} password
+                    </button>
+                  </div>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -82,8 +107,27 @@ const RegisterForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Konfirmasi Password</FormLabel>
+              <FormDescription>Ketik ulang password</FormDescription>
               <FormControl>
-                <Input type="password" {...field} />
+                <div>
+                  <Input
+                    type={showConfirmPassword ? "text" : "password"}
+                    {...field}
+                  />
+
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      className="text-sm py-1 font-medium text-primary cursor-pointer w-fit"
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                    >
+                      {showConfirmPassword ? "Sembunyikan" : "Tampilkan"}{" "}
+                      password
+                    </button>
+                  </div>
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
