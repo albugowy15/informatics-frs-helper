@@ -104,7 +104,7 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-4"
       >
-        <div className="flex flex-col 2xl:flex-row gap-3">
+        <div className="flex flex-col gap-3">
           <FormField
             control={form.control}
             name="title"
@@ -153,7 +153,7 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
           </Typography>
           <div className="py-1" />
           {classContext.classTaken.length > 0 ? (
-            <div className="2xl:grid 2xl:grid-cols-2 2xl:gap-2 space-y-2">
+            <div className="space-y-2">
               {classContext.classTaken.map((item, index) => (
                 <ClassCard
                   data={{

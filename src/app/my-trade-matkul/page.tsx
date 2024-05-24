@@ -32,7 +32,7 @@ export default async function MyTradeMatkulPage() {
         </Link>
       </Button>
 
-      <div className="grid gap-2 lg:grid-cols-3 2xl:grid-cols-6">
+      <div className="grid gap-2 lg:grid-cols-3">
         {tradeMatkulPosts.length > 0 ? (
           tradeMatkulPosts.map((post) => (
             <MyTradeCard post={post} key={post.id} />

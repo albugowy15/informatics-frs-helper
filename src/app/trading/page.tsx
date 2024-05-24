@@ -35,7 +35,7 @@ export default async function TradingMatkulPage({
             Tidak ada trade matkul
           </Typography>
         ) : null}
-        <div className="grid gap-2 md:grid-cols-2 2xl:grid-cols-6">
+        <div className="grid gap-2 md:grid-cols-2 2xl:grid-cols-4">
           {listTrades.map((trade) => (
             <TradeCard trade={trade} key={trade.id} />
           ))}

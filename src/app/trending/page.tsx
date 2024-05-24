@@ -21,7 +21,7 @@ export default async function TrendingPage() {
       </Typography>
       <div className="py-2" />
       {!isTrendingEmpty ? (
-        <main className="mx-auto grid gap-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6">
+        <main className="mx-auto grid gap-2 md:grid-cols-2 lg:grid-cols-4">
           {trendingClass.map((kelas) => (
             <ClassCard
               key={kelas.id}
