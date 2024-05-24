@@ -29,15 +29,17 @@ export default async function TradingMatkulPage({
   return (
     <main className="mt-4 gap-4 lg:flex">
       <TradeFilterWidget />
-      <main className="grid w-full gap-2 md:grid-cols-2 lg:grid-cols-3">
+      <main className="w-full">
         {listTrades.length === 0 ? (
           <Typography variant="h4" className="text-center lg:text-left">
             Tidak ada trade matkul
           </Typography>
         ) : null}
-        {listTrades.map((trade) => (
-          <TradeCard trade={trade} key={trade.id} />
-        ))}
+        <div className="grid gap-2 md:grid-cols-2 2xl:grid-cols-6">
+          {listTrades.map((trade) => (
+            <TradeCard trade={trade} key={trade.id} />
+          ))}
+        </div>
       </main>
     </main>
   );

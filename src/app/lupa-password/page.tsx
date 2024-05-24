@@ -15,17 +15,19 @@ export const metadata: Metadata = {
 
 export default function ForgotPasswordPage() {
   return (
-    <Card className="mx-auto mt-6 w-full md:w-96">
-      <CardHeader>
-        <CardTitle>Lupa Password</CardTitle>
-        <CardDescription>
-          Link untuk reset password akan dikirimkan ke emailmu. Cek juga di spam
-          atau promosi.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ForgotPasswordForm />
-      </CardContent>
-    </Card>
+    <div className="flex items-center justify-center mt-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Lupa Password</CardTitle>
+          <CardDescription>
+            Link untuk reset password akan dikirimkan ke emailmu. Cek juga di
+            spam atau promosi.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ForgotPasswordForm />
+        </CardContent>
+      </Card>
+    </div>
   );
 }

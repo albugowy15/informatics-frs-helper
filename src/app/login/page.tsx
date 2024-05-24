@@ -16,16 +16,18 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <Card className="mx-auto mt-6 w-full md:w-96">
-      <CardHeader>
-        <CardTitle>Silahkan Login</CardTitle>
-        <CardDescription>
-          Silahkan login menggunakan email atau username beserta password.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <LoginForm />
-      </CardContent>
-    </Card>
+    <div className="flex items-center justify-center mt-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Silahkan Login</CardTitle>
+          <CardDescription>
+            Silahkan login menggunakan email atau username beserta password.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <LoginForm />
+        </CardContent>
+      </Card>
+    </div>
   );
 }

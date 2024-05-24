@@ -19,7 +19,7 @@ import TradingFilterForm from "./trading-filter-form";
 const TradeFilterWidget = () => {
   return (
     <>
-      <aside className="sticky top-4 hidden h-fit w-[26%] flex-shrink-0 lg:block">
+      <aside className="sticky top-4 hidden h-fit w-[30%] 2xl:w-fit flex-shrink-0 lg:block">
         <Card>
           <CardHeader>
             <CardTitle>Filter Trading Kelas</CardTitle>

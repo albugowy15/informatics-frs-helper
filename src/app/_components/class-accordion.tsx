@@ -55,7 +55,7 @@ const ClassAccordion = async ({
               </div>
             </AccordionTrigger>
             <AccordionContent>
-              <div className="grid gap-2 md:grid-cols-3">
+              <div className="grid gap-2 md:grid-cols-3 2xl:grid-cols-6">
                 {matkul.Class.length === 0 ? (
                   <Typography variant="body1">Tidak ada kelas</Typography>
                 ) : (

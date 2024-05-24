@@ -16,7 +16,7 @@ import React from "react";
 
 const Navbar = (props: { items: Navigation[] }) => {
   return (
-    <header className="flex items-center justify-between border-b px-3 py-2 md:container">
+    <header className="flex items-center justify-between border-b px-5 py-2">
       <nav className="hidden items-center space-x-4 md:flex lg:space-x-6">
         <Link
           href="/"

@@ -100,51 +100,60 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Judul Plan</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="semester"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Pilih Semester</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
+        <div className="flex flex-col 2xl:flex-row gap-3">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Judul Plan</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Pilih semester" />
-                  </SelectTrigger>
+                  <Input {...field} type="text" />
                 </FormControl>
-                <SelectContent>
-                  {SemesterWithKey.map((item) => (
-                    <SelectItem key={item.id} value={item.value}>
-                      {item.value}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="semester"
+            render={({ field }) => (
+              <FormItem className="flex-1">
+                <FormLabel>Pilih Semester</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Pilih semester" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {SemesterWithKey.map((item) => (
+                      <SelectItem key={item.id} value={item.value}>
+                        {item.value}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         <div>
           <Typography variant="h4" className="text-base font-semibold">
             Matkul yang diambil
           </Typography>
+          <div className="py-1" />
           {classContext.classTaken.length > 0 ? (
-            <div className="space-y-2">
+            <div className="2xl:grid 2xl:grid-cols-2 2xl:gap-2 space-y-2">
               {classContext.classTaken.map((item, index) => (
                 <ClassCard
                   data={{

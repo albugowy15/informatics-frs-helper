@@ -15,16 +15,18 @@ export const metadata: Metadata = {
 
 export default function RegisterPage() {
   return (
-    <Card className="mx-auto mt-6 w-full md:w-96">
-      <CardHeader>
-        <CardTitle>Silahkan Register</CardTitle>
-        <CardDescription>
-          Silahkan register menggunakan email, username, dan password
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <RegisterForm />
-      </CardContent>
-    </Card>
+    <div className="flex items-center justify-center mt-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Silahkan Register</CardTitle>
+          <CardDescription>
+            Silahkan register menggunakan email, username, dan password
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <RegisterForm />
+        </CardContent>
+      </Card>
+    </div>
   );
 }

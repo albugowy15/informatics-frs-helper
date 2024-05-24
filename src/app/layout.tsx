@@ -33,7 +33,7 @@ export default function RootLayout({
           >
             <Toaster closeButton richColors expand={false} />
             <Navbar items={homeNavigation} />
-            <div className="px-3 py-5 md:container">{children}</div>
+            <div className="px-5 py-5">{children}</div>
             <Footer />
           </ThemeProvider>
         </TRPCReactProvider>

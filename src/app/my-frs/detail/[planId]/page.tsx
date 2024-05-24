@@ -36,7 +36,7 @@ export default async function PlanDetailPage({
 
       <section className="space-y-2">
         <Typography variant="h4">Matkul yang diambil</Typography>
-        <div className="grid gap-2 lg:grid-cols-4">
+        <div className="grid gap-2 lg:grid-cols-4 2xl:grid-cols-6">
           {plan.Class.map((kelas) => (
             <ClassCard
               key={kelas.id}

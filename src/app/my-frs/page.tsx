@@ -22,7 +22,7 @@ export default async function FRSPage() {
         dihapus di semester berikutnya.
       </Typography>
       <CreateFrsButton isReachFRSLimit={plans.length >= 3} />
-      <div className="grid gap-2 lg:grid-cols-3">
+      <div className="grid gap-2 lg:grid-cols-3 2xl:grid-cols-6">
         {plans.length > 0 ? (
           plans.map((plan) => <FrsPlanCard plan={plan} key={plan.id} />)
         ) : (

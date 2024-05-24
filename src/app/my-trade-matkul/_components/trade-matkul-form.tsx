@@ -123,7 +123,7 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="max-w-2xl">
               <FormLabel>Deskripsi</FormLabel>
               <FormControl>
                 <Textarea
