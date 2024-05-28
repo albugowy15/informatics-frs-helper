@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default async function PanduanPage() {
   unstable_noStore();
-  const statisticData = await api.common.getStatistic.query();
+  const statisticData = await api.common.getStatistic();
   return (
     <main className="space-y-4">
       <Typography variant="h2" className="text-center">

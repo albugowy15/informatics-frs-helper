@@ -76,7 +76,7 @@ const ResetPasswordForm = (props: { token: string }) => {
         <Button
           className="flex w-full justify-center"
           type="submit"
-          loading={mutateResetPassword.isLoading}
+          loading={mutateResetPassword.isPending}
         >
           Perbarui Password
         </Button>

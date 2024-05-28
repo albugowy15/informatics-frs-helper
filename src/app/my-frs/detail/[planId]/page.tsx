@@ -14,7 +14,7 @@ export default async function PlanDetailPage({
 }: {
   params: { planId: string };
 }) {
-  const plan = await api.frs.getPlanDetail.query({
+  const plan = await api.frs.getPlanDetail({
     planId: params.planId,
   });
 

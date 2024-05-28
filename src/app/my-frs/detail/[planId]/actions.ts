@@ -10,7 +10,7 @@ export async function deletePlanAction(
   data: RouterInputs["frs"]["deletePlan"],
 ) {
   try {
-    await api.frs.deletePlan.mutate(data);
+    await api.frs.deletePlan(data);
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return { error: e.message };

@@ -8,7 +8,7 @@ export async function resetPasswordAction(
   data: RouterInputs["user"]["resetPassword"],
 ) {
   try {
-    await api.user.resetPassword.mutate(data);
+    await api.user.resetPassword(data);
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return {

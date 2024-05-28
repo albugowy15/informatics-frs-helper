@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function FRSPage() {
   unstable_noStore();
-  const plans = await api.frs.getAllPlans.query();
+  const plans = await api.frs.getAllPlans();
   return (
     <main>
       <Typography variant="h3">My FRS Plan</Typography>

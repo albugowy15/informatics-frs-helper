@@ -111,7 +111,7 @@ const ChangePasswordForm = () => {
         <Button
           className="flex w-full justify-center"
           type="submit"
-          loading={mutatePassword.isLoading}
+          loading={mutatePassword.isPending}
         >
           Ubah Password
         </Button>

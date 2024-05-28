@@ -12,7 +12,7 @@ export default async function EditTradeMatkulPage({
 }: {
   params: { tradeMatkulId: string };
 }) {
-  const prevTradeMatkul = await api.tradeMatkul.getTradeMatkul.query({
+  const prevTradeMatkul = await api.tradeMatkul.getTradeMatkul({
     tradeMatkulId: params.tradeMatkulId,
   });
   return <TradeMatkulForm prevData={prevTradeMatkul} />;
