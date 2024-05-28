@@ -3909,8 +3909,8 @@ snapshots:
 
   '@tanstack/react-query@5.51.23(react@18.3.1)':
     dependencies:
-      '@tanstack/query-core': 5.51.21
-      react: 18.3.1
+      '@tanstack/query-core': 5.40.0
+      react: 19.0.0-rc-935180c7e0-20240524
 
   '@tidbcloud/prisma-adapter@5.15.0(@tidbcloud/serverless@0.2.0)':
     dependencies:
@@ -6219,10 +6219,6 @@ snapshots:
       tslib: 2.6.2
     optionalDependencies:
       '@types/react': 18.3.3
-
-  use-sync-external-store@1.2.2(react@19.0.0-rc-935180c7e0-20240524):
-    dependencies:
-      react: 19.0.0-rc-935180c7e0-20240524
 
   util-deprecate@1.0.2: {}
 
