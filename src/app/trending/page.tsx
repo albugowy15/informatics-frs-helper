@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default async function TrendingPage() {
   unstable_noStore();
-  const trendingClass = await api.common.getTrendingClasses.query();
+  const trendingClass = await api.common.getTrendingClasses();
   const isTrendingEmpty = trendingClass.length == 0;
   return (
     <>

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default async function MyTradeMatkulPage() {
   unstable_noStore();
-  const tradeMatkulPosts = await api.tradeMatkul.getAllMyTradeMatkul.query();
+  const tradeMatkulPosts = await api.tradeMatkul.getAllMyTradeMatkul();
 
   return (
     <main>

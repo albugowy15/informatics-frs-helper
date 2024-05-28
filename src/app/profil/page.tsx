@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default async function ProfilePage() {
   unstable_noStore();
-  const userProfile = await api.user.getUserProfile.query();
+  const userProfile = await api.user.getUserProfile();
 
   return (
     <Card className="mx-auto w-full min-w-fit sm:w-[500px]">

@@ -8,7 +8,7 @@ import { type EditProfileFormType } from "./_components/edit-profile-form";
 
 export async function updateProfileAction(data: EditProfileFormType) {
   try {
-    await api.user.updateProfile.mutate(data);
+    await api.user.updateProfile(data);
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return { error: e.message };

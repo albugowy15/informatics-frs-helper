@@ -21,7 +21,7 @@ export default async function TradingMatkulPage({
   searchParams: SearchParam;
 }) {
   const { semester = undefined, subject = undefined } = searchParams;
-  const listTrades = await api.tradeMatkul.getAllTradeMatkul.query({
+  const listTrades = await api.tradeMatkul.getAllTradeMatkul({
     semester: semester === undefined ? undefined : parseInt(semester),
     matkul: subject === undefined || subject === "Semua" ? undefined : subject,
   });

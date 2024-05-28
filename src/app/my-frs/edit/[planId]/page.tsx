@@ -15,7 +15,7 @@ export default async function EditFrsPage({
   params: { planId: string };
   searchParams: SearchParam;
 }) {
-  const planDetail = await api.frs.getPlanDetail.query({
+  const planDetail = await api.frs.getPlanDetail({
     planId: params.planId,
   });
   const { semester = "1", subject = "Semua" } = searchParams;

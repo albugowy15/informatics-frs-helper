@@ -10,7 +10,7 @@ export async function createTradeMatkulAction(
   data: RouterInputs["tradeMatkul"]["createTradeMatkul"],
 ) {
   try {
-    await api.tradeMatkul.createTradeMatkul.mutate(data);
+    await api.tradeMatkul.createTradeMatkul(data);
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return {
@@ -27,7 +27,7 @@ export async function updateTradeMatkulAction(
   data: RouterInputs["tradeMatkul"]["updateTradeMatkul"],
 ) {
   try {
-    await api.tradeMatkul.updateTradeMatkul.mutate(data);
+    await api.tradeMatkul.updateTradeMatkul(data);
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return {
@@ -44,7 +44,7 @@ export async function deleteMyTradeMatkulAction(
   data: RouterInputs["tradeMatkul"]["deleteMyTradeMatkul"],
 ) {
   try {
-    await api.tradeMatkul.deleteMyTradeMatkul.mutate(data);
+    await api.tradeMatkul.deleteMyTradeMatkul(data);
   } catch (e) {
     if (e instanceof TRPCClientError) {
       return {

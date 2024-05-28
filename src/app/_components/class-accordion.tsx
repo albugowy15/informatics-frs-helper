@@ -29,7 +29,7 @@ const ClassAccordion = async ({
   withAction = false,
   ...props
 }: ClassAccordionProps) => {
-  const classes = await api.common.getClass.query({
+  const classes = await api.common.getClass({
     semester:
       props.semester === undefined ? parseInt("1") : parseInt(props.semester),
     matkul:
