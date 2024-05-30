@@ -7,17 +7,23 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { renderPageTitle } from "@/lib/utils";
+import { auth } from "@/server/auth";
 import { type Metadata } from "next";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Reset Password"),
 };
 
-export default function ResetPasswordPage({
+export default async function ResetPasswordPage({
   params,
 }: {
   params: { token: string };
 }) {
+  const session = await auth();
+  if (session) {
+    redirect("/");
+  }
   return (
     <Card className="mx-auto mt-6 w-full md:w-96">
       <CardHeader>

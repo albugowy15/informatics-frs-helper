@@ -7,14 +7,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { renderPageTitle } from "@/lib/utils";
+import { auth } from "@/server/auth";
 import { type Metadata } from "next";
+import { redirect } from "next/navigation";
 import React from "react";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Login"),
 };
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await auth();
+  if (session) {
+    redirect("/");
+  }
   return (
     <div className="flex items-center justify-center mt-6">
       <Card>

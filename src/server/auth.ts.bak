@@ -1,31 +1,34 @@
-import NextAuth, { type DefaultSession } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import {
+  type DefaultSession,
+  getServerSession,
+  type NextAuthOptions,
+} from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { env } from "@/env.mjs";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import prisma from "@/server/db";
 
 export interface LoginResponseData {
   username: string;
   email: string;
+  accessToken: string;
   id: string;
 }
 
+/**
+ * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
+ * object and keep type safety.
+ *
+ * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
+ */
 declare module "next-auth" {
-  /**
-   * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
-  interface Session {
-    user: {
-      /** The user's postal address. */
-      id: string;
-      /**
-       * By default, TypeScript merges new interface properties and overwrites existing ones.
-       * In this case, the default session user properties will be overwritten,
-       * with the new ones defined above. To keep the default session user properties,
-       * you need to add them back into the newly declared interface.
-       */
-    } & DefaultSession["user"];
+  interface Session extends DefaultSession {
+    user: LoginResponseData & DefaultSession["user"];
   }
 }
+
+const KEY = env.NEXTAUTH_SECRET!;
 
 async function handleLogin(username: string, password: string) {
   if (!username || !password) {
@@ -55,11 +58,23 @@ async function handleLogin(username: string, password: string) {
   if (!isMatch) {
     throw new Error("Password salah");
   }
-  return {
+  const payload = {
     id: user.id,
-    email: user.email,
     username: user.username,
+    email: user.email,
   };
+  try {
+    const token = jwt.sign(payload, KEY, { expiresIn: "1d" });
+    return {
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      accessToken: token,
+    };
+  } catch (e) {
+    console.log(e);
+    throw new Error("ERROR SIGN TOKEN");
+  }
 }
 
 /**
@@ -67,9 +82,9 @@ async function handleLogin(username: string, password: string) {
  *
  * @see https://next-auth.js.org/configuration/options
  */
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
-    Credentials({
+    CredentialsProvider({
       name: "Credentials",
       credentials: {
         username: {
@@ -81,22 +96,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           type: "password",
         },
       },
-      authorize: async (credentials) => {
+      async authorize(credentials) {
         if (!credentials) {
           throw new Error("Username dan password kosong");
         }
         try {
-          const user = await handleLogin(
-            credentials.username as string,
-            credentials.password as string,
-          );
-          return user;
+          return await handleLogin(credentials.username, credentials.password);
         } catch (e: unknown) {
           if (e instanceof Error) {
-            console.error("error reason:", e.message);
             throw new Error(e.message);
           } else {
-            console.error("error reason:", e);
             throw new Error("INTERNAL ERROR");
           }
         }
@@ -105,22 +114,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     jwt({ token, user }) {
-      if (user) {
-        // User is available during sign-in
-        token.id = user.id;
-      }
-      return token;
+      return { ...token, ...user };
     },
     session({ session, token }) {
-      session.user.id = token.id as string;
-      return session;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+        },
+      };
     },
   },
-  // secret: env.AUTH_SECRET,
+  secret: env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
   pages: {
     signIn: "/login",
   },
-});
+  jwt: {
+    secret: env.NEXTAUTH_SECRET,
+  },
+};
+
+/**
+ * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
+ *
+ * @see https://next-auth.js.org/configuration/nextjs
+ */
+export const getServerAuthSession = () => getServerSession(authOptions);
