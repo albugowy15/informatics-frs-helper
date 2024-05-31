@@ -9,7 +9,6 @@ const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
   RESET_SECRET: z.string(),
   RESEND_API_KEY: z.string(),
-  BASE_URL: z.string().url(),
   AUTH_SECRET:
     process.env.NODE_ENV === "production"
       ? z.string().min(1)
@@ -46,7 +45,6 @@ const processEnv = {
   AUTH_URL: process.env.AUTH_URL,
   RESET_SECRET: process.env.RESET_SECRET,
   RESEND_API_KEY: process.env.RESEND_API_KEY,
-  BASE_URL: process.env.BASE_URL,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
 };
 

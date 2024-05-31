@@ -11,6 +11,7 @@ import {
 } from "@/server/api/trpc";
 import prisma from "@/server/db";
 import { TRPCError } from "@trpc/server";
+import { getBaseUrl } from "@/trpc/shared";
 import { kv } from "@vercel/kv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -257,7 +258,7 @@ export const userRouter = createTRPCRouter({
       const token = jwt.sign(payload, env.RESET_SECRET, {
         expiresIn: "30m",
       });
-      const tokenUrl = `${env.BASE_URL}/reset-password/${token}`;
+      const tokenUrl = getBaseUrl() + `/reset-password/${token}`;
 
       const resend = new Resend(env.RESEND_API_KEY);
       try {
