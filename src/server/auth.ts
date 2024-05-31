@@ -1,72 +1,23 @@
-import NextAuth, { type DefaultSession } from "next-auth";
+import { env } from "@/env.mjs";
+import NextAuth, { CredentialsSignin } from "next-auth";
+
 import Credentials from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-import prisma from "@/server/db";
-
-export interface LoginResponseData {
-  username: string;
-  email: string;
-  id: string;
-}
-
-declare module "next-auth" {
-  /**
-   * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
-  interface Session {
-    user: {
-      /** The user's postal address. */
-      id: string;
-      /**
-       * By default, TypeScript merges new interface properties and overwrites existing ones.
-       * In this case, the default session user properties will be overwritten,
-       * with the new ones defined above. To keep the default session user properties,
-       * you need to add them back into the newly declared interface.
-       */
-    } & DefaultSession["user"];
-  }
-}
-
-async function handleLogin(username: string, password: string) {
-  if (!username || !password) {
-    throw new Error("Username dan password tidak ada");
-  }
-
-  const users = await prisma.user.findMany({
-    where: {
-      OR: [
-        {
-          username: username,
-        },
-        {
-          email: username,
-        },
-      ],
-    },
-  });
-  if (users.length === 0 || users.length > 1) {
-    throw new Error("User tidak ditemukan");
-  }
-  const user = users[0];
-  if (!user) {
-    throw new Error("User tidak ditemukan");
-  }
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    throw new Error("Password salah");
-  }
-  return {
-    id: user.id,
-    email: user.email,
-    username: user.username,
-  };
-}
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
  *
  * @see https://next-auth.js.org/configuration/options
  */
+
+interface LoginApiResponse {
+  msg?: string;
+  data?: {
+    id: string;
+    username: string;
+    email: string;
+  };
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
@@ -83,23 +34,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         if (!credentials) {
-          throw new Error("Username dan password kosong");
+          throw new CredentialsSignin("credentisals empty");
         }
-        try {
-          const user = await handleLogin(
-            credentials.username as string,
-            credentials.password as string,
-          );
-          return user;
-        } catch (e: unknown) {
-          if (e instanceof Error) {
-            console.error("error reason:", e.message);
-            throw new Error(e.message);
-          } else {
-            console.error("error reason:", e);
-            throw new Error("INTERNAL ERROR");
-          }
+        const loginApiUrl = new URL("/api/login", env.BASE_URL);
+        const res = await fetch(loginApiUrl, {
+          method: "POST",
+          body: JSON.stringify(credentials),
+        });
+
+        const resBody: LoginApiResponse = await res.json();
+        if (!res.ok || resBody.msg) {
+          throw new CredentialsSignin(resBody.msg);
         }
+
+        if (resBody.data) {
+          return resBody.data;
+        }
+        return null;
       },
     }),
   ],
