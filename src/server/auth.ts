@@ -37,6 +37,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new CredentialsSignin("credentisals empty");
         }
         const loginApiUrl = new URL("/api/login", env.BASE_URL);
+        console.log("loginApiUrl:", loginApiUrl);
         const res = await fetch(loginApiUrl, {
           method: "POST",
           body: JSON.stringify(credentials),

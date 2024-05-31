@@ -57,6 +57,11 @@ export const tradeMatkulRouter = createTRPCRouter({
         });
       }
       try {
+        if (!ctx.session.user.id) {
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+          });
+        }
         await prisma.tradeMatkul.create({
           data: {
             description: input.description,
