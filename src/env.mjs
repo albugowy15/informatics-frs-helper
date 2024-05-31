@@ -9,12 +9,22 @@ const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
   RESET_SECRET: z.string(),
   RESEND_API_KEY: z.string(),
-  BASE_URL: z.string().url(),
+  BASE_URL: z.preprocess(
+    (str) => process.env.VERCEL_URL ?? str,
+    process.env.VERCEL ? z.string().min(1) : z.string().url(),
+  ),
   AUTH_SECRET:
     process.env.NODE_ENV === "production"
       ? z.string().min(1)
       : z.string().min(1).optional(),
   AUTH_TRUST_HOST: z.string(),
+  AUTH_URL: z.preprocess(
+    // This makes Vercel deployments not fail if you don't set AUTH_URL
+    // Since NextAuth.js automatically uses the VERCEL_URL if present.
+    (str) => process.env.VERCEL_URL ?? str,
+    // VERCEL_URL doesn't include `https` so it cant be validated as a URL
+    process.env.VERCEL ? z.string().min(1) : z.string().url(),
+  ),
 });
 
 /**
@@ -36,6 +46,7 @@ const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
   AUTH_SECRET: process.env.AUTH_SECRET,
   AUTH_TRUST_HOST: process.env.AUTH_TRUST_HOST,
+  AUTH_URL: process.env.AUTH_URL,
   RESET_SECRET: process.env.RESET_SECRET,
   RESEND_API_KEY: process.env.RESEND_API_KEY,
   BASE_URL: process.env.BASE_URL,

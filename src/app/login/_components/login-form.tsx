@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { signIn } from "next-auth/react";
 
 const loginSchema = z.object({
   username: z
@@ -44,20 +45,19 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     setButtonDisabled(true);
-    const signIn = (await import("next-auth/react")).signIn;
     signIn("credentials", {
       username: data.username,
       password: data.password,
       redirect: false,
     })
       .then((res) => {
-        if (res?.ok) {
+        if (res?.error) {
+          toast.error("Username atau password salah");
+          setButtonDisabled(false);
+        } else {
           toast.success("Login Berhasil");
           setButtonDisabled(false);
           window.location.replace("/");
-        } else {
-          toast.error(res?.error);
-          setButtonDisabled(false);
         }
       })
       .catch(() => {
