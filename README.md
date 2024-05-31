@@ -39,7 +39,7 @@ For details on how to use Informatics FRS Helper, check out the [documentation](
 To run this project locally, ensure that you have installed all the necessary tools on your machine:
 
 - [Node.js LTS](https://nodejs.org/en)
-- [pnpm version 8 or higher](https://pnpm.io)
+- [pnpm version 9 or higher](https://pnpm.io)
 - [Docker](https://www.docker.com)
 
 Then, you can follow these steps:
