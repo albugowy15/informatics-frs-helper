@@ -1,4 +1,4 @@
-import { getBaseUrl } from "@/trpc/shared";
+import { env } from "@/env.mjs";
 import NextAuth, { CredentialsSignin } from "next-auth";
 
 import Credentials from "next-auth/providers/credentials";
@@ -36,7 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!credentials) {
           throw new CredentialsSignin("credentisals empty");
         }
-        const loginApiUrl = getBaseUrl() + "/api/login";
+        const loginApiUrl = env.APP_URL + "/api/login";
         const res = await fetch(loginApiUrl, {
           method: "POST",
           body: JSON.stringify(credentials),
