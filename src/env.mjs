@@ -9,10 +9,7 @@ const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
   RESET_SECRET: z.string(),
   RESEND_API_KEY: z.string(),
-  BASE_URL: z.preprocess(
-    (str) => process.env.VERCEL_URL ?? str,
-    process.env.VERCEL ? z.string().min(1) : z.string().url(),
-  ),
+  BASE_URL: z.string().url(),
   AUTH_SECRET:
     process.env.NODE_ENV === "production"
       ? z.string().min(1)
