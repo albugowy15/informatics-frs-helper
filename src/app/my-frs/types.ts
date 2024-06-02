@@ -1,4 +1,4 @@
-import { type RouterOutputs } from "@/trpc/shared";
+import { type RouterOutputs } from "@/trpc/react";
 
 export interface SearchParam {
   semester?: string;

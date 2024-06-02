@@ -10,13 +10,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToastMutate } from "@/lib/hooks";
-import { type RouterOutputs } from "@/trpc/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
 import { type z } from "zod";
 import { editProfileSchema } from "../../schema";
 import { updateProfileAction } from "../actions";
+import { type RouterOutputs } from "@/trpc/react";
 
 export type EditProfileFormType = z.infer<typeof editProfileSchema>;
 

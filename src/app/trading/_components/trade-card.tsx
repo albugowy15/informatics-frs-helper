@@ -1,5 +1,5 @@
 import Typography from "@/components/typography";
-import { type RouterOutputs } from "@/trpc/shared";
+import { type RouterOutputs } from "@/trpc/react";
 
 const TradeCard = (props: {
   trade: RouterOutputs["tradeMatkul"]["getAllTradeMatkul"][0];

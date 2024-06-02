@@ -1,7 +1,7 @@
 "use server";
 
+import { type RouterInputs } from "@/trpc/react";
 import { api } from "@/trpc/server";
-import { type RouterInputs } from "@/trpc/shared";
 import { TRPCClientError } from "@trpc/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
