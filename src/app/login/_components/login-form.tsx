@@ -4,7 +4,7 @@ import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 import Typography from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,21 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { signIn } from "next-auth/react";
-
-const loginSchema = z.object({
-  username: z
-    .string({
-      required_error: "Username tidak boleh kosong",
-      invalid_type_error: "Username tidak valid",
-    })
-    .min(1, { message: "Username tidak boleh kosong" }),
-  password: z
-    .string({
-      required_error: "Password tidak boleh kosong",
-      invalid_type_error: "Password tidak valid",
-    })
-    .min(1, { message: "Password tidak boleh kosong" }),
-});
+import { loginSchema } from "../schema";
 
 type LoginForm = z.infer<typeof loginSchema>;
 
