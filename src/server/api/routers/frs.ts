@@ -8,7 +8,7 @@ const frsPlanSchema = z.object({
   title: titleSchema,
   semester: z
     .number()
-    .min(1, { message: "semester kosong" })
+    .min(1, { message: "Semester kosong" })
     .max(8, { message: "Semester lebih dari 8" }),
   matkul: z.string().array(),
 });

@@ -34,7 +34,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         if (!credentials) {
-          throw new CredentialsSignin("credentisals empty");
+          throw new CredentialsSignin("credentials empty");
         }
         const loginApiUrl = env.APP_URL + "/api/login";
         const res = await fetch(loginApiUrl, {
