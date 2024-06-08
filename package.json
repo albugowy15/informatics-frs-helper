@@ -48,7 +48,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.7",
     "@tanstack/react-query": "^5.40.1",
-    "@tidbcloud/prisma-adapter": "^5.11.1",
+    "@tidbcloud/prisma-adapter": "^5.15.0",
     "@tidbcloud/serverless": "^0.1.1",
     "@trpc/client": "next",
     "@trpc/next": "next",
@@ -98,5 +98,5 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
-  "packageManager": "pnpm@9.1.4+sha512.9df9cf27c91715646c7d675d1c9c8e41f6fce88246f1318c1aa6a1ed1aeb3c4f032fcdf4ba63cc69c4fe6d634279176b5358727d8f2cc1e65b65f43ce2f8bfb0"
+  "packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771"
 }

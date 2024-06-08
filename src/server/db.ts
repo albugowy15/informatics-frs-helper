@@ -9,7 +9,6 @@ const createPrismaClient = () =>
   new PrismaClient({
     log:
       env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
-    // @ts-expect-error ignore adapter name
     adapter: new PrismaTiDBCloud(connection),
   });
 
