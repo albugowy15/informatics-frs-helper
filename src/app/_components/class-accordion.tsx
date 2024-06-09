@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/accordion";
 import { api } from "@/trpc/server";
 import ClassCardActionButton from "../my-frs/_components/class-card-action-button";
+import { parseSemester } from "@/lib/utils";
 
 const NoClasses = ({ isClassEmpty }: { isClassEmpty: boolean }) => {
   return (
@@ -30,8 +31,7 @@ const ClassAccordion = async ({
   ...props
 }: ClassAccordionProps) => {
   const classes = await api.common.getClass({
-    semester:
-      props.semester === undefined ? parseInt("1") : parseInt(props.semester),
+    semester: props.semester === undefined ? 1 : parseSemester(props.semester),
     matkul:
       props.subject === "Semua" || props.subject === undefined
         ? undefined

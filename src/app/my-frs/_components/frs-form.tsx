@@ -31,6 +31,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { createPlanAction, updatePlanAction } from "../actions";
 import { titleSchema } from "../schema";
+import { parseSemester } from "@/lib/utils";
 
 const createFRSFormSchema = z.object({
   title: titleSchema,
@@ -72,7 +73,7 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
           updatePlanAction({
             data: {
               title: data.title,
-              semester: parseInt(data.semester),
+              semester: parseSemester(data.semester),
               matkul: subjects,
             },
             planId: props.planId ?? "",
@@ -82,7 +83,7 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
         mutation.mutate(
           createPlanAction({
             title: data.title,
-            semester: parseInt(data.semester),
+            semester: parseSemester(data.semester),
             matkul: subjects,
           }),
         );

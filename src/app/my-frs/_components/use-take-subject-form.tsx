@@ -7,6 +7,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { parseSemester } from "@/lib/utils";
 
 const takeClassSchema = z.object({
   semester: requiredSemesterStringSchema,
@@ -29,7 +30,7 @@ function useTakeSubjectForm() {
   const semesterWatch = useWatch({ control: form.control, name: "semester" });
 
   const listSubjects = api.common.getSubject.useQuery({
-    semester: parseInt(semesterWatch),
+    semester: parseSemester(semesterWatch),
     withAll: true,
   });
 

@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SemesterWithKey } from "@/config/contants";
+import { parseSemester } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { useFormContext, useWatch } from "react-hook-form";
 
@@ -42,7 +43,7 @@ const ChooseClassSection = (props: ChooseClassSectionProps) => {
     name: subjectField,
   });
   const listSubject = api.common.getSubject.useQuery({
-    semester: parseInt(semesterWatch),
+    semester: parseSemester(semesterWatch),
   });
   const listClass = api.common.getClassBySubject.useQuery({
     subjectId: subjectWatch,

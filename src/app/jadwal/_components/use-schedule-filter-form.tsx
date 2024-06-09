@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
 import { filterSchema } from "../schema";
 import { type z } from "zod";
+import { parseSemester } from "@/lib/utils";
 
 type FilterForm = z.infer<typeof filterSchema>;
 
@@ -23,7 +24,7 @@ function useScheduleFilterForm() {
   const semesterWatch = useWatch({ control: form.control, name: "semester" });
 
   const listSubjects = api.common.getSubject.useQuery({
-    semester: parseInt(semesterWatch),
+    semester: parseSemester(semesterWatch),
     withAll: true,
   });
   const onSubmit: SubmitHandler<FilterForm> = (data) => {

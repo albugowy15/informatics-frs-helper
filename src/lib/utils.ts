@@ -14,3 +14,11 @@ const emptyStringToUndefined = z.literal("").transform(() => undefined);
 export function asOptionalField<T extends z.ZodTypeAny>(schema: T) {
   return schema.optional().or(emptyStringToUndefined);
 }
+
+export function parseSemester(val: string) {
+  try {
+    return parseInt(val);
+  } catch (e) {
+    return 1;
+  }
+}

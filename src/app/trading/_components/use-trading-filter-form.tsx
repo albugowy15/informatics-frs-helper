@@ -1,5 +1,6 @@
 "use client";
 
+import { parseSemester } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -28,7 +29,7 @@ function useTradingFilterForm() {
 
   const listSubjects = api.common.getSubject.useQuery(
     {
-      semester: parseInt(semesterWatch!),
+      semester: parseSemester(semesterWatch ?? ""),
       withAll: true,
     },
     { enabled: semesterWatch !== undefined },

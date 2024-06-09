@@ -1,5 +1,5 @@
 import Typography from "@/components/typography";
-import { renderPageTitle } from "@/lib/utils";
+import { parseSemester, renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
 import { type Metadata } from "next";
 import TradeCard from "./_components/trade-card";
@@ -22,7 +22,7 @@ export default async function TradingMatkulPage({
 }) {
   const { semester = undefined, subject = undefined } = searchParams;
   const listTrades = await api.tradeMatkul.getAllTradeMatkul({
-    semester: semester === undefined ? undefined : parseInt(semester),
+    semester: semester === undefined ? undefined : parseSemester(semester),
     matkul: subject === undefined || subject === "Semua" ? undefined : subject,
   });
 
