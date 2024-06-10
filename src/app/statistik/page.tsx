@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Statistik aplikasi Informatics FRS Helper",
 };
 
-export default async function PanduanPage() {
+export default async function StatistikPage() {
   unstable_noStore();
   const statisticData = await api.common.getStatistic();
   return (

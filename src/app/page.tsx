@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Informatics FRS Helper",
 };
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <section className="flex flex-col items-center justify-center gap-6">
