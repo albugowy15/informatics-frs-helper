@@ -1,7 +1,7 @@
 import { ModeToggle } from "@/components/theme-toggle";
 import LoginAction from "./login-action";
 import AccountDropdown from "../account-dropdown";
-import { auth } from "@/server/auth";
+import { auth } from "auth";
 
 const UserNav = async () => {
   const session = await auth();
