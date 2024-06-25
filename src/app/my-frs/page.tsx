@@ -2,7 +2,6 @@ import Typography from "@/components/typography";
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
 import { type Metadata } from "next";
-import { unstable_noStore } from "next/cache";
 import CreateFrsButton from "./_components/create-frs-button";
 import FrsPlanCard from "./_components/frs-plan-card";
 
@@ -11,7 +10,6 @@ export const metadata: Metadata = {
 };
 
 export default async function FRSPage() {
-  unstable_noStore();
   const plans = await api.frs.getAllPlans();
   return (
     <main>
