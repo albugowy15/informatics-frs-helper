@@ -13,7 +13,6 @@ import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
 import { Pencil1Icon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
-import { unstable_noStore } from "next/cache";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -21,7 +20,6 @@ export const metadata: Metadata = {
 };
 
 export default async function ProfilePage() {
-  unstable_noStore();
   const userProfile = await api.user.getUserProfile();
 
   return (

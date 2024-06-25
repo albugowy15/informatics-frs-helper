@@ -9,14 +9,12 @@ import {
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
 import { type Metadata } from "next";
-import { unstable_noStore } from "next/cache";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Edit Profil"),
 };
 
 export default async function EditProfilePage() {
-  unstable_noStore();
   const userProfile = await api.user.getUserProfile();
 
   return (
