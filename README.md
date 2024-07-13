@@ -5,9 +5,6 @@
 
   <p>A tool for ITS Informatics students to organize their FRS. This project is powered by <a href="https://create.t3.gg">T3 Stack</a>.</p>
 
-  <a href="https://github.com/albugowy15/informatics-frs-helper/actions/workflows/test.yml">
-    <img src="https://github.com/albugowy15/informatics-frs-helper/actions/workflows/test.yml/badge.svg" alt="Test"/>
-  </a>
   <a href="https://github.com/albugowy15/informatics-frs-helper/pulls">
     <img src="https://img.shields.io/badge/PRs-welcome-blue" alt="PR"/>
   </a>
@@ -40,7 +37,6 @@ To run this project locally, ensure that you have installed all the necessary to
 
 - [Node.js LTS](https://nodejs.org/en)
 - [pnpm version 9 or higher](https://pnpm.io)
-- [Docker](https://www.docker.com)
 
 Then, you can follow these steps:
 
