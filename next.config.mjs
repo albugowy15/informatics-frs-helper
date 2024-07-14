@@ -8,6 +8,9 @@ import bundleAnalyzer from "@next/bundle-analyzer";
 
 /** @type {import("next").NextConfig} */
 const config = {
+  experimental: {
+    reactCompiler: true,
+  },
   logging: {
     fetches: {
       fullUrl: true,
