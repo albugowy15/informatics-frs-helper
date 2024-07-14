@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SemesterWithKey } from "@/config/contants";
-import React from "react";
+import * as React from "react";
 import { useScheduleFilterForm } from "./use-schedule-filter-form";
 
 interface ScheduleFilterFormProps {

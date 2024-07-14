@@ -4,7 +4,7 @@ import { useClassContext } from "@/app/my-frs/_components/class-context";
 import { type PlanDetailClass } from "@/app/my-frs/types";
 import { Button } from "@/components/ui/button";
 import { api } from "@/trpc/react";
-import React from "react";
+import * as React from "react";
 import { toast } from "sonner";
 
 const ClassCardActionButton = (props: { data: PlanDetailClass }) => {

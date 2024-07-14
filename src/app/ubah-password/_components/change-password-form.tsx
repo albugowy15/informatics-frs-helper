@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import React from "react";
+import * as React from "react";
 import {
   Form,
   FormControl,

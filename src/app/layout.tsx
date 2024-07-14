@@ -8,7 +8,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
-import React from "react";
+import * as React from "react";
 
 const inter = Inter({
   subsets: ["latin"],

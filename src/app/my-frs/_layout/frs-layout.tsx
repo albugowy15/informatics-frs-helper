@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { ClassAccordion } from "@/app/_components/class-accordion";
 import ClassContextProvider from "@/app/my-frs/_components/class-context";
 import FRSForm from "@/app/my-frs/_components/frs-form";

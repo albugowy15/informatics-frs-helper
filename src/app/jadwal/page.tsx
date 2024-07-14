@@ -1,7 +1,7 @@
 import { type Metadata } from "next";
 import Loader from "@/components/loader";
 import { renderPageTitle } from "@/lib/utils";
-import React from "react";
+import * as React from "react";
 import { ClassAccordion } from "../_components/class-accordion";
 import { ScheduleFilterWidget } from "./_components/schedule-filter-widget";
 

@@ -10,7 +10,7 @@ import { renderPageTitle } from "@/lib/utils";
 import { auth } from "auth";
 import { type Metadata } from "next";
 import { redirect } from "next/navigation";
-import React from "react";
+import * as React from "react";
 
 export const metadata: Metadata = {
   title: renderPageTitle("Login"),

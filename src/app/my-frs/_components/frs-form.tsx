@@ -25,7 +25,7 @@ import { SemesterWithKey } from "@/config/contants";
 import { useToastMutate } from "@/lib/hooks";
 import { requiredSemesterStringSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import * as React from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";

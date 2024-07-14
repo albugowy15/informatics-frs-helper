@@ -6,7 +6,7 @@ import {
   PersonIcon,
   ShuffleIcon,
 } from "@radix-ui/react-icons";
-import React from "react";
+import * as React from "react";
 
 const typeMapping: Record<StatisticData["type"], React.ReactNode> = {
   user: <PersonIcon className="h-4 w-4 text-muted-foreground" />,

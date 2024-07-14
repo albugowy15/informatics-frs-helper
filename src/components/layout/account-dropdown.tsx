@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { menuNavigation } from "@/config/navigation";
-import React from "react";
+import * as React from "react";
 import LogoutButton from "./logout-button";
 
 const AccountDropdown = () => {

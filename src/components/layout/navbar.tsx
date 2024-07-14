@@ -12,7 +12,7 @@ import {
 
 import { type Navigation } from "@/config/navigation";
 import UserNav from "./header/user-nav";
-import React from "react";
+import * as React from "react";
 
 const Navbar = (props: { items: Navigation[] }) => {
   return (
