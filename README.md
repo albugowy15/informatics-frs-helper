@@ -13,6 +13,10 @@
 
 </div>
 
+## **⚠️⚠️⚠️ Project Status ⚠️⚠️⚠️**
+
+**This project is no longer being maintained. If you are interested in taking over its maintenance, please open an issue or reach out through [Discussions](https://github.com/albugowy15/informatics-frs-helper/discussions).**
+
 ## Main Features
 
 ### myFRS - Plan your course registration (FRS)
@@ -54,25 +58,19 @@ cd informatics-frs-helper
 pnpm install
 ```
 
-4. Start the MySQL database using Docker Compose
-
-```bash
-docker compose up -d db
-```
-
-5. Apply Prisma database migrations
+4. Apply Prisma database migrations
 
 ```bash
 pnpm db:push
 ```
 
-6. Seed the database with prisma seeder
+5. Seed the database with prisma seeder
 
 ```bash
 pnpm db:seed
 ```
 
-7. Run your project in development mode
+6. Run your project in development mode
 
 ```bash
 pnpm dev

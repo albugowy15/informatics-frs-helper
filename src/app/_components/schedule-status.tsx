@@ -7,7 +7,7 @@ async function ScheduleStatusAlert() {
   return (
     <Alert
       variant={scheduleStatus === "UPDATED" ? "default" : "destructive"}
-      className="mx-auto mt-8 w-fit"
+      className="mx-auto w-fit"
     >
       <RocketIcon className="h-4 w-4" />
       <AlertTitle>{scheduleStatus}</AlertTitle>
