@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { homeNavigation } from "@/config/navigation";
 import "@/styles/globals.css";
 import { TRPCReactProvider } from "@/trpc/react";
+import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
@@ -14,6 +15,28 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 });
+
+function MaintainerWarningBar() {
+  return (
+    <div className="flex justify-center bg-secondary text-secondary-foreground py-1 font-semibold text-sm">
+      <a
+        href="https://github.com/albugowy15/informatics-frs-helper"
+        target="_blank"
+        className="hover:text-primary flex items-center gap-2"
+      >
+        <ExclamationTriangleIcon />
+        <ExclamationTriangleIcon />
+        <ExclamationTriangleIcon />
+        <span>
+          Website ini sudah tidak di-<i>maintain</i>
+        </span>
+        <ExclamationTriangleIcon />
+        <ExclamationTriangleIcon />
+        <ExclamationTriangleIcon />
+      </a>
+    </div>
+  );
+}
 
 export default function RootLayout({
   children,
@@ -32,6 +55,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Toaster closeButton richColors expand={false} />
+            <MaintainerWarningBar />
             <Navbar items={homeNavigation} />
             <div className="px-5 py-5">{children}</div>
             <Footer />
