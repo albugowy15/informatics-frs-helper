@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.9.0...v2.10.0) (2024-08-01)
+
+
+### Features
+
+* project maintenance status ([85ae28a](https://github.com/albugowy15/informatics-frs-helper/commit/85ae28a6758531b05c19ebb258cfd649c453ed4b))
+
 ## [2.9.0](https://github.com/albugowy15/informatics-frs-helper/compare/2.8.2...v2.9.0) (2024-06-12)
 
 
