@@ -2,7 +2,7 @@
 
 import { type RouterInputs } from "@/trpc/react";
 import { api } from "@/trpc/server";
-import { TRPCClientError } from "@trpc/client";
+import { TRPCError } from "@trpc/server";
 import { redirect } from "next/navigation";
 
 export async function registerUserAction(
@@ -11,7 +11,7 @@ export async function registerUserAction(
   try {
     await api.user.register(data);
   } catch (e) {
-    if (e instanceof TRPCClientError) {
+    if (e instanceof TRPCError) {
       return {
         error: e.message,
       };

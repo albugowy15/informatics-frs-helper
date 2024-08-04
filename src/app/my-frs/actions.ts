@@ -2,7 +2,7 @@
 
 import { type RouterInputs } from "@/trpc/react";
 import { api } from "@/trpc/server";
-import { TRPCClientError } from "@trpc/client";
+import { TRPCError } from "@trpc/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -12,7 +12,7 @@ export async function createPlanAction(
   try {
     await api.frs.createPlan(data);
   } catch (e) {
-    if (e instanceof TRPCClientError) {
+    if (e instanceof TRPCError) {
       return {
         error: e.message,
       };
@@ -29,7 +29,7 @@ export async function updatePlanAction(
   try {
     await api.frs.updatePlan(data);
   } catch (e) {
-    if (e instanceof TRPCClientError) return { error: e.message };
+    if (e instanceof TRPCError) return { error: e.message };
     console.error("action err:", e);
   }
   revalidatePath("/my-frs");
