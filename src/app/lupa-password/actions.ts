@@ -2,7 +2,7 @@
 
 import { type RouterInputs } from "@/trpc/react";
 import { api } from "@/trpc/server";
-import { TRPCClientError } from "@trpc/client";
+import { TRPCError } from "@trpc/server";
 
 export async function resetPasswordAction(
   data: RouterInputs["user"]["resetPassword"],
@@ -10,7 +10,7 @@ export async function resetPasswordAction(
   try {
     await api.user.resetPassword(data);
   } catch (e) {
-    if (e instanceof TRPCClientError) {
+    if (e instanceof TRPCError) {
       return {
         error: e.message,
       };
