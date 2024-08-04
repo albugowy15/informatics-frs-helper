@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.11.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.10.0...v2.11.0) (2024-08-04)
+
+
+### Features
+
+* project maintenance status ([8d2b4e7](https://github.com/albugowy15/informatics-frs-helper/commit/8d2b4e75c8729d1291babd606bea25edecc6380c))
+
+
+### Bug Fixes
+
+* remove maintainer warning ([33dc82c](https://github.com/albugowy15/informatics-frs-helper/commit/33dc82cba3391ff6fb9a79633319659b823b1027))
+* replace TRPCClientError with TRPCError ([9ff2810](https://github.com/albugowy15/informatics-frs-helper/commit/9ff281062e021cff9f74bc979a9b7f11edb28146))
+* reset password error ([01f127b](https://github.com/albugowy15/informatics-frs-helper/commit/01f127b1597d505a2ff2d0d449cf5fe89ff50fa9))
+
 ## [2.10.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.9.0...v2.10.0) (2024-08-01)
 
 
