@@ -231,7 +231,15 @@ export const userRouter = createTRPCRouter({
           message: "User tidak ditemukan",
         });
       }
-      const savedTimeRedis = await kv.get<string>(user.id);
+      let savedTimeRedis: string | null;
+      try {
+        savedTimeRedis = await kv.get<string>(user.id);
+      } catch (e) {
+        console.error("error get kv:", e);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+        });
+      }
       if (savedTimeRedis) {
         const currentTime = new Date();
         const savedTime = new Date(savedTimeRedis);
@@ -249,7 +257,6 @@ export const userRouter = createTRPCRouter({
           });
         }
       }
-
       const payload = {
         userId: user.id,
         username: user.username,
@@ -261,7 +268,7 @@ export const userRouter = createTRPCRouter({
 
       const resend = new Resend(env.RESEND_API_KEY);
       try {
-        await resend.emails.send({
+        const { error } = await resend.emails.send({
           from: "TC FRS Helper <no-reply@tc-frs-helper.live>",
           to: [user.email],
           subject: "Permintaan Reset Password - TC FRS Helper",
@@ -275,18 +282,12 @@ export const userRouter = createTRPCRouter({
           <br /><br />
           <p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
         });
-        const currentTime = new Date();
-        try {
-          await kv.set(user.id, currentTime.toISOString());
-        } catch (error) {
-          console.error(error);
+        if (error) {
+          console.error("error send reset password email: ", error);
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",
           });
         }
-        return {
-          message: "Email reset password berhasil dikirim",
-        };
       } catch (error) {
         console.error(error);
         throw new TRPCError({
@@ -294,6 +295,19 @@ export const userRouter = createTRPCRouter({
           message: "Gagal mengirimkan email reset password",
         });
       }
+      const currentTime = new Date();
+      try {
+        await kv.set(user.id, currentTime.toISOString());
+      } catch (e) {
+        console.error("error set kv: ", e);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Gagal mengirimkan email reset password",
+        });
+      }
+      return {
+        message: "Email reset password berhasil dikirim",
+      };
     }),
   verifyResetPassword: publicProcedure
     .input(
