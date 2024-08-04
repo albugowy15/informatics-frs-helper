@@ -13,9 +13,9 @@
 
 </div>
 
-## **⚠️⚠️⚠️ Project Status ⚠️⚠️⚠️**
+## Project Status
 
-**This project is no longer being maintained. If you are interested in taking over its maintenance, please open an issue or reach out through [Discussions](https://github.com/albugowy15/informatics-frs-helper/discussions).**
+This project is actively maintained by **Nashwan Rasyid**. For any inquiries, updates, or assistance, please contact him via email at baconeggsthrowaway@gmail.com.
 
 ## Main Features
 
