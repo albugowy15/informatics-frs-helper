@@ -1,15 +1,8 @@
 import { ScheduleStatusAlert } from "@/app/_components/schedule-status";
 import Typography from "@/components/typography";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { renderPageTitle } from "@/lib/utils";
-import {
-  ArrowRightIcon,
-  ExclamationTriangleIcon,
-  GitHubLogoIcon,
-  ReaderIcon,
-  StarIcon,
-} from "@radix-ui/react-icons";
+import { ArrowRightIcon, ReaderIcon, StarIcon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
 import Link from "next/link";
 
@@ -18,34 +11,10 @@ export const metadata: Metadata = {
   description: "Informatics FRS Helper",
 };
 
-function ProjectMaintainerAlert() {
-  return (
-    <Alert className="mx-auto max-w-xl">
-      <ExclamationTriangleIcon className="h-4 w-4" />
-      <AlertTitle>This project needs a maintainer!</AlertTitle>
-      <AlertDescription>
-        Maintainer saat ini sudah tidak aktif sebagai mahasiswa Informatika ITS.
-      </AlertDescription>
-      <div className="flex justify-end mt-4">
-        <Button asChild>
-          <a
-            href="https://github.com/albugowy15/informatics-frs-helper"
-            target="_blank"
-          >
-            <GitHubLogoIcon className="mr-2 h-4 w-4" />
-            Lihat Github
-          </a>
-        </Button>
-      </div>
-    </Alert>
-  );
-}
-
 export default function HomePage() {
   return (
     <>
       <section className="flex flex-col items-center justify-center gap-6">
-        <ProjectMaintainerAlert />
         <ScheduleStatusAlert />
         <a
           href="https://api-informatics-frs-helper.fly.dev"
