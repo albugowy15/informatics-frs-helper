@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.11.1](https://github.com/albugowy15/informatics-frs-helper/compare/v2.11.0...v2.11.1) (2024-08-09)
+
+
+### Bug Fixes
+
+* revert to vercel public domain ([7c72c82](https://github.com/albugowy15/informatics-frs-helper/commit/7c72c826f05f81a1c6f0eb8687cb59809f19a54e))
+
 ## [2.11.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.10.0...v2.11.0) (2024-08-04)
 
 
