@@ -8,7 +8,7 @@
     "url": "https://bughowi.com"
   },
   "description": "Fullstack Typesafe Next.js application for ITS Informatics students to organize their FRS ",
-  "homepage": "https://tc-frs-helper.live",
+  "homepage": "https://tc-frs-helper.vercel.app",
   "repository": {
     "type": "github",
     "url": "https://github.com/albugowy15/informatics-frs-helper",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
-    "@prisma/client": "^5.17.0",
+    "@prisma/client": "^5.18.0",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.1",
@@ -47,7 +47,7 @@
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
-    "@tanstack/react-query": "^5.51.21",
+    "@tanstack/react-query": "^5.51.23",
     "@tidbcloud/prisma-adapter": "^5.15.0",
     "@tidbcloud/serverless": "^0.2.0",
     "@trpc/client": "next",
@@ -91,10 +91,10 @@
     "clsx": "^2.1.1",
     "eslint": "8.57.0",
     "eslint-config-next": "^14.2.5",
-    "postcss": "^8.4.40",
+    "postcss": "^8.4.41",
     "prettier": "^3.3.3",
-    "prisma": "^5.17.0",
-    "tailwindcss": "^3.4.7",
+    "prisma": "^5.18.0",
+    "tailwindcss": "^3.4.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   },

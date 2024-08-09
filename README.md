@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://tc-frs-helper.live">
+  <a href="https://tc-frs-helper.vercel.app">
     <h1>Informatics FRS Helper</h1>
   </a>
 
@@ -9,7 +9,7 @@
     <img src="https://img.shields.io/badge/PRs-welcome-blue" alt="PR"/>
   </a>
 
-<a href="https://tc-frs-helper.live/panduan"><strong>Documentation</strong></a> · <a href="https://tc-frs-helper.live/report"><strong>Report</strong></a> · <a href="https://github.com/albugowy15/informatics-frs-helper/discussions"><strong>Discussions</strong></a>
+<a href="https://tc-frs-helper.vercel.app/panduan"><strong>Documentation</strong></a> · <a href="https://tc-frs-helper.vercel.app/report"><strong>Report</strong></a> · <a href="https://github.com/albugowy15/informatics-frs-helper/discussions"><strong>Discussions</strong></a>
 
 </div>
 
@@ -33,7 +33,7 @@ Check the timetable for each subject and class in the Course Schedule (Jadwal Ke
 
 ## Documentation
 
-For details on how to use Informatics FRS Helper, check out the [documentation](https://tc-frs-helper.live/panduan).
+For details on how to use Informatics FRS Helper, check out the [documentation](https://tc-frs-helper.vercel.app/panduan).
 
 ## Running Locally
 

@@ -269,7 +269,7 @@ export const userRouter = createTRPCRouter({
       const resend = new Resend(env.RESEND_API_KEY);
       try {
         const { error } = await resend.emails.send({
-          from: "TC FRS Helper <no-reply@tc-frs-helper.live>",
+          from: "TC FRS Helper <no-reply@bughowi.com>",
           to: [user.email],
           subject: "Permintaan Reset Password - TC FRS Helper",
           html: `
@@ -278,9 +278,9 @@ export const userRouter = createTRPCRouter({
           <br/>
           <p>Kamu telah meminta untuk reset password. Silahkan klik link berikut untuk mereset password kamu</p>
           <br />
-          <a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>${tokenUrl}</a>
+          <a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>Reset Password</a>
           <br /><br />
-          <p>Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
+          <p>Link reset password di atas hanya valid dalam 30 menit setelah kamu melakukan reset password. Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
         });
         if (error) {
           console.error("error send reset password email: ", error);
