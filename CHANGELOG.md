@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.12.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.11.1...v2.12.0) (2024-08-10)
+
+
+### Features
+
+* remove read schedule status from edge config ([ffa01b8](https://github.com/albugowy15/informatics-frs-helper/commit/ffa01b82ec38912d368343713031cb252ab72e18))
+
 ## [2.11.1](https://github.com/albugowy15/informatics-frs-helper/compare/v2.11.0...v2.11.1) (2024-08-09)
 
 
