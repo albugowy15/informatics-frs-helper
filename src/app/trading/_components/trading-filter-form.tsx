@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SemesterWithKey } from "@/config/contants";
+import { SemesterWithKey } from "@/config/constants";
 import { useTradingFilterForm } from "./use-trading-filter-form";
 
 const TradingFilterForm = (props: { submitAction?: React.ReactNode }) => {

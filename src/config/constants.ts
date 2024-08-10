@@ -4,3 +4,5 @@ export const SemesterWithKey = Semester.map((item) => ({
   id: crypto.randomUUID(),
   value: item,
 }));
+
+export const ScheduleStatus: "UPDATED" | "OUTDATED" = "UPDATED";

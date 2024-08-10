@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SemesterWithKey } from "@/config/contants";
+import { SemesterWithKey } from "@/config/constants";
 import { MixerVerticalIcon } from "@radix-ui/react-icons";
 import { useTakeSubjectForm } from "./use-take-subject-form";
 

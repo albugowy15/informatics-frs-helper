@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SemesterWithKey } from "@/config/contants";
+import { SemesterWithKey } from "@/config/constants";
 import * as React from "react";
 import { useScheduleFilterForm } from "./use-schedule-filter-form";
 

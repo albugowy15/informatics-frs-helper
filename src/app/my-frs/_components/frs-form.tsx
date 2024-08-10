@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SemesterWithKey } from "@/config/contants";
+import { SemesterWithKey } from "@/config/constants";
 import { useToastMutate } from "@/lib/hooks";
 import { requiredSemesterStringSchema } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";

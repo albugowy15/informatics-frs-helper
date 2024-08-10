@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SemesterWithKey } from "@/config/contants";
+import { SemesterWithKey } from "@/config/constants";
 import { parseSemester } from "@/lib/utils";
 import { api } from "@/trpc/react";
 import { useFormContext, useWatch } from "react-hook-form";
