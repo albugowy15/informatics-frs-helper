@@ -362,13 +362,15 @@ export const userRouter = createTRPCRouter({
           return {
             message: "Password berhasil diubah",
           };
-        } catch (e) {
+        } catch (error) {
+          console.error("Error change user password: ", error);
           throw new TRPCError({
             code: "INTERNAL_SERVER_ERROR",
             message: "Gagal mengubah password",
           });
         }
       } catch (error) {
+        console.error("Error change user password: ", error);
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Token tidak valid",

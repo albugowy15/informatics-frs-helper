@@ -14,9 +14,11 @@ export const useToastMutate = (options?: ToastOptions) => {
     setIsLoading(true);
     mutateFn
       .then((res) => {
-        res?.error
-          ? toast.error(options?.error ? options.error : res.error)
-          : toast.success(options ? options.success : "Berhasil");
+        if (res?.error) {
+          toast.error(options?.error ? options.error : res.error);
+        } else {
+          toast.success(options ? options.success : "Berhasil");
+        }
       })
       .catch(() => {
         toast.error("Unknown error");

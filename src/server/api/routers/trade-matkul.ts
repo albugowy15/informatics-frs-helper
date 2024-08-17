@@ -224,7 +224,8 @@ export const tradeMatkulRouter = createTRPCRouter({
             userId: ctx.session.user.id,
           },
         });
-      } catch (e) {
+      } catch (error) {
+        console.error("Failed trade matkul: ", error);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "Gagal menghapus trade matkul",
