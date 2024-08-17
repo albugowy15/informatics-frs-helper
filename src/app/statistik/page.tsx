@@ -9,7 +9,6 @@ import {
 import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
 import { type Metadata } from "next";
-import { unstable_noStore } from "next/cache";
 import { FrsSemesterChart } from "./_components/frs-chart";
 import { StatisticCard } from "./_components/statistic-card";
 
@@ -19,7 +18,6 @@ export const metadata: Metadata = {
 };
 
 export default async function StatistikPage() {
-  unstable_noStore();
   const statisticData = await api.common.getStatistic();
   return (
     <main className="space-y-4">

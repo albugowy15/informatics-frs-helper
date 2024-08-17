@@ -4,7 +4,6 @@ import { renderPageTitle } from "@/lib/utils";
 import { api } from "@/trpc/server";
 import { PlusIcon } from "@radix-ui/react-icons";
 import { type Metadata } from "next";
-import { unstable_noStore } from "next/cache";
 import Link from "next/link";
 import MyTradeCard from "./_components/my-trade-card";
 
@@ -13,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default async function MyTradeMatkulPage() {
-  unstable_noStore();
   const tradeMatkulPosts = await api.tradeMatkul.getAllMyTradeMatkul();
 
   return (
