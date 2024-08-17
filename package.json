@@ -68,11 +68,11 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.2",
     "recharts": "^2.12.7",
-    "resend": "^3.5.0",
+    "resend": "^4.0.0",
     "server-only": "^0.0.1",
     "sonner": "^1.5.0",
     "superjson": "^2.2.1",
-    "tailwind-merge": "^2.4.0",
+    "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
   },
@@ -81,12 +81,13 @@
     "@next/bundle-analyzer": "^14.2.5",
     "@tailwindcss/forms": "^0.5.7",
     "@types/bcryptjs": "^2.4.6",
-    "@types/eslint": "^8.56.11",
+    "@types/eslint": "^9.6.0",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^20.14.14",
+    "@types/node": "^20.15.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/eslint-plugin": "^8.1.0",
+    "@typescript-eslint/parser": "^8.1.0",
     "autoprefixer": "^10.4.20",
     "clsx": "^2.1.1",
     "eslint": "8.57.0",
@@ -94,9 +95,9 @@
     "postcss": "^8.4.41",
     "prettier": "^3.3.3",
     "prisma": "^5.18.0",
-    "tailwindcss": "^3.4.9",
+    "tailwindcss": "^3.4.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   },
-  "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e"
+  "packageManager": "pnpm@9.7.1+sha512.faf344af2d6ca65c4c5c8c2224ea77a81a5e8859cbc4e06b1511ddce2f0151512431dd19e6aff31f2c6a8f5f2aced9bd2273e1fed7dd4de1868984059d2c4247"
 }
