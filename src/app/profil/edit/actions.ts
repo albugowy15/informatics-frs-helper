@@ -2,7 +2,6 @@
 
 import { api } from "@/trpc/server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { type EditProfileFormType } from "./_components/edit-profile-form";
 import { TRPCError } from "@trpc/server";
 
@@ -16,5 +15,4 @@ export async function updateProfileAction(data: EditProfileFormType) {
     console.error("action err:", e);
   }
   revalidatePath("/profil");
-  redirect("/profil");
 }

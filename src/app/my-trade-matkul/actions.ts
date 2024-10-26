@@ -4,7 +4,6 @@ import { type RouterInputs } from "@/trpc/react";
 import { api } from "@/trpc/server";
 import { TRPCError } from "@trpc/server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function createTradeMatkulAction(
   data: RouterInputs["tradeMatkul"]["createTradeMatkul"],
@@ -20,7 +19,6 @@ export async function createTradeMatkulAction(
     console.error("action err:", e);
   }
   revalidatePath("/my-trade-matkul");
-  redirect("/my-trade-matkul");
 }
 
 export async function updateTradeMatkulAction(
@@ -37,7 +35,6 @@ export async function updateTradeMatkulAction(
     console.error("action err:", e);
   }
   revalidatePath("/my-trade-matkul");
-  redirect("/my-trade-matkul");
 }
 
 export async function deleteMyTradeMatkulAction(
@@ -54,5 +51,4 @@ export async function deleteMyTradeMatkulAction(
     console.error("action err:", e);
   }
   revalidatePath("/my-trade-matkul");
-  redirect("/my-trade-matkul");
 }

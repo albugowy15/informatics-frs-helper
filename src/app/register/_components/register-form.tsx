@@ -34,6 +34,7 @@ const RegisterForm = () => {
   const mutation = useToastMutate({
     success: "Akun berhasil dibuat, silahkan login",
     loading: "Mohon tunggu...",
+    redirect: "/login",
   });
 
   const onSubmit: SubmitHandler<RegisterForm> = (data) => {

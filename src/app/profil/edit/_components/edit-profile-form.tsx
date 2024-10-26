@@ -37,6 +37,7 @@ const EditProfileForm = (props: { userProfile: UserProfile }) => {
   const mutation = useToastMutate({
     success: "Profil berhasil diperbarui",
     loading: "Memperbarui profil",
+    redirect: "/profil",
   });
 
   const onFormSubmit: SubmitHandler<EditProfileFormType> = async (data) => {
