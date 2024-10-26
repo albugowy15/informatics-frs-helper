@@ -63,6 +63,7 @@ const FRSForm = (props: { planDetail?: PlanDetailProps; planId?: string }) => {
     loading: props.planDetail
       ? "Memperbarui rencana FRS..."
       : "Membuat rencana FRS...",
+    redirect: "/my-frs",
   });
 
   const onSubmit: SubmitHandler<CreateFRSFormType> = (data) => {

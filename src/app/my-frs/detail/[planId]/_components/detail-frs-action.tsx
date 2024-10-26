@@ -20,7 +20,8 @@ import { deletePlanAction } from "../actions";
 const DetailFrsAction = (props: { frsTitle: string; planId: string }) => {
   const mutation = useToastMutate({
     success: "Berhasil menghapus rencana FRS",
-    loading: "Menghapus rencan FRS",
+    loading: "Menghapus rencana FRS",
+    redirect: "/my-frs",
   });
 
   const handleDeleteFrsPlan = () => {

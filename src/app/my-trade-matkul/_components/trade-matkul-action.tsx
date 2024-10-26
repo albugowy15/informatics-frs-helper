@@ -21,6 +21,7 @@ const TradeMatkulAction = (props: { tradeMatkulId: string }) => {
   const mutation = useToastMutate({
     success: "Berhasil menghapus Trade matkul",
     loading: "Menghapus trade matkul",
+    redirect: "/my-trade-matkul",
   });
 
   const handleDeleteTradeMatkul = () => {

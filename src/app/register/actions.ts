@@ -3,7 +3,6 @@
 import { type RouterInputs } from "@/trpc/react";
 import { api } from "@/trpc/server";
 import { TRPCError } from "@trpc/server";
-import { redirect } from "next/navigation";
 
 export async function registerUserAction(
   data: RouterInputs["user"]["register"],
@@ -18,5 +17,4 @@ export async function registerUserAction(
     }
     console.error("action err:", e);
   }
-  redirect("/login");
 }

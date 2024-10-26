@@ -4,7 +4,6 @@ import { type RouterInputs } from "@/trpc/react";
 import { api } from "@/trpc/server";
 import { TRPCError } from "@trpc/server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function createPlanAction(
   data: RouterInputs["frs"]["createPlan"],
@@ -20,7 +19,6 @@ export async function createPlanAction(
     console.error("action err:", e);
   }
   revalidatePath("/my-frs");
-  redirect("/my-frs");
 }
 
 export async function updatePlanAction(
@@ -33,5 +31,4 @@ export async function updatePlanAction(
     console.error("action err:", e);
   }
   revalidatePath("/my-frs");
-  redirect("/my-frs");
 }

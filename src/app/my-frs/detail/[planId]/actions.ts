@@ -4,7 +4,6 @@ import { type RouterInputs } from "@/trpc/react";
 import { api } from "@/trpc/server";
 import { TRPCError } from "@trpc/server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function deletePlanAction(
   data: RouterInputs["frs"]["deletePlan"],
@@ -18,5 +17,4 @@ export async function deletePlanAction(
     console.error("action err:", e);
   }
   revalidatePath("/my-frs");
-  redirect("/my-frs");
 }

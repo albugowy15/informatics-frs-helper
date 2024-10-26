@@ -87,6 +87,7 @@ const TradeMatkulForm = (props: TradeMatkulFormProps) => {
     loading: props.prevData
       ? "Memperbarui post trade matkul..."
       : "Membuat post trade matkul...",
+    redirect: "/my-trade-matkul",
   });
 
   const onSubmit: SubmitHandler<CreateTradeMatkulFormSchema> = (data) => {
