@@ -15,11 +15,10 @@ export interface SearchParam {
   subject: string;
 }
 
-export default function SchedulePage({
-  searchParams,
-}: {
-  searchParams: SearchParam;
+export default async function SchedulePage(props: {
+  searchParams: Promise<SearchParam>;
 }) {
+  const searchParams = await props.searchParams;
   const { semester = "1", subject = "Semua" } = searchParams;
 
   return (

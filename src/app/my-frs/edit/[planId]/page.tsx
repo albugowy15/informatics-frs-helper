@@ -8,13 +8,12 @@ export const metadata: Metadata = {
   title: renderPageTitle("Edit myFRS"),
 };
 
-export default async function EditFrsPage({
-  params,
-  searchParams,
-}: {
-  params: { planId: string };
-  searchParams: SearchParam;
+export default async function EditFrsPage(props: {
+  params: Promise<{ planId: string }>;
+  searchParams: Promise<SearchParam>;
 }) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const planDetail = await api.frs.getPlanDetail({
     planId: params.planId,
   });

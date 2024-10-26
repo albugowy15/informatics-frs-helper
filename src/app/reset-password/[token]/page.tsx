@@ -15,11 +15,10 @@ export const metadata: Metadata = {
   title: renderPageTitle("Reset Password"),
 };
 
-export default async function ResetPasswordPage({
-  params,
-}: {
-  params: { token: string };
+export default async function ResetPasswordPage(props: {
+  params: Promise<{ token: string }>;
 }) {
+  const params = await props.params;
   const session = await auth();
   if (session) {
     redirect("/");

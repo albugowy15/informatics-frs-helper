@@ -15,11 +15,10 @@ interface SearchParam {
   subject: string;
 }
 
-export default async function TradingMatkulPage({
-  searchParams,
-}: {
-  searchParams: SearchParam;
+export default async function TradingMatkulPage(props: {
+  searchParams: Promise<SearchParam>;
 }) {
+  const searchParams = await props.searchParams;
   const { semester = undefined, subject = undefined } = searchParams;
   const listTrades = await api.tradeMatkul.getAllTradeMatkul({
     semester: semester === undefined ? undefined : parseSemester(semester),

@@ -9,11 +9,10 @@ export const metadata: Metadata = {
   title: renderPageTitle("Detail myFRS"),
 };
 
-export default async function PlanDetailPage({
-  params,
-}: {
-  params: { planId: string };
+export default async function PlanDetailPage(props: {
+  params: Promise<{ planId: string }>;
 }) {
+  const params = await props.params;
   const plan = await api.frs.getPlanDetail({
     planId: params.planId,
   });
