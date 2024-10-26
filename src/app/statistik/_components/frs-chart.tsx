@@ -1,44 +1,23 @@
 "use client";
 
+import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { type FrsBySemester } from "@/server/api/routers/common";
-import {
-  Bar,
-  BarChart,
-  Label,
-  ResponsiveContainer,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { Bar, BarChart, Label, XAxis, YAxis } from "recharts";
 
 export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
-  const renderCustomBarLabel = ({
-    x,
-    y,
-    width,
-    value,
-  }: {
-    x: number;
-    y: number;
-    width: number;
-    value: number;
-  }) => {
-    return (
-      <text
-        className="text-sm text-muted-foreground"
-        x={x + width / 2}
-        y={y}
-        fill="#888888"
-        textAnchor="middle"
-        dy={-6}
-      >
-        {value}
-      </text>
-    );
-  };
+  const chartConfig = {
+    value: {
+      label: "chart",
+      color: "#adfa1d",
+    },
+  } satisfies ChartConfig;
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <BarChart data={props.data}>
+    <ChartContainer
+      config={chartConfig}
+      className="min-h[200px] h-[300px] md:h-[400px] w-full"
+    >
+      <BarChart accessibilityLayer data={props.data}>
         <XAxis
           dataKey="key"
           stroke="#888888"
@@ -62,13 +41,8 @@ export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
             angle={-90}
           />
         </YAxis>
-        <Bar
-          dataKey="value"
-          fill="#adfa1d"
-          radius={[4, 4, 0, 0]}
-          label={renderCustomBarLabel}
-        />
+        <Bar dataKey="value" fill="var(--color-value)" radius={4} />
       </BarChart>
-    </ResponsiveContainer>
+    </ChartContainer>
   );
 };
