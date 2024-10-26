@@ -7,11 +7,10 @@ export const metadata: Metadata = {
   title: renderPageTitle("Edit myTradeMatkul"),
 };
 
-export default async function EditTradeMatkulPage({
-  params,
-}: {
-  params: { tradeMatkulId: string };
+export default async function EditTradeMatkulPage(props: {
+  params: Promise<{ tradeMatkulId: string }>;
 }) {
+  const params = await props.params;
   const prevTradeMatkul = await api.tradeMatkul.getTradeMatkul({
     tradeMatkulId: params.tradeMatkulId,
   });

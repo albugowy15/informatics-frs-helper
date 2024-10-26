@@ -7,11 +7,10 @@ export const metadata: Metadata = {
   title: renderPageTitle("Create myFRS"),
 };
 
-export default function CreateFRSPage({
-  searchParams,
-}: {
-  searchParams: SearchParam;
+export default async function CreateFRSPage(props: {
+  searchParams: Promise<SearchParam>;
 }) {
+  const searchParams = await props.searchParams;
   const { semester = "1", subject = "Semua" } = searchParams;
 
   return (
