@@ -1,7 +1,7 @@
 "use server";
 
-import { type RouterInputs } from "@/trpc/react";
 import { api } from "@/trpc/server";
+import { RouterInputs } from "@/utils/api";
 import { TRPCError } from "@trpc/server";
 
 export async function resetPasswordAction(

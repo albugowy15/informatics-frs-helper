@@ -2,7 +2,7 @@ import { commonRouter } from "@/server/api/routers/common";
 import { frsRouter } from "@/server/api/routers/frs";
 import { tradeMatkulRouter } from "@/server/api/routers/trade-matkul";
 import { userRouter } from "@/server/api/routers/user";
-import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
+import { createTRPCRouter } from "@/server/api/trpc";
 
 /**
  * This is the primary router for your server.
@@ -26,4 +26,4 @@ export type AppRouter = typeof appRouter;
  * const res = await trpc.post.all();
  *       ^? Post[]
  */
-export const createCaller = createCallerFactory(appRouter);
+// export const createCaller = createCallerFactory(appRouter);

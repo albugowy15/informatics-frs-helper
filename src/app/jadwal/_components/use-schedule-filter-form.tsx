@@ -1,12 +1,12 @@
 "use client";
 
-import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
 import { filterSchema } from "../schema";
 import { type z } from "zod";
 import { parseSemester } from "@/lib/utils";
+import { api } from "@/trpc/react";
 
 type FilterForm = z.infer<typeof filterSchema>;
 

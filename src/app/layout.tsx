@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { homeNavigation } from "@/config/navigation";
 import "@/styles/globals.css";
-import { TRPCReactProvider } from "@/trpc/react";
+import { TRPCProvider } from "@/trpc/react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="id-ID" className={inter.className} suppressHydrationWarning>
       <head />
       <body className="flex min-h-screen flex-col bg-background font-sans antialiased">
-        <TRPCReactProvider>
+        <TRPCProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -36,7 +36,7 @@ export default function RootLayout({
             <div className="px-5 py-5">{children}</div>
             <Footer />
           </ThemeProvider>
-        </TRPCReactProvider>
+        </TRPCProvider>
         <SpeedInsights />
         <Analytics />
       </body>

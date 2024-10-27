@@ -1,6 +1,6 @@
 import Typography from "@/components/typography";
 import TradeMatkulAction from "./trade-matkul-action";
-import { type RouterOutputs } from "@/trpc/react";
+import { type RouterOutputs } from "@/utils/api";
 
 const MyTradeCard = (props: {
   post: RouterOutputs["tradeMatkul"]["getAllMyTradeMatkul"][0];

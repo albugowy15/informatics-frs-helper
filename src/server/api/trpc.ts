@@ -7,8 +7,9 @@
  * need to use are documented accordingly near the end.
  */
 
+import { cache } from "react";
 import { initTRPC, TRPCError } from "@trpc/server";
-import { auth } from "auth";
+import { auth } from "../../../auth";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -24,14 +25,13 @@ import { ZodError } from "zod";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
+export const createTRPCContext = cache(async () => {
   const session = await auth();
 
   return {
     session,
-    ...opts,
   };
-};
+});
 
 /**
  * 2. INITIALIZATION
@@ -40,6 +40,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
  * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
  * errors on the backend.
  */
+
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {

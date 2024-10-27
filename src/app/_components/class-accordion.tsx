@@ -6,9 +6,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { api } from "@/trpc/server";
 import ClassCardActionButton from "../my-frs/_components/class-card-action-button";
 import { parseSemester } from "@/lib/utils";
+import { api } from "@/trpc/server";
 
 const NoClasses = ({ isClassEmpty }: { isClassEmpty: boolean }) => {
   return (

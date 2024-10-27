@@ -29,7 +29,7 @@ function useTradingFilterForm() {
 
   const listSubjects = api.common.getSubject.useQuery(
     {
-      semester: parseSemester(semesterWatch ?? ""),
+      semester: parseSemester(semesterWatch || "1"),
       withAll: true,
     },
     { enabled: semesterWatch !== undefined },

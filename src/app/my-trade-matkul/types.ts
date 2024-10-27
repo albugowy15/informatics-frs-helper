@@ -1,3 +1,3 @@
-import { type RouterOutputs } from "@/trpc/react";
+import { type RouterOutputs } from "@/utils/api";
 
 export type TradeMatkul = RouterOutputs["tradeMatkul"]["getTradeMatkul"];

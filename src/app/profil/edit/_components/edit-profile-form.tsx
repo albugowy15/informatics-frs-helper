@@ -16,7 +16,7 @@ import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
 import { type z } from "zod";
 import { editProfileSchema } from "../../schema";
 import { updateProfileAction } from "../actions";
-import { type RouterOutputs } from "@/trpc/react";
+import { type RouterOutputs } from "@/utils/api";
 
 export type EditProfileFormType = z.infer<typeof editProfileSchema>;
 
