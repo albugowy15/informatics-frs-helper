@@ -1,30 +1,29 @@
 "use client";
 
-import { type ChartConfig, ChartContainer } from "@/components/ui/chart";
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
 import { type FrsBySemester } from "@/server/api/routers/common";
 import { Bar, BarChart, Label, XAxis, YAxis } from "recharts";
 
-export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
-  const chartConfig = {
-    value: {
-      label: "chart",
-      color: "#adfa1d",
-    },
-  } satisfies ChartConfig;
+const chartConfig = {
+  frs: {
+    label: "frs",
+    color: "#2563eb",
+  },
+} satisfies ChartConfig;
 
+export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
   return (
     <ChartContainer
       config={chartConfig}
       className="min-h[200px] h-[300px] md:h-[400px] w-full"
     >
       <BarChart accessibilityLayer data={props.data}>
-        <XAxis
-          dataKey="key"
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        >
+        <XAxis dataKey="key" fontSize={12} tickLine={false} axisLine={false}>
           <Label
             position="insideBottom"
             value="Semester"
@@ -32,7 +31,7 @@ export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
             offset={-4}
           />
         </XAxis>
-        <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false}>
+        <YAxis fontSize={12} tickLine={false} axisLine={false}>
           <Label
             position="insideLeft"
             fontSize={12}
@@ -41,7 +40,8 @@ export const FrsSemesterChart = (props: { data: FrsBySemester[] }) => {
             angle={-90}
           />
         </YAxis>
-        <Bar dataKey="value" fill="var(--color-value)" radius={4} />
+        <ChartTooltip content={<ChartTooltipContent />} />
+        <Bar dataKey="value" fill="var(--color-frs)" radius={4} />
       </BarChart>
     </ChartContainer>
   );

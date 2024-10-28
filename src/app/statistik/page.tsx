@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 
 export default async function StatistikPage() {
   const statisticData = await api.common.getStatistic();
+  const isNoFrsPlan = statisticData.frsBySemester.length === 0;
   return (
     <main className="space-y-4">
       <Typography variant="h2" className="text-center">
@@ -36,8 +37,16 @@ export default async function StatistikPage() {
             Jumlah Plan FRS yang dibuat berdasarkan semester
           </CardDescription>
         </CardHeader>
-        <CardContent className="pl-0">
-          <FrsSemesterChart data={statisticData.frsBySemester} />
+        <CardContent className="">
+          {isNoFrsPlan ? (
+            <div className="flex items-center justify-center w-full h-[150px]">
+              <Typography variant="body1" className="text-center">
+                Belum ada Plan FRS yang dibuat
+              </Typography>
+            </div>
+          ) : (
+            <FrsSemesterChart data={statisticData.frsBySemester} />
+          )}
         </CardContent>
       </Card>
     </main>

@@ -1,11 +1,6 @@
 import { fontFamily } from "tailwindcss/defaultTheme";
 export const darkMode = ["class"];
-export const content = [
-  "./pages/**/*.{ts,tsx}",
-  "./components/**/*.{ts,tsx}",
-  "./app/**/*.{ts,tsx}",
-  "./src/**/*.{ts,tsx}",
-];
+export const content = ["./src/**/*.{ts,tsx}"];
 export const theme = {
   container: {
     center: true,
@@ -60,12 +55,12 @@ export const theme = {
     },
     keyframes: {
       "accordion-down": {
-        from: { height: 0 },
+        from: { height: "0" },
         to: { height: "var(--radix-accordion-content-height)" },
       },
       "accordion-up": {
         from: { height: "var(--radix-accordion-content-height)" },
-        to: { height: 0 },
+        to: { height: "0" },
       },
     },
     animation: {
