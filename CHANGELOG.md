@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.13.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.12.0...v2.13.0) (2024-10-28)
+
+
+### Features
+
+* update shadcn ui component ([1db7b90](https://github.com/albugowy15/informatics-frs-helper/commit/1db7b902cc13195d2675b4968df050004c318b41))
+* update trpc setup more stable app rsc ([d2bc85d](https://github.com/albugowy15/informatics-frs-helper/commit/d2bc85dc2349428620b9df4dc4893a7a03ee3337))
+* upgrade next-15 ([637aa8f](https://github.com/albugowy15/informatics-frs-helper/commit/637aa8fd7ca5e1e6d45a03ff1e7bac47f4c8a73f))
+
+
+### Bug Fixes
+
+* do route redirect after performing mutation in client ([6958f20](https://github.com/albugowy15/informatics-frs-helper/commit/6958f20c7285df714f0e9c01284803b675c9bae6))
+* rechart in react 19 ([43f4401](https://github.com/albugowy15/informatics-frs-helper/commit/43f4401532780bab4cc1042323d68c542cc3177d))
+
 ## [2.12.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.11.1...v2.12.0) (2024-08-17)
 
 
