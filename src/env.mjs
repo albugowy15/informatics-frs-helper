@@ -22,6 +22,11 @@ const server = z.object({
     // VERCEL_URL doesn't include `https` so it cant be validated as a URL
     process.env.VERCEL ? z.string().min(1) : z.string().url(),
   ),
+  MAIL_SMTP_SERVER: z.string(),
+  MAIL_SMTP_PORT: z.string(),
+  MAIL_SMTP_LOGIN: z.string(),
+  MAIL_SMTP_PASSWORD: z.string(),
+  MAIL_BREVO_APIKEY: z.string(),
 });
 
 /**
@@ -48,6 +53,11 @@ const processEnv = {
   RESET_SECRET: process.env.RESET_SECRET,
   RESEND_API_KEY: process.env.RESEND_API_KEY,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+  MAIL_SMTP_SERVER: process.env.MAIL_SMTP_SERVER,
+  MAIL_SMTP_PORT: process.env.MAIL_SMTP_PORT,
+  MAIL_SMTP_LOGIN: process.env.MAIL_SMTP_LOGIN,
+  MAIL_SMTP_PASSWORD: process.env.MAIL_SMTP_PASSWORD,
+  MAIL_BREVO_APIKEY: process.env.MAIL_BREVO_APIKEY,
 };
 
 // Don't touch the part below

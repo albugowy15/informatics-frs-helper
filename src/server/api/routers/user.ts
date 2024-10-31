@@ -14,8 +14,8 @@ import { TRPCError } from "@trpc/server";
 import { kv } from "@vercel/kv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { Resend } from "resend";
 import { z } from "zod";
+import * as brevo from "@getbrevo/brevo";
 
 export const userRouter = createTRPCRouter({
   register: publicProcedure
@@ -266,13 +266,15 @@ export const userRouter = createTRPCRouter({
       });
       const tokenUrl = env.APP_URL + `/reset-password/${token}`;
 
-      const resend = new Resend(env.RESEND_API_KEY);
       try {
-        const { error } = await resend.emails.send({
-          from: "TC FRS Helper <no-reply@bughowi.com>",
-          to: [user.email],
-          subject: "Permintaan Reset Password - TC FRS Helper",
-          html: `
+        const apiInstance = new brevo.TransactionalEmailsApi();
+        apiInstance.setApiKey(
+          brevo.TransactionalEmailsApiApiKeys.apiKey,
+          env.MAIL_BREVO_APIKEY,
+        );
+        const sendSmtpEmail = new brevo.SendSmtpEmail();
+        sendSmtpEmail.subject = "Permintaan Reset Password - TC FRS Helper";
+        sendSmtpEmail.htmlContent = `
           <h1>Konfirmasi Reset Password</h1>
           <p>Hallo <strong>${user.username}</strong></p>
           <br/>
@@ -280,14 +282,14 @@ export const userRouter = createTRPCRouter({
           <br />
           <a href='${tokenUrl}' target='_blank' rel='noopener noreferrer'>Reset Password</a>
           <br /><br />
-          <p>Link reset password di atas hanya valid dalam 30 menit setelah kamu melakukan reset password. Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>`,
-        });
-        if (error) {
-          console.error("error send reset password email: ", error);
-          throw new TRPCError({
-            code: "INTERNAL_SERVER_ERROR",
-          });
-        }
+          <p>Link reset password di atas hanya valid dalam 30 menit setelah kamu melakukan reset password. Mohon jangan menunjukkan email ataupun link reset password di atas kesiapapun. Terima kasih</p>
+    `;
+        sendSmtpEmail.sender = {
+          name: "TC FRS Helper",
+          email: "no-reply@bughowi.com",
+        };
+        sendSmtpEmail.to = [{ email: user.email }];
+        await apiInstance.sendTransacEmail(sendSmtpEmail);
       } catch (error) {
         console.error(error);
         throw new TRPCError({
