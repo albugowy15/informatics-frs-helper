@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.14.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.13.0...v2.14.0) (2024-10-31)
+
+
+### Features
+
+* replace resend with brevo ([edfc57e](https://github.com/albugowy15/informatics-frs-helper/commit/edfc57ea1784ca6cb9c0678f2b5890bbac3688f1))
+
 ## [2.13.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.12.0...v2.13.0) (2024-10-28)
 
 
