@@ -22,6 +22,9 @@ type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
 const ForgotPasswordForm = () => {
   const form = useForm<ForgotPasswordForm>({
     resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: "",
+    },
   });
   const mutation = useToastMutate({
     success: "Reset password berhasil, silahkan cek email",
