@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { renderPageTitle } from "@/lib/utils";
-import { auth } from "auth";
+import { auth } from "@/auth";
 import { type Metadata } from "next";
 import { redirect } from "next/navigation";
 

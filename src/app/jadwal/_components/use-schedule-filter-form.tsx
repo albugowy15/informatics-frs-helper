@@ -6,7 +6,7 @@ import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
 import { filterSchema } from "../schema";
 import { type z } from "zod";
 import { parseSemester } from "@/lib/utils";
-import { api } from "@/trpc/react";
+import { trpc } from "@/trpc/client";
 
 type FilterForm = z.infer<typeof filterSchema>;
 
@@ -23,7 +23,7 @@ function useScheduleFilterForm() {
   });
   const semesterWatch = useWatch({ control: form.control, name: "semester" });
 
-  const listSubjects = api.common.getSubject.useQuery({
+  const listSubjects = trpc.common.getSubject.useQuery({
     semester: parseSemester(semesterWatch),
     withAll: true,
   });

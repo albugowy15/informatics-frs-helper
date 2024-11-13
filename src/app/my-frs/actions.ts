@@ -1,7 +1,7 @@
 "use server";
 
+import { RouterInputs } from "@/trpc/routers/root";
 import { api } from "@/trpc/server";
-import { RouterInputs } from "@/utils/api";
 import { TRPCError } from "@trpc/server";
 import { revalidatePath } from "next/cache";
 

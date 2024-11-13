@@ -1,7 +1,7 @@
 "use client";
 
 import { parseSemester } from "@/lib/utils";
-import { api } from "@/trpc/react";
+import { trpc } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
@@ -27,7 +27,7 @@ function useTradingFilterForm() {
   });
   const semesterWatch = useWatch({ control: form.control, name: "semester" });
 
-  const listSubjects = api.common.getSubject.useQuery(
+  const listSubjects = trpc.common.getSubject.useQuery(
     {
       semester: parseSemester(semesterWatch || "1"),
       withAll: true,

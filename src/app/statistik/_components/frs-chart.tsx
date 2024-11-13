@@ -6,7 +6,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { type FrsBySemester } from "@/server/api/routers/common";
+import { FrsBySemester } from "@/trpc/routers/common";
 import { Bar, BarChart, Label, XAxis, YAxis } from "recharts";
 
 const chartConfig = {

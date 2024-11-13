@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { homeNavigation } from "@/config/navigation";
 import "@/styles/globals.css";
-import { TRPCProvider } from "@/trpc/react";
+import { TRPCProvider } from "@/trpc/client";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";

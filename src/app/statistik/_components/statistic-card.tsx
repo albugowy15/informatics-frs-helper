@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { type StatisticData } from "@/server/api/routers/common";
+import { StatisticData } from "@/trpc/routers/common";
 import {
   ArchiveIcon,
   IdCardIcon,

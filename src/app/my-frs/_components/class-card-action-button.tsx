@@ -3,7 +3,7 @@
 import { useClassContext } from "@/app/my-frs/_components/class-context";
 import { type PlanDetailClass } from "@/app/my-frs/types";
 import { Button } from "@/components/ui/button";
-import { api } from "@/trpc/react";
+import { trpc } from "@/trpc/client";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -11,7 +11,7 @@ const ClassCardActionButton = (props: { data: PlanDetailClass }) => {
   const classContext = useClassContext();
   const [pickClass, setPickClass] = React.useState<PlanDetailClass>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const validateClassTaken = api.frs.validatePlan.useMutation({
+  const validateClassTaken = trpc.frs.validatePlan.useMutation({
     onSuccess: () => {
       if (pickClass) {
         classContext.setClassTaken((prev: PlanDetailClass[]) => [
