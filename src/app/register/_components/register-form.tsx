@@ -29,6 +29,12 @@ const RegisterForm = () => {
 
   const form = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
+    defaultValues: {
+      email: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 
   const mutation = useToastMutate({

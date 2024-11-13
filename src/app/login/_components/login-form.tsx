@@ -26,6 +26,10 @@ type LoginForm = z.infer<typeof loginSchema>;
 const LoginForm = () => {
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
   });
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
