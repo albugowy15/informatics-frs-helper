@@ -6,27 +6,24 @@ import { z } from "zod";
  */
 const server = z.object({
   APP_URL: z.string().url(),
-  DATABASE_URL: z.string().url(),
-  NODE_ENV: z.enum(["development", "test", "production"]),
+  KV_REST_API_READ_ONLY_TOKEN: z.string(),
+  KV_REST_API_TOKEN: z.string(),
+  KV_REST_API_URL: z.string().url(),
+  KV_URL: z.string().url(),
+  EDGE_CONFIG: z.string().url(),
   RESET_SECRET: z.string(),
-  RESEND_API_KEY: z.string(),
+  DATABASE_URL: z.string().url(),
   AUTH_SECRET:
     process.env.NODE_ENV === "production"
       ? z.string().min(1)
       : z.string().min(1).optional(),
   AUTH_TRUST_HOST: z.string(),
   AUTH_URL: z.preprocess(
-    // This makes Vercel deployments not fail if you don't set AUTH_URL
-    // Since NextAuth.js automatically uses the VERCEL_URL if present.
     (str) => process.env.VERCEL_URL ?? str,
-    // VERCEL_URL doesn't include `https` so it cant be validated as a URL
     process.env.VERCEL ? z.string().min(1) : z.string().url(),
   ),
-  MAIL_SMTP_SERVER: z.string(),
-  MAIL_SMTP_PORT: z.string(),
-  MAIL_SMTP_LOGIN: z.string(),
-  MAIL_SMTP_PASSWORD: z.string(),
   MAIL_BREVO_APIKEY: z.string(),
+  NODE_ENV: z.enum(["development", "test", "production"]),
 });
 
 /**
@@ -45,19 +42,18 @@ const client = z.object({
  */
 const processEnv = {
   APP_URL: process.env.APP_URL,
+  KV_REST_API_READ_ONLY_TOKEN: process.env.KV_REST_API_READ_ONLY_TOKEN,
+  KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN,
+  KV_REST_API_URL: process.env.KV_REST_API_URL,
+  KV_URL: process.env.KV_URL,
+  EDGE_CONFIG: process.env.EDGE_CONFIG,
+  RESET_SECRET: process.env.RESET_SECRET,
   DATABASE_URL: process.env.DATABASE_URL,
-  NODE_ENV: process.env.NODE_ENV,
   AUTH_SECRET: process.env.AUTH_SECRET,
   AUTH_TRUST_HOST: process.env.AUTH_TRUST_HOST,
   AUTH_URL: process.env.AUTH_URL,
-  RESET_SECRET: process.env.RESET_SECRET,
-  RESEND_API_KEY: process.env.RESEND_API_KEY,
-  // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
-  MAIL_SMTP_SERVER: process.env.MAIL_SMTP_SERVER,
-  MAIL_SMTP_PORT: process.env.MAIL_SMTP_PORT,
-  MAIL_SMTP_LOGIN: process.env.MAIL_SMTP_LOGIN,
-  MAIL_SMTP_PASSWORD: process.env.MAIL_SMTP_PASSWORD,
   MAIL_BREVO_APIKEY: process.env.MAIL_BREVO_APIKEY,
+  NODE_ENV: process.env.NODE_ENV,
 };
 
 // Don't touch the part below
