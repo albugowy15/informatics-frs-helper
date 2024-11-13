@@ -8,7 +8,7 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "@/server/api/trpc";
+} from "@/trpc/init";
 import prisma from "@/server/db";
 import { TRPCError } from "@trpc/server";
 import { kv } from "@vercel/kv";
