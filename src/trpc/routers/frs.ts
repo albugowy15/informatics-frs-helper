@@ -1,8 +1,8 @@
 import { titleSchema } from "@/app/my-frs/schema";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import prisma from "@/server/db";
+import { createTRPCRouter, protectedProcedure } from "../init";
 
 const frsPlanSchema = z.object({
   title: titleSchema,
