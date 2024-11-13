@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { api } from "@/trpc/react";
+import { trpc } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm, type SubmitHandler } from "react-hook-form";
@@ -27,9 +27,13 @@ const ChangePasswordForm = () => {
   const [showNewPassword, setShowNewPassword] = React.useState(false);
   const form = useForm<CreatePasswordForm>({
     resolver: zodResolver(changePasswordSchema),
+    defaultValues: {
+      new_password: "",
+      old_password: "",
+    },
   });
   const router = useRouter();
-  const mutatePassword = api.user.changePassword.useMutation({
+  const mutatePassword = trpc.user.changePassword.useMutation({
     onSuccess: () => {
       toast.success("Password berhasil diubah");
       router.push("/");

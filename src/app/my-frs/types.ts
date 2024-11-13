@@ -1,4 +1,4 @@
-import { type RouterOutputs } from "@/utils/api";
+import { RouterOutputs } from "@/trpc/routers/root";
 
 export interface SearchParam {
   semester?: string;

@@ -5,7 +5,7 @@ import { matkulSchema } from "../schema";
 import { z } from "zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
-import { api } from "@/trpc/react";
+import { trpc } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { parseSemester } from "@/lib/utils";
 
@@ -29,7 +29,7 @@ function useTakeSubjectForm() {
   });
   const semesterWatch = useWatch({ control: form.control, name: "semester" });
 
-  const listSubjects = api.common.getSubject.useQuery({
+  const listSubjects = trpc.common.getSubject.useQuery({
     semester: parseSemester(semesterWatch),
     withAll: true,
   });

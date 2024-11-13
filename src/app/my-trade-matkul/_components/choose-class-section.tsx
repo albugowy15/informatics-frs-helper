@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { SemesterWithKey } from "@/config/constants";
 import { parseSemester } from "@/lib/utils";
-import { api } from "@/trpc/react";
+import { trpc } from "@/trpc/client";
 import { useFormContext, useWatch } from "react-hook-form";
 
 interface ChooseClassSectionProps {
@@ -42,10 +42,10 @@ const ChooseClassSection = (props: ChooseClassSectionProps) => {
     control: formCtx.control,
     name: subjectField,
   });
-  const listSubject = api.common.getSubject.useQuery({
+  const listSubject = trpc.common.getSubject.useQuery({
     semester: parseSemester(semesterWatch),
   });
-  const listClass = api.common.getClassBySubject.useQuery({
+  const listClass = trpc.common.getClassBySubject.useQuery({
     subjectId: subjectWatch,
   });
 
