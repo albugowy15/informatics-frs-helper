@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.14.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.13.0...v2.14.0) (2024-11-15)
+
+
+### Features
+
+* replace resend with brevo ([edfc57e](https://github.com/albugowy15/informatics-frs-helper/commit/edfc57ea1784ca6cb9c0678f2b5890bbac3688f1))
+* update env list to include kv and brevo ([877c3e1](https://github.com/albugowy15/informatics-frs-helper/commit/877c3e1501d57119dedfc914e8371a541b4ec45d))
+
+
+### Bug Fixes
+
+* react controlled input by fill useForm defaultValues ([702acbb](https://github.com/albugowy15/informatics-frs-helper/commit/702acbb8c1b29bf21c6e7c1019cdb8a5222f5186))
+* update ThemeProviderProps import path ([22dd529](https://github.com/albugowy15/informatics-frs-helper/commit/22dd5290193a03e6111020dfd85d19aef6e029e4))
+
 ## [2.13.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.12.0...v2.13.0) (2024-10-28)
 
 
