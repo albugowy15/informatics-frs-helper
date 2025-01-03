@@ -52,6 +52,7 @@ const processEnv = {
   AUTH_SECRET: process.env.AUTH_SECRET,
   AUTH_TRUST_HOST: process.env.AUTH_TRUST_HOST,
   AUTH_URL: process.env.AUTH_URL,
+  RESET_SECRET: process.env.RESET_SECRET,
   MAIL_BREVO_APIKEY: process.env.MAIL_BREVO_APIKEY,
   NODE_ENV: process.env.NODE_ENV,
 };
