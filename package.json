@@ -15,9 +15,6 @@
     "directory": "src"
   },
   "license": "GPL-3.0-or-later",
-  "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
-  },
   "scripts": {
     "dev": "next dev --turbopack",
     "start": "next start",
@@ -26,7 +23,6 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:seed": "prisma db seed",
     "typecheck": "tsc --noEmit --incremental false",
     "format": "prettier -w .",
     "format:check": "prettier -c .",
@@ -73,7 +69,7 @@
     "server-only": "^0.0.1",
     "sonner": "^1.7.4",
     "superjson": "^2.2.2",
-    "tailwind-merge": "^2.6.0",
+    "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.1"
   },
@@ -83,6 +79,7 @@
     "@faker-js/faker": "^9.4.0",
     "@next/bundle-analyzer": "15.1.6",
     "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4.0.5",
     "@types/bcryptjs": "^2.4.6",
     "@types/eslint": "^9.6.1",
     "@types/jsonwebtoken": "^9.0.8",
@@ -95,9 +92,9 @@
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "prisma": "^5.22.0",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   },
-  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
+  "packageManager": "pnpm@10.2.1+sha512.398035c7bd696d0ba0b10a688ed558285329d27ea994804a52bad9167d8e3a72bcb993f9699585d3ca25779ac64949ef422757a6c31102c12ab932e5cbe5cc92"
 }

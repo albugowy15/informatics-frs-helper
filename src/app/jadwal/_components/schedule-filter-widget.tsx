@@ -23,7 +23,7 @@ const ScheduleFilterWidget = () => {
   return (
     <>
       {/* begin -- Filter widget for large screen */}
-      <aside className="sticky top-4 hidden h-fit w-[30%] 2xl:w-fit flex-shrink-0 lg:block">
+      <aside className="sticky top-4 hidden h-fit w-[30%] 2xl:w-fit shrink-0 lg:block">
         <Card>
           <CardHeader>
             <CardTitle>Filter Jadwal</CardTitle>

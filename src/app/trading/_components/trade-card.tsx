@@ -15,7 +15,7 @@ const TradeCard = (props: {
         <span className="font-medium text-red-600">Want</span> :{" "}
         {props.trade.searchMatkul.Matkul.name} {props.trade.searchMatkul.code}
       </Typography>
-      <Typography variant="body1" className="[&:not(:first-child)]:mt-0">
+      <Typography variant="body1" className="not-first:mt-0">
         <span className="font-medium text-green-600">Have</span> :{" "}
         {props.trade.hasMatkul.Matkul.name} {props.trade.hasMatkul.code}
       </Typography>

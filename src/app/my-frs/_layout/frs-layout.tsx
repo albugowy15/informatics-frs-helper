@@ -17,7 +17,7 @@ function FrsLayout(props: FrsLayoutProps) {
   return (
     <main className="relative mt-4 flex flex-col gap-2 lg:flex-row">
       <ClassContextProvider planDetailClass={props.planDetail?.Class}>
-        <aside className="lg:sticky lg:top-4 lg:max-h-screen lg:w-[30%] lg:flex-shrink-0 lg:overflow-y-auto lg:pr-2">
+        <aside className="lg:sticky lg:top-4 lg:max-h-screen lg:w-[30%] lg:shrink-0 lg:overflow-y-auto lg:pr-2">
           <Card>
             <CardHeader>
               <CardTitle>Informasi Plan FRS</CardTitle>
