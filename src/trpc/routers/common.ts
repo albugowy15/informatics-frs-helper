@@ -217,7 +217,7 @@ export const commonRouter = createTRPCRouter({
       },
       ["statistic"],
       {
-        revalidate: 300,
+        revalidate: 100,
       },
     ),
   ),
