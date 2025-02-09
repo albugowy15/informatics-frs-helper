@@ -4,7 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { homeNavigation } from "@/config/navigation";
 import "@/styles/globals.css";
-import { TRPCProvider } from "@/trpc/client";
+import { TRPCProvider } from "@/trpc/react";
+import { HydrateClient } from "@/trpc/server";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
@@ -25,17 +26,19 @@ export default function RootLayout({
       <head />
       <body className="flex min-h-screen flex-col bg-background font-sans antialiased">
         <TRPCProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Toaster closeButton richColors expand={false} />
-            <Navbar items={homeNavigation} />
-            <div className="px-5 py-5">{children}</div>
-            <Footer />
-          </ThemeProvider>
+          <HydrateClient>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Toaster closeButton richColors expand={false} />
+              <Navbar items={homeNavigation} />
+              <div className="px-5 py-5">{children}</div>
+              <Footer />
+            </ThemeProvider>
+          </HydrateClient>
         </TRPCProvider>
         <SpeedInsights />
         <Analytics />
