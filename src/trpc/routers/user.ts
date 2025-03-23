@@ -234,7 +234,7 @@ export const userRouter = createTRPCRouter({
       let savedTimeRedis: string | null;
       try {
         savedTimeRedis = await kv.get<string>(user.id);
-      } catch (e) {
+      } catch {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
         });
@@ -370,7 +370,7 @@ export const userRouter = createTRPCRouter({
             message: "Gagal mengubah password",
           });
         }
-      } catch (error) {
+      } catch {
         throw new TRPCError({
           code: "BAD_REQUEST",
           message: "Token tidak valid",

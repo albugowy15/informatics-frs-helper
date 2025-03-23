@@ -18,7 +18,7 @@ export function asOptionalField<T extends z.ZodTypeAny>(schema: T) {
 export function parseSemester(val: string) {
   try {
     return parseInt(val);
-  } catch (error) {
+  } catch {
     return 1;
   }
 }
