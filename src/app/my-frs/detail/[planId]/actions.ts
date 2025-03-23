@@ -14,7 +14,6 @@ export async function deletePlanAction(
     if (e instanceof TRPCError) {
       return { error: e.message };
     }
-    console.error("action err:", e);
   }
   revalidatePath("/my-frs");
 }

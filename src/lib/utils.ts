@@ -19,7 +19,6 @@ export function parseSemester(val: string) {
   try {
     return parseInt(val);
   } catch (error) {
-    console.error("Error parse semester to int: ", error);
     return 1;
   }
 }

@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/trpc/init";
 import prisma from "@/server/db";
-import { unstable_cache } from "next/cache";
 
 export interface StatisticData {
   id: string;
@@ -23,30 +22,22 @@ export const commonRouter = createTRPCRouter({
         subjectId: z.string(),
       }),
     )
-    .query(
-      unstable_cache(
-        async ({ input }) => {
-          return await prisma.class.findMany({
-            select: {
-              id: true,
-              code: true,
-            },
-            where: {
-              Matkul: {
-                id: input.subjectId,
-              },
-            },
-            orderBy: {
-              code: "asc",
-            },
-          });
+    .query(async ({ input }) => {
+      return await prisma.class.findMany({
+        select: {
+          id: true,
+          code: true,
         },
-        [],
-        {
-          revalidate: 180,
+        where: {
+          Matkul: {
+            id: input.subjectId,
+          },
         },
-      ),
-    ),
+        orderBy: {
+          code: "asc",
+        },
+      });
+    }),
   getClass: publicProcedure
     .input(
       z.object({
@@ -55,46 +46,40 @@ export const commonRouter = createTRPCRouter({
         with_taken: z.boolean().optional(),
       }),
     )
-    .query(
-      unstable_cache(
-        async ({ input }) => {
-          return await prisma.matkul.findMany({
-            where: {
-              semester: input.semester,
-              name: input.matkul,
-            },
+    .query(async ({ input }) => {
+      return await prisma.matkul.findMany({
+        where: {
+          semester: input.semester,
+          name: input.matkul,
+        },
+        select: {
+          id: true,
+          name: true,
+          semester: true,
+          sks: true,
+          Class: {
             select: {
+              code: true,
+              day: true,
               id: true,
-              name: true,
-              semester: true,
-              sks: true,
-              Class: {
-                select: {
-                  code: true,
-                  day: true,
-                  id: true,
-                  Lecturer: {
-                    select: { code: true, fullname: true, id: true },
-                  },
-                  Session: {
-                    select: { session_time: true },
-                  },
-                  taken: input.with_taken ? input.with_taken : false,
-                },
-                orderBy: {
-                  code: "asc",
-                },
+              Lecturer: {
+                select: { code: true, fullname: true, id: true },
               },
+              Session: {
+                select: { session_time: true },
+              },
+              taken: input.with_taken ? input.with_taken : false,
             },
             orderBy: {
-              name: "asc",
+              code: "asc",
             },
-          });
+          },
         },
-        [],
-        { revalidate: 180 },
-      ),
-    ),
+        orderBy: {
+          name: "asc",
+        },
+      });
+    }),
   getSubject: publicProcedure
     .input(
       z.object({
@@ -102,123 +87,98 @@ export const commonRouter = createTRPCRouter({
         withAll: z.boolean().optional(),
       }),
     )
-    .query(
-      unstable_cache(
-        async ({ input }) => {
-          const listSubject = await prisma.matkul.findMany({
-            select: {
-              id: true,
-              name: true,
-            },
-            where: {
-              semester: input.semester,
-            },
-            orderBy: {
-              name: "asc",
-            },
-          });
-          return input.withAll === true
-            ? [{ id: "", name: "Semua" }, ...listSubject]
-            : listSubject;
+    .query(async ({ input }) => {
+      const listSubject = await prisma.matkul.findMany({
+        select: {
+          id: true,
+          name: true,
         },
-        [],
-        { revalidate: 180 },
-      ),
-    ),
-  getTrendingClasses: publicProcedure.query(
-    unstable_cache(
-      async () => {
-        return await prisma.class.findMany({
-          select: {
-            code: true,
-            day: true,
-            id: true,
-            Lecturer: { select: { fullname: true, id: true } },
-            Matkul: { select: { name: true, id: true, sks: true } },
-            Session: {
-              select: { session_time: true },
-            },
-            taken: true,
-          },
-          where: {
-            taken: {
-              gt: 10,
-            },
-          },
-          orderBy: {
-            taken: "desc",
-          },
-          take: 12,
-        });
+        where: {
+          semester: input.semester,
+        },
+        orderBy: {
+          name: "asc",
+        },
+      });
+      return input.withAll === true
+        ? [{ id: "", name: "Semua" }, ...listSubject]
+        : listSubject;
+    }),
+  getTrendingClasses: publicProcedure.query(async () => {
+    return await prisma.class.findMany({
+      select: {
+        code: true,
+        day: true,
+        id: true,
+        Lecturer: { select: { fullname: true, id: true } },
+        Matkul: { select: { name: true, id: true, sks: true } },
+        Session: {
+          select: { session_time: true },
+        },
+        taken: true,
       },
-      ["trending"],
-      { revalidate: 600 },
-    ),
-  ),
-  getStatistic: publicProcedure.query(
-    unstable_cache(
-      async () => {
-        const [
-          totalClasses,
-          totalUsers,
-          totalPlans,
-          totalTrades,
-          frsBySemester,
-        ] = await Promise.all([
-          prisma.class.count(),
-          prisma.user.count(),
-          prisma.plan.count(),
-          prisma.tradeMatkul.count(),
-          prisma.plan
-            .groupBy({
-              by: "semester",
-              orderBy: {
-                semester: "asc",
-              },
-              _count: true,
-            })
-            .then((val) =>
-              val.map((item) => ({ key: item.semester, value: item._count })),
-            ),
-        ]);
-
-        const statistic: StatisticData[] = [
-          {
-            id: crypto.randomUUID(),
-            title: "Total Kelas",
-            value: totalClasses,
-            type: "class",
-            description: "Kelas dapat diambil",
-          },
-          {
-            id: crypto.randomUUID(),
-            title: "Total User",
-            value: totalUsers,
-            type: "user",
-            description: "User terdaftar",
-          },
-          {
-            id: crypto.randomUUID(),
-            title: "Total Plan FRS",
-            value: totalPlans,
-            type: "frs",
-            description: "Rencana FRS dibuat",
-          },
-          {
-            id: crypto.randomUUID(),
-            title: "Total Trade Kelas",
-            value: totalTrades,
-            type: "trade",
-            description: "Post Trade Kelas dibuat",
-          },
-        ];
-
-        return { statistic, frsBySemester };
+      where: {
+        taken: {
+          gt: 10,
+        },
       },
-      ["statistic"],
+      orderBy: {
+        taken: "desc",
+      },
+      take: 12,
+    });
+  }),
+  getStatistic: publicProcedure.query(async () => {
+    const [totalClasses, totalUsers, totalPlans, totalTrades, frsBySemester] =
+      await Promise.all([
+        prisma.class.count(),
+        prisma.user.count(),
+        prisma.plan.count(),
+        prisma.tradeMatkul.count(),
+        prisma.plan
+          .groupBy({
+            by: "semester",
+            orderBy: {
+              semester: "asc",
+            },
+            _count: true,
+          })
+          .then((val) =>
+            val.map((item) => ({ key: item.semester, value: item._count })),
+          ),
+      ]);
+
+    const statistic: StatisticData[] = [
       {
-        revalidate: 100,
+        id: crypto.randomUUID(),
+        title: "Total Kelas",
+        value: totalClasses,
+        type: "class",
+        description: "Kelas dapat diambil",
       },
-    ),
-  ),
+      {
+        id: crypto.randomUUID(),
+        title: "Total User",
+        value: totalUsers,
+        type: "user",
+        description: "User terdaftar",
+      },
+      {
+        id: crypto.randomUUID(),
+        title: "Total Plan FRS",
+        value: totalPlans,
+        type: "frs",
+        description: "Rencana FRS dibuat",
+      },
+      {
+        id: crypto.randomUUID(),
+        title: "Total Trade Kelas",
+        value: totalTrades,
+        type: "trade",
+        description: "Post Trade Kelas dibuat",
+      },
+    ];
+
+    return { statistic, frsBySemester };
+  }),
 });

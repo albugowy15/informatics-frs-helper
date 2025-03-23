@@ -51,7 +51,6 @@ export async function POST(req: Request) {
       { status: 200 },
     );
   } catch (e) {
-    console.error("/api/login error:", e);
     return Response.json(
       {
         msg: "unknown",
