@@ -6,7 +6,6 @@ import {
   publicProcedure,
 } from "@/trpc/init";
 import prisma from "@/server/db";
-import { unstable_cache } from "next/cache";
 
 export const tradeMatkulRouter = createTRPCRouter({
   createTradeMatkul: protectedProcedure
@@ -293,59 +292,51 @@ export const tradeMatkulRouter = createTRPCRouter({
         matkul: z.string().optional(),
       }),
     )
-    .query(
-      unstable_cache(
-        async ({ input }) => {
-          return await prisma.tradeMatkul.findMany({
-            include: {
-              hasMatkul: {
+    .query(async ({ input }) => {
+      return await prisma.tradeMatkul.findMany({
+        include: {
+          hasMatkul: {
+            select: {
+              code: true,
+              Matkul: {
                 select: {
-                  code: true,
-                  Matkul: {
-                    select: {
-                      name: true,
-                      semester: true,
-                    },
-                  },
-                },
-              },
-              searchMatkul: {
-                select: {
-                  code: true,
-                  Matkul: {
-                    select: {
-                      name: true,
-                      semester: true,
-                    },
-                  },
-                },
-              },
-              User: {
-                select: {
-                  username: true,
-                  fullname: true,
-                  idLine: true,
-                  whatsapp: true,
+                  name: true,
+                  semester: true,
                 },
               },
             },
-            where: {
-              searchMatkul: {
-                Matkul: {
-                  semester: input.semester ?? undefined,
-                  name:
-                    input.matkul === "" || input.matkul === "Semua"
-                      ? undefined
-                      : input.matkul,
+          },
+          searchMatkul: {
+            select: {
+              code: true,
+              Matkul: {
+                select: {
+                  name: true,
+                  semester: true,
                 },
               },
             },
-          });
+          },
+          User: {
+            select: {
+              username: true,
+              fullname: true,
+              idLine: true,
+              whatsapp: true,
+            },
+          },
         },
-        [],
-        {
-          revalidate: 180,
+        where: {
+          searchMatkul: {
+            Matkul: {
+              semester: input.semester ?? undefined,
+              name:
+                input.matkul === "" || input.matkul === "Semua"
+                  ? undefined
+                  : input.matkul,
+            },
+          },
         },
-      ),
-    ),
+      });
+    }),
 });
