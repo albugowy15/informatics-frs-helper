@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       },
       { status: 200 },
     );
-  } catch (e) {
+  } catch {
     return Response.json(
       {
         msg: "unknown",
