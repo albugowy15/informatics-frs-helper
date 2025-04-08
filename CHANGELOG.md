@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.15.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.14.0...v2.15.0) (2025-04-08)
+
+
+### Features
+
+* remove prisma seeder ([decfbb8](https://github.com/albugowy15/informatics-frs-helper/commit/decfbb881aa3648069fae54eb047601e226fb4e6))
+
+
+### Bug Fixes
+
+* decrease revalidate time ([9c2489c](https://github.com/albugowy15/informatics-frs-helper/commit/9c2489ccb6ca933515a0500754a58698d658c04e))
+* eslint error ([6a7818e](https://github.com/albugowy15/informatics-frs-helper/commit/6a7818ece2e81dae6867be1c896ecafb29241849))
+* httpBatchLink import from @trpc/client ([141e98d](https://github.com/albugowy15/informatics-frs-helper/commit/141e98de5d05cc949884e1c7ccabb99dbd1c2638))
+
 ## [2.14.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.13.0...v2.14.0) (2024-11-15)
 
 
