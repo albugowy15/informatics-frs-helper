@@ -47,3 +47,5 @@ yarn-error.log*
 /test-results
 
 commit_messages.txt
+
+/.open-next/

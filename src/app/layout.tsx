@@ -6,8 +6,6 @@ import { homeNavigation } from "@/config/navigation";
 import "@/styles/globals.css";
 import { TRPCProvider } from "@/trpc/client";
 import { HydrateClient } from "@/trpc/server";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import * as React from "react";
 
@@ -40,8 +38,6 @@ export default function RootLayout({
             </ThemeProvider>
           </HydrateClient>
         </TRPCProvider>
-        <SpeedInsights />
-        <Analytics />
       </body>
     </html>
   );

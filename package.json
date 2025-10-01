@@ -8,7 +8,6 @@
     "url": "https://bughowi.com"
   },
   "description": "Fullstack Typesafe Next.js application for ITS Informatics students to organize their FRS ",
-  "homepage": "https://tc-frs-helper.vercel.app",
   "repository": {
     "type": "github",
     "url": "https://github.com/albugowy15/informatics-frs-helper",
@@ -27,11 +26,15 @@
     "format": "prettier -w .",
     "format:check": "prettier -c .",
     "lint:fix": "eslint src --fix && pnpm format",
-    "check": "pnpm typecheck && pnpm lint && pnpm format:check"
+    "check": "pnpm typecheck && pnpm lint && pnpm format:check",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
     "@getbrevo/brevo": "^2.2.0",
     "@hookform/resolvers": "^4.1.3",
+    "@opennextjs/cloudflare": "^1.9.0",
     "@prisma/client": "5.22.0",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -51,10 +54,8 @@
     "@trpc/next": "^11.0.0",
     "@trpc/react-query": "^11.0.0",
     "@trpc/server": "^11.0.0",
-    "@vercel/analytics": "^1.5.0",
     "@vercel/edge-config": "^1.4.0",
     "@vercel/kv": "^3.0.0",
-    "@vercel/speed-insights": "^1.2.0",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "jsonwebtoken": "^9.0.2",
@@ -94,14 +95,14 @@
     "prisma": "5.22.0",
     "tailwindcss": "^4.0.15",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "wrangler": "^4.40.3"
   },
   "packageManager": "pnpm@10.6.5+sha512.cdf928fca20832cd59ec53826492b7dc25dc524d4370b6b4adbf65803d32efaa6c1c88147c0ae4e8d579a6c9eec715757b50d4fa35eea179d868eada4ed043af",
   "pnpm": {
     "onlyBuiltDependencies": [
       "@prisma/client",
       "@prisma/engines",
-      "@vercel/speed-insights",
       "prisma",
       "sharp"
     ]

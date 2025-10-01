@@ -18,10 +18,7 @@ const server = z.object({
       ? z.string().min(1)
       : z.string().min(1).optional(),
   AUTH_TRUST_HOST: z.string(),
-  AUTH_URL: z.preprocess(
-    (str) => process.env.VERCEL_URL ?? str,
-    process.env.VERCEL ? z.string().min(1) : z.string().url(),
-  ),
+  AUTH_URL: z.string().url(),
   MAIL_BREVO_APIKEY: z.string(),
   NODE_ENV: z.enum(["development", "test", "production"]),
 });
