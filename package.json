@@ -17,7 +17,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "build": "next build --turbopack",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
