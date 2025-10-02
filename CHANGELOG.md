@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.16.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.15.0...v2.16.0) (2025-10-02)
+
+
+### Features
+
+* migrate next lint to eslint ([d2b020d](https://github.com/albugowy15/informatics-frs-helper/commit/d2b020d92eaf87ccc2dcdc279bf8f8d1e97b0ab8))
+* update packages and deploy to netlify ([b5debd8](https://github.com/albugowy15/informatics-frs-helper/commit/b5debd83349a69191160a85b5aac7870ee130e61))
+
 ## [2.15.0](https://github.com/albugowy15/informatics-frs-helper/compare/v2.14.0...v2.15.0) (2025-04-08)
 
 
