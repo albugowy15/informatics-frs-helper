@@ -31,7 +31,7 @@
   "dependencies": {
     "@getbrevo/brevo": "^3.0.1",
     "@hookform/resolvers": "^5.2.2",
-    "@prisma/client": "5.22.0",
+    "@prisma/client": "6.16.3",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -44,7 +44,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tanstack/react-query": "^5.90.2",
-    "@tidbcloud/prisma-adapter": "^5.20.0",
+    "@tidbcloud/prisma-adapter": "^6.12.0",
     "@tidbcloud/serverless": "^0.2.0",
     "@trpc/client": "^11.6.0",
     "@trpc/next": "^11.6.0",
@@ -61,14 +61,14 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-hook-form": "^7.63.0",
-    "recharts": "2.15.4",
+    "recharts": "3.2.1",
     "resend": "^6.1.2",
     "server-only": "^0.0.1",
     "sonner": "^2.0.7",
     "superjson": "^2.2.2",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.25.76"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -87,7 +87,7 @@
     "eslint-config-next": "15.5.4",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
-    "prisma": "5.22.0",
+    "prisma": "6.16.3",
     "tailwindcss": "^4.1.14",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
