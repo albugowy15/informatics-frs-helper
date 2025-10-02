@@ -32,7 +32,7 @@ Check the timetable for each subject and class in the Course Schedule (Jadwal Ke
 To run this project locally, ensure that you have installed all the necessary tools on your machine:
 
 - [Node.js LTS](https://nodejs.org/en)
-- [pnpm version 9 or higher](https://pnpm.io)
+- [pnpm version 10 or higher](https://pnpm.io)
 
 Then, you can follow these steps:
 
